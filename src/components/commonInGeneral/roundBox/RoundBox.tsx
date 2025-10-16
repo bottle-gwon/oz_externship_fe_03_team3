@@ -1,4 +1,8 @@
-import { convertToBorder, paddingMap } from '@/lib/tailwindClassNameMap'
+import {
+  convertToBorder,
+  paddingMap,
+  radiusMap,
+} from '@/lib/tailwindClassNameMap'
 import type { DivProps, None, XsToXxl } from '@/types'
 
 interface WithRoundBoxProps {
@@ -6,6 +10,7 @@ interface WithRoundBoxProps {
   isShadowed?: boolean
   isBordered?: boolean
   padding?: XsToXxl | None
+  radius?: 'sm' | 'md' | 'lg' | 'full'
 }
 
 const RoundBox = ({
@@ -13,6 +18,7 @@ const RoundBox = ({
   isBordered = true,
   isShadowed,
   padding = 'md',
+  radius = 'md',
   ...props
 }: DivProps & WithRoundBoxProps) => {
   const { className, children, ...rest } = props
@@ -21,7 +27,8 @@ const RoundBox = ({
   const shadowResult = isShadowed ? 'dropdown-shadow-md' : ''
   const borderResult = convertToBorder(color, isBordered)
   const paddingResult = paddingMap[padding] ?? ''
-  const result = `${colorResult} ${borderResult} ${shadowResult} ${paddingResult}`
+  const radiusResult = radiusMap[radius]
+  const result = `${colorResult} ${borderResult} ${shadowResult} ${paddingResult} ${radiusResult}`
 
   return (
     <div {...rest} className={`${className} ${result}`}>

@@ -48,3 +48,9 @@ export const convertToBorder = (color: 'mono', isBordered: boolean) => {
       return isBordered ? 'border-1 border-gray-200' : ''
   }
 }
+export const radiusMap = {
+  sm: 'rounded-sm',
+  md: 'rounded-lg',
+  lg: 'rounded-xl',
+  full: 'rounded-full',
+}

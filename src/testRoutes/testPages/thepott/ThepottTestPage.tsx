@@ -1,3 +1,4 @@
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import {
   GridContainer,
   Vstack,
@@ -21,11 +22,13 @@ const ThepottTestPage = () => {
   return (
     <Vstack className="w-2xl bg-rose-200">
       <FullScreen className="bg-sky-300" />
-      <div className="h-[500px] w-[1500px] bg-amber-700 p-3">
+
+      <RoundBox className="h-[500px] w-[1500px] bg-amber-700 p-3">
         <Container isPadded className="bg-amber-300">
           asdfasdf
         </Container>
-      </div>
+      </RoundBox>
+
       <Box />
       <Box />
       <Box />
