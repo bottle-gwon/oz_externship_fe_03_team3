@@ -11,7 +11,7 @@ const Vstack = ({ gap = 'md', ...props }: DivProps & WithVstackProps) => {
   const gapResult = gapMap[gap] ?? ''
 
   return (
-    <div {...rest} className={`${className} ${gapResult} flex flex-col gap-3`}>
+    <div {...rest} className={`${className} ${gapResult} flex flex-col`}>
       {children}
     </div>
   )

@@ -6,6 +6,8 @@ import {
 import Container from '../../../components/commonInGeneral/layout/_Container'
 import FlexOneContainer from '../../../components/commonInGeneral/layout/_FlexOneContainer'
 import FullScreen from '../../../components/commonInGeneral/layout/_FullScreen'
+import Select from '@/components/commonInGeneral/select/Select'
+import { ArrowBigDown } from 'lucide-react'
 
 const Box = () => {
   return <div className="h-[100px] w-[100px] bg-amber-300">뭔가 있음</div>
@@ -21,8 +23,10 @@ const BlueLongBox = () => {
 const ThepottTestPage = () => {
   return (
     <Vstack className="w-2xl bg-rose-200">
-      <FullScreen className="bg-sky-300" />
+      <ArrowBigDown />
 
+      <FullScreen className="bg-sky-300" />
+      <Select></Select>
       <RoundBox className="h-[500px] w-[1500px] bg-amber-700 p-3">
         <Container isPadded className="bg-amber-300">
           asdfasdf
