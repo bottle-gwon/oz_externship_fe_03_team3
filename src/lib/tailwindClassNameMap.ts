@@ -41,3 +41,10 @@ export const widthMap = {
   md: 'w-4xl', // 896px 넓은 모달 | 공고 세부 페이지
   lg: 'w-7xl', // 1280px 그 외 넓은 페이지
 }
+
+export const convertToBorder = (color: 'mono', isBordered: boolean) => {
+  switch (color) {
+    case 'mono':
+      return isBordered ? 'border-1 border-gray-200' : ''
+  }
+}
