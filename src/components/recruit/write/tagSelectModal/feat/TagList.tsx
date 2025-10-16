@@ -24,7 +24,7 @@ const TagList = () => {
       <TagCard />
       <TagPagination
         currentPage={current}
-        totalPage={10}
+        totalPage={15}
         onPageChange={handlePageChange}
       />
     </div>

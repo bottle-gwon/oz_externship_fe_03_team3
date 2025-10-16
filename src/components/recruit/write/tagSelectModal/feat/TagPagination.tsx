@@ -1,5 +1,6 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { TagPaginationInterface } from './TagList'
+import { useMemo } from 'react'
 
 const TagPagination = ({
   currentPage, // 현재 페이지
@@ -8,8 +9,37 @@ const TagPagination = ({
   maxPage = 9, // 출력할 번호 개수
 }: TagPaginationInterface) => {
   // 총 페이지 수 만큼 출력,
-  // Todo 추후에 출력할 번호 개수로 분기처리 할것
-  const pageNumbers = Array.from({ length: totalPage }, (_, i) => i + 1)
+
+  const pageNumbers = useMemo(() => {
+    // 최대 페이지(9) 보다 작으면 전부 출력
+    const halfPage = Math.floor(maxPage / 2) //
+
+    if (totalPage <= maxPage) {
+      return Array.from({ length: totalPage }, (_, i) => i + 1)
+    }
+
+    // 화면상 시작 페이지 ~ 화면상 마지막 페이지
+
+    let startPage = currentPage - halfPage
+    let endPage = currentPage + halfPage
+
+    // 시작 페이지, 마지막 페이지에서 1에서 totalPage를 벗어나지 못하도록 함
+
+    if (startPage < 1) {
+      startPage = 1
+      endPage = maxPage
+    }
+    // 마지막 페이지 totalpage 보다 커질 경우..
+    if (endPage > totalPage) {
+      endPage = totalPage
+      startPage = totalPage - maxPage + 1
+    }
+    // 시작페이지 ~ 마지막 페이지
+    return Array.from(
+      { length: endPage - startPage + 1 },
+      (_, i) => startPage + i
+    )
+  }, [totalPage, currentPage, maxPage])
 
   return (
     <div className="flex justify-center space-x-2">
