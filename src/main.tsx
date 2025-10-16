@@ -5,17 +5,17 @@ import testRouteArray from './testRoutes'
 import { lazy, Suspense } from 'react'
 import NotFoundPage from './pages/errors/NotFoundPage'
 
-const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
+    const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
 const RecruitWritePage = lazy(
   () => import('./pages/recruit/write/RecruitWritePage')
 )
-const RecruitManagePage = lazy(
+    const RecruitManagePage = lazy(
   () => import('./pages/recruit/manage/RecruitManagePage')
 )
-const RecruitDetailPage = lazy(
+  const RecruitDetailPage = lazy(
   () => import('./pages/recruit/detail/RecruitDetailPage')
 )
-const LecturePage = lazy(() => import('./pages/lecture/LecturePage'))
+      const LecturePage = lazy(() => import('./pages/lecture/LecturePage'))
 
 const routeArray = [
   {
