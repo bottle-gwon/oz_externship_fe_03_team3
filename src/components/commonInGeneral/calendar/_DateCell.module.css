@@ -1,0 +1,22 @@
+.headerCell {
+  padding: var(--spacing-xs);
+  text-align: center;
+  color: var(--color, inherit);
+}
+
+.dayCircle {
+  width: 24px;
+  height: 24px;
+  border-radius: var(--rounded-full);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: var(--bg, transparent);
+  color: var(--color, inherit);
+}
+
+.eventDotContainer {
+  width: 100%;
+  padding: var(--spacing-sm);
+}

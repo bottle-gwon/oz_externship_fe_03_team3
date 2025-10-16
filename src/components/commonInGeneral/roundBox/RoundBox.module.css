@@ -1,0 +1,10 @@
+.roundBox {
+  border-radius: var(--rounded-md);
+  border: 1px solid var(--color-dimdim);
+  border-top-color: oklch(1 0 0 / 0.2);
+  padding: var(--padding, 0);
+  box-shadow: var(--shadow, none);
+
+  transition-property: border-color;
+  transition-duration: 0.1s;
+}

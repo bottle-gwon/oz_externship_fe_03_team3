@@ -1,0 +1,7 @@
+.customImage {
+  border-radius: var(--rounded, 0);
+  height: var(--height, auto);
+  width: var(--width, auto);
+  object-fit: cover;
+  flex-shrink: 0;
+}

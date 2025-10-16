@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import testRouteArray from './testRoutes'
 import { lazy, Suspense } from 'react'
 import NotFoundPage from './pages/errors/NotFoundPage'
+import Layout from './pages/layout/Layout'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
 const RecruitWritePage = lazy(
@@ -52,7 +53,7 @@ const suspendedRouterArray = routeArray.map((route) => ({
 
 const router = createBrowserRouter([
   ...testRouteArray,
-  ...suspendedRouterArray,
+  { element: <Layout />, children: suspendedRouterArray },
   { path: '*', element: <NotFoundPage /> },
 ])
 
