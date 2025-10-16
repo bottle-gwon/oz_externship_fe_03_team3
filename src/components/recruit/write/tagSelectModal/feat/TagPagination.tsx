@@ -6,7 +6,7 @@ const TagPagination = ({
   onPageChange,
   maxPage = 5,
 }: TagPaginationInterface) => {
-  return <div></div>
+  return <div className="flex justify-center space-x-2"></div>
 }
 
 export default TagPagination
