@@ -19,7 +19,7 @@ const LecturePage = lazy(() => import('./pages/lecture/LecturePage'))
 
 const routeArray = [
   {
-    path: '/recruit',
+         path: '/recruit',
     element: <RecruitListPage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
@@ -33,12 +33,12 @@ const routeArray = [
     element: <RecruitManagePage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
-  {
-    path: '/recruit/detail/:recruitId',
-    element: <RecruitDetailPage />,
-    fallback: <p>나중에 스켈레톤 넣을 자리</p>,
-  },
-  {
+        {
+          path: '/recruit/detail/:recruitId',
+          element: <RecruitDetailPage />,
+          fallback: <p>나중에 스켈레톤 넣을 자리</p>,
+        },
+        {
     path: '/lecture',
     element: <LecturePage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
