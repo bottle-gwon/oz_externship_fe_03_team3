@@ -1,4 +1,5 @@
 import type { ButtonProps, Color } from '@/types'
+import { Hstack } from '../layout'
 
 type ButtonVariant = 'outlined' | 'contained' | 'ghost'
 
@@ -95,7 +96,7 @@ const Button = ({
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
-  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} transition`
+  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} transition w-fit h-fit`
 
   return (
     <button
@@ -103,7 +104,9 @@ const Button = ({
       disabled={status !== 'enabled'}
       className={`${className} ${result} rounded-lg`}
     >
-      {children}
+      <Hstack gap="none" className="items-center">
+        {children}
+      </Hstack>
     </button>
   )
 }

@@ -3,13 +3,15 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import FullScreen from '@/components/commonInGeneral/layout/_FullScreen'
 import Text from '@/components/commonInGeneral/text/Text'
+import { ArrowBigDown } from 'lucide-react'
 
 const colorArray = ['mono', 'primary', 'danger', 'success', 'blue'] as const
 type Color = (typeof colorArray)[number]
 const variantArray = ['contained', 'outlined', 'ghost'] as const
 type ButtonVariant = (typeof variantArray)[number]
 const statusArray = ['enabled', 'disabled', 'pending'] as const
-type ButtonStatus = (typeof statusArray)[number]
+
+const sizeArray = ['sm', 'md', 'lg'] as const
 
 const ButtonInStatusGroup = ({
   color,
@@ -47,6 +49,23 @@ const ThePottButtonPage = () => {
             <ButtonInColorArray key={variant} variant={variant} />
           ))}
         </Vstack>
+        <Hstack className="h-[50px]">
+          {sizeArray.map((size) => (
+            <Button key={size} size={size}>
+              {size}
+            </Button>
+          ))}
+        </Hstack>
+        <Hstack>
+          <Button size="sm">
+            <ArrowBigDown />
+            아이콘도 넣을 수 있습니다
+          </Button>
+          <Button size="lg">
+            <ArrowBigDown />
+            아이콘도 넣을 수 있습니다
+          </Button>
+        </Hstack>
       </Container>
     </FullScreen>
   )
