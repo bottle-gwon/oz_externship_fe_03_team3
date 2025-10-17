@@ -47,6 +47,7 @@ export default function TestRecruitCard({
           radius="lg"
           className={`imgBox ${imageClassName} flex-none overflow-hidden bg-gray-200`}
         ></RoundBox>
+        {/* 추후 api 재확인 현재 확인한 바로는 이미지 api 없음 */}
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -81,6 +82,7 @@ export default function TestRecruitCard({
               className="expected_personnel inline-flex items-center gap-1"
             >
               <Users className="size-4" />
+              {/* 추후 svg 아이콘으로 추가 */}
               모집인원 : {expectedPersonnel ?? ''}명
             </div>
 
@@ -110,6 +112,7 @@ export default function TestRecruitCard({
                   className="description text-sm text-gray-600"
                 >
                   {text}
+                  {/* 추후 확정 api 확인하여 강사명도 추가여부 고민 현재 api 확인한 바로는 RECM-003 강의목록, 강사명 없음*/}
                 </li>
               ))}
             </ul>
