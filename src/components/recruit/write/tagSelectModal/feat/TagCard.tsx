@@ -8,8 +8,12 @@ interface TagCard {
 
 const TagCard = ({ name, isChecked }: TagCard) => {
   return (
-    <div className="h-[50px] w-[614px] rounded-sm border border-gray-200">
-      <div className="flex h-full items-center justify-between px-[13px]">
+    <div
+      className={`border-gray-20 h-[50px] w-[614px] rounded-sm border ${isChecked && 'border-[#eab308] bg-[#fefce8]'}`}
+    >
+      <div
+        className={`flex h-full items-center justify-between px-[13px] ${isChecked && 'text-[#854d0e]'}`}
+      >
         <span>{name}</span>
 
         {/* 체크 박스 디자인에 맞게 커스텀 */}
