@@ -24,9 +24,16 @@ const ThepottTestPage = () => {
   return (
     <Vstack className="w-2xl bg-rose-200">
       <ArrowBigDown />
+      <Select>
+        <Select.Trigger>나를 눌러요</Select.Trigger>
+        <Select.Content>
+          <Select.Option>apple</Select.Option>
+          <Select.Option>banana</Select.Option>
+          <Select.Option icon={<ArrowBigDown />}>carrot</Select.Option>
+        </Select.Content>
+      </Select>
 
       <FullScreen className="bg-sky-300" />
-      <Select></Select>
       <RoundBox className="h-[500px] w-[1500px] bg-amber-700 p-3">
         <Container isPadded className="bg-amber-300">
           asdfasdf

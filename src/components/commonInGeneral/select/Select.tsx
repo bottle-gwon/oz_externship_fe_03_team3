@@ -3,11 +3,12 @@ import {
   useContext,
   useRef,
   useState,
+  type JSX,
   type ReactNode,
 } from 'react'
 import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
-import { ChevronDown } from 'lucide-react'
+import { ArrowBigDown, ChevronDown } from 'lucide-react'
 
 interface SelectContextProps {
   isOpened: boolean
@@ -44,10 +45,11 @@ const SelectTrigger = ({ children }: { children: string }) => {
   )
 }
 
-const SelectItem = ({
+const SelectOption = ({
+  icon,
   children,
 }: {
-  value?: string | number | boolean
+  icon?: JSX.Element
   children: string
 }) => {
   const { setIsOpened, setSelectedItem } = useSelectContext()
@@ -56,9 +58,13 @@ const SelectItem = ({
     setSelectedItem(children)
   }
 
+  // TODO: 나중에 p 태그는 Text로 교체
   return (
     <RoundBox isBordered={false} onClick={handleClick}>
-      <Hstack>{children}</Hstack>
+      <Hstack>
+        {icon && icon}
+        <p>{children}</p>
+      </Hstack>
     </RoundBox>
   )
 }
@@ -109,22 +115,6 @@ const Select = ({ children }: { children: ReactNode }) => {
 
 Select.Trigger = SelectTrigger
 Select.Content = SelectContent
-Select.Item = SelectItem
+Select.Option = SelectOption
 
-const SelectDemo = () => {
-  return (
-    <Select>
-      <Select.Trigger>나를 눌러요</Select.Trigger>
-      <Select.Content>
-        <Select.Item>바나나</Select.Item>
-        <Select.Item>사과</Select.Item>
-        <Select.Item>당근</Select.Item>
-        <Select.Item>디디</Select.Item>
-        <Select.Item>즈너</Select.Item>
-        <Select.Item>츠</Select.Item>
-      </Select.Content>
-    </Select>
-  )
-}
-
-export default SelectDemo
+export default Select
