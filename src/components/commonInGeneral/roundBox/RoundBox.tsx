@@ -1,5 +1,6 @@
 import {
   convertToBorder,
+  makeBgResult,
   paddingMap,
   radiusMap,
 } from '@/lib/tailwindClassNameMap'
@@ -23,7 +24,7 @@ const RoundBox = ({
 }: DivProps & WithRoundBoxProps) => {
   const { className, children, ...rest } = props
 
-  const colorResult = color === 'mono' ? 'bg-white' : 'bg-red-500' // TODO: pull push 이후에는 convertToBgColor 만들어야
+  const colorResult = makeBgResult(color, className) // TODO: pull push 이후에는 convertToBgColor 만들어야
   const shadowResult = isShadowed ? 'dropdown-shadow-md' : ''
   const borderResult = convertToBorder(color, isBordered)
   const paddingResult = paddingMap[padding] ?? ''

@@ -24,7 +24,7 @@ const ThepottTestPage = () => {
   return (
     <Vstack className="w-2xl bg-rose-200">
       <ArrowBigDown />
-      <Select>
+      <Select className="w-[200px]">
         <Select.Trigger>나를 눌러요</Select.Trigger>
         <Select.Content>
           <Select.Option>apple</Select.Option>
