@@ -1,4 +1,3 @@
-// 큰 박스
 ;<div className="outBox">
   <div aria-label="이미지" className="imgBox"></div>
 
