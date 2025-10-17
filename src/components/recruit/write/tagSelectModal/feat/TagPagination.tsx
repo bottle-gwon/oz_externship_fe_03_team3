@@ -45,7 +45,7 @@ const TagPagination = ({
     <div className="flex justify-center space-x-2">
       {/* 이전 버튼 */}
       <button
-        className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] active:bg-[#a16207] disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
+        className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
@@ -56,7 +56,7 @@ const TagPagination = ({
       {pageNumbers.map((number) => (
         <button
           key={number}
-          className={`size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-0 hover:bg-[#ca8a04] active:bg-[#a16207] ${currentPage === number ? 'bg-[#eab308]' : 'bg-white'} `}
+          className={`size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-0 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white ${currentPage === number ? 'bg-[#eab308] text-white' : 'bg-white'} `}
           onClick={() => onPageChange(number)}
         >
           <span className="size-4">{number}</span>
@@ -65,7 +65,7 @@ const TagPagination = ({
 
       {/* 다음 버튼 */}
       <button
-        className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] active:bg-[#a16207] disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
+        className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
         disabled={currentPage === totalPage}
         onClick={() => onPageChange(currentPage + 1)}
       >

@@ -57,10 +57,10 @@ const TagList = ({ tags, page, page_size, total_count }: TagApiResponse) => {
       {/* <TagCard name="초보자 환영" isChecked /> */}
 
       <TagPagination
-        currentPage={page}
-        totalPage={total_count / 5}
-        // currentPage={current}  //페이지 네이션 테스트
-        // totalPage={15}
+        // currentPage={page}
+        // totalPage={total_count / 5}
+        currentPage={current} //페이지 네이션 테스트
+        totalPage={15}
         onPageChange={handlePageChange}
       />
     </div>
