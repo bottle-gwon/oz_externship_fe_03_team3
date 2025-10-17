@@ -11,7 +11,7 @@ const Hstack = ({ gap = 'md', ...props }: DivProps & WithHstackProps) => {
   const gapResult = gapMap[gap] ?? ''
 
   return (
-    <div {...rest} className={`${className} ${gapResult} flex gap-3`}>
+    <div {...rest} className={`${className} ${gapResult} flex`}>
       {children}
     </div>
   )

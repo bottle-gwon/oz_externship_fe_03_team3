@@ -1,6 +1,7 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { TagPaginationInterface } from './TagList'
 import { useMemo } from 'react'
+import { Hstack } from '@/components/commonInGeneral/layout'
 
 const TagPagination = ({
   currentPage, // 현재 페이지
@@ -42,7 +43,7 @@ const TagPagination = ({
   }, [totalPage, currentPage, maxPage])
 
   return (
-    <div className="flex justify-center space-x-2">
+    <Hstack gap="sm" className="items-center justify-center">
       {/* 이전 버튼 */}
       <button
         className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
@@ -71,7 +72,7 @@ const TagPagination = ({
       >
         <ChevronRight className="size-4" />
       </button>
-    </div>
+    </Hstack>
   )
 }
 
