@@ -3,11 +3,7 @@ import Vstack from '../../commonInGeneral/layout/_Vstack'
 import Hstack from '../../commonInGeneral/layout/_Hstack'
 import RecommendPreviewCard from './RecommendPreviwCard'
 import UserStar from '../../../assets/user-star.svg'
-
-export type RecommendType = 'recruit' | 'course'
-export interface EmptyStateProps {
-  type: RecommendType
-}
+import type { PageProps } from '@/types'
 
 const emptyStateContent = {
   recruit: {
@@ -22,13 +18,13 @@ const emptyStateContent = {
   },
 }
 
-const RecommendGuest = ({ type }: EmptyStateProps) => {
+const RecommendGuest = ({ type }: PageProps) => {
   const content = emptyStateContent[type]
 
   return (
     <Vstack
       gap="none"
-      className="h-[522px] w-[1216px] items-center justify-center rounded-2xl border border-[#FEF08A] bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)] p-8"
+      className="h-[522px] w-[1216px] items-center justify-center rounded-xl border border-[#FEF08A] bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)] p-8"
     >
       <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-[50%] bg-[#FEF9C3]">
         <img src={UserStar} className="h-6 w-6" />
