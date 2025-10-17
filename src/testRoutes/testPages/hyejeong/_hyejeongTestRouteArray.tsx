@@ -1,4 +1,4 @@
-import { RecommendSection } from '../../../components/recruit/RecommendSection'
+import { RecommendSection } from '../../../components/recruit/recommendSection/RecommendSection'
 
 const hyejeongTestRouteArray = [
   { path: '/test/hyejeong', element: <RecommendSection /> },
