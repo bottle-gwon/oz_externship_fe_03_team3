@@ -1,5 +1,5 @@
 import thepottTestRouteArray from './_thepotTestRouteArray'
-import hyejeongTestRouteArray from './testPages/hyejeong/_HyejeongTestRouteArray'
+import hyejeongTestRouteArray from './testPages/hyejeong/_hyejeongTestRouteArray'
 
 const testRouteArray = [...thepottTestRouteArray, ...hyejeongTestRouteArray]
 

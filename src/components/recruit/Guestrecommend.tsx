@@ -1,5 +1,5 @@
 import { LogIn, UserPlus } from 'lucide-react'
-import { EmptyStatePreviewCard } from './EmptyStatePreviwCard'
+import { EmptyStatePreviewCard } from './RecommendPreviwCard'
 
 export type RecommendType = 'recruit' | 'course'
 export interface EmptyStateProps {
