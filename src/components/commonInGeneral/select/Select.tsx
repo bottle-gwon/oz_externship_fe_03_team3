@@ -7,11 +7,11 @@ import SelectContent from './_SelectContent'
 import SelectOption from './_SelectOption'
 
 interface WithSelectProps {
-  onOptionChange: (selectedOption: string) => void
+  onOptionSelect: (option: string) => void
 }
 
 const Select = ({
-  onOptionChange,
+  onOptionSelect,
   className,
   children,
   ...props
@@ -24,7 +24,7 @@ const Select = ({
   return (
     <SelectContext
       value={{
-        onOptionChange,
+        onOptionSelect,
         isOpened,
         setIsOpened,
         selectedOption,

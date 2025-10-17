@@ -11,7 +11,7 @@ const SelectOption = ({
   children: string
 }) => {
   const [isMouseEntered, setIsMouseEntered] = useState<boolean>(false)
-  const { onOptionChange, setIsOpened, setSelectedOption, setSelectedIcon } =
+  const { onOptionSelect, setIsOpened, setSelectedOption, setSelectedIcon } =
     useSelectContext()
   const handleClick = () => {
     setSelectedIcon(icon ?? null)
@@ -19,7 +19,7 @@ const SelectOption = ({
     setIsOpened(false)
     setSelectedOption(children)
 
-    onOptionChange(children)
+    onOptionSelect(children)
   }
 
   // TODO: 나중에 p 태그는 Text로 교체

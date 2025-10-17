@@ -1,7 +1,7 @@
 import { createContext, type JSX } from 'react'
 
 interface SelectContextProps {
-  onOptionChange: (selectedOption: string) => void
+  onOptionSelect: (option: string) => void
   isOpened: boolean
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
   selectedOption: string | null
