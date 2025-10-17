@@ -1,8 +1,0 @@
-.text {
-  color: var(--color, inherit);
-  font-weight: var(--font-weight, inherit);
-  font-size: var(--font-size, inherit);
-  word-break: keep-all;
-  text-indent: -1em;
-  padding-left: 1em;
-}

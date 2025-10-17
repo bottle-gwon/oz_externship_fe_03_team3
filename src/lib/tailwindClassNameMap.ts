@@ -1,3 +1,5 @@
+import type { Color } from '../types'
+
 export const gapMap = {
   none: '',
   xs: 'gap-1',
@@ -35,7 +37,6 @@ export const paddingBottomMap = {
   xl: 'pb-6',
   xxl: 'pb-8',
 }
-
 export const widthMap = {
   sm: 'w-2xl', // 672px 좁은 모달
   md: 'w-4xl', // 896px 넓은 모달 | 공고 세부 페이지
@@ -62,4 +63,10 @@ export const makeBgResult = (color: string, className?: string) => {
 
   const colorResult = color === 'mono' ? 'bg-white' : 'bg-red-500'
   return colorResult
+}
+export const convertToTextColor = (color: Color, isMuted: boolean) => {
+  switch (color) {
+    case 'mono':
+      return isMuted ? 'text-gray-600' : 'text-gray-900'
+  }
 }

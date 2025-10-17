@@ -8,6 +8,7 @@ import FlexOneContainer from '../../../components/commonInGeneral/layout/_FlexOn
 import FullScreen from '../../../components/commonInGeneral/layout/_FullScreen'
 import Select from '@/components/commonInGeneral/select/Select'
 import { ArrowBigDown } from 'lucide-react'
+import Text from '../../../components/commonInGeneral/text/Text'
 
 const Box = () => {
   return <div className="h-[100px] w-[100px] bg-amber-300">뭔가 있음</div>
@@ -39,7 +40,7 @@ const ThepottTestPage = () => {
       <FullScreen className="bg-sky-300" />
       <RoundBox className="h-[500px] w-[1500px] bg-amber-700 p-3">
         <Container isPadded className="bg-amber-300">
-          asdfasdf
+          <Text>이건 아주 멋진 거야</Text>
         </Container>
       </RoundBox>
 
