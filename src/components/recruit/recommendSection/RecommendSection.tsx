@@ -1,7 +1,7 @@
-import { EmptyState } from './Guestrecommend'
+import { GuestRecommend } from './Guestrecommend'
 
 export const RecommendSection = () => {
-  const isLoggedIn: boolean = false
+  const isLoggedIn: boolean = false // 로그인 확인 boolean값, 추후에 변경
 
-  return <div>{isLoggedIn ? <></> : <EmptyState type={'recruit'} />}</div>
+  return <div>{isLoggedIn ? <></> : <GuestRecommend type={'recruit'} />}</div>
 }

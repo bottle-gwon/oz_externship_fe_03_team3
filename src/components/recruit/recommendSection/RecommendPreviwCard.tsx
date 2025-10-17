@@ -1,8 +1,10 @@
-export const EmptyStatePreviewCard = () => {
+import CircleStar from '../../../assets/circle-star.svg'
+
+export const RecommendPreviewCard = () => {
   return (
     <div className="relative h-[142px] w-[372px] gap-2 rounded-lg border border-[#E5E7EB] bg-white p-4">
       <div className="absolute -top-1 -right-1">
-        <img src="/circle-star.svg" />
+        <img src={CircleStar} />
       </div>
 
       <div className="mb-3 flex">

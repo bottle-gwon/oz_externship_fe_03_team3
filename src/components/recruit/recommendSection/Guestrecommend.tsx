@@ -1,5 +1,6 @@
 import { LogIn, UserPlus } from 'lucide-react'
-import { EmptyStatePreviewCard } from './RecommendPreviwCard'
+import { RecommendPreviewCard } from './RecommendPreviwCard'
+import UserStar from '../../../assets/user-star.svg'
 
 export type RecommendType = 'recruit' | 'course'
 export interface EmptyStateProps {
@@ -19,13 +20,13 @@ const emptyStateContent = {
   },
 }
 
-export const EmptyState = ({ type }: EmptyStateProps) => {
+export const GuestRecommend = ({ type }: EmptyStateProps) => {
   const content = emptyStateContent[type]
 
   return (
     <div className="flex h-[522px] w-[1216px] flex-col items-center justify-center rounded-2xl border border-[#FEF08A] bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)] p-8">
       <div className="center mb-4 flex h-16 w-16 items-center justify-center rounded-[50%] bg-[#FEF9C3]">
-        <img src="/user-star.svg" className="h-6 w-6" />
+        <img src={UserStar} className="h-6 w-6" />
       </div>
       <h3 className="mb-3 text-2xl leading-8 font-semibold text-[#111827]">
         {content.title}
@@ -49,7 +50,7 @@ export const EmptyState = ({ type }: EmptyStateProps) => {
         </p>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {[1, 2, 3].map((i) => (
-            <EmptyStatePreviewCard key={i} />
+            <RecommendPreviewCard key={i} />
           ))}
         </div>
       </div>
