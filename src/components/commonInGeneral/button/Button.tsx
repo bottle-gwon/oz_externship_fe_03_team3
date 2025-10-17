@@ -12,21 +12,27 @@ interface WithButtonProps {
 }
 
 const makeBgResult = (color: Color, variant: ButtonVariant) => {
-  if (variant !== 'contained') {
-    return ''
-  }
-
   switch (color) {
     case 'mono':
-      return 'bg-gray-100 hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-100'
-    case 'danger':
-      return 'bg-danger-500 hover:bg-danger-600 active:bg-danger-800 disabled:bg-danger-100'
+      return variant === 'contained'
+        ? 'bg-gray-100 hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-100'
+        : 'hover:bg-gray-50 active:bg-gray-100'
     case 'primary':
-      return 'bg-primary-500 hover:bg-primary-600 active:bg-primary-800 disabled:bg-primary-100'
+      return variant === 'contained'
+        ? 'bg-primary-500 hover:bg-primary-600 active:bg-primary-800 disabled:bg-primary-100'
+        : 'hover:bg-primary-50 active:bg-primary-100'
+    case 'danger':
+      return variant === 'contained'
+        ? 'bg-danger-500 hover:bg-danger-600 active:bg-danger-800 disabled:bg-danger-100'
+        : ''
     case 'success':
-      return 'bg-success-500 hover:bg-success-600 active:bg-success-800 disabled:bg-success-100'
+      return variant === 'contained'
+        ? 'bg-success-500 hover:bg-success-600 active:bg-success-800 disabled:bg-success-100'
+        : ''
     case 'blue':
-      return 'bg-blue-500 hover:bg-blue-600 active:bg-blue-800 disabled:bg-blue-100'
+      return variant === 'contained'
+        ? 'bg-blue-500 hover:bg-blue-600 active:bg-blue-800 disabled:bg-blue-100'
+        : ''
   }
 }
 
@@ -48,9 +54,9 @@ const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
 
   switch (color) {
     case 'mono':
-      return 'text-gray-700'
+      return 'text-gray-700 hover:text-gray-800 active:text-gray-800'
     case 'primary':
-      return 'text-primary-600'
+      return 'text-primary-600 hover:text-primary-700 active:text-primary-800'
     case 'danger':
       return 'text-danger-600'
     case 'success':
@@ -71,6 +77,7 @@ const makeOutlineResult = (color: Color, variant: ButtonVariant) => {
     case 'primary':
       return 'outline outline-primary-500 hover:outline-primary-600 active:outline-primary-700'
     default:
+      // mono, primary 외에는 outlined를 지원하지 않습니다
       return ''
   }
 }
@@ -88,7 +95,7 @@ const Button = ({
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
-  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult}`
+  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} transition`
 
   return (
     <button

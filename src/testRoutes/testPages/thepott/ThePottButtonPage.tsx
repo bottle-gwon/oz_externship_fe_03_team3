@@ -1,45 +1,54 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
+import Container from '@/components/commonInGeneral/layout/_Container'
+import FullScreen from '@/components/commonInGeneral/layout/_FullScreen'
+import Text from '@/components/commonInGeneral/text/Text'
 
-const ThePottButtonPage = () => {
+const colorArray = ['mono', 'primary', 'danger', 'success', 'blue'] as const
+type Color = (typeof colorArray)[number]
+const variantArray = ['contained', 'outlined', 'ghost'] as const
+type ButtonVariant = (typeof variantArray)[number]
+const statusArray = ['enabled', 'disabled', 'pending'] as const
+type ButtonStatus = (typeof statusArray)[number]
+
+const ButtonInStatusGroup = ({
+  color,
+  variant,
+}: {
+  color: Color
+  variant: ButtonVariant
+}) => {
   return (
     <Vstack>
-      <Hstack gap="xxl" className="p-12">
-        <Button color="mono" variant="contained">
-          Mono
+      {statusArray.map((status) => (
+        <Button key={status} color={color} variant={variant} status={status}>
+          {variant}__{status}
         </Button>
-        <Button color="danger" variant="contained">
-          Danger
-        </Button>
-        <Button color="primary" variant="contained">
-          Primary
-        </Button>
-        <Button color="success" variant="contained">
-          Success
-        </Button>
-        <Button color="blue" variant="contained">
-          Blue
-        </Button>
-      </Hstack>
-
-      <Hstack gap="xxl" className="p-12">
-        <Button color="mono" variant="outlined">
-          Mono
-        </Button>
-        <Button color="danger" variant="outlined">
-          Danger
-        </Button>
-        <Button color="primary" variant="outlined">
-          Primary
-        </Button>
-        <Button color="success" variant="outlined">
-          Success
-        </Button>
-        <Button color="blue" variant="outlined">
-          Blue
-        </Button>
-      </Hstack>
+      ))}
     </Vstack>
+  )
+}
+const ButtonInColorArray = ({ variant }: { variant: ButtonVariant }) => {
+  return (
+    <Hstack gap="xxl">
+      {colorArray.map((color) => (
+        <ButtonInStatusGroup key={color} color={color} variant={variant} />
+      ))}
+      <Text>{variant}</Text>
+    </Hstack>
+  )
+}
+const ThePottButtonPage = () => {
+  return (
+    <FullScreen>
+      <Container isPadded>
+        <Vstack>
+          {variantArray.map((variant) => (
+            <ButtonInColorArray key={variant} variant={variant} />
+          ))}
+        </Vstack>
+      </Container>
+    </FullScreen>
   )
 }
 
