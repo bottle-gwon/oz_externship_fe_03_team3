@@ -1,6 +1,6 @@
 import CircleStar from '../../../assets/circle-star.svg'
 
-export const RecommendPreviewCard = () => {
+const RecommendPreviewCard = () => {
   return (
     <div className="relative h-[142px] w-[372px] gap-2 rounded-lg border border-[#E5E7EB] bg-white p-4">
       <div className="absolute -top-1 -right-1">
@@ -25,3 +25,5 @@ export const RecommendPreviewCard = () => {
     </div>
   )
 }
+
+export default RecommendPreviewCard
