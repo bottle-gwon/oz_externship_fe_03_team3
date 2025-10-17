@@ -8,13 +8,16 @@ import {
 } from 'react'
 import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
-import { ArrowBigDown, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
+import type { DivProps } from '@/types'
 
 interface SelectContextProps {
   isOpened: boolean
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
-  selectedItem: string | null
-  setSelectedItem: React.Dispatch<React.SetStateAction<string | null>>
+  selectedOption: string | null
+  setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>
+  selectedIcon: JSX.Element | null
+  setSelectedIcon: React.Dispatch<React.SetStateAction<JSX.Element | null>>
   triggerRef: React.RefObject<HTMLDivElement | null>
 }
 
@@ -29,16 +32,23 @@ const useSelectContext = () => {
 }
 
 const SelectTrigger = ({ children }: { children: string }) => {
-  const { setIsOpened, selectedItem, triggerRef } = useSelectContext()
+  const { setIsOpened, selectedOption, selectedIcon, triggerRef } =
+    useSelectContext()
   const handleClick = () => {
     setIsOpened((prev) => !prev)
   }
 
-  const label = selectedItem ?? children
+  const label = selectedOption ?? children
+
   return (
     <RoundBox ref={triggerRef} onClick={handleClick}>
       <Hstack>
-        <Hstack className="grow">{label}</Hstack>
+        {selectedIcon ?? selectedIcon}
+        <p
+          className={`grow ${selectedOption ? 'text-gray-900' : 'text-gray-500'}`}
+        >
+          {label}
+        </p>
         <ChevronDown />
       </Hstack>
     </RoundBox>
@@ -52,10 +62,12 @@ const SelectOption = ({
   icon?: JSX.Element
   children: string
 }) => {
-  const { setIsOpened, setSelectedItem } = useSelectContext()
+  const { setIsOpened, setSelectedOption, setSelectedIcon } = useSelectContext()
   const handleClick = () => {
+    setSelectedIcon(icon ?? null)
+
     setIsOpened(false)
-    setSelectedItem(children)
+    setSelectedOption(children)
   }
 
   // TODO: 나중에 p 태그는 Text로 교체
@@ -91,9 +103,10 @@ const SelectContent = ({ children }: { children: ReactNode }) => {
   )
 }
 
-const Select = ({ children }: { children: ReactNode }) => {
+const Select = ({ className, children, ...props }: DivProps) => {
   const [isOpened, setIsOpened] = useState<boolean>(false)
-  const [selectedItem, setSelectedItem] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [selectedIcon, setSelectedIcon] = useState<JSX.Element | null>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -101,12 +114,14 @@ const Select = ({ children }: { children: ReactNode }) => {
       value={{
         isOpened,
         setIsOpened,
-        selectedItem,
-        setSelectedItem,
+        selectedOption,
+        setSelectedOption,
+        selectedIcon,
+        setSelectedIcon,
         triggerRef,
       }}
     >
-      <Vstack gap="xs" className="relative gap-0">
+      <Vstack {...props} gap="xs" className={`${className} relative gap-0`}>
         {children}
       </Vstack>
     </SelectContext>
