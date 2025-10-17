@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import TagList from '../../../components/recruit/write/tagSelectModal/feat/TagList'
 
 const EXAMPLE_DATA = {
@@ -14,13 +15,33 @@ const EXAMPLE_DATA = {
 }
 
 const GwonTestPage = () => {
+  // 임시 데이터
+  const [current, setCurrent] = useState(1)
+  const [testSelectArray, setTestSelectArray] = useState(['AI', '밥']) //selectArray 대신 넣었습니다.
+
+  // 임시 페이지 변경 함수
+  const handlePageChange = (newPage: number) => {
+    setCurrent(newPage)
+  }
+  // 임시 변경 함수
+  const onClickTag = (newName: string) => {
+    if (testSelectArray.includes(newName)) {
+      setTestSelectArray((prev) => prev.filter((el) => el !== newName))
+    } else {
+      setTestSelectArray((prev) => [...prev, newName])
+    }
+  }
   return (
     <div className="mt-10">
       <TagList
         tags={EXAMPLE_DATA.tags}
-        page={EXAMPLE_DATA.page}
+        // page={EXAMPLE_DATA.page}
+        page={current} // 페이지 네이션 테스트
         page_size={EXAMPLE_DATA.page_size}
         total_count={EXAMPLE_DATA.total_count}
+        onPageChange={handlePageChange}
+        onSelectTag={onClickTag}
+        selectArray={testSelectArray}
       />
     </div>
   )

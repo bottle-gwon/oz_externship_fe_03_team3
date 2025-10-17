@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import TagCard from './TagCard'
 import TagPagination from './TagPagination'
 import type { TagApiResponse } from '../../../../../types'
@@ -22,24 +21,17 @@ interface TagListInterface extends TagApiResponse {
   selectArray: string[]
 }
 
-const TagList = ({ tags, page, page_size, total_count }: TagApiResponse) => {
-  // 임시 페이지 데이터 추후 API 설정시 다시 작성
-  const [current, setCurrent] = useState(1)
-  const [testSelectArray, setTestSelectArray] = useState(['AI', '밥']) //selectArray 대신 넣었습니다.
+const TagList = ({
+  tags,
+  page,
+  page_size,
+  total_count,
+  onPageChange,
+  onSelectTag,
+  selectArray,
+}: TagListInterface) => {
   if (!tags || !page || !page_size || !total_count) {
     return
-  }
-  // 임시 페이지 변경 함수
-  const handlePageChange = (newPage: number) => {
-    setCurrent(newPage)
-  }
-
-  const onClickTag = (newName: string) => {
-    if (testSelectArray.includes(newName)) {
-      setTestSelectArray((prev) => prev.filter((el) => el !== newName))
-    } else {
-      setTestSelectArray((prev) => [...prev, newName])
-    }
   }
 
   return (
@@ -49,19 +41,19 @@ const TagList = ({ tags, page, page_size, total_count }: TagApiResponse) => {
           <TagCard
             key={el.id + el.name}
             name={el.name}
-            isChecked={testSelectArray.includes(el.name)}
-            onClickTag={onClickTag}
+            isChecked={selectArray.includes(el.name)}
+            onClickTag={onSelectTag}
           />
         ))}
       </div>
       {/* <TagCard name="초보자 환영" isChecked /> */}
 
       <TagPagination
-        // currentPage={page}
-        // totalPage={total_count / 5}
-        currentPage={current} //페이지 네이션 테스트
-        totalPage={15}
-        onPageChange={handlePageChange}
+        currentPage={page}
+        totalPage={total_count / 5}
+        // currentPage={page} //페이지 네이션 테스트
+        // totalPage={15}
+        onPageChange={onPageChange}
       />
     </div>
   )
