@@ -20,7 +20,7 @@ const TagCard = ({ name, isChecked, onClickTag }: TagCard) => {
         <span>{name}</span>
 
         {/* 체크 박스 디자인에 맞게 커스텀 */}
-        <label htmlFor="tag-check">
+        <label htmlFor="tag-check" className="pointer-events-none">
           <input
             type="checkbox"
             id="tag-check"
