@@ -15,12 +15,12 @@ const makeBgResult = (color: Color, variant: ButtonVariant) => {
   switch (color) {
     case 'mono':
       return variant === 'contained'
-        ? 'bg-gray-100 hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-100'
-        : 'hover:bg-gray-50 active:bg-gray-100'
+        ? 'bg-gray-100 hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-50'
+        : 'hover:bg-gray-50 active:bg-gray-100 disabled:bg-transparent'
     case 'primary':
       return variant === 'contained'
         ? 'bg-primary-500 hover:bg-primary-600 active:bg-primary-800 disabled:bg-primary-100'
-        : 'hover:bg-primary-50 active:bg-primary-100'
+        : 'hover:bg-primary-50 active:bg-primary-100 disabled:bg-transparent'
     case 'danger':
       return variant === 'contained'
         ? 'bg-danger-500 hover:bg-danger-600 active:bg-danger-800 disabled:bg-danger-100'
@@ -54,9 +54,9 @@ const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
 
   switch (color) {
     case 'mono':
-      return 'text-gray-700 hover:text-gray-800 active:text-gray-800'
+      return 'text-gray-700 hover:text-gray-800 active:text-gray-900 disabled:text-gray-300'
     case 'primary':
-      return 'text-primary-600 hover:text-primary-700 active:text-primary-800'
+      return 'text-primary-600 hover:text-primary-700 active:text-primary-800 disabled:text-primary-200'
     case 'danger':
       return 'text-danger-600'
     case 'success':
