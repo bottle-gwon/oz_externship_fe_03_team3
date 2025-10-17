@@ -2,7 +2,7 @@ import TagList from '../../../components/recruit/write/tagSelectModal/feat/TagLi
 
 const GwonTestPage = () => {
   return (
-    <div>
+    <div className="mt-10">
       <TagList />
     </div>
   )

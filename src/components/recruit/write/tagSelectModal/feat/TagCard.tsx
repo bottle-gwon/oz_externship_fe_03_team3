@@ -1,5 +1,32 @@
-const TagCard = () => {
-  return <div>카드</div>
+import { Check } from 'lucide-react'
+
+interface TagCard {
+  name: string
+  isChecked: boolean
+  // onClickTag: (checked: boolean)=> void
+}
+
+const TagCard = ({ name, isChecked }: TagCard) => {
+  return (
+    <div className="h-[50px] w-[614px] rounded-sm border border-gray-200">
+      <div className="flex h-full items-center justify-between px-[13px]">
+        <span>{name}</span>
+
+        {/* 체크 박스 디자인에 맞게 커스텀 */}
+        <label htmlFor="tag-check">
+          <input
+            type="checkbox"
+            id="tag-check"
+            className="peer hidden appearance-none"
+            checked={isChecked}
+          />
+          <div className="flex h-[20px] w-[20px] items-center justify-center rounded-sm border-2 border-gray-300 text-transparent peer-checked:border-transparent peer-checked:bg-[#eab308] peer-checked:text-white">
+            <Check className="size-3.5" />
+          </div>
+        </label>
+      </div>
+    </div>
+  )
 }
 
 export default TagCard

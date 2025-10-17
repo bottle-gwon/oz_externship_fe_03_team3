@@ -20,8 +20,8 @@ const TagList = () => {
   }
 
   return (
-    <div>
-      <TagCard />
+    <div className="flex flex-col items-center justify-center gap-[24px]">
+      <TagCard name="초보자 환영" isChecked />
       <TagPagination
         currentPage={current}
         totalPage={15}
