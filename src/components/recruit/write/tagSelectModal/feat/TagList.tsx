@@ -1,3 +1,4 @@
+import { Vstack } from '@/components/commonInGeneral/layout'
 import TagCard from './TagCard'
 import TagPagination from './TagPagination'
 import type { TagApiResponse } from '@/types'
@@ -35,8 +36,8 @@ const TagList = ({
   }
 
   return (
-    <div className="flex flex-col items-center justify-center gap-[24px]">
-      <div className="flex flex-col gap-[8px]">
+    <Vstack gap="xl" className="items-center justify-center">
+      <Vstack gap="sm" className="items-center justify-center">
         {tags?.map((el) => (
           <TagCard
             key={el.id + el.name}
@@ -45,7 +46,7 @@ const TagList = ({
             onClickTag={onSelectTag}
           />
         ))}
-      </div>
+      </Vstack>
       {/* <TagCard name="초보자 환영" isChecked /> */}
 
       <TagPagination
@@ -55,7 +56,7 @@ const TagList = ({
         // totalPage={15}
         onPageChange={onPageChange}
       />
-    </div>
+    </Vstack>
   )
 }
 
