@@ -1,116 +1,21 @@
-import {
-  createContext,
-  useContext,
-  useRef,
-  useState,
-  type JSX,
-  type ReactNode,
-} from 'react'
-import { Hstack, Vstack } from '../layout'
-import RoundBox from '../roundBox/RoundBox'
-import { ChevronDown } from 'lucide-react'
+import { useRef, useState, type JSX } from 'react'
+import { Vstack } from '../layout'
 import type { DivProps } from '@/types'
+import SelectContext from './_SelectContext'
+import SelectTrigger from './_SelectTrigger'
+import SelectContent from './_SelectContent'
+import SelectOption from './_SelectOption'
 
-interface SelectContextProps {
-  isOpened: boolean
-  setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
-  selectedOption: string | null
-  setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>
-  selectedIcon: JSX.Element | null
-  setSelectedIcon: React.Dispatch<React.SetStateAction<JSX.Element | null>>
-  triggerRef: React.RefObject<HTMLDivElement | null>
+interface WithSelectProps {
+  onOptionChange: (selectedOption: string) => void
 }
 
-const SelectContext = createContext<SelectContextProps | null>(null)
-
-const useSelectContext = () => {
-  const context = useContext(SelectContext)
-  if (!context) {
-    throw Error('---- 콘텍스트가 없어요!')
-  }
-  return context
-}
-
-const SelectTrigger = ({ children }: { children: string }) => {
-  const { setIsOpened, selectedOption, selectedIcon, triggerRef } =
-    useSelectContext()
-  const handleClick = () => {
-    setIsOpened((prev) => !prev)
-  }
-
-  const label = selectedOption ?? children
-
-  return (
-    <RoundBox ref={triggerRef} onClick={handleClick}>
-      <Hstack>
-        {selectedIcon ?? selectedIcon}
-        <p
-          className={`grow ${selectedOption ? 'text-gray-900' : 'text-gray-500'}`}
-        >
-          {label}
-        </p>
-        <ChevronDown />
-      </Hstack>
-    </RoundBox>
-  )
-}
-
-const SelectOption = ({
-  icon,
+const Select = ({
+  onOptionChange,
+  className,
   children,
-}: {
-  icon?: JSX.Element
-  children: string
-}) => {
-  const [isMouseEntered, setIsMouseEntered] = useState<boolean>(false)
-  const { setIsOpened, setSelectedOption, setSelectedIcon } = useSelectContext()
-  const handleClick = () => {
-    setSelectedIcon(icon ?? null)
-
-    setIsOpened(false)
-    setSelectedOption(children)
-  }
-
-  // TODO: 나중에 p 태그는 Text로 교체
-  return (
-    <RoundBox
-      isBordered={false}
-      onClick={handleClick}
-      onMouseEnter={() => setIsMouseEntered(true)}
-      onMouseLeave={() => setIsMouseEntered(false)}
-      className={isMouseEntered ? 'bg-gray-100' : ''}
-    >
-      <Hstack>
-        {icon && icon}
-        <p>{children}</p>
-      </Hstack>
-    </RoundBox>
-  )
-}
-
-const SelectContent = ({ children }: { children: ReactNode }) => {
-  const { isOpened, triggerRef } = useSelectContext()
-
-  if (!isOpened) {
-    return null
-  }
-
-  if (!triggerRef.current) {
-    return null
-  }
-
-  return (
-    <RoundBox
-      style={{ top: triggerRef.current.offsetHeight + 4 }}
-      padding="xs"
-      className="absolute w-full"
-    >
-      <Vstack gap="none">{children}</Vstack>
-    </RoundBox>
-  )
-}
-
-const Select = ({ className, children, ...props }: DivProps) => {
+  ...props
+}: DivProps & WithSelectProps) => {
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [selectedIcon, setSelectedIcon] = useState<JSX.Element | null>(null)
@@ -119,6 +24,7 @@ const Select = ({ className, children, ...props }: DivProps) => {
   return (
     <SelectContext
       value={{
+        onOptionChange,
         isOpened,
         setIsOpened,
         selectedOption,
