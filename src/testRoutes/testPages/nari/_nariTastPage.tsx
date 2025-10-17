@@ -1,9 +1,11 @@
-import RecruitCard from '@/components/recruit/RecruitCard' // 절대경로 없으면 상대경로로
+import RecruitCard from '@/components/recruit/RecruitCard'
 
-export default function NariTastPage() {
+const NariTastPage = () => {
   return (
-    <div className="p-6">
+    <div>
       <RecruitCard />
     </div>
   )
 }
+
+export default NariTastPage

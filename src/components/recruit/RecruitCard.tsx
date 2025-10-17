@@ -17,7 +17,7 @@ export interface RecruitCardProps {
   imageClassName?: string
 }
 
-export default function TestRecruitCard({
+const RecruitCard = ({
   title = '제목',
   expectedPersonnel = 5,
   due_date = '2025.10.25.',
@@ -30,7 +30,7 @@ export default function TestRecruitCard({
   footerRight,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
-}: RecruitCardProps) {
+}: RecruitCardProps) => {
   return (
     <RoundBox
       color="mono"
@@ -46,8 +46,8 @@ export default function TestRecruitCard({
           padding="none"
           radius="lg"
           className={`imgBox ${imageClassName} flex-none overflow-hidden bg-gray-200`}
+          aria-label="공고 이미지"
         ></RoundBox>
-        {/* 추후 api 재확인 현재 확인한 바로는 이미지 api 없음 */}
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -94,6 +94,7 @@ export default function TestRecruitCard({
                 className="inline-flex items-center gap-1"
               >
                 <Calendar className="size-4" />
+                {/* 추후 svg 아이콘으로 추가 */}
                 마감일 : {due_date ?? ''}
               </span>
               {dateTagRight}
@@ -112,7 +113,7 @@ export default function TestRecruitCard({
                   className="description text-sm text-gray-600"
                 >
                   {text}
-                  {/* 추후 확정 api 확인하여 강사명도 추가여부 고민 현재 api 확인한 바로는 RECM-003 강의목록, 강사명 없음*/}
+                  {/* 추후 확정 api 확인하여 강사명도 어떻게 추가할지 고민 현재 api확인 바로는 RECM-003강의목록, 강사명 없음*/}
                 </li>
               ))}
             </ul>
@@ -138,3 +139,5 @@ export default function TestRecruitCard({
     </RoundBox>
   )
 }
+
+export default RecruitCard
