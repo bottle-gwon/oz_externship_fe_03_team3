@@ -3,13 +3,16 @@ import { Check } from 'lucide-react'
 interface TagCard {
   name: string
   isChecked: boolean
-  // onClickTag: (checked: boolean)=> void
+  onClickTag: (newname: string) => void
 }
 
-const TagCard = ({ name, isChecked }: TagCard) => {
+const TagCard = ({ name, isChecked, onClickTag }: TagCard) => {
   return (
     <div
       className={`h-[50px] w-[614px] rounded-sm border border-gray-200 ${isChecked && 'border-[#eab308] bg-[#fefce8]'}`}
+      onClick={() => {
+        onClickTag(name)
+      }}
     >
       <div
         className={`flex h-full items-center justify-between px-[13px] ${isChecked && 'text-[#854d0e]'}`}
