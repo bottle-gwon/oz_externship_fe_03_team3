@@ -20,7 +20,7 @@ const emptyStateContent = {
   },
 }
 
-export const GuestRecommend = ({ type }: EmptyStateProps) => {
+export const RecommendGuest = ({ type }: EmptyStateProps) => {
   const content = emptyStateContent[type]
 
   return (
