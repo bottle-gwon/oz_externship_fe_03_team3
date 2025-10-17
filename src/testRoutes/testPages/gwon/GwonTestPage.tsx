@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import TagList from '../../../components/recruit/write/tagSelectModal/feat/TagList'
+import TagList from '@/components/recruit/write/tagSelectModal/feat/TagList'
 
 const EXAMPLE_DATA = {
   tags: [

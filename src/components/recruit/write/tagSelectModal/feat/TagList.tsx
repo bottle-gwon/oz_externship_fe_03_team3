@@ -1,6 +1,6 @@
 import TagCard from './TagCard'
 import TagPagination from './TagPagination'
-import type { TagApiResponse } from '../../../../../types'
+import type { TagApiResponse } from '@/types'
 
 // 페이지 네이션 타입
 type pageChange = (newPage: number) => void
