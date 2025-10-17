@@ -1,13 +1,25 @@
 import { Bookmark, Calendar, Eye, Users } from 'lucide-react'
+import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 
 export default function TestRecruitCard() {
   return (
-    <div className="outBox rounded-xl border border-gray-200 bg-white p-3">
+    <RoundBox
+      color="mono"
+      isShadowed={false}
+      isBordered
+      padding="xl"
+      radius="md"
+      className="outBox bg-white"
+    >
       <div className="flex gap-3">
-        <div
-          aria-label="이미지"
-          className="imgBox size-20 flex-none overflow-hidden rounded-lg bg-gray-200"
-        ></div>
+        <RoundBox
+          color="mono"
+          isShadowed={false}
+          isBordered
+          padding="xl"
+          radius="lg"
+          className="imgBox size-20 flex-none overflow-hidden bg-gray-200"
+        ></RoundBox>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -62,12 +74,19 @@ export default function TestRecruitCard() {
           </div>
 
           <div aria-label="태그" className="tags mt-2 flex flex-wrap gap-2">
-            <span className="rounded-full bg-gray-100 px-2 py-0.5 text-xs">
+            <RoundBox
+              color="mono"
+              isShadowed={false}
+              isBordered={false}
+              padding="xl"
+              radius="sm"
+              className="tags bg-yellow-100 text-xs"
+            >
               #AI
-            </span>
+            </RoundBox>
           </div>
         </div>
       </div>
-    </div>
+    </RoundBox>
   )
 }
