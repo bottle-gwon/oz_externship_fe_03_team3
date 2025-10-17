@@ -1,3 +1,4 @@
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import {
   GridContainer,
   Vstack,
@@ -5,6 +6,8 @@ import {
 import Container from '../../../components/commonInGeneral/layout/_Container'
 import FlexOneContainer from '../../../components/commonInGeneral/layout/_FlexOneContainer'
 import FullScreen from '../../../components/commonInGeneral/layout/_FullScreen'
+import Select from '@/components/commonInGeneral/select/Select'
+import { ArrowBigDown } from 'lucide-react'
 import Text from '../../../components/commonInGeneral/text/Text'
 
 const Box = () => {
@@ -21,12 +24,26 @@ const BlueLongBox = () => {
 const ThepottTestPage = () => {
   return (
     <Vstack className="w-2xl bg-rose-200">
+      <ArrowBigDown />
+      <Select
+        onOptionSelect={(option: string) => console.log({ option })}
+        className="w-[200px]"
+      >
+        <Select.Trigger>나를 눌러요</Select.Trigger>
+        <Select.Content>
+          <Select.Option>apple</Select.Option>
+          <Select.Option>banana</Select.Option>
+          <Select.Option icon={<ArrowBigDown />}>carrot</Select.Option>
+        </Select.Content>
+      </Select>
+
       <FullScreen className="bg-sky-300" />
-      <div className="h-[500px] w-[1500px] bg-amber-700 p-3">
+      <RoundBox className="h-[500px] w-[1500px] bg-amber-700 p-3">
         <Container isPadded className="bg-amber-300">
           <Text>이건 아주 멋진 거야</Text>
         </Container>
-      </div>
+      </RoundBox>
+
       <Box />
       <Box />
       <Box />

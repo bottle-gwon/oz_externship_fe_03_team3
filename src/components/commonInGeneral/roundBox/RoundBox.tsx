@@ -1,37 +1,41 @@
-// import type { DivProps, None, Style, XsToXl } from '../../packageInterfaces'
-// import styles from './RoundBox.module.css'
-//
-// interface WithRoundBoxProps {
-//   isShadowed?: boolean
-//   padding?: XsToXl | None
-// }
-//
-// const RoundBox = ({
-//   isShadowed = true,
-//   padding = 'md',
-//   ...props
-// }: DivProps & WithRoundBoxProps) => {
-//   const { style, className, children, ...rest } = props
-//
-//   const styleForVar: Style = {}
-//   styleForVar['--shadow'] = isShadowed ? 'var(--drop-shadow-md)' : 0
-//   styleForVar['--padding'] =
-//     padding === 'none' ? 0 : `var(--spacing-${padding})`
-//   // styleForVar["--padding"] = "var(--spacing-lg)"
-//   // styleForVar["--border"] = isShadowed ? "none" : "1px solid var(--color-dimdimdim)"
-//   styleForVar['--border-color-hover'] = isShadowed
-//     ? 'transparent'
-//     : 'var(--color-dimdim)'
-//
-//   return (
-//     <div
-//       {...rest}
-//       style={{ ...styleForVar, ...style }}
-//       className={`${className} ${styles.roundBox}`}
-//     >
-//       {children}
-//     </div>
-//   )
-// }
-//
-// export default RoundBox
+import {
+  convertToBorder,
+  makeBgResult,
+  paddingMap,
+  radiusMap,
+} from '@/lib/tailwindClassNameMap'
+import type { DivProps, None, XsToXxl } from '@/types'
+
+interface WithRoundBoxProps {
+  color?: 'mono' // TODO: pull push 이후에 Color로 교체해야
+  isShadowed?: boolean
+  isBordered?: boolean
+  padding?: XsToXxl | None
+  radius?: 'sm' | 'md' | 'lg' | 'full'
+}
+
+const RoundBox = ({
+  color = 'mono',
+  isBordered = true,
+  isShadowed,
+  padding = 'md',
+  radius = 'md',
+  ...props
+}: DivProps & WithRoundBoxProps) => {
+  const { className, children, ...rest } = props
+
+  const colorResult = makeBgResult(color, className) // TODO: pull push 이후에는 convertToBgColor 만들어야
+  const shadowResult = isShadowed ? 'dropdown-shadow-md' : ''
+  const borderResult = convertToBorder(color, isBordered)
+  const paddingResult = paddingMap[padding] ?? ''
+  const radiusResult = radiusMap[radius]
+  const result = `${colorResult} ${borderResult} ${shadowResult} ${paddingResult} ${radiusResult}`
+
+  return (
+    <div {...rest} className={`${className} ${result}`}>
+      {children}
+    </div>
+  )
+}
+
+export default RoundBox

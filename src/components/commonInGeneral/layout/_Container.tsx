@@ -8,6 +8,7 @@ interface WithContainerProps {
 
 const Container = ({
   width = 'lg',
+  isPadded,
   ...props
 }: DivProps & WithContainerProps) => {
   const { className, children, ...rest } = props
