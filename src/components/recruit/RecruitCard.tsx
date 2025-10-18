@@ -11,7 +11,7 @@ import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 
 type RecruitCardProps = {
   title?: string
-  expectedPersonnel?: number
+  expected_personnel?: number
   due_date?: string
   lectures?: string[]
   tags?: string[]
@@ -25,7 +25,7 @@ type RecruitCardProps = {
 
 const RecruitCard = ({
   title = '제목',
-  expectedPersonnel = 5,
+  expected_personnel = 5,
   due_date = '2025.10.25.',
   lectures = ['강의목록', '강의목록2'],
   tags = ['AI', '백앤드', '프론트앤드'],
@@ -103,7 +103,7 @@ const RecruitCard = ({
             >
               <Users className="size-4" />
               {/* 추후 svg 아이콘으로 추가 */}
-              모집인원 : {expectedPersonnel ?? ''}명
+              모집인원 : {expected_personnel ?? ''}명
             </div>
 
             <div className="h-2" />
