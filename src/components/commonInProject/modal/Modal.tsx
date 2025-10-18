@@ -82,7 +82,8 @@ const Modal = ({
     <ModalContext.Provider value={{ onClose }}>
       <FullScreen
         {...rest}
-        className={`${className} fixed flex items-center justify-center`}
+        isCentered
+        className={`${className} fixed`}
         onClick={onClose}
       >
         <FullScreen style={{ zIndex }} className="fixed bg-black opacity-50" />

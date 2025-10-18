@@ -1,12 +1,21 @@
 import type { DivProps } from '../../../types'
 
-const FullScreen = ({ ...props }: DivProps) => {
+interface WithFullScreenProps {
+  isCentered?: boolean
+}
+
+const FullScreen = ({
+  isCentered,
+  ...props
+}: DivProps & WithFullScreenProps) => {
   const { className, children, ...rest } = props
+
+  const centerResult = isCentered ? 'justify-center items-center' : ''
 
   return (
     <div
       {...rest}
-      className={`${className} flex h-screen w-screen flex-col overflow-hidden`}
+      className={`${className} ${centerResult} flex h-screen w-screen flex-col overflow-hidden`}
     >
       {children}
     </div>
