@@ -8,7 +8,6 @@ import {
   Users,
 } from 'lucide-react'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
-import type { ReactNode } from 'react'
 
 type RecruitCardProps = {
   title?: string
@@ -18,8 +17,8 @@ type RecruitCardProps = {
   tags?: string[]
   viewCount?: number
   bookmarkCount?: number
+  due_date_Tag?: boolean
   isMine?: boolean
-  dateTagRight?: ReactNode
   cardClassName?: string
   imageClassName?: string
 }
@@ -32,8 +31,8 @@ const RecruitCard = ({
   tags = ['AI', '백앤드', '프론트앤드'],
   viewCount = 30,
   bookmarkCount = 0,
+  due_date_Tag = true,
   isMine = true,
-  dateTagRight,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
@@ -118,7 +117,11 @@ const RecruitCard = ({
                 {/* 추후 svg 아이콘으로 추가 */}
                 마감일 : {due_date ?? ''}
               </span>
-              {isMine && dateTagRight}
+              {due_date_Tag && (
+                <span className="rounded-md bg-gray-100 px-3 py-1 text-sm text-gray-700">
+                  기타
+                </span>
+              )}
             </div>
           </div>
 
@@ -166,7 +169,7 @@ const RecruitCard = ({
                 >
                   <FileText className="flex size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
-                  <span className="flex">지원내역</span>
+                  <button className="flex">지원내역</button>
                 </RoundBox>
               </div>
             )}
