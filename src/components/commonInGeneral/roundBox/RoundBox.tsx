@@ -30,11 +30,7 @@ const makeBorderResult = (color: RoundBoxColor, isBordered: boolean) => {
   }
 }
 
-const makeBgResult = (color: RoundBoxColor, className?: string) => {
-  if (className?.includes('bg-')) {
-    return ''
-  }
-
+const makeBgResult = (color: RoundBoxColor) => {
   switch (color) {
     case 'mono-bright':
       return 'bg-white'
@@ -61,7 +57,7 @@ const RoundBox = ({
 }: DivProps & WithRoundBoxProps) => {
   const { className, children, ...rest } = props
 
-  const colorResult = makeBgResult(color, className)
+  const colorResult = makeBgResult(color)
   const shadowResult = isShadowed ? 'dropdown-shadow-md' : ''
 
   const borderResult = makeBorderResult(color, isBordered)
