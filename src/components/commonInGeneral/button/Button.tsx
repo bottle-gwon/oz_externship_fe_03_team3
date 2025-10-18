@@ -105,6 +105,7 @@ const Button = ({
       className={`${className} ${result} rounded-lg`}
     >
       <Hstack gap="none" className="items-center">
+        {status === 'pending' && <div>PendingPlaceholder</div>}
         {children}
       </Hstack>
     </button>
