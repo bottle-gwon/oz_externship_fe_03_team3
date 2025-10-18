@@ -47,12 +47,3 @@ export const radiusMap = {
   lg: 'rounded-xl',
   full: 'rounded-full',
 }
-
-export const makeBgResult = (color: string, className?: string) => {
-  if (className?.includes('bg-')) {
-    return ''
-  }
-
-  const colorResult = color === 'mono' ? 'bg-white' : 'bg-red-500'
-  return colorResult
-}

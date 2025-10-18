@@ -1,14 +1,51 @@
-import { makeBgResult, paddingMap, radiusMap } from '@/lib/tailwindClassNameMap'
-import type { DivProps, None, XsToXxl } from '@/types'
+import { paddingMap, radiusMap } from '@/lib/tailwindClassNameMap'
+import type { Color, DivProps, None, XsToXxl } from '@/types'
 
-const convertToBorder = (color: 'mono', isBordered: boolean) => {
+type RoundBoxColor = Omit<Color, 'mono'> | 'mono-bright' | 'mono-dim'
+
+const makeBorderResult = (color: RoundBoxColor, isBordered: boolean) => {
+  if (!isBordered) {
+    return ''
+  }
+
   switch (color) {
-    case 'mono':
-      return isBordered ? 'border-1 border-gray-200' : ''
+    case 'mono-bright':
+    case 'mono-dim':
+      return 'border border-gray-200'
+    case 'primary':
+      return 'border border-primary-200'
+    case 'danger':
+      return 'border border-danger-400'
+    case 'success':
+      return 'border border-success-400'
+    case 'blue':
+      return 'border border-blue-400'
   }
 }
+
+const makeBgResult = (color: RoundBoxColor, className?: string) => {
+  if (className?.includes('bg-')) {
+    return ''
+  }
+
+  switch (color) {
+    case 'mono-bright':
+      return 'bg-white'
+    case 'mono-dim':
+      return 'bg-gray-100'
+    case 'primary':
+      return 'bg-primary-100'
+    case 'danger':
+      return 'bg-danger-100'
+    case 'success':
+      return 'bg-success-100'
+    case 'blue':
+      return 'bg-blue-100'
+  }
+}
+
 interface WithRoundBoxProps {
-  color?: 'mono' // TODO: pull push 이후에 Color로 교체해야
+  color?: RoundBoxColor
   isShadowed?: boolean
   isBordered?: boolean
   padding?: XsToXxl | None
@@ -16,7 +53,7 @@ interface WithRoundBoxProps {
 }
 
 const RoundBox = ({
-  color = 'mono',
+  color = 'mono-bright',
   isBordered = true,
   isShadowed,
   padding = 'md',
@@ -25,9 +62,10 @@ const RoundBox = ({
 }: DivProps & WithRoundBoxProps) => {
   const { className, children, ...rest } = props
 
-  const colorResult = makeBgResult(color, className) // TODO: pull push 이후에는 convertToBgColor 만들어야
+  const colorResult = makeBgResult(color, className)
   const shadowResult = isShadowed ? 'dropdown-shadow-md' : ''
-  const borderResult = convertToBorder(color, isBordered)
+
+  const borderResult = makeBorderResult(color, isBordered)
   const paddingResult = paddingMap[padding] ?? ''
   const radiusResult = radiusMap[radius]
   const result = `${colorResult} ${borderResult} ${shadowResult} ${paddingResult} ${radiusResult}`
