@@ -39,9 +39,9 @@ const makeBgResult = (color: RoundBoxColor, className?: string) => {
     case 'mono-bright':
       return 'bg-white'
     case 'mono-dim':
-      return 'bg-gray-100'
+      return 'bg-gray-50'
     case 'primary':
-      return 'bg-primary-100'
+      return 'bg-primary-50'
     case 'danger':
       return 'bg-danger-100'
     case 'success':
