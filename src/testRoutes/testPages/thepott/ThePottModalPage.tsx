@@ -8,11 +8,13 @@ const ThePottModalPage = () => {
   const [isOn, setIsOn] = useState(false)
   return (
     <>
-      <Modal isOn={isOn} onBackgroundClick={() => setIsOn(false)}>
-        이게 보여짐
+      <Modal isOn={isOn} onClose={() => setIsOn(false)}>
+        <Modal.Header>이게 헤더</Modal.Header>
+        <Modal.Body>이게 바디</Modal.Body>
+        <Modal.Footer>이게 푸터</Modal.Footer>
       </Modal>
       <Vstack padding="xxl">
-        <Button>누르면 모달 켜짐</Button>
+        <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
         <Text>가나다라</Text>
         <Text>가나다라</Text>
         <Text>가나다라</Text>
