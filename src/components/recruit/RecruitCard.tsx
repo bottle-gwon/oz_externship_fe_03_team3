@@ -1,4 +1,12 @@
-import { Bookmark, Calendar, Eye, Users } from 'lucide-react'
+import {
+  Bookmark,
+  Calendar,
+  Eye,
+  FileText,
+  Pencil,
+  Trash2,
+  Users,
+} from 'lucide-react'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import type { ReactNode } from 'react'
 
@@ -11,9 +19,7 @@ type RecruitCardProps = {
   viewCount?: number
   bookmarkCount?: number
   isMine?: boolean
-  topRight?: ReactNode
   dateTagRight?: ReactNode
-  footerRight?: ReactNode
   cardClassName?: string
   imageClassName?: string
 }
@@ -26,10 +32,8 @@ const RecruitCard = ({
   tags = ['AI', '백앤드', '프론트앤드'],
   viewCount = 30,
   bookmarkCount = 0,
-  isMine = false,
-  topRight,
+  isMine = true,
   dateTagRight,
-  footerRight,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
@@ -72,7 +76,22 @@ const RecruitCard = ({
               >
                 <Bookmark className="size-4" /> {bookmarkCount}
               </span>
-              {isMine && topRight}
+              {isMine && (
+                <span className="inline-flex items-center gap-1">
+                  <button
+                    aria-label="수정"
+                    className="rounded p-1 hover:bg-gray-100"
+                  >
+                    <Pencil className="size-4" />
+                  </button>
+                  <button
+                    aria-label="삭제"
+                    className="rounded p-1 hover:bg-gray-100"
+                  >
+                    <Trash2 className="size-4" />
+                  </button>
+                </span>
+              )}
             </div>
           </div>
 
@@ -137,7 +156,19 @@ const RecruitCard = ({
               ))}
             </div>
             {isMine && (
-              <div className="row-span-2 self-center">{footerRight}</div>
+              <div className="row-span-2 self-center">
+                <RoundBox
+                  color="mono"
+                  isBordered
+                  padding="none"
+                  radius="sm"
+                  className="inline-flex items-center gap-2 bg-blue-500 px-5 py-2 text-xs text-white"
+                >
+                  <FileText className="flex size-4" />
+                  {/* 추후 svg 아이콘으로 추가 */}
+                  <span className="flex">지원내역</span>
+                </RoundBox>
+              </div>
             )}
           </div>
         </div>
