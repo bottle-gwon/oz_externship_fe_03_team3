@@ -1,4 +1,4 @@
-import type { ButtonVariant, Color } from '../types'
+import type { Color } from '../types'
 
 export const gapMap = {
   none: '',
