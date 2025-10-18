@@ -2,7 +2,7 @@ import { Bookmark, Calendar, Eye, Users } from 'lucide-react'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import type { ReactNode } from 'react'
 
-export interface RecruitCardProps {
+type RecruitCardProps = {
   title?: string
   expectedPersonnel?: number
   due_date?: string
@@ -119,21 +119,23 @@ const RecruitCard = ({
             </ul>
           </div>
 
-          <div aria-label="태그" className="tags mt-2 flex flex-wrap gap-2">
-            {tags.map((tag) => (
-              <RoundBox
-                key={tag}
-                color="mono"
-                isBordered={false}
-                padding="none"
-                radius="sm"
-                className="bg-yellow-100 px-3 py-1 text-[12px] text-yellow-800"
-              >
-                {tag}
-              </RoundBox>
-            ))}
+          <div className="mt-2 grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-2">
+            <div aria-label="태그" className="tags mt-2 flex flex-wrap gap-2">
+              {tags.map((tag) => (
+                <RoundBox
+                  key={tag}
+                  color="mono"
+                  isBordered={false}
+                  padding="none"
+                  radius="sm"
+                  className="bg-yellow-100 px-3 py-1 text-[12px] text-yellow-800"
+                >
+                  {tag}
+                </RoundBox>
+              ))}
+            </div>
+            <div className="row-span-2 self-center">{footerRight}</div>
           </div>
-          {footerRight}
         </div>
       </div>
     </RoundBox>
