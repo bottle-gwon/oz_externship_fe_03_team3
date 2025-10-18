@@ -27,7 +27,11 @@ interface WithRoundBoxProps {
 }
 
 const TestRoundBox = (props: WithRoundBoxProps) => {
-  return <RoundBox {...props}>{JSON.stringify(props)}</RoundBox>
+  return (
+    <RoundBox {...props}>
+      <Text>{JSON.stringify(props)}</Text>
+    </RoundBox>
+  )
 }
 
 const TestRoundBoxColumn = (props: WithRoundBoxProps) => {

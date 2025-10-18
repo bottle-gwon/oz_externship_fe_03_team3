@@ -22,11 +22,11 @@ const makeBorderResult = (color: RoundBoxColor, isBordered: boolean) => {
     case 'primary':
       return 'border border-primary-200'
     case 'danger':
-      return 'border border-danger-400'
+      return 'border border-danger-border'
     case 'success':
-      return 'border border-success-400'
+      return 'border border-success-border'
     case 'blue':
-      return 'border border-blue-400'
+      return 'border border-blue-100'
   }
 }
 
@@ -39,11 +39,11 @@ const makeBgResult = (color: RoundBoxColor) => {
     case 'primary':
       return 'bg-primary-50'
     case 'danger':
-      return 'bg-danger-100'
+      return 'bg-danger-50'
     case 'success':
-      return 'bg-success-100'
+      return 'bg-success-50'
     case 'blue':
-      return 'bg-blue-100'
+      return 'bg-blue-50'
   }
 }
 
@@ -58,7 +58,7 @@ const RoundBox = ({
   const { className, children, ...rest } = props
 
   const colorResult = makeBgResult(color)
-  const shadowResult = isShadowed ? 'dropdown-shadow-md' : ''
+  const shadowResult = isShadowed ? 'shadow-md' : ''
 
   const borderResult = makeBorderResult(color, isBordered)
   const paddingResult = paddingMap[padding] ?? ''

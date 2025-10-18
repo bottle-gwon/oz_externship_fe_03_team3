@@ -1,6 +1,9 @@
 import type { Color, PProps } from '../../../types'
 
-const convertToTextColor = (color: Color, isMuted: boolean) => {
+const convertToTextColor = (color?: Color, isMuted?: boolean) => {
+  if (!color) {
+    return 'text-inherit'
+  }
   switch (color) {
     case 'mono':
       return isMuted ? 'text-gray-600' : 'text-gray-900'
@@ -12,11 +15,7 @@ interface TextProps {
   isMuted?: boolean
 }
 
-const Text = ({
-  color = 'mono',
-  isMuted = false,
-  ...props
-}: TextProps & PProps) => {
+const Text = ({ color, isMuted = false, ...props }: TextProps & PProps) => {
   const { children, className, ...rest } = props
 
   const colorResult = convertToTextColor(color, isMuted)
