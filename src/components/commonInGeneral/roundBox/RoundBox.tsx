@@ -2,6 +2,13 @@ import { paddingMap, radiusMap } from '@/lib/tailwindClassNameMap'
 import type { Color, DivProps, None, XsToXxl } from '@/types'
 
 type RoundBoxColor = Omit<Color, 'mono'> | 'mono-bright' | 'mono-dim'
+interface WithRoundBoxProps {
+  color?: RoundBoxColor
+  isShadowed?: boolean
+  isBordered?: boolean
+  padding?: XsToXxl | None
+  radius?: 'sm' | 'md' | 'lg' | 'full'
+}
 
 const makeBorderResult = (color: RoundBoxColor, isBordered: boolean) => {
   if (!isBordered) {
@@ -42,14 +49,6 @@ const makeBgResult = (color: RoundBoxColor, className?: string) => {
     case 'blue':
       return 'bg-blue-100'
   }
-}
-
-interface WithRoundBoxProps {
-  color?: RoundBoxColor
-  isShadowed?: boolean
-  isBordered?: boolean
-  padding?: XsToXxl | None
-  radius?: 'sm' | 'md' | 'lg' | 'full'
 }
 
 const RoundBox = ({
