@@ -44,10 +44,7 @@ const ThepottTestPage = () => {
         </Button>
       </Hstack>
       <ArrowBigDown />
-      <Select
-        onOptionSelect={(option: string) => console.log({ option })}
-        className="w-[200px]"
-      >
+      <Select onOptionSelect={() => null} className="w-[200px]">
         <Select.Trigger>나를 눌러요</Select.Trigger>
         <Select.Content>
           <Select.Option>apple</Select.Option>
