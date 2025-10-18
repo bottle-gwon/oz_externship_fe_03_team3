@@ -10,6 +10,7 @@ type RecruitCardProps = {
   tags?: string[]
   viewCount?: number
   bookmarkCount?: number
+  isMine?: boolean
   topRight?: ReactNode
   dateTagRight?: ReactNode
   footerRight?: ReactNode
@@ -25,6 +26,7 @@ const RecruitCard = ({
   tags = ['AI', '백앤드', '프론트앤드'],
   viewCount = 30,
   bookmarkCount = 0,
+  isMine = false,
   topRight,
   dateTagRight,
   footerRight,
@@ -70,7 +72,7 @@ const RecruitCard = ({
               >
                 <Bookmark className="size-4" /> {bookmarkCount}
               </span>
-              {topRight}
+              {isMine && topRight}
             </div>
           </div>
 
@@ -97,7 +99,7 @@ const RecruitCard = ({
                 {/* 추후 svg 아이콘으로 추가 */}
                 마감일 : {due_date ?? ''}
               </span>
-              {dateTagRight}
+              {isMine && dateTagRight}
             </div>
           </div>
 
@@ -134,7 +136,9 @@ const RecruitCard = ({
                 </RoundBox>
               ))}
             </div>
-            <div className="row-span-2 self-center">{footerRight}</div>
+            {isMine && (
+              <div className="row-span-2 self-center">{footerRight}</div>
+            )}
           </div>
         </div>
       </div>
