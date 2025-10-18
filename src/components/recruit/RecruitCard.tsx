@@ -79,13 +79,13 @@ const RecruitCard = ({
                 <span className="inline-flex items-center gap-1">
                   <button
                     aria-label="수정"
-                    className="rounded p-1 hover:bg-gray-100"
+                    className="rounded p-1 hover:text-blue-600"
                   >
                     <Pencil className="size-4" />
                   </button>
                   <button
                     aria-label="삭제"
-                    className="rounded p-1 hover:bg-gray-100"
+                    className="rounded p-1 hover:text-red-600"
                   >
                     <Trash2 className="size-4" />
                   </button>
