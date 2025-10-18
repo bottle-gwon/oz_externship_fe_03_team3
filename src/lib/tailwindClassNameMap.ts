@@ -1,5 +1,3 @@
-import type { Color } from '../types'
-
 export const gapMap = {
   none: '',
   xs: 'gap-1',
@@ -43,12 +41,6 @@ export const widthMap = {
   lg: 'w-7xl', // 1280px 그 외 넓은 페이지
 }
 
-export const convertToBorder = (color: 'mono', isBordered: boolean) => {
-  switch (color) {
-    case 'mono':
-      return isBordered ? 'border-1 border-gray-200' : ''
-  }
-}
 export const radiusMap = {
   sm: 'rounded-sm',
   md: 'rounded-lg',
@@ -63,10 +55,4 @@ export const makeBgResult = (color: string, className?: string) => {
 
   const colorResult = color === 'mono' ? 'bg-white' : 'bg-red-500'
   return colorResult
-}
-export const convertToTextColor = (color: Color, isMuted: boolean) => {
-  switch (color) {
-    case 'mono':
-      return isMuted ? 'text-gray-600' : 'text-gray-900'
-  }
 }

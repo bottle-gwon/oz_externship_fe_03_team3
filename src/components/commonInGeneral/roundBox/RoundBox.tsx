@@ -1,11 +1,12 @@
-import {
-  convertToBorder,
-  makeBgResult,
-  paddingMap,
-  radiusMap,
-} from '@/lib/tailwindClassNameMap'
+import { makeBgResult, paddingMap, radiusMap } from '@/lib/tailwindClassNameMap'
 import type { DivProps, None, XsToXxl } from '@/types'
 
+const convertToBorder = (color: 'mono', isBordered: boolean) => {
+  switch (color) {
+    case 'mono':
+      return isBordered ? 'border-1 border-gray-200' : ''
+  }
+}
 interface WithRoundBoxProps {
   color?: 'mono' // TODO: pull push 이후에 Color로 교체해야
   isShadowed?: boolean

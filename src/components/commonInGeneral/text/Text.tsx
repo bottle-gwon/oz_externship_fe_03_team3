@@ -1,5 +1,11 @@
-import { convertToTextColor } from '../../../lib/tailwindClassNameMap'
 import type { Color, PProps } from '../../../types'
+
+const convertToTextColor = (color: Color, isMuted: boolean) => {
+  switch (color) {
+    case 'mono':
+      return isMuted ? 'text-gray-600' : 'text-gray-900'
+  }
+}
 
 interface TextProps {
   color?: Color // 더 추가될 예정
