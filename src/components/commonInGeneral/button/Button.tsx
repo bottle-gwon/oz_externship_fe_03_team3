@@ -52,9 +52,9 @@ const makeOutlineResult = (color: Color, variant: ButtonVariant) => {
 
   switch (color) {
     case 'mono':
-      return 'outline outline-gray-300 hover:outline-gray-400 active:outline-gray-500'
+      return 'outline outline-gray-300 hover:outline-gray-400 active:outline-gray-500 disabled:outline-gray-200'
     case 'primary':
-      return 'outline outline-primary-500 hover:outline-primary-600 active:outline-primary-700'
+      return 'outline outline-primary-500 hover:outline-primary-600 active:outline-primary-700 disabled:outline-primary-400'
     default:
       // mono, primary 외에는 outlined를 지원하지 않습니다
       return ''
