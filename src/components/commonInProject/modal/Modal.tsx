@@ -1,8 +1,8 @@
-import type { DivProps, SmToLg } from '@/types'
-import FullScreen from '../layout/_FullScreen'
-import RoundBox from '../roundBox/RoundBox'
+import { Hstack } from '@/components/commonInGeneral/layout'
+import FullScreen from '@/components/commonInGeneral/layout/_FullScreen'
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import { widthMap } from '@/lib/tailwindClassNameMap'
-import { Hstack, Vstack } from '../layout'
+import type { DivProps, SmToLg } from '@/types'
 import { X } from 'lucide-react'
 
 const ModalBody = ({ className, children, ...rest }: DivProps) => {
@@ -33,6 +33,7 @@ interface WithModalProps {
   isOn: boolean
   modalZIndex?: number
   width?: SmToLg
+
   onBackgroundClick: React.MouseEventHandler<HTMLDivElement>
 }
 
