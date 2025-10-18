@@ -47,6 +47,22 @@ const makeBgResult = (color: RoundBoxColor) => {
   }
 }
 
+const makeTextColorResult = (color: RoundBoxColor) => {
+  switch (color) {
+    case 'mono-bright':
+    case 'mono-dim':
+      return 'text-gray-900'
+    case 'primary':
+      return 'text-primary-800'
+    case 'danger':
+      return 'text-danger-800'
+    case 'success':
+      return 'text-success-800'
+    case 'blue':
+      return 'text-blue-800'
+  }
+}
+
 const RoundBox = ({
   color = 'mono-bright',
   isBordered = true,
@@ -58,12 +74,12 @@ const RoundBox = ({
   const { className, children, ...rest } = props
 
   const colorResult = makeBgResult(color)
+  const textColorResult = makeTextColorResult(color)
   const shadowResult = isShadowed ? 'shadow-md' : ''
-
   const borderResult = makeBorderResult(color, isBordered)
   const paddingResult = paddingMap[padding] ?? ''
   const radiusResult = radiusMap[radius]
-  const result = `${colorResult} ${borderResult} ${shadowResult} ${paddingResult} ${radiusResult}`
+  const result = `${colorResult} ${textColorResult} ${borderResult} ${shadowResult} ${paddingResult} ${radiusResult}`
 
   return (
     <div {...rest} className={`${className} ${result}`}>
