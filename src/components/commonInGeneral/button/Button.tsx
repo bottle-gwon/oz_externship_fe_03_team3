@@ -1,15 +1,13 @@
-import type { ButtonProps, Color } from '@/types'
+import type { ButtonProps, ButtonVariant, Color, SmToLg } from '@/types'
 import { Hstack } from '../layout'
-
-type ButtonVariant = 'outlined' | 'contained' | 'ghost'
-
-type ButtonSize = 'sm' | 'md' | 'lg'
+import Spinner from '../spinner/Spinner'
+import { makeTextColorResult } from '@/lib/tailwindClassNameMap'
 
 interface WithButtonProps {
   color?: Color
   variant?: ButtonVariant
   status?: 'enabled' | 'pending' | 'disabled'
-  size?: ButtonSize
+  size?: SmToLg
 }
 
 const makeBgResult = (color: Color, variant: ButtonVariant) => {
@@ -37,7 +35,7 @@ const makeBgResult = (color: Color, variant: ButtonVariant) => {
   }
 }
 
-const makePaddigResult = (size: ButtonSize) => {
+const makePaddigResult = (size: SmToLg) => {
   switch (size) {
     case 'sm':
       return 'px-3 py-2'
@@ -47,26 +45,6 @@ const makePaddigResult = (size: ButtonSize) => {
       return 'px-6 py-3'
   }
 }
-
-const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
-  if (variant === 'contained' && color !== 'mono') {
-    return 'text-white'
-  }
-
-  switch (color) {
-    case 'mono':
-      return 'text-gray-700 hover:text-gray-800 active:text-gray-900 disabled:text-gray-300'
-    case 'primary':
-      return 'text-primary-600 hover:text-primary-700 active:text-primary-800 disabled:text-primary-200'
-    case 'danger':
-      return 'text-danger-600'
-    case 'success':
-      return 'text-success-600'
-    case 'blue':
-      return 'text-blue-600'
-  }
-}
-
 const makeOutlineResult = (color: Color, variant: ButtonVariant) => {
   if (variant !== 'outlined') {
     return
@@ -105,7 +83,9 @@ const Button = ({
       className={`${className} ${result} rounded-lg`}
     >
       <Hstack gap="none" className="items-center">
-        {status === 'pending' && <div>PendingPlaceholder</div>}
+        {status === 'pending' && (
+          <Spinner variant={variant} size={size} color={color} />
+        )}
         {children}
       </Hstack>
     </button>
