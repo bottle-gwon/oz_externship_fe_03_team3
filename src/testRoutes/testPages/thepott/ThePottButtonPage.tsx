@@ -66,6 +66,14 @@ const ThePottButtonPage = () => {
             아이콘도 넣을 수 있습니다
           </Button>
         </Hstack>
+        <Hstack>
+          <Button size="sm" status="pending">
+            스피너 크기 비교
+          </Button>
+          <Button size="lg" status="pending">
+            스피너 크기 비교
+          </Button>
+        </Hstack>
       </Container>
     </FullScreen>
   )

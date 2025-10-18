@@ -1,6 +1,4 @@
 .loader {
-  width: 48px;
-  height: 48px;
   border-radius: 50%;
   position: relative;
   animation: rotate 1s linear infinite;
@@ -11,7 +9,7 @@
   position: absolute;
   inset: 0px;
   border-radius: 50%;
-  border-width: 5px;
+  border-width: 2px;
   border-style: solid;
   animation: prixClipFix 2s linear infinite;
 }

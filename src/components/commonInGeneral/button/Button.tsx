@@ -1,7 +1,6 @@
 import type { ButtonProps, ButtonVariant, Color, SmToLg } from '@/types'
 import { Hstack } from '../layout'
 import Spinner from '../spinner/Spinner'
-import { makeTextColorResult } from '@/lib/tailwindClassNameMap'
 
 interface WithButtonProps {
   color?: Color
@@ -14,23 +13,23 @@ const makeBgResult = (color: Color, variant: ButtonVariant) => {
   switch (color) {
     case 'mono':
       return variant === 'contained'
-        ? 'bg-gray-100 hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-50'
+        ? 'bg-gray-100 hover:bg-gray-200 active:bg-gray-300 disabled:bg-gray-100'
         : 'hover:bg-gray-50 active:bg-gray-100 disabled:bg-transparent'
     case 'primary':
       return variant === 'contained'
-        ? 'bg-primary-500 hover:bg-primary-600 active:bg-primary-800 disabled:bg-primary-100'
+        ? 'bg-primary-500 hover:bg-primary-600 active:bg-primary-800 disabled:bg-primary-500'
         : 'hover:bg-primary-50 active:bg-primary-100 disabled:bg-transparent'
     case 'danger':
       return variant === 'contained'
-        ? 'bg-danger-500 hover:bg-danger-600 active:bg-danger-800 disabled:bg-danger-100'
+        ? 'bg-danger-500 hover:bg-danger-600 active:bg-danger-800 disabled:bg-danger-500'
         : ''
     case 'success':
       return variant === 'contained'
-        ? 'bg-success-500 hover:bg-success-600 active:bg-success-800 disabled:bg-success-100'
+        ? 'bg-success-500 hover:bg-success-600 active:bg-success-800 disabled:bg-success-500'
         : ''
     case 'blue':
       return variant === 'contained'
-        ? 'bg-blue-500 hover:bg-blue-600 active:bg-blue-800 disabled:bg-blue-100'
+        ? 'bg-blue-500 hover:bg-blue-600 active:bg-blue-800 disabled:bg-blue-500'
         : ''
   }
 }
@@ -52,12 +51,30 @@ const makeOutlineResult = (color: Color, variant: ButtonVariant) => {
 
   switch (color) {
     case 'mono':
-      return 'outline outline-gray-300 hover:outline-gray-400 active:outline-gray-500 disabled:outline-gray-200'
+      return 'outline outline-gray-300 hover:outline-gray-400 active:outline-gray-500 disabled:outline-gray-300'
     case 'primary':
-      return 'outline outline-primary-500 hover:outline-primary-600 active:outline-primary-700 disabled:outline-primary-400'
+      return 'outline outline-primary-500 hover:outline-primary-600 active:outline-primary-700 disabled:outline-primary-500'
     default:
       // mono, primary 외에는 outlined를 지원하지 않습니다
       return ''
+  }
+}
+const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
+  if (variant === 'contained' && color !== 'mono') {
+    return 'text-white'
+  }
+
+  switch (color) {
+    case 'mono':
+      return 'text-gray-700 hover:text-gray-800 active:text-gray-900 disabled:text-gray-700'
+    case 'primary':
+      return 'text-primary-600 hover:text-primary-700 active:text-primary-800 disabled:text-primary-600'
+    case 'danger':
+      return 'text-danger-600'
+    case 'success':
+      return 'text-success-600'
+    case 'blue':
+      return 'text-blue-600'
   }
 }
 
@@ -80,7 +97,7 @@ const Button = ({
     <button
       {...rest}
       disabled={status !== 'enabled'}
-      className={`${className} ${result} rounded-lg`}
+      className={`${className} ${result} rounded-lg disabled:opacity-50`}
     >
       <Hstack gap="none" className="items-center">
         {status === 'pending' && (

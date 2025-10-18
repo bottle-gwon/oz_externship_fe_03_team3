@@ -70,22 +70,3 @@ export const convertToTextColor = (color: Color, isMuted: boolean) => {
       return isMuted ? 'text-gray-600' : 'text-gray-900'
   }
 }
-
-export const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
-  if (variant === 'contained' && color !== 'mono') {
-    return 'text-white'
-  }
-
-  switch (color) {
-    case 'mono':
-      return 'text-gray-700 hover:text-gray-800 active:text-gray-900 disabled:text-gray-300'
-    case 'primary':
-      return 'text-primary-600 hover:text-primary-700 active:text-primary-800 disabled:text-primary-200'
-    case 'danger':
-      return 'text-danger-600'
-    case 'success':
-      return 'text-success-600'
-    case 'blue':
-      return 'text-blue-600'
-  }
-}
