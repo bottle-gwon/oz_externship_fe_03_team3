@@ -8,15 +8,11 @@ import {
   Users,
 } from 'lucide-react'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
+import type { recruit } from '@/types/interface Recruit'
 
-type RecruitCardProps = {
-  title?: string
-  expected_personnel?: number
-  due_date?: string
+export type RecruitCardProps = {
+  recruit: recruit
   lectures?: string[]
-  tags?: string[]
-  views?: number
-  bookmark_count?: number
   due_date_Tag?: boolean
   isMine?: boolean
   cardClassName?: string
@@ -24,13 +20,8 @@ type RecruitCardProps = {
 }
 
 const RecruitCard = ({
-  title = '제목',
-  expected_personnel = 5,
-  due_date = '2025.10.25.',
+  recruit: { title, expected_personnel, due_date, tags, views, bookmark_count },
   lectures = ['강의목록', '강의목록2'],
-  tags = ['AI', '백앤드', '프론트앤드'],
-  views = 30,
-  bookmark_count = 0,
   due_date_Tag = true,
   isMine = true,
   cardClassName = '',
