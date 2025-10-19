@@ -15,8 +15,8 @@ type RecruitCardProps = {
   due_date?: string
   lectures?: string[]
   tags?: string[]
-  viewCount?: number
-  bookmarkCount?: number
+  views?: number
+  bookmark_count?: number
   due_date_Tag?: boolean
   isMine?: boolean
   cardClassName?: string
@@ -29,8 +29,8 @@ const RecruitCard = ({
   due_date = '2025.10.25.',
   lectures = ['강의목록', '강의목록2'],
   tags = ['AI', '백앤드', '프론트앤드'],
-  viewCount = 30,
-  bookmarkCount = 0,
+  views = 30,
+  bookmark_count = 0,
   due_date_Tag = true,
   isMine = true,
   cardClassName = '',
@@ -67,13 +67,13 @@ const RecruitCard = ({
                 aria-label="조회수"
                 className="viewCount inline-flex items-center gap-1"
               >
-                <Eye className="size-4" /> {viewCount}
+                <Eye className="size-4" /> {views}
               </span>
               <span
                 aria-label="북마크"
                 className="bookmarkCount inline-flex items-center gap-1"
               >
-                <Bookmark className="size-4" /> {bookmarkCount}
+                <Bookmark className="size-4" /> {bookmark_count}
               </span>
               {isMine && (
                 <span className="inline-flex items-center gap-1">
