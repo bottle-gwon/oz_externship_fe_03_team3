@@ -44,6 +44,7 @@ const RecruitCard = ({
           className={`imgBox ${imageClassName} flex-none overflow-hidden bg-gray-200`}
           aria-label="공고 이미지"
         ></RoundBox>
+        {/* 추후 확정 api 확인하여 이미지 어떻게 추가할지 고민 현재 api확인 바로는 RECM-003 이미지 url 없음*/}
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
