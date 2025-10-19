@@ -7,7 +7,7 @@ export interface recruit {
   current_personnel: number
   status: 'open' | 'closed' | string
   tags: string[]
-  study_group: { id: number; name: string } | null
+  study_group: { id: number; name: string }
   bookmark_count: number
   is_bookmarked: boolean
   views: number
