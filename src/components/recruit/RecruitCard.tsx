@@ -12,7 +12,7 @@ import type { recruit } from '@/types/interfaceRecruit'
 
 export type RecruitCardProps = {
   recruit: recruit
-  lectures: string[]
+  lectures?: string[]
   due_date_Tag?: boolean
   isMine?: boolean
   cardClassName?: string
@@ -22,8 +22,8 @@ export type RecruitCardProps = {
 const RecruitCard = ({
   recruit: { title, expected_personnel, due_date, tags, views, bookmark_count },
   lectures = ['강의목록', '강의목록2'],
-  due_date_Tag = true,
-  isMine = true,
+  due_date_Tag = false,
+  isMine = false,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
