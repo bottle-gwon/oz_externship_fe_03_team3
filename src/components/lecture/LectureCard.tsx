@@ -1,6 +1,8 @@
 import type { DivProps, ImgProps, Lecture } from '@/types'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
-import RoundBox from '../commonInGeneral/roundBox/RoundBox'
+import RoundBox, {
+  type WithRoundBoxProps,
+} from '../commonInGeneral/roundBox/RoundBox'
 import Text from '../commonInGeneral/text/Text'
 import Button from '../commonInGeneral/button/Button'
 
@@ -46,9 +48,20 @@ const Img = ({
   )
 }
 
-const Chip = ({ children, className, ...rest }: DivProps) => {
+const Chip = ({
+  color = 'primary',
+  children,
+  ...rest
+}: DivProps & WithRoundBoxProps) => {
   return (
-    <RoundBox {...rest} color="primary" padding="xs" className="text-xs">
+    <RoundBox
+      {...rest}
+      color={color}
+      padding="xs"
+      radius="sm"
+      className="text-xs"
+      isBordered={false}
+    >
       {children}
     </RoundBox>
   )
