@@ -57,7 +57,7 @@ const TagList = ({
 
       <TagPagination
         currentPage={page}
-        totalPage={total_count / 5}
+        totalPage={Math.ceil(total_count / 5)}
         // currentPage={page} //페이지 네이션 테스트
         // totalPage={15}
         onPageChange={onPageChange}

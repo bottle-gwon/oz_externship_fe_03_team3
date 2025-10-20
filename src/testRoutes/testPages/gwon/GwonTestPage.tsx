@@ -19,6 +19,7 @@ const EXAMPLE_DATA = {
 const GwonTestPage = () => {
   // 임시 데이터
   const [current, setCurrent] = useState(1)
+  const [exData, setExdata] = useState(EXAMPLE_DATA)
   const [testSelectArray, setTestSelectArray] = useState(['AI', '밥']) //selectArray 대신 넣었습니다.
 
   // 임시 페이지 변경 함수
@@ -39,9 +40,24 @@ const GwonTestPage = () => {
       setTestSelectArray((prev) => prev.filter((el) => el !== tagName))
     }
   }
+
+  //임시 검색 함수
+  //임시라서 간단하게만 담겨 있습니다.(실제 검색은 be에서 담당함)
+  const onSearchTag = (tagName: string) => {
+    if (tagName === '') {
+      setExdata(EXAMPLE_DATA)
+    }
+    const filtered = EXAMPLE_DATA.tags.filter((el) => el.name.includes(tagName))
+    setExdata((prev) => ({
+      ...prev,
+      tags: filtered,
+      page: 1,
+      total_count: filtered.length,
+    }))
+  }
   return (
     <div className="mt-10">
-      <TagSearch />
+      <TagSearch onSearch={onSearchTag} />
       {testSelectArray.length !== 0 && (
         <TagSelection
           tagArray={testSelectArray}
@@ -49,11 +65,11 @@ const GwonTestPage = () => {
         />
       )}
       <TagList
-        tags={EXAMPLE_DATA.tags}
+        tags={exData.tags}
         // page={EXAMPLE_DATA.page}
         page={current} // 페이지 네이션 테스트
-        page_size={EXAMPLE_DATA.page_size}
-        total_count={EXAMPLE_DATA.total_count}
+        page_size={exData.page_size}
+        total_count={exData.total_count}
         onPageChange={handlePageChange}
         onSelectTag={onClickTag}
         selectArray={testSelectArray}

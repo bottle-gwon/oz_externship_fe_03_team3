@@ -1,7 +1,13 @@
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import { Search } from 'lucide-react'
+import { useState } from 'react'
 
-const TagSearch = () => {
+interface search {
+  onSearch: (tagName: string) => void
+}
+
+const TagSearch = ({ onSearch }: search) => {
+  const [searchText, setSearchText] = useState('')
   return (
     <Vstack className="h-[99px] w-[672px] justify-center border-b border-gray-200 px-6">
       <Hstack className="p-oz-md h-[50px] w-[624px] items-center justify-between rounded-md border border-gray-300">
@@ -10,6 +16,12 @@ const TagSearch = () => {
           type="text"
           placeholder="태그명으로 검색..."
           className="h-full w-[570px]"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter') {
+              onSearch(searchText)
+            }
+          }}
+          onChange={(e) => setSearchText(e.target.value)}
         />
       </Hstack>
     </Vstack>
