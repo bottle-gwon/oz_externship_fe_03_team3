@@ -1,4 +1,5 @@
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import { Clock3, FileText, Megaphone } from 'lucide-react'
 
 const RecruitSummaryCard = () => {
   return (
@@ -14,10 +15,13 @@ const RecruitSummaryCard = () => {
           <RoundBox
             color="mono-dim"
             isBordered={false}
-            padding="xl"
+            padding="lg"
             radius="md"
-            className="h-11 w-11"
-          ></RoundBox>
+            className="h-12 w-12"
+          >
+            <FileText className="flex size-4" />
+            {/* 추후 svg 아이콘으로 추가 */}
+          </RoundBox>
           <div className="flex h-11 flex-col justify-center">
             <span className="flex items-center truncate text-xl font-bold text-gray-900">
               4
@@ -38,10 +42,13 @@ const RecruitSummaryCard = () => {
           <RoundBox
             color="success"
             isBordered={false}
-            padding="xl"
+            padding="lg"
             radius="md"
             className="h-12 w-12"
-          ></RoundBox>
+          >
+            <Megaphone className="flex size-4" />
+            {/* 추후 svg 아이콘으로 추가 */}
+          </RoundBox>
           <div className="flex h-11 flex-col justify-center">
             <span className="flex items-center truncate text-xl font-bold text-gray-900">
               3
@@ -62,10 +69,12 @@ const RecruitSummaryCard = () => {
           <RoundBox
             color="danger"
             isBordered={false}
-            padding="xl"
+            padding="lg"
             radius="md"
             className="h-12 w-12"
-          ></RoundBox>
+          >
+            <Clock3 className="flex size-4" />
+          </RoundBox>
           <div className="flex h-11 flex-col justify-center">
             <span className="flex items-center truncate text-xl font-bold text-gray-900">
               1
