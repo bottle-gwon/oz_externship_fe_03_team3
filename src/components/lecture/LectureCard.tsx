@@ -6,6 +6,7 @@ import RoundBox, {
 import Text from '../commonInGeneral/text/Text'
 import Button from '../commonInGeneral/button/Button'
 import { ChevronDown } from 'lucide-react'
+import ReviewSummary from './ReviewSummary'
 
 const fallbackImageUrl =
   'https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_auto/linuxiac.com/wp-content/uploads/2020/06/archlinux-1024x768.jpg'
@@ -49,7 +50,7 @@ const Img = ({
   )
 }
 
-const Chip = ({
+const Tag = ({
   color = 'primary',
   children,
   ...rest
@@ -72,7 +73,6 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
     <RoundBox padding="none" className="overflow-hidden">
       <Img
         src={lecture.thumbnail_img_url}
-        // src={fallbackImageUrl}
         fallbackImageUrl={fallbackImageUrl}
         isWide
         alt={`${lecture.title}__thumbnail`}
@@ -80,7 +80,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
       <Vstack className="p-5" gap="none">
         <Hstack className="pb-2">
           {lecture.categories.map((category) => (
-            <Chip key={category.id}>{category.name}</Chip>
+            <Tag key={category.id}>{category.name}</Tag>
           ))}
         </Hstack>
         <Text className="pb-1 text-lg font-semibold">{lecture.title}</Text>
@@ -91,7 +91,10 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           여기에 강의 설명이 있어야 하는데 그게 누락되어서 요청드려야 할
           듯합니다
         </Text>
-        <Text className="pb-3">{lecture.average_rating} 별표로 하야 함</Text>
+        <ReviewSummary
+          average_rating={lecture.average_rating}
+          className="pb-3"
+        />
 
         <Hstack className="items-center pb-4" gap="none">
           <Text className="text-xl font-bold">

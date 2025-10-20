@@ -11,7 +11,7 @@ const GridContainer = ({
 }: DivProps & WithGridContainerProps) => {
   const { className, children, ...rest } = props
 
-  const gapResult = gapMap[gap] ?? ''
+  const gapResult = className?.includes('gap-') ? '' : (gapMap[gap] ?? '')
 
   return (
     <div

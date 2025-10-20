@@ -13,7 +13,7 @@ const Hstack = ({
 }: DivProps & WithHstackProps) => {
   const { className, children, ...rest } = props
 
-  const gapResult = gapMap[gap] ?? ''
+  const gapResult = className?.includes('gap-') ? '' : (gapMap[gap] ?? '')
   const paddingResult = paddingMap[padding] ?? ''
   const result = `${gapResult} ${paddingResult}`
 
