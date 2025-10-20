@@ -2,53 +2,76 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 const RecruitSummaryCard = () => {
   return (
-    <div>
-      <RoundBox color="mono" isBordered padding="xl" radius="md" className="">
-        <div>
+    <div className="flex flex-wrap items-start justify-start gap-5">
+      <RoundBox
+        color="mono-bright"
+        isBordered
+        padding="lg"
+        radius="sm"
+        className="h-20 w-60"
+      >
+        <div className="flex-start flex items-center gap-4">
           <RoundBox
-            color="mono"
-            isBordered
+            color="mono-dim"
+            isBordered={false}
             padding="xl"
             radius="md"
-            className=""
-          >
-            <div className="">
-              <span className="">4</span>
-              <span>전체</span>
-            </div>
-          </RoundBox>
+            className="h-11 w-11"
+          ></RoundBox>
+          <div className="flex h-11 flex-col justify-center">
+            <span className="flex items-center truncate text-xl font-bold text-gray-900">
+              4
+            </span>
+            <span className="text-xs text-gray-600">전체</span>
+          </div>
         </div>
       </RoundBox>
-      <RoundBox color="mono" isBordered padding="xl" radius="md" className="">
-        <div>
+
+      <RoundBox
+        color="mono-bright"
+        isBordered
+        padding="lg"
+        radius="sm"
+        className="h-20 w-60"
+      >
+        <div className="flex-start flex items-center gap-4">
           <RoundBox
-            color="mono"
-            isBordered
+            color="success"
+            isBordered={false}
             padding="xl"
             radius="md"
-            className=""
-          >
-            <div className="">
-              <span className="">3</span>
-              <span>모집중</span>
-            </div>
-          </RoundBox>
+            className="h-12 w-12"
+          ></RoundBox>
+          <div className="flex h-11 flex-col justify-center">
+            <span className="flex items-center truncate text-xl font-bold text-gray-900">
+              3
+            </span>
+            <span className="text-xs text-gray-600">모집중</span>
+          </div>
         </div>
       </RoundBox>
-      <RoundBox color="mono" isBordered padding="xl" radius="md" className="">
-        <div>
+
+      <RoundBox
+        color="mono-bright"
+        isBordered
+        padding="lg"
+        radius="sm"
+        className="h-20 w-60"
+      >
+        <div className="flex-start flex items-center gap-4">
           <RoundBox
-            color="mono"
-            isBordered
+            color="danger"
+            isBordered={false}
             padding="xl"
             radius="md"
-            className=""
-          >
-            <div className="">
-              <span className="">1</span>
-              <span>마감됨</span>
-            </div>
-          </RoundBox>
+            className="h-12 w-12"
+          ></RoundBox>
+          <div className="flex h-11 flex-col justify-center">
+            <span className="flex items-center truncate text-xl font-bold text-gray-900">
+              1
+            </span>
+            <span className="text-xs text-gray-600">마감됨</span>
+          </div>
         </div>
       </RoundBox>
     </div>
