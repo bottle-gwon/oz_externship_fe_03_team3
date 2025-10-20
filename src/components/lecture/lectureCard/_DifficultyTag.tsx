@@ -1,5 +1,5 @@
+import Tag from '@/components/commonInProject/tag/Tag'
 import type { Difficulty } from '@/types'
-import Tag from '../commonInProject/tag/Tag'
 
 const difficultyToColor = {
   EASY: 'success',

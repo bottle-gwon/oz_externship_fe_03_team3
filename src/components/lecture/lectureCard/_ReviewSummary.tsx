@@ -1,6 +1,6 @@
+import { Hstack } from '@/components/commonInGeneral/layout'
+import Text from '@/components/commonInGeneral/text/Text'
 import { Star } from 'lucide-react'
-import { Hstack } from '../commonInGeneral/layout'
-import Text from '../commonInGeneral/text/Text'
 
 interface ReviewSummaryProps {
   average_rating: number

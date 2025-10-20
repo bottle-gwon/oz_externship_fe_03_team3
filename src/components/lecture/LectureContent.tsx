@@ -6,7 +6,7 @@ import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Select from '../commonInGeneral/select/Select'
 import Text from '../commonInGeneral/text/Text'
 import { dummyLectureArray } from './lectureListDummy'
-import LectureCard from './LectureCard'
+import LectureCard from './lectureCard/LectureCard'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)

@@ -1,14 +1,13 @@
+import Button from '@/components/commonInGeneral/button/Button'
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import type { Lecture } from '@/types'
-import { Hstack, Vstack } from '../commonInGeneral/layout'
-import RoundBox from '../commonInGeneral/roundBox/RoundBox'
-import Text from '../commonInGeneral/text/Text'
-import Button from '../commonInGeneral/button/Button'
 import { ChevronDown } from 'lucide-react'
-import ReviewSummary from './ReviewSummary'
-import Img from '../commonInProject/img/Img'
-import DifficultyTag from './DifficultyTag'
-import Tag from '../commonInProject/tag/Tag'
-import LectureBookmarkButton from './LectureBookmarkButton'
+import Tag from '@/components/commonInProject/tag/Tag'
+import Text from '@/components/commonInGeneral/text/Text'
+import DifficultyTag from './_DifficultyTag'
+import ReviewSummary from './_ReviewSummary'
+import LectureThumbnailSection from './thumbnailSection/LectureThumnailSection'
 
 const LectureCard = ({ lecture }: { lecture: Lecture }) => {
   const handleRedirect = () => {
@@ -17,24 +16,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
 
   return (
     <RoundBox padding="none" className="overflow-hidden">
-      <div className="relative">
-        <Img
-          src={lecture.thumbnail_img_url}
-          isWide
-          alt={`${lecture.title}__thumbnail`}
-        />
-        <Hstack className="absolute top-0 left-0 w-full justify-between p-3">
-          <Vstack>
-            <Tag color="primary" isVivid>
-              {lecture.platform}
-            </Tag>
-            <Tag color="danger" isVivid>
-              할인율
-            </Tag>
-          </Vstack>
-          <LectureBookmarkButton lecture={lecture} />
-        </Hstack>
-      </div>
+      <LectureThumbnailSection lecture={lecture} />
 
       <Vstack className="p-5" gap="none">
         <Hstack className="gap-2 pb-2">

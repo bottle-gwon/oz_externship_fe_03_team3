@@ -1,7 +1,7 @@
 import { Bookmark } from 'lucide-react'
-import Button from '../commonInGeneral/button/Button'
 import type { Lecture } from '@/types'
 import { useState } from 'react'
+import Button from '@/components/commonInGeneral/button/Button'
 
 const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
   const [isDummyBookmarked, setIsDummyBookmarked] = useState(!lecture)
