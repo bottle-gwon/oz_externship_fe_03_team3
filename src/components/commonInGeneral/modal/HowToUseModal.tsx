@@ -4,12 +4,22 @@ import { Vstack } from '../layout'
 import Text from '../text/Text'
 import Button from '../button/Button'
 
+// isOn: boolean ---- 켜지고 꺼지는 조건
+//
+// width
+// - sm: 672px, 좁은 모달 -- 지원 내역 모달 외 전부
+// - md: 896px, 넓은 모달 -- 지원 내역 모달
+//
+// modalZIndex: 여러 모달을 한 화면에 띄우기 위한 prop. 0, 1, 2 등으로 입력하면 됩니다
+//
+// onClose: 뒷배경을 클릭할 때, 혹은 Header의 x 버튼을 클릭할 때 동작하는 함수
+
 const HowToUseSingleModal = () => {
   const [isOn, setIsOn] = useState(false)
 
   return (
     <>
-      <Modal isOn={isOn} onClose={() => setIsOn(false)}>
+      <Modal isOn={isOn} width="md" onClose={() => setIsOn(false)}>
         <Modal.Header>
           <Text>헤더에는 X 버튼이 있어요</Text>
           <Text>그리고 border-bottom이 있어요</Text>
