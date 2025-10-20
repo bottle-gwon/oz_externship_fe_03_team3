@@ -21,6 +21,7 @@ export type RecruitCardProps = {
 
 const RecruitCard = ({
   recruit: {
+    thumbnail_img_url,
     title,
     expected_headcount,
     due_date,
@@ -47,10 +48,15 @@ const RecruitCard = ({
           isBordered={false}
           padding="none"
           radius="lg"
-          className={`imgBox ${imageClassName} flex-none overflow-hidden bg-gray-200`}
+          className={`${imageClassName} flex-none overflow-hidden bg-gray-200`}
           aria-label="공고 이미지"
-        ></RoundBox>
-        {/* 추후 확정 api 확인하여 이미지 어떻게 추가할지 고민 현재 api확인 바로는 RECM-003 이미지 url 없음*/}
+        >
+          <img
+            src={thumbnail_img_url}
+            alt="imgBox"
+            className={`${imageClassName}`}
+          />
+        </RoundBox>
 
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
@@ -127,7 +133,6 @@ const RecruitCard = ({
                   className="description text-sm text-gray-600"
                 >
                   {lectures.title}-{lectures.instructor}
-                  {/* 추후 확정 api 확인하여 강사명도 어떻게 추가할지 고민 현재 api확인 바로는 RECM-003강의목록, 강사명 없음*/}
                 </li>
               ))}
             </ul>
