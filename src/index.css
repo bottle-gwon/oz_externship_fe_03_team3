@@ -59,4 +59,11 @@
   --color-danger-500: #ef4444;
   --color-danger-600: #dc2626;
   --color-danger-800: #991b1b;
+
+  --spacing-oz-xs: 4px;
+  --spacing-oz-sm: 8px;
+  --spacing-oz-md: 12px;
+  --spacing-oz-lg: 16px;
+  --spacing-oz-xl: 24px;
+  --spacing-oz-xxl: 32px;
 }
