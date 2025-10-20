@@ -32,9 +32,20 @@ const GwonTestPage = () => {
       setTestSelectArray((prev) => [...prev, newName])
     }
   }
+  // 임시 제거 함수
+  const onClickDeleteTag = (tagName: string) => {
+    if (testSelectArray.includes(tagName)) {
+      setTestSelectArray((prev) => prev.filter((el) => el !== tagName))
+    }
+  }
   return (
     <div className="mt-10">
-      {testSelectArray.length !== 0 && <TagSelection />}
+      {testSelectArray.length !== 0 && (
+        <TagSelection
+          tagArray={testSelectArray}
+          onDeleteTag={onClickDeleteTag}
+        />
+      )}
       <TagList
         tags={EXAMPLE_DATA.tags}
         // page={EXAMPLE_DATA.page}

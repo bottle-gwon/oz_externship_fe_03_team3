@@ -1,15 +1,26 @@
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import TagSelected from './TagSelected'
 
-const TagSelection = () => {
+interface TagSelection {
+  tagArray: string[]
+  onDeleteTag: (tagName: string) => void
+}
+
+const TagSelection = ({ tagArray, onDeleteTag }: TagSelection) => {
+  if (!tagArray || !Array.isArray(tagArray)) {
+    return
+  }
+
   return (
     <Vstack
       gap="sm"
-      className="h-[89px] w-[672px] items-start justify-start px-6"
+      className="h-[89px] w-[672px] items-start justify-center px-6"
     >
-      <span className="h-[20px] text-sm">{`선택된 태그 (0/0)`}</span>
+      <span className="h-[20px] text-sm">{`선택된 태그 (${tagArray.length}/5)`}</span>
       <Hstack>
-        <TagSelected />
+        {tagArray.map((el, i) => (
+          <TagSelected key={el + i} tag={el} onDeleteTag={onDeleteTag} />
+        ))}
       </Hstack>
     </Vstack>
   )
