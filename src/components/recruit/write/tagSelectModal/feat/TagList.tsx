@@ -38,7 +38,7 @@ const TagList = ({
   return (
     <Vstack
       gap="xl"
-      className="h-[426px] w-[672px] items-center justify-center border-y border-gray-200"
+      className="h-[426px] w-[672px] items-center justify-center border-b border-gray-200"
     >
       <Vstack gap="sm" className="h-[314px] items-center justify-start">
         <Hstack className="w-full items-start justify-start self-start">
