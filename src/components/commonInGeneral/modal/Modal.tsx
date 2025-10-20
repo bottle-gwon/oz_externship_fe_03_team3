@@ -22,7 +22,7 @@ const Modal = ({
   onClose,
   ...props
 }: DivProps & WithModalProps) => {
-  const { style, className, children, ...rest } = props
+  const { color: _color, style, className, children, ...rest } = props
 
   const zIndex = 90 + modalZIndex
 
