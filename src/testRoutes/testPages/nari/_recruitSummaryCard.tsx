@@ -9,15 +9,15 @@ const RecruitSummaryCard = () => {
         isBordered
         padding="lg"
         radius="sm"
-        className="h-20 w-60"
+        className="h-20 w-62"
       >
         <div className="flex-start flex items-center gap-4">
           <RoundBox
             color="mono-dim"
             isBordered={false}
-            padding="lg"
+            padding="md"
             radius="md"
-            className="h-12 w-12"
+            className="h-10 w-10"
           >
             <FileText className="flex size-4" />
             {/* 추후 svg 아이콘으로 추가 */}
@@ -36,15 +36,15 @@ const RecruitSummaryCard = () => {
         isBordered
         padding="lg"
         radius="sm"
-        className="h-20 w-60"
+        className="h-20 w-62"
       >
         <div className="flex-start flex items-center gap-4">
           <RoundBox
             color="success"
             isBordered={false}
-            padding="lg"
+            padding="md"
             radius="md"
-            className="h-12 w-12"
+            className="h-10 w-10"
           >
             <Megaphone className="flex size-4" />
             {/* 추후 svg 아이콘으로 추가 */}
@@ -63,15 +63,15 @@ const RecruitSummaryCard = () => {
         isBordered
         padding="lg"
         radius="sm"
-        className="h-20 w-60"
+        className="h-20 w-62"
       >
         <div className="flex-start flex items-center gap-4">
           <RoundBox
             color="danger"
             isBordered={false}
-            padding="lg"
+            padding="md"
             radius="md"
-            className="h-12 w-12"
+            className="h-10 w-10"
           >
             <Clock3 className="flex size-4" />
           </RoundBox>
