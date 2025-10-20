@@ -1,4 +1,4 @@
-import CircleStar from '../../../assets/circle-star.svg'
+import CircleStar from '../../assets/circle-star.svg'
 
 const RecommendPreviewCard = () => {
   return (

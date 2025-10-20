@@ -2,7 +2,7 @@ import { LogIn, UserPlus } from 'lucide-react'
 import Vstack from '../commonInGeneral/layout/_Vstack'
 import Hstack from '../commonInGeneral/layout/_Hstack'
 import RecommendPreviewCard from './RecommendPreviwCard'
-import UserStar from '../../../assets/user-star.svg'
+import UserStar from '../../assets/user-star.svg'
 import type { RecommendPageProps } from '@/types'
 
 const emptyStateContent = {
