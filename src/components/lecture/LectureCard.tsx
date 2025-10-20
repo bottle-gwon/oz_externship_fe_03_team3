@@ -1,4 +1,4 @@
-import type { ImgProps, Lecture } from '@/types'
+import type { DivProps, ImgProps, Lecture } from '@/types'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Text from '../commonInGeneral/text/Text'
@@ -8,9 +8,16 @@ const fallbackImageUrl =
   'https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_auto/linuxiac.com/wp-content/uploads/2020/06/archlinux-1024x768.jpg'
 
 interface WithImgProps {
+  isWide?: boolean
   fallbackImageUrl?: string
 }
-const Img = ({ fallbackImageUrl, ...props }: ImgProps & WithImgProps) => {
+
+const Img = ({
+  isWide,
+  fallbackImageUrl,
+  ...props
+}: ImgProps & WithImgProps) => {
+  const wideResult = isWide ? 'aspect-video' : 'aspect-[4/3]'
   const handleLoad: React.ReactEventHandler<HTMLImageElement> = (event) => {
     if (!fallbackImageUrl) {
       return
@@ -34,8 +41,16 @@ const Img = ({ fallbackImageUrl, ...props }: ImgProps & WithImgProps) => {
       {...props}
       onLoad={handleLoad}
       onError={handleError}
-      className="aspect-video w-full object-cover"
+      className={`${wideResult} w-full object-cover`}
     />
+  )
+}
+
+const Chip = ({ children, className, ...rest }: DivProps) => {
+  return (
+    <RoundBox {...rest} color="primary" padding="xs" className="text-xs">
+      {children}
+    </RoundBox>
   )
 }
 
@@ -46,11 +61,12 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
         <Img
           src={lecture.thumbnail_img_url}
           fallbackImageUrl={fallbackImageUrl}
+          isWide
           alt={`${lecture.title}__thumbnail`}
         />
         <Hstack>
           {lecture.categories.map((category) => (
-            <Text key={category.id}>{category.name}</Text>
+            <Chip key={category.id}>{category.name}</Chip>
           ))}
         </Hstack>
         <Text>{lecture.instructor}</Text>
