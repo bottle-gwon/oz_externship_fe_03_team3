@@ -91,13 +91,13 @@ const Button = ({
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
-  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} transition w-fit h-fit`
+  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult}`
 
   return (
     <button
       {...rest}
       disabled={status !== 'enabled'}
-      className={`${className} ${result} rounded-lg disabled:opacity-50`}
+      className={`${className} ${result} h-fit w-fit cursor-pointer rounded-lg transition disabled:opacity-50`}
     >
       <Hstack gap="none" className="items-center">
         {status === 'pending' && (
