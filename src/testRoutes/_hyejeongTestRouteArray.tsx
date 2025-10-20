@@ -1,4 +1,4 @@
-import RecommendSection from '../components/recruit/recommendSection/RecommendSection'
+import RecommendSection from '../components/recommendSection/RecommendSection'
 import HyejeongPageTitle from './testPages/hyejeong/HyejeongPageTitle'
 
 const hyejeongTestRouteArray = [
