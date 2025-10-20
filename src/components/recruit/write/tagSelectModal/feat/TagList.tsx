@@ -1,4 +1,4 @@
-import { Vstack } from '@/components/commonInGeneral/layout'
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import TagCard from './TagCard'
 import TagPagination from './TagPagination'
 import type { TagApiResponse } from '@/types'
@@ -36,8 +36,14 @@ const TagList = ({
   }
 
   return (
-    <Vstack gap="xl" className="items-center justify-center">
-      <Vstack gap="sm" className="items-center justify-center">
+    <Vstack
+      gap="xl"
+      className="h-[426px] w-[672px] items-center justify-center border-y border-gray-200"
+    >
+      <Vstack gap="sm" className="h-[314px] items-center justify-center">
+        <Hstack className="w-full items-start justify-start self-start">
+          <p className="text-sm font-medium">{`사용가능한 태그 (${total_count}개)`}</p>
+        </Hstack>
         {tags?.map((el) => (
           <TagCard
             key={el.id + el.name}
