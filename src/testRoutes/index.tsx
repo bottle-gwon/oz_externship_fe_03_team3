@@ -1,7 +1,7 @@
 import nariRouteArray from './_nariRouteArray'
 import gwonTestRouteArray from './_gwonTestRouteArray'
 import thepottTestRouteArray from './_thepotTestRouteArray'
-import hyejeongTestRouteArray from './testPages/hyejeong/_hyejeongTestRouteArray'
+import hyejeongTestRouteArray from './_hyejeongTestRouteArray'
 
 const testRouteArray = [
   ...thepottTestRouteArray,
