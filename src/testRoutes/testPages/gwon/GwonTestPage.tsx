@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import TagList from '@/components/recruit/write/tagSelectModal/feat/TagList'
 import TagSelection from '@/components/recruit/write/tagSelectModal/feat/TagSelection'
+import TagSearch from '@/components/recruit/write/tagSelectModal/feat/TagSearch'
 
 const EXAMPLE_DATA = {
   tags: [
@@ -40,6 +41,7 @@ const GwonTestPage = () => {
   }
   return (
     <div className="mt-10">
+      <TagSearch />
       {testSelectArray.length !== 0 && (
         <TagSelection
           tagArray={testSelectArray}
