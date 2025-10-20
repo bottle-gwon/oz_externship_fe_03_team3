@@ -22,7 +22,6 @@ export type RecruitCardProps = {
 const RecruitCard = ({
   recruit: { title, expected_personnel, due_date, tags, views, bookmark_count },
   lectures = ['강의목록', '강의목록2'],
-  due_date_Tag = false,
   isMine = false,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
@@ -99,22 +98,14 @@ const RecruitCard = ({
             </div>
 
             <div className="h-2" />
-
-            <div className="inline-flex flex-wrap items-center gap-2">
-              <span
-                aria-label="마감일"
-                className="inline-flex items-center gap-1"
-              >
-                <Calendar className="size-4" />
-                {/* 추후 svg 아이콘으로 추가 */}
-                마감일 : {due_date ?? ''}
-              </span>
-              {due_date_Tag && (
-                <span className="rounded-md bg-gray-100 px-3 py-1 text-sm text-gray-700">
-                  기타
-                </span>
-              )}
-            </div>
+            <span
+              aria-label="마감일"
+              className="inline-flex items-center gap-1"
+            >
+              <Calendar className="size-4" />
+              {/* 추후 svg 아이콘으로 추가 */}
+              마감일 : {due_date ?? ''}
+            </span>
           </div>
 
           <div className="h-2" />
