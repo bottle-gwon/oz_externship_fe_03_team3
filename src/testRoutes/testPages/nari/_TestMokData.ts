@@ -1,11 +1,12 @@
 import type { recruit } from '@/types/interfaceRecruit'
+import img from '@/testRoutes/testPages/nari/d8b6dce9691774374a170cfc1d2c92b1b571c146.jpg'
 
 export const mockRecruits: recruit[] = [
   {
     id: 101,
     uuid: 'b0f8e91b-4a33-4e91-bf80-4f4e5e89d123',
     title: 'AI 스터디 모집합니다!',
-    thumbnail_img_url: 'https://example.com/recruitments/101/image1.jpg',
+    thumbnail_img_url: img,
     expected_headcount: 5,
     views_count: 153,
     bookmark_count: 8,
