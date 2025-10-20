@@ -3,7 +3,7 @@ import { Hstack, Vstack } from '../commonInGeneral/layout'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Text from '../commonInGeneral/text/Text'
 import Button from '../commonInGeneral/button/Button'
-import { Bookmark, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import ReviewSummary from './ReviewSummary'
 import Img from '../commonInProject/img/Img'
 import DifficultyTag from './DifficultyTag'
@@ -25,10 +25,14 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
         />
         <Hstack className="absolute top-0 left-0 w-full justify-between p-3">
           <Vstack>
-            <Tag>{lecture.platform}</Tag>
-            <Tag color="danger">할인율</Tag>
+            <Tag color="primary" isVivid>
+              {lecture.platform}
+            </Tag>
+            <Tag color="danger" isVivid>
+              할인율
+            </Tag>
           </Vstack>
-          <LectureBookmarkButton />
+          <LectureBookmarkButton lecture={lecture} />
         </Hstack>
       </div>
 
@@ -36,7 +40,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
         <Hstack className="gap-2 pb-2">
           <DifficultyTag difficulty={lecture.difficulty} />
           {lecture.categories.map((category) => (
-            <Tag key={category.id} color="mono-dim">
+            <Tag key={category.id} color="mono">
               {category.name}
             </Tag>
           ))}
