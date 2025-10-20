@@ -74,18 +74,18 @@ const RecruitCard = ({
                 <Bookmark className="size-4" /> {bookmark_count}
               </span>
               {isMine && (
-                <span className="inline-flex items-center gap-1">
+                <span className="inline-flex items-center gap-3">
                   <button
                     aria-label="수정"
-                    className="rounded p-1 hover:text-blue-600"
+                    className="text-gray-500 hover:text-blue-600"
                   >
-                    <Pencil className="size-4" />
+                    <Pencil className="size-3.5" />
                   </button>
                   <button
                     aria-label="삭제"
-                    className="rounded p-1 hover:text-red-600"
+                    className="text-gray-500 hover:text-red-600"
                   >
-                    <Trash2 className="size-4" />
+                    <Trash2 className="size-3.5" />
                   </button>
                 </span>
               )}
