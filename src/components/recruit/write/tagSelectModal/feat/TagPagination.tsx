@@ -46,7 +46,7 @@ const TagPagination = ({
     <Hstack gap="sm" className="items-center justify-center">
       {/* 이전 버튼 */}
       <button
-        className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
+        className="size-10 cursor-pointer rounded-md border border-gray-300 px-2.5 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
@@ -57,7 +57,7 @@ const TagPagination = ({
       {pageNumbers.map((number) => (
         <button
           key={number}
-          className={`size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-0 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white ${currentPage === number ? 'bg-[#eab308] text-white' : 'bg-white'} `}
+          className={`size-10 cursor-pointer rounded-md border border-gray-300 px-2.5 py-0 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white ${currentPage === number ? 'bg-[#eab308] text-white' : 'bg-white'} `}
           onClick={() => onPageChange(number)}
         >
           <span className="size-4">{number}</span>
@@ -66,7 +66,7 @@ const TagPagination = ({
 
       {/* 다음 버튼 */}
       <button
-        className="size-8 cursor-pointer rounded-sm border border-gray-300 px-2 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
+        className="size-10 cursor-pointer rounded-md border border-gray-300 px-3 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
         disabled={currentPage === totalPage}
         onClick={() => onPageChange(currentPage + 1)}
       >
