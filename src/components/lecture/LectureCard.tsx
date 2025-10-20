@@ -5,6 +5,7 @@ import RoundBox, {
 } from '../commonInGeneral/roundBox/RoundBox'
 import Text from '../commonInGeneral/text/Text'
 import Button from '../commonInGeneral/button/Button'
+import { ChevronDown } from 'lucide-react'
 
 const fallbackImageUrl =
   'https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_auto/linuxiac.com/wp-content/uploads/2020/06/archlinux-1024x768.jpg'
@@ -57,9 +58,8 @@ const Chip = ({
     <RoundBox
       {...rest}
       color={color}
-      padding="xs"
       radius="sm"
-      className="text-xs"
+      className="px-oz-sm py-oz-xs text-xs"
       isBordered={false}
     >
       {children}
@@ -70,34 +70,43 @@ const Chip = ({
 const LectureCard = ({ lecture }: { lecture: Lecture }) => {
   return (
     <RoundBox padding="none" className="overflow-hidden">
-      <Vstack gap="none">
-        <Img
-          src={lecture.thumbnail_img_url}
-          fallbackImageUrl={fallbackImageUrl}
-          isWide
-          alt={`${lecture.title}__thumbnail`}
-        />
-        <Hstack>
+      <Img
+        src={lecture.thumbnail_img_url}
+        // src={fallbackImageUrl}
+        fallbackImageUrl={fallbackImageUrl}
+        isWide
+        alt={`${lecture.title}__thumbnail`}
+      />
+      <Vstack className="p-5" gap="none">
+        <Hstack className="pb-2">
           {lecture.categories.map((category) => (
             <Chip key={category.id}>{category.name}</Chip>
           ))}
         </Hstack>
-        <Text>{lecture.instructor}</Text>
-        <Text>
+        <Text className="pb-1 text-lg font-semibold">{lecture.title}</Text>
+        <Text className="pb-2 text-sm">{lecture.instructor}</Text>
+        <Text className="pb-3">
           여기에 강의 설명이 있어야 하는데 그게 누락되어서 요청드려야 할
           듯합니다
         </Text>
-        <Text>{lecture.average_rating} 별표로 하야 함</Text>
-        <Hstack>
-          <Text>{lecture.discount_price}</Text>
-          <Text>{lecture.original_price}</Text>
-        </Hstack>
-        <Hstack>
-          <Button>리뷰 보기</Button>
-          <Button>강의 보러 가기</Button>
+        <Text className="pb-3">{lecture.average_rating} 별표로 하야 함</Text>
+
+        <Hstack className="items-center pb-4" gap="none">
+          <Text className="text-xl font-bold">
+            ₩{lecture.discount_price.toLocaleString()}
+          </Text>
+          <Text isMuted className="text-sm line-through">
+            ₩{lecture.original_price.toLocaleString()}
+          </Text>
         </Hstack>
 
-        <Vstack></Vstack>
+        <Hstack className="justify-between">
+          <Button color="primary" variant="ghost">
+            <ChevronDown />
+            리뷰 보기
+          </Button>
+          <Button color="primary">강의 보러 가기</Button>
+        </Hstack>
       </Vstack>
     </RoundBox>
   )
