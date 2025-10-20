@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import TagList from '@/components/recruit/write/tagSelectModal/feat/TagList'
+import TagSelection from '@/components/recruit/write/tagSelectModal/feat/TagSelection'
 
 const EXAMPLE_DATA = {
   tags: [
@@ -33,6 +34,7 @@ const GwonTestPage = () => {
   }
   return (
     <div className="mt-10">
+      {testSelectArray.length !== 0 && <TagSelection />}
       <TagList
         tags={EXAMPLE_DATA.tags}
         // page={EXAMPLE_DATA.page}
