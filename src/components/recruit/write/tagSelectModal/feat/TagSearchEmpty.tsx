@@ -3,7 +3,12 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import { Tag } from 'lucide-react'
 
-const TagSearchEmpty = () => {
+interface TagEmpty {
+  keyword: string
+  onClickAddTag: (newTag: string, isAdd: boolean) => void
+}
+
+const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
   return (
     <Vstack
       gap="lg"
@@ -14,22 +19,27 @@ const TagSearchEmpty = () => {
         color=""
         className="bg-primary-50 border-primary-300 h-[72px] w-[624px] border-2 border-dashed"
       >
+        {/* 새로 등록하시겠습니까? 안내멘트및 등록 버튼 */}
         <Hstack
           gap="none"
           className="h-full w-full items-center justify-between"
         >
           <Vstack gap="none" className="h-[36px] justify-center">
-            <p className="text-primary-800 text-sm font-medium">{`'테스트' 태그를 새로 만드시겠습니까?`}</p>
+            <p className="text-primary-800 text-sm font-medium">{`'${keyword}' 태그를 새로 만드시겠습니까?`}</p>
             <p className="text-primary-600 text-xs">
               검색 결과에 원하는 태그가 없는 경우 새로 등록 할 수 있습니다.
             </p>
           </Vstack>
-          <Button className="bg-primary-500 hover:bg-primary-600 active:bg-primary-700 text-white hover:text-white active:text-white">
+          <Button
+            onClick={() => onClickAddTag(keyword, true)}
+            className="bg-primary-500 hover:bg-primary-600 active:bg-primary-700 cursor-pointer text-white hover:text-white active:text-white"
+          >
             <span>새로 등록하기</span>
           </Button>
         </Hstack>
       </RoundBox>
 
+      {/* 검색 결과 없음 안내문 */}
       <Vstack
         gap="sm"
         className="h-[236px] w-[624px] items-center justify-center"
