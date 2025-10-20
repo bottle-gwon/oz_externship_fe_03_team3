@@ -7,6 +7,7 @@ interface WithButtonProps {
   variant?: ButtonVariant
   status?: 'enabled' | 'pending' | 'disabled'
   size?: SmToLg
+  shape?: 'rectangle' | 'square' | 'circle'
 }
 
 const makeBgResult = (color: Color, variant: ButtonVariant) => {
@@ -33,7 +34,6 @@ const makeBgResult = (color: Color, variant: ButtonVariant) => {
         : ''
   }
 }
-
 const makePaddigResult = (size: SmToLg) => {
   switch (size) {
     case 'sm':
@@ -77,27 +77,39 @@ const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
       return 'text-blue-600'
   }
 }
+const shapeMap = {
+  rectangle: 'rounded-lg h-fit w-fit ',
+  square: 'flex justify-center items-center max-w-10 w-full h-[40px] p-auto',
+  circle:
+    'flex justify-center items-center max-w-10 w-full h-[40px] p-auto rounded-full',
+}
 
 const Button = ({
   color = 'mono',
   variant = 'contained',
   status = 'enabled',
   size = 'md',
+  shape = 'rectangle',
   ...props
 }: ButtonProps & WithButtonProps) => {
   const { className, children, ...rest } = props
   const bgResult = makeBgResult(color, variant)
-  const paddingResult = className?.includes('p-') ? '' : makePaddigResult(size)
+  const paddingResult = className?.includes('p-')
+    ? ''
+    : shape !== 'rectangle'
+      ? ''
+      : makePaddigResult(size)
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
-  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult}`
+  const shapeResult = shapeMap[shape]
+  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} ${shapeResult}`
 
   return (
     <button
       {...rest}
       disabled={status !== 'enabled'}
-      className={`${className} ${result} h-fit w-fit cursor-pointer rounded-lg transition disabled:opacity-50`}
+      className={`${className} ${result} cursor-pointer transition disabled:opacity-50`}
     >
       <Hstack gap="none" className="items-center">
         {status === 'pending' && (

@@ -3,11 +3,12 @@ import { Hstack, Vstack } from '../commonInGeneral/layout'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Text from '../commonInGeneral/text/Text'
 import Button from '../commonInGeneral/button/Button'
-import { ChevronDown } from 'lucide-react'
+import { Bookmark, ChevronDown } from 'lucide-react'
 import ReviewSummary from './ReviewSummary'
 import Img from '../commonInProject/img/Img'
 import DifficultyTag from './DifficultyTag'
 import Tag from '../commonInProject/tag/Tag'
+import LectureBookmarkButton from './LectureBookmarkButton'
 
 const LectureCard = ({ lecture }: { lecture: Lecture }) => {
   const handleRedirect = () => {
@@ -16,11 +17,20 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
 
   return (
     <RoundBox padding="none" className="overflow-hidden">
-      <Img
-        src={lecture.thumbnail_img_url}
-        isWide
-        alt={`${lecture.title}__thumbnail`}
-      />
+      <div className="relative">
+        <Img
+          src={lecture.thumbnail_img_url}
+          isWide
+          alt={`${lecture.title}__thumbnail`}
+        />
+        <Hstack className="absolute top-0 left-0 w-full justify-between p-3">
+          <Vstack>
+            <Tag>{lecture.platform}</Tag>
+            <Tag color="danger">할인율</Tag>
+          </Vstack>
+          <LectureBookmarkButton />
+        </Hstack>
+      </div>
 
       <Vstack className="p-5" gap="none">
         <Hstack className="gap-2 pb-2">
@@ -36,8 +46,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           {lecture.instructor}
         </Text>
         <Text className="pb-3" color="mono" isMuted>
-          여기에 강의 설명이 있어야 하는데 그게 누락되어서 요청드려야 할
-          듯합니다
+          누락된 것: 1. 강의 설명 2. 리뷰 개수 3. 북마크 여부
         </Text>
         <ReviewSummary
           average_rating={lecture.average_rating}
