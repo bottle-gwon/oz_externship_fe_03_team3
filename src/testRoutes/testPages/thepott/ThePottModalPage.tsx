@@ -1,7 +1,7 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Vstack } from '@/components/commonInGeneral/layout'
+import Modal from '@/components/commonInGeneral/modal/Modal'
 import Text from '@/components/commonInGeneral/text/Text'
-import Modal from '@/components/commonInProject/modal/Modal'
 import { useState } from 'react'
 
 const ThePottModalPage = () => {
