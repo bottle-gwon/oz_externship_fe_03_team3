@@ -2,6 +2,7 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import TagCard from './TagCard'
 import TagPagination from './TagPagination'
 import type { TagApiResponse } from '@/types'
+import TagSearchEmpty from './TagSearchEmpty'
 
 // 페이지 네이션 타입
 type pageChange = (newPage: number) => void
@@ -31,8 +32,13 @@ const TagList = ({
   onSelectTag,
   selectArray,
 }: TagListInterface) => {
-  if (!tags || !page || !page_size || !total_count) {
+  if (!tags || !page || !page_size) {
     return
+  }
+
+  // 검색 결과 없음 새로운 태그 추가
+  if (total_count === 0) {
+    return <TagSearchEmpty />
   }
 
   return (
