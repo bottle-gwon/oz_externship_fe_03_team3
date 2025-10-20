@@ -1,17 +1,24 @@
-import { gapMap } from '../../../lib/tailwindClassNameMap'
+import { gapMap, paddingMap } from '../../../lib/tailwindClassNameMap'
 import type { DivProps, None, XsToXxl } from '../../../types'
 
 interface WithHstackProps {
   gap?: XsToXxl | None
+  padding?: XsToXxl | None
 }
 
-const Hstack = ({ gap = 'md', ...props }: DivProps & WithHstackProps) => {
+const Hstack = ({
+  gap = 'md',
+  padding = 'none',
+  ...props
+}: DivProps & WithHstackProps) => {
   const { className, children, ...rest } = props
 
   const gapResult = gapMap[gap] ?? ''
+  const paddingResult = paddingMap[padding] ?? ''
+  const result = `${gapResult} ${paddingResult}`
 
   return (
-    <div {...rest} className={`${className} ${gapResult} flex gap-3`}>
+    <div {...rest} className={`${className} ${result} flex`}>
       {children}
     </div>
   )

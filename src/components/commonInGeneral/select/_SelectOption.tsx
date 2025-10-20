@@ -25,11 +25,11 @@ const SelectOption = ({
   // TODO: 나중에 p 태그는 Text로 교체
   return (
     <RoundBox
+      color={isMouseEntered ? 'mono-dim' : 'mono-bright'}
       isBordered={false}
       onClick={handleClick}
       onMouseEnter={() => setIsMouseEntered(true)}
       onMouseLeave={() => setIsMouseEntered(false)}
-      className={isMouseEntered ? 'bg-gray-100' : ''}
     >
       <Hstack>
         {icon && icon}

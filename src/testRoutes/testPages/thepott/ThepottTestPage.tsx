@@ -1,6 +1,7 @@
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import {
   GridContainer,
+  Hstack,
   Vstack,
 } from '../../../components/commonInGeneral/layout'
 import Container from '../../../components/commonInGeneral/layout/_Container'
@@ -9,6 +10,7 @@ import FullScreen from '../../../components/commonInGeneral/layout/_FullScreen'
 import Select from '@/components/commonInGeneral/select/Select'
 import { ArrowBigDown } from 'lucide-react'
 import Text from '../../../components/commonInGeneral/text/Text'
+import Button from '@/components/commonInGeneral/button/Button'
 
 const Box = () => {
   return <div className="h-[100px] w-[100px] bg-amber-300">뭔가 있음</div>
@@ -24,11 +26,25 @@ const BlueLongBox = () => {
 const ThepottTestPage = () => {
   return (
     <Vstack className="w-2xl bg-rose-200">
+      <Hstack>
+        <Button variant="contained" color="mono">
+          뭔가 멋진 이름
+        </Button>
+        <Button variant="contained" color="danger">
+          뭔가 멋진 이름
+        </Button>
+        <Button variant="contained" color="success">
+          뭔가 멋진 이름
+        </Button>
+        <Button variant="contained" color="blue">
+          뭔가 멋진 이름
+        </Button>
+        <Button variant="contained" color="primary">
+          뭔가 멋진 이름
+        </Button>
+      </Hstack>
       <ArrowBigDown />
-      <Select
-        onOptionSelect={(option: string) => console.log({ option })}
-        className="w-[200px]"
-      >
+      <Select onOptionSelect={() => null} className="w-[200px]">
         <Select.Trigger>나를 눌러요</Select.Trigger>
         <Select.Content>
           <Select.Option>apple</Select.Option>

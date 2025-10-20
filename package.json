@@ -8,6 +8,7 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:strict": "eslint . --config eslint.config.strict.js",
     "format": "prettier --write --cache .",
     "preview": "vite preview",
     "prepare": "husky"
