@@ -6,6 +6,8 @@ import { useState } from 'react'
 
 const ThePottModalPage = () => {
   const [isOn, setIsOn] = useState(false)
+  const longIndexArray = [...Object.keys(Array(50).fill(0))]
+
   return (
     <>
       <Modal isOn={isOn} onClose={() => setIsOn(false)}>
@@ -15,12 +17,10 @@ const ThePottModalPage = () => {
       </Modal>
       <Vstack padding="xxl">
         <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
-        <Text>가나다라</Text>
-        <Text>가나다라</Text>
-        <Text>가나다라</Text>
-        <Text>가나다라</Text>
-        <Text>가나다라</Text>
-        <Text>가나다라</Text>
+        {longIndexArray.map((index) => (
+          <Text key={index}>가나다라</Text>
+        ))}
+        <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
       </Vstack>
     </>
   )

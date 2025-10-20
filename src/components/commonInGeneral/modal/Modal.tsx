@@ -6,6 +6,7 @@ import ModalContext from './_ModalContext'
 import ModalBody from './_ModalBody'
 import ModalFooter from './_ModalFooter'
 import ModalHeader from './_ModdalHeader'
+import { useEffect } from 'react'
 
 interface WithModalProps {
   isOn: boolean
@@ -27,6 +28,10 @@ const Modal = ({
   const zIndex = 90 + modalZIndex
 
   const widthResult = widthMap[width]
+
+  useEffect(() => {
+    document.body.style.overflow = isOn ? 'hidden' : 'unset'
+  }, [isOn])
 
   if (!isOn) {
     return null

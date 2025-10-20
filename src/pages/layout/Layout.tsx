@@ -5,7 +5,7 @@ import Header from '../../components/layout/header/Header'
 
 const Layout = () => {
   return (
-    <FullScreen className="bg-gray-50 relative">
+    <FullScreen className="relative bg-gray-50">
       <Header />
       <FlexOneContainer isYScrollable>
         <Outlet />
