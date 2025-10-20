@@ -21,6 +21,7 @@ interface TagListInterface extends TagApiResponse {
   onPageChange: pageChange
   onSelectTag: tagSelect
   selectArray: string[]
+  keyword: string //검색 키워드
 }
 
 const TagList = ({
@@ -31,6 +32,7 @@ const TagList = ({
   onPageChange,
   onSelectTag,
   selectArray,
+  keyword,
 }: TagListInterface) => {
   if (!tags || !page || !page_size) {
     return
@@ -38,7 +40,7 @@ const TagList = ({
 
   // 검색 결과 없음 새로운 태그 추가
   if (total_count === 0) {
-    return <TagSearchEmpty />
+    return <TagSearchEmpty keyword={keyword} onClickAddTag={onSelectTag} />
   }
 
   return (
