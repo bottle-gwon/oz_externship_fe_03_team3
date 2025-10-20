@@ -20,8 +20,15 @@ export type RecruitCardProps = {
 }
 
 const RecruitCard = ({
-  recruit: { title, expected_personnel, due_date, tags, views, bookmark_count },
-  lectures = ['강의목록', '강의목록2'],
+  recruit: {
+    title,
+    expected_headcount,
+    due_date,
+    tags,
+    views_count,
+    bookmark_count,
+    study_group,
+  },
   isMine = false,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
@@ -58,7 +65,7 @@ const RecruitCard = ({
                 aria-label="조회수"
                 className="viewCount inline-flex items-center gap-1"
               >
-                <Eye className="size-4" /> {views}
+                <Eye className="size-4" /> {views_count}
               </span>
               <span
                 aria-label="북마크"
@@ -94,7 +101,7 @@ const RecruitCard = ({
             >
               <Users className="size-4" />
               {/* 추후 svg 아이콘으로 추가 */}
-              모집인원 : {expected_personnel ?? ''}명
+              모집인원 : {expected_headcount ?? ''}명
             </div>
 
             <div className="h-2" />
@@ -104,7 +111,7 @@ const RecruitCard = ({
             >
               <Calendar className="size-4" />
               {/* 추후 svg 아이콘으로 추가 */}
-              마감일 : {due_date ?? ''}
+              마감일 : {(due_date ?? '').slice(0, 10).replace(/-/g, '.') + '.'}
             </span>
           </div>
 
@@ -113,13 +120,13 @@ const RecruitCard = ({
           <div className="mt-2">
             <div className="text-sm">강의 목록 :</div>
             <ul className="lectures mt-1 list-inside list-disc">
-              {lectures.map((text) => (
+              {study_group.lectures.map((lectures) => (
                 <li
-                  key={text}
+                  key={lectures.id}
                   aria-label="강의목록"
                   className="description text-sm text-gray-600"
                 >
-                  {text}
+                  {lectures.title}-{lectures.instructor}
                   {/* 추후 확정 api 확인하여 강사명도 어떻게 추가할지 고민 현재 api확인 바로는 RECM-003강의목록, 강사명 없음*/}
                 </li>
               ))}
@@ -130,14 +137,14 @@ const RecruitCard = ({
             <div aria-label="태그" className="tags mt-2 flex flex-wrap gap-2">
               {tags.map((tag) => (
                 <RoundBox
-                  key={tag}
+                  key={tag.id}
                   color="mono"
                   isBordered={false}
                   padding="none"
                   radius="sm"
                   className="bg-yellow-100 px-3 py-1 text-[12px] text-yellow-800"
                 >
-                  {tag}
+                  {tag.name}
                 </RoundBox>
               ))}
             </div>
