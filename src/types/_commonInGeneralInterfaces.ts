@@ -1,5 +1,5 @@
 export type XsToXxl = 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl'
-export type SmToLg = Omit<XsToXxl, 'xs' | 'xl' | 'xxl'>
+export type SmToLg = 'sm' | 'md' | 'lg'
 
 export type None = 'none'
 
