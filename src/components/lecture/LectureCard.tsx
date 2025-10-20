@@ -84,8 +84,10 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           ))}
         </Hstack>
         <Text className="pb-1 text-lg font-semibold">{lecture.title}</Text>
-        <Text className="pb-2 text-sm">{lecture.instructor}</Text>
-        <Text className="pb-3">
+        <Text className="pb-2 text-sm" color="mono" isMuted>
+          {lecture.instructor}
+        </Text>
+        <Text className="pb-3" color="mono" isMuted>
           여기에 강의 설명이 있어야 하는데 그게 누락되어서 요청드려야 할
           듯합니다
         </Text>
@@ -100,8 +102,8 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           </Text>
         </Hstack>
 
-        <Hstack className="justify-between">
-          <Button color="primary" variant="ghost">
+        <Hstack className="items-center justify-between">
+          <Button color="primary" variant="ghost" className="p-0">
             <ChevronDown />
             리뷰 보기
           </Button>

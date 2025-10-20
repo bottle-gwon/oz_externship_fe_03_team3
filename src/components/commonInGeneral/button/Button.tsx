@@ -87,7 +87,7 @@ const Button = ({
 }: ButtonProps & WithButtonProps) => {
   const { className, children, ...rest } = props
   const bgResult = makeBgResult(color, variant)
-  const paddingResult = makePaddigResult(size)
+  const paddingResult = className?.includes('p-') ? '' : makePaddigResult(size)
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
