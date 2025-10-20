@@ -1,7 +1,8 @@
 import TitleSection from '@/components/titleSection/TitleSection'
 
 const HyejeongPageTitle = () => {
-  return <TitleSection type="manage" isLoggedIn />
+  const isLoggedIn = false
+  return <TitleSection type="manage" isLoggedIn={isLoggedIn} />
 }
 
 export default HyejeongPageTitle

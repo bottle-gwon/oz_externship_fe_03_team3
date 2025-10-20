@@ -3,12 +3,14 @@ import Button from '../commonInGeneral/button/Button'
 import { ArrowLeft, LogIn } from 'lucide-react'
 import ScrollText from '../../assets/scroll-text.svg'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
+import { useNavigate } from 'react-router'
 
 type TitleButtonContentType = {
   label: string
   color: Color
   icon?: React.ReactNode
   variant?: ButtonVariant
+  url: string
 }
 
 type TitleContentType = {
@@ -31,11 +33,13 @@ const title: Record<string, TitleContentType> = {
               label: '공고 관리',
               color: 'primary',
               variant: 'outlined',
+              url: '/recruit/manager',
             },
             {
               label: '+ 공고 작성하기',
               color: 'primary',
               variant: 'contained',
+              url: '/recruit/create',
             },
           ]
         : [
@@ -43,7 +47,8 @@ const title: Record<string, TitleContentType> = {
               icon: <LogIn />,
               label: '로그인 후 공고 작성',
               color: 'primary',
-              variant: 'outlined',
+              variant: 'contained',
+              url: '/login',
             },
           ],
   },
@@ -73,6 +78,7 @@ const title: Record<string, TitleContentType> = {
       {
         label: '+ 새 공고 작성하기',
         color: 'primary',
+        url: '/recruit/create',
       },
     ],
   },
@@ -81,6 +87,11 @@ const title: Record<string, TitleContentType> = {
 const TitleSection = ({ type, isLoggedIn = false }: TitlePageProps) => {
   const content = title[type]
   const buttons = content.buttons(isLoggedIn)
+  const navigate = useNavigate()
+
+  const handleBack = () => navigate(-1)
+  const handleClick = (url: string) => navigate(url)
+
   return (
     <Hstack
       gap="none"
@@ -89,13 +100,16 @@ const TitleSection = ({ type, isLoggedIn = false }: TitlePageProps) => {
       <Hstack gap="none" className="items-center">
         {/* 뒤로가기 버튼 */}
         {content.showBackbutton && (
-          <button className="mr-4 flex h-10 w-10 items-center justify-center rounded-[50%] bg-[#F3F4F6] py-2 hover:bg-[#E5E7EB]">
+          <button
+            onClick={handleBack}
+            className="mr-4 flex h-10 w-10 items-center justify-center rounded-[50%] bg-[#F3F4F6] py-2 hover:bg-[#E5E7EB]"
+          >
             <ArrowLeft size={17} className="text-[#3B4350]" />
           </button>
         )}
         <Vstack gap="none" className="h-[68px]">
           <h1 className="pb-2 text-3xl leading-9 font-bold">{content.title}</h1>
-          <p className="h-7 pt-1">{content.subtitle}</p>
+          <p className="h-7 pt-1 text-[#52525b]">{content.subtitle}</p>
         </Vstack>
       </Hstack>
       {buttons.length > 0 && (
@@ -107,6 +121,7 @@ const TitleSection = ({ type, isLoggedIn = false }: TitlePageProps) => {
               variant={btn.variant}
               size={'lg'}
               className="ml-3"
+              onClick={() => handleClick(btn.url)}
             >
               {btn.icon && <span className="mr-2">{btn.icon}</span>}
               {btn.label}
