@@ -1,86 +1,34 @@
-import type { DivProps, ImgProps, Lecture } from '@/types'
+import type { Lecture } from '@/types'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
-import RoundBox, {
-  type WithRoundBoxProps,
-} from '../commonInGeneral/roundBox/RoundBox'
+import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Text from '../commonInGeneral/text/Text'
 import Button from '../commonInGeneral/button/Button'
 import { ChevronDown } from 'lucide-react'
 import ReviewSummary from './ReviewSummary'
-
-const fallbackImageUrl =
-  'https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_auto/linuxiac.com/wp-content/uploads/2020/06/archlinux-1024x768.jpg'
-
-interface WithImgProps {
-  isWide?: boolean
-  fallbackImageUrl?: string
-}
-
-const Img = ({
-  isWide,
-  fallbackImageUrl,
-  ...props
-}: ImgProps & WithImgProps) => {
-  const wideResult = isWide ? 'aspect-video' : 'aspect-[4/3]'
-  const handleLoad: React.ReactEventHandler<HTMLImageElement> = (event) => {
-    if (!fallbackImageUrl) {
-      return
-    }
-
-    const img = event.currentTarget
-    if (img.naturalWidth === 0 || img.naturalHeight === 0) {
-      img.src = fallbackImageUrl
-    }
-  }
-
-  const handleError: React.ReactEventHandler<HTMLImageElement> = (event) => {
-    if (!fallbackImageUrl) {
-      return
-    }
-
-    event.currentTarget.src = fallbackImageUrl
-  }
-  return (
-    <img
-      {...props}
-      onLoad={handleLoad}
-      onError={handleError}
-      className={`${wideResult} w-full object-cover`}
-    />
-  )
-}
-
-const Tag = ({
-  color = 'primary',
-  children,
-  ...rest
-}: DivProps & WithRoundBoxProps) => {
-  return (
-    <RoundBox
-      {...rest}
-      color={color}
-      radius="sm"
-      className="px-oz-sm py-oz-xs text-xs"
-      isBordered={false}
-    >
-      {children}
-    </RoundBox>
-  )
-}
+import Img from '../commonInProject/img/Img'
+import DifficultyTag from './DifficultyTag'
+import Tag from '../commonInProject/tag/Tag'
 
 const LectureCard = ({ lecture }: { lecture: Lecture }) => {
+  const handleRedirect = () => {
+    window.location.href = lecture.url_link
+  }
+
   return (
     <RoundBox padding="none" className="overflow-hidden">
       <Img
         src={lecture.thumbnail_img_url}
-        fallbackImageUrl={fallbackImageUrl}
         isWide
         alt={`${lecture.title}__thumbnail`}
       />
+
       <Vstack className="p-5" gap="none">
-        <Hstack className="pb-2">
+        <Hstack className="gap-2 pb-2">
+          <DifficultyTag difficulty={lecture.difficulty} />
           {lecture.categories.map((category) => (
-            <Tag key={category.id}>{category.name}</Tag>
+            <Tag key={category.id} color="mono-dim">
+              {category.name}
+            </Tag>
           ))}
         </Hstack>
         <Text className="pb-1 text-lg font-semibold">{lecture.title}</Text>
@@ -110,7 +58,9 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
             <ChevronDown />
             리뷰 보기
           </Button>
-          <Button color="primary">강의 보러 가기</Button>
+          <Button color="primary" onClick={handleRedirect}>
+            강의 보러 가기
+          </Button>
         </Hstack>
       </Vstack>
     </RoundBox>

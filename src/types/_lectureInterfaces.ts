@@ -1,3 +1,5 @@
+export type Difficulty = 'EASY' | 'NORMAL' | 'HARD'
+
 export interface LectureCategory {
   id: number
   name: string
@@ -9,7 +11,7 @@ export interface Lecture {
   instructor: string
   thumbnail_img_url: string
   categories: LectureCategory[]
-  difficulty: 'EASY' | 'NORMAL' | 'HARD'
+  difficulty: Difficulty
   original_price: number
   discount_price: number
   platform: 'inflearn' | 'udemy'
