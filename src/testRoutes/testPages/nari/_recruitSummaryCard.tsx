@@ -1,6 +1,6 @@
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
-const _recruitSummaryCard = () => {
+const RecruitSummaryCard = () => {
   return (
     <div>
       <RoundBox color="mono" isBordered padding="xl" radius="md" className="">
@@ -55,4 +55,4 @@ const _recruitSummaryCard = () => {
   )
 }
 
-export default _recruitSummaryCard
+export default RecruitSummaryCard
