@@ -27,7 +27,7 @@ const GwonTestPage = () => {
   const handlePageChange = (newPage: number) => {
     setCurrent(newPage)
   }
-  // 임시 변경 함수
+  // 임시 태그 변경 함수
   const onClickTag = (newName: string, isAdd: boolean = false) => {
     if (isAdd) {
       if (!testSelectArray.includes(newName)) {
