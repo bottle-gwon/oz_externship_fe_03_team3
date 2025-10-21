@@ -3,12 +3,16 @@ import type { MyRecruit } from '@/types'
 
 import { Clock3, FileText, Megaphone } from 'lucide-react'
 
-type SummaryProps = { recruits: MyRecruit[] }
+type SummaryProps = { myRecruitArray: MyRecruit[] }
 
-const RecruitSummaryCard = ({ recruits }: SummaryProps) => {
-  const totalCount = recruits.length
-  const openCount = recruits.filter((item) => item.is_closed === false).length
-  const closedCount = recruits.filter((item) => item.is_closed === true).length
+const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
+  const totalCount = myRecruitArray.length
+  const openCount = myRecruitArray.filter(
+    (item) => item.is_closed === false
+  ).length
+  const closedCount = myRecruitArray.filter(
+    (item) => item.is_closed === true
+  ).length
   return (
     <div className="flex flex-wrap items-start justify-start gap-5">
       <RoundBox
