@@ -1,10 +1,24 @@
-import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
-import type { RecommendPageProps } from '@/types'
+import {
+  GridContainer,
+  Hstack,
+  Vstack,
+} from '@/components/commonInGeneral/layout'
+import type { Lecture, RecommendPageProps, RecommendPageType } from '@/types'
+import RecruitCard from '../recruit/RecruitCard'
+import LectureCard from '../lecture/lectureCard/LectureCard'
+import type { recruit } from '@/types/interfaceRecruit'
 
-const RecommendUser = ({ type }: RecommendPageProps) => {
+const RecommendUser = <T extends RecommendPageType>({
+  type,
+  recommendedArray,
+}: RecommendPageProps<T>) => {
   const userName = '김스터디' // 로그인 된 사용자, 추후에 수정
   const title =
     type === 'recruit' ? ` 님을 위한 맟춤 스터디 공고` : ` 님을 위한 추천 강의`
+
+  if (type === 'recruit') {
+    return
+  }
   return (
     <Vstack
       gap="none"
@@ -20,6 +34,22 @@ const RecommendUser = ({ type }: RecommendPageProps) => {
             개인화 추천
           </span>
         </Hstack>
+        <GridContainer>
+          {type === 'recruit' &&
+            recommendedArray.map((recommend) => (
+              <RecruitCard
+                key={recommend.uuid}
+                recruit={recommend as recruit}
+              />
+            ))}
+          {type === 'lecture' &&
+            recommendedArray.map((recommend) => (
+              <LectureCard
+                key={recommend.uuid}
+                lecture={recommend as Lecture}
+              />
+            ))}
+        </GridContainer>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {/* 임시 카드 컴포넌트 */}
           {[1, 2, 3].map((i) => (

@@ -1,20 +1,23 @@
-import type { RecommendPageType } from '@/types'
+import type { Recommended, RecommendPageType } from '@/types'
 import RecommendGuest from './RecommendGuest'
 import RecommendUser from './RecommendUser'
 
-const RecommendSection = ({ type }: { type: RecommendPageType }) => {
-  // const RecommendSection = ({ type }) => {
-  const isLoggedIn: boolean = true // 로그인 확인 boolean값, 추후에 변경
+interface RecommendSectionProps<T extends RecommendPageType> {
+  type: RecommendPageType
+  isLoggedIn: boolean
+  recommendedArray: Recommended<T>[]
+}
 
-  return (
-    <div>
-      {isLoggedIn ? (
-        <RecommendUser type={type} />
-      ) : (
-        <RecommendGuest type={type} />
-      )}
-    </div>
-  )
+const RecommendSection = <T extends RecommendPageType>({
+  type,
+  isLoggedIn,
+  recommendedArray,
+}: RecommendSectionProps<T>) => {
+  if (isLoggedIn) {
+    return <RecommendUser type={type} recommendedArray={recommendedArray} />
+  }
+
+  return <RecommendGuest type={type} />
 }
 
 export default RecommendSection

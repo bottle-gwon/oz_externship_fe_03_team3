@@ -1,7 +1,16 @@
+import type { Lecture } from './_lectureInterfaces'
+import type { recruit } from './interfaceRecruit'
+
 // 추천섹션
 export type RecommendPageType = 'recruit' | 'lecture'
-export interface RecommendPageProps {
-  type: RecommendPageType
+
+export type Recommended<T extends RecommendPageType> = T extends 'recruit'
+  ? recruit
+  : Lecture
+
+export interface RecommendPageProps<T extends RecommendPageType> {
+  type: T
+  recommendedArray: Recommended<T>[]
 }
 
 // 타이틀
