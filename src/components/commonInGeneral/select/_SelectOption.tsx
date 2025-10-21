@@ -28,7 +28,7 @@ const SelectOption = ({
     <RoundBox
       isBordered={false}
       onClick={handleClick}
-      className="bg-white px-3 py-2 hover:bg-gray-50"
+      className="cursor-pointer bg-white px-3 py-2 transition hover:bg-gray-50"
     >
       <Hstack>
         {icon && icon}

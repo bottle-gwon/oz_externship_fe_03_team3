@@ -16,7 +16,7 @@ const SelectTrigger = ({ children }: { children: string }) => {
     <RoundBox
       ref={triggerRef}
       onClick={handleClick}
-      className="bg-white px-3 py-2 transition hover:bg-gray-50"
+      className="cursor-pointer bg-white px-3 py-2 transition hover:bg-gray-50"
     >
       <Hstack>
         {selectedIcon ?? selectedIcon}
