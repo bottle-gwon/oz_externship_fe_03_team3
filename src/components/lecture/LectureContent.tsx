@@ -8,6 +8,7 @@ import { dummyLectureArray } from './lectureListDummy'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
 import RecommendSection from '../recommendSection/RecommendSection'
+import Input from '../commonInGeneral/inputFamily/Input'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
@@ -31,7 +32,7 @@ const LectureContent = () => {
       <Vstack className="px-oz-xxl gap-oz-xxl">
         <RoundBox>
           <GridContainer className="gap-oz-lg">
-            <RoundBox>검색창 자리 확인용(기능 없음)</RoundBox>
+            <Input placeholder="검색어를 입력하세요" isInDanger />
             <Select onOptionSelect={() => null} className="w-full">
               <Select.Trigger>전체 카테고리(자리 확인용)</Select.Trigger>
             </Select>
