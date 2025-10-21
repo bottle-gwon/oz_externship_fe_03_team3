@@ -1,8 +1,8 @@
 import { paddingMap, radiusMap } from '@/lib/tailwindClassNameMap'
 import type { Color, DivProps, None, XsToXxl } from '@/types'
 
-type RoundBoxColor = Omit<Color, 'mono'> | 'mono-bright' | 'mono-dim'
-interface WithRoundBoxProps {
+export type RoundBoxColor = Exclude<Color, 'mono'> | 'mono-bright' | 'mono-dim'
+export interface WithRoundBoxProps {
   color?: RoundBoxColor
   isShadowed?: boolean
   isBordered?: boolean

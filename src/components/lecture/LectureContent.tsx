@@ -5,19 +5,13 @@ import Container from '../commonInGeneral/layout/_Container'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Select from '../commonInGeneral/select/Select'
 import Text from '../commonInGeneral/text/Text'
-
-const LectureCardPlaceholder = () => {
-  return (
-    <RoundBox padding="none" className="h-[516px]">
-      <Vstack>
-        <div className="h-[216px] bg-amber-300">사진 자리</div>
-      </Vstack>
-    </RoundBox>
-  )
-}
+import { dummyLectureArray } from './lectureListDummy'
+import LectureCard from './lectureCard/LectureCard'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
+
+  // TODO: 더미 데이터 사용중. 나중에 삭제해야 합니다!
 
   return (
     <Container>
@@ -58,8 +52,8 @@ const LectureContent = () => {
           </RoundBox>
 
           <GridContainer className="gap-oz-xl">
-            {[...Object.keys(Array(10).fill(0))].map((index) => (
-              <LectureCardPlaceholder key={index} />
+            {dummyLectureArray.map((lecture) => (
+              <LectureCard key={lecture.uuid} lecture={lecture} />
             ))}
           </GridContainer>
         </Vstack>
