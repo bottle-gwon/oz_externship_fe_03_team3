@@ -52,7 +52,7 @@ const title: Record<string, TitleContentType> = {
             },
           ],
   },
-  course: {
+  lecture: {
     title: 'IT 강의 목록',
     subtitle: '전문 강사들의 고품질 IT 강의를 만나보세요',
     showBackbutton: false,

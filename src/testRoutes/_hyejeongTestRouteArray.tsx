@@ -1,8 +1,11 @@
-import RecommendSection from '../components/recommendSection/RecommendSection'
 import HyejeongPageTitle from './testPages/hyejeong/HyejeongPageTitle'
+import HyejeongRecommendSection from './testPages/hyejeong/HyejeongRecommendSection'
 
 const hyejeongTestRouteArray = [
-  { path: '/test/hyejeong', element: <RecommendSection /> },
+  {
+    path: '/test/hyejeong',
+    element: <HyejeongRecommendSection />,
+  },
   { path: '/test/hyejeong/title', element: <HyejeongPageTitle /> },
 ]
 
