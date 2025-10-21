@@ -12,16 +12,11 @@ const GwonTagModalTest = () => {
     setIsOn(true)
   }
 
-  // 모달창 닫기
-  const onClose = () => {
-    setIsOn(false)
-  }
-
   return (
     <Vstack>
       <TagSelectModal
         isOn={isOn}
-        onClose={onClose}
+        onClose={setIsOn} // 세터 함수로 넘겨줄것  닫거나, 취소시 선택된 태그는 날려야 해서 onClose 이벤트는 내부에서 정의
         tagArray={tagArray}
         setTagArray={setTagArray}
       />
