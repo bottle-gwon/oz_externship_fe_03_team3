@@ -9,18 +9,17 @@ import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
 import { dummyRecruitArray } from '@/components/recruit/recruitListDummy'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Search } from 'lucide-react'
-import { useState } from 'react'
 
 const RecruitListPage = () => {
-  const [isLoggedInForDebug, serIsLoggedInDebug] = useState(true) //로그인 여부 추후에 변경
+  const isLoggedIn = true //로그인 여부 추후에 변경
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-[#F9FAFB]">
       <Header />
-      <TitleSection type="recruit" isLoggedIn={isLoggedInForDebug} />
+      <TitleSection type="recruit" isLoggedIn={isLoggedIn} />
       <RecommendSection
         type="recruit"
-        isLoggedIn={isLoggedInForDebug}
+        isLoggedIn={isLoggedIn}
         recommendedArray={dummyRecruitArray.slice(0, 3)}
       />
       <RoundBox
