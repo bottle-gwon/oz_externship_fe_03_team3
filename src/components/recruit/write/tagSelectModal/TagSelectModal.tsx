@@ -79,7 +79,7 @@ const TagSelectModal = ({
   }
 
   return (
-    <Modal isOn={isOn} onClose={onClose}>
+    <Modal isOn={isOn} onClose={onClose} width="sm">
       <Modal.Header>헤더</Modal.Header>
       <Modal.Body>
         <TagSearch onSearch={onSearchTag} />

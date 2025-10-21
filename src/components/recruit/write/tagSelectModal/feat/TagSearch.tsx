@@ -28,7 +28,7 @@ const TagSearch = ({ onSearch }: search) => {
   }
 
   return (
-    <Vstack className="h-[99px] w-[672px] justify-center border-b border-gray-200 px-6">
+    <Vstack className="-mx-6 -mt-6 h-[99px] w-[672px] items-center justify-center border-b border-gray-200">
       <Hstack className="p-oz-md h-[50px] w-[624px] items-center justify-between rounded-md border border-gray-300">
         <Search className="size-4 text-gray-400" />
         <input

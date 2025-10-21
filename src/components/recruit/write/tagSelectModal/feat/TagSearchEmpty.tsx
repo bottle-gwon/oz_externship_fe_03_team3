@@ -13,7 +13,7 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
     <Vstack
       gap="lg"
       padding="xl"
-      className="h-[372px] w-[672px] items-center justify-center border-b border-gray-200"
+      className="-mx-6 h-[372px] w-[672px] items-center justify-center border-b border-gray-200"
     >
       <RoundBox
         color="primary"
