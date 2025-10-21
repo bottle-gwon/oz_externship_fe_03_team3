@@ -39,7 +39,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           className="pb-3"
         />
 
-        <Hstack className="items-center pb-4" gap="none">
+        <Hstack className="items-center pb-4" gap="sm">
           <Text className="text-xl font-bold">
             ₩{lecture.discount_price.toLocaleString()}
           </Text>
