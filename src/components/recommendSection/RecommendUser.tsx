@@ -7,6 +7,8 @@ import type { Lecture, RecommendPageProps, RecommendPageType } from '@/types'
 import RecruitCard from '../recruit/RecruitCard'
 import LectureCard from '../lecture/lectureCard/LectureCard'
 import type { recruit } from '@/types/interfaceRecruit'
+import Container from '../commonInGeneral/layout/_Container'
+import Tag from '../commonInProject/tag/Tag'
 
 const RecommendUser = <T extends RecommendPageType>({
   type,
@@ -20,20 +22,22 @@ const RecommendUser = <T extends RecommendPageType>({
     return
   }
   return (
-    <Vstack
-      gap="none"
-      className="h-[492px] w-[1306px] items-center justify-center rounded-xl border border-[#FEF08A] bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)]"
+    <Container
+      width="lg"
+      isPadded
+      className="rounded-xl border border-[#FEF08A] bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)]"
     >
       <Vstack gap="none">
-        <Hstack gap="none" className="mb-6 items-center">
-          <h3 className="w-[379px] text-2xl leading-8 font-semibold text-[#3E454C]">
+        <Hstack gap="xxl" className="mb-6 items-center">
+          <h3 className="text-2xl font-semibold text-[#3E454C]">
             <span className="text-[#CA8A04]">{userName}</span>
             {title}
           </h3>
-          <span className="h-6 w-[74px] rounded-sm bg-[#EA580C] px-2 py-1 text-center text-xs text-white">
+          <Tag color="danger" isVivid>
             개인화 추천
-          </span>
+          </Tag>
         </Hstack>
+
         <GridContainer>
           {type === 'recruit' &&
             recommendedArray.map((recommend) => (
@@ -51,7 +55,7 @@ const RecommendUser = <T extends RecommendPageType>({
             ))}
         </GridContainer>
       </Vstack>
-    </Vstack>
+    </Container>
   )
 }
 
