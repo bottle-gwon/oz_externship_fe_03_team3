@@ -36,7 +36,7 @@ const RecruitCard = ({
 }: RecruitCardProps) => {
   return (
     <RoundBox
-      color="mono"
+      color="mono-bright"
       isBordered
       padding="xl"
       radius="md"
@@ -44,7 +44,7 @@ const RecruitCard = ({
     >
       <div className="flex gap-3">
         <RoundBox
-          color="mono"
+          color="mono-bright"
           isBordered={false}
           padding="none"
           radius="lg"
@@ -143,7 +143,7 @@ const RecruitCard = ({
               {tags.map((tag) => (
                 <RoundBox
                   key={tag.id}
-                  color="mono"
+                  color="mono-bright"
                   isBordered={false}
                   padding="none"
                   radius="sm"
@@ -156,7 +156,7 @@ const RecruitCard = ({
             {isMine && (
               <div className="row-span-2 self-center">
                 <RoundBox
-                  color="mono"
+                  color="mono-bright"
                   isBordered
                   padding="none"
                   radius="sm"
