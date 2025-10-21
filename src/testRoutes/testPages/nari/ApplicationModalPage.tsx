@@ -19,22 +19,30 @@ const ApplicationModalPage = () => {
         <Modal.Body>
           <div>
             <section>
-              <label htmlFor="">자기소개</label>
+              <label htmlFor="">
+                자기소개 <span>*</span>
+              </label>
               <textarea className="resize-none" />
               <div>글자수</div>
             </section>
             <section>
-              <label htmlFor="">지원 동기</label>
+              <label htmlFor="">
+                지원 동기 <span>*</span>
+              </label>
               <textarea className="resize-none" />
               <div>글자수</div>
             </section>
             <section>
-              <label htmlFor="">스터디 목표</label>
+              <label htmlFor="">
+                스터디 목표 <span>*</span>
+              </label>
               <textarea className="resize-none" />
               <div>글자수</div>
             </section>
             <section>
-              <label htmlFor="">가능한 시간대</label>
+              <label htmlFor="">
+                가능한 시간대 <span>*</span>
+              </label>
               <textarea className="resize-none" />
               <div>글자수</div>
             </section>
