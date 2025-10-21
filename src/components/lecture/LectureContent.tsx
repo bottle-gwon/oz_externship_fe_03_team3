@@ -22,7 +22,7 @@ const LectureContent = () => {
           <Button onClick={() => setIsLoggedInForDebug(!isLoggedInForDebug)}>
             로그인 여부 토글 ____ 디버그용
           </Button>
-          <TitleSection isLoggedIn={isLoggedInForDebug} type="course" />
+          <TitleSection isLoggedIn={isLoggedInForDebug} type="lecture" />
         </Vstack>
         <RoundBox
           color="primary"
