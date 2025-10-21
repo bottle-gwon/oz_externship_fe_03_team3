@@ -8,6 +8,7 @@ import Text from '../commonInGeneral/text/Text'
 import { dummyLectureArray } from './lectureListDummy'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
+import RecommendSection from '../recommendSection/RecommendSection'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
@@ -15,44 +16,37 @@ const LectureContent = () => {
   // TODO: 더미 데이터 사용중. 나중에 삭제해야 합니다!
 
   return (
-    <Container>
-      <Vstack className="gap-oz-xxl px-oz-xl">
-        {/* header -- 제작해주시는 것으로 교체할 예정 */}
-        <Vstack className="px-oz-xl">
-          <Button onClick={() => setIsLoggedInForDebug(!isLoggedInForDebug)}>
-            로그인 여부 토글 ____ 디버그용
-          </Button>
-          <TitleSection isLoggedIn={isLoggedInForDebug} type="lecture" />
-        </Vstack>
-        <RoundBox
-          color="primary"
-          className={isLoggedInForDebug ? 'p-oz-xl' : 'p-oz-xxl mx-oz-xl'}
-        >
-          <Text>
-            추천 섹션, 로그인 유도 섹션. 혜정님께서 작성하신 것 공통화 후 사용할
-            예정
-          </Text>
-          <Text>로그인 여부: {JSON.stringify(isLoggedInForDebug)}</Text>
-        </RoundBox>
-        <Vstack className="px-oz-xl gap-oz-xxl">
-          <RoundBox>
-            <GridContainer className="gap-oz-lg">
-              <RoundBox>검색창 자리 확인용(기능 없음)</RoundBox>
-              <Select onOptionSelect={() => null} className="w-full">
-                <Select.Trigger>전체 카테고리(자리 확인용)</Select.Trigger>
-              </Select>
-              <Select onOptionSelect={() => null} className="w-full">
-                <Select.Trigger>최신순(눌리지 않음)</Select.Trigger>
-              </Select>
-            </GridContainer>
-          </RoundBox>
-
-          <GridContainer className="gap-oz-xl">
-            {dummyLectureArray.map((lecture) => (
-              <LectureCard key={lecture.uuid} lecture={lecture} />
-            ))}
+    <Container className="py-oz-xxl">
+      {/* header -- 제작해주시는 것으로 교체할 예정 */}
+      <Vstack className="px-oz-xxl">
+        <Button onClick={() => setIsLoggedInForDebug(!isLoggedInForDebug)}>
+          로그인 여부 토글 ____ 디버그용
+        </Button>
+        <TitleSection isLoggedIn={isLoggedInForDebug} type="lecture" />
+      </Vstack>
+      <RecommendSection
+        type="lecture"
+        isLoggedIn={isLoggedInForDebug}
+        recommendedArray={dummyLectureArray.slice(0, 3)}
+      />
+      <Vstack className="px-oz-xxl gap-oz-xxl">
+        <RoundBox>
+          <GridContainer className="gap-oz-lg">
+            <RoundBox>검색창 자리 확인용(기능 없음)</RoundBox>
+            <Select onOptionSelect={() => null} className="w-full">
+              <Select.Trigger>전체 카테고리(자리 확인용)</Select.Trigger>
+            </Select>
+            <Select onOptionSelect={() => null} className="w-full">
+              <Select.Trigger>최신순(눌리지 않음)</Select.Trigger>
+            </Select>
           </GridContainer>
-        </Vstack>
+        </RoundBox>
+
+        <GridContainer className="gap-oz-xl">
+          {dummyLectureArray.map((lecture) => (
+            <LectureCard key={lecture.uuid} lecture={lecture} />
+          ))}
+        </GridContainer>
       </Vstack>
     </Container>
   )
