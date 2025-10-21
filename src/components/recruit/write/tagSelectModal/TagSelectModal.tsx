@@ -52,7 +52,7 @@ const TagSelectModal = ({
 
   const handleClose = () => {
     // 초기화 후 닫기
-    setSelectTagArray([])
+    setSelectTagArray(tagArray)
     onClose(false)
   }
 
