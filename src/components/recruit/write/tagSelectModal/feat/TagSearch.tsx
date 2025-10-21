@@ -23,6 +23,10 @@ const TagSearch = ({ onSearch }: search) => {
     }
   }
 
+  const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value.trim())
+  }
+
   return (
     <Vstack className="h-[99px] w-[672px] justify-center border-b border-gray-200 px-6">
       <Hstack className="p-oz-md h-[50px] w-[624px] items-center justify-between rounded-md border border-gray-300">
@@ -32,7 +36,7 @@ const TagSearch = ({ onSearch }: search) => {
           placeholder="태그명으로 검색..."
           className="h-full w-[570px]"
           onKeyDown={handleKeydownEnter}
-          onChange={(e) => setSearchText(e.target.value)}
+          onChange={handleKeywordChange}
         />
       </Hstack>
     </Vstack>
