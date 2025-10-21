@@ -1,7 +1,8 @@
-import { type JSX, useState } from 'react'
+import { type JSX } from 'react'
 import { Hstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import useSelectContext from './_useSelectContext'
+import Text from '../text/Text'
 
 const SelectOption = ({
   icon,
@@ -10,9 +11,9 @@ const SelectOption = ({
   icon?: JSX.Element
   children: string
 }) => {
-  const [isMouseEntered, setIsMouseEntered] = useState<boolean>(false)
   const { onOptionSelect, setIsOpened, setSelectedOption, setSelectedIcon } =
     useSelectContext()
+
   const handleClick = () => {
     setSelectedIcon(icon ?? null)
 
@@ -25,15 +26,13 @@ const SelectOption = ({
   // TODO: 나중에 p 태그는 Text로 교체
   return (
     <RoundBox
-      color={isMouseEntered ? 'mono-dim' : 'mono-bright'}
       isBordered={false}
       onClick={handleClick}
-      onMouseEnter={() => setIsMouseEntered(true)}
-      onMouseLeave={() => setIsMouseEntered(false)}
+      className="bg-white px-3 py-2 hover:bg-gray-50"
     >
       <Hstack>
         {icon && icon}
-        <p>{children}</p>
+        <Text>{children}</Text>
       </Hstack>
     </RoundBox>
   )

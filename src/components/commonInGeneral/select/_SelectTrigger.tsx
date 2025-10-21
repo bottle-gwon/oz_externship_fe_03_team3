@@ -13,7 +13,11 @@ const SelectTrigger = ({ children }: { children: string }) => {
   const label = selectedOption ?? children
 
   return (
-    <RoundBox ref={triggerRef} onClick={handleClick}>
+    <RoundBox
+      ref={triggerRef}
+      onClick={handleClick}
+      className="bg-white px-3 py-2 transition hover:bg-gray-50"
+    >
       <Hstack>
         {selectedIcon ?? selectedIcon}
         <p
