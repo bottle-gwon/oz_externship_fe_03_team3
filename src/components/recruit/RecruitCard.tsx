@@ -8,10 +8,10 @@ import {
   Users,
 } from 'lucide-react'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
-import type { recruit } from '@/types/interfaceRecruit'
+import type { Recruit } from '@/types'
 
 export type RecruitCardProps = {
-  recruit: recruit
+  recruit: Recruit
   lectures?: string[]
   due_date_Tag?: boolean
   isMine?: boolean

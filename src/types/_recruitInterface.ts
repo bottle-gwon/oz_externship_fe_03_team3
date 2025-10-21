@@ -1,4 +1,4 @@
-export interface recruit {
+export interface Recruit {
   id: number
   uuid: string
   title: string
