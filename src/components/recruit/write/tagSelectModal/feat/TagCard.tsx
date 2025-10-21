@@ -10,7 +10,7 @@ interface TagCard {
 const TagCard = ({ name, isChecked, onClickTag }: TagCard) => {
   return (
     <div
-      className={`h-[50px] w-[624px] rounded-sm border border-gray-200 ${isChecked && 'border-[#eab308] bg-[#fefce8]'}`}
+      className={`h-[50px] w-[624px] cursor-pointer rounded-sm border border-gray-200 ${isChecked && 'border-[#eab308] bg-[#fefce8]'}`}
       onClick={() => {
         onClickTag(name)
       }}
