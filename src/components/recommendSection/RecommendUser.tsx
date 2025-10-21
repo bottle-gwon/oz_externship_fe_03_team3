@@ -3,10 +3,14 @@ import {
   Hstack,
   Vstack,
 } from '@/components/commonInGeneral/layout'
-import type { Lecture, RecommendPageProps, RecommendPageType } from '@/types'
+import type {
+  Lecture,
+  RecommendPageProps,
+  RecommendPageType,
+  Recruit,
+} from '@/types'
 import RecruitCard from '../recruit/RecruitCard'
 import LectureCard from '../lecture/lectureCard/LectureCard'
-import type { recruit } from '@/types/interfaceRecruit'
 import Container from '../commonInGeneral/layout/_Container'
 import Tag from '../commonInProject/tag/Tag'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
@@ -43,7 +47,7 @@ const RecommendUser = <T extends RecommendPageType>({
               recommendedArray.map((recommend) => (
                 <RecruitCard
                   key={recommend.uuid}
-                  recruit={recommend as recruit}
+                  recruit={recommend as Recruit}
                 />
               ))}
             {type === 'lecture' &&
