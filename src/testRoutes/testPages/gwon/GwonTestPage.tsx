@@ -30,13 +30,13 @@ const GwonTestPage = () => {
   // 임시 태그 변경 함수
   const onClickTag = (newName: string, isAdd: boolean = false) => {
     if (isAdd) {
-      if (!testSelectArray.includes(newName)) {
+      if (!testSelectArray.includes(newName) && testSelectArray.length < 5) {
         setTestSelectArray((prev) => [...prev, newName])
       }
     } else {
       if (testSelectArray.includes(newName)) {
         setTestSelectArray((prev) => prev.filter((el) => el !== newName))
-      } else {
+      } else if (testSelectArray.length < 5) {
         setTestSelectArray((prev) => [...prev, newName])
       }
     }
