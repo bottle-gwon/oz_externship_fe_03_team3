@@ -73,11 +73,9 @@ const GwonTestPage = () => {
         />
       )}
       <TagList
-        tags={exData.tags}
+        responseData={exData}
         // page={EXAMPLE_DATA.page}
         page={current} // 페이지 네이션 테스트
-        page_size={exData.page_size}
-        total_count={exData.total_count}
         onPageChange={handlePageChange}
         onSelectTag={onClickTag}
         selectArray={testSelectArray}
