@@ -17,7 +17,9 @@ export interface TagPaginationInterface {
 
 // {tags, page, page_size, total_count} :TagApiResponse
 // api 적용시 사용
-interface TagListInterface extends TagApiResponse {
+interface TagListInterface {
+  responseData: TagApiResponse
+  page: number
   onPageChange: pageChange
   onSelectTag: tagSelect
   selectArray: string[]
@@ -25,21 +27,19 @@ interface TagListInterface extends TagApiResponse {
 }
 
 const TagList = ({
-  tags,
+  responseData,
   page,
-  page_size,
-  total_count,
   onPageChange,
   onSelectTag,
   selectArray,
   keyword,
 }: TagListInterface) => {
-  if (!tags || !page || !page_size) {
+  if (!responseData || !page) {
     return
   }
 
   // 검색 결과 없음 새로운 태그 추가
-  if (total_count === 0) {
+  if (responseData.total_count === 0) {
     return <TagSearchEmpty keyword={keyword} onClickAddTag={onSelectTag} />
   }
 
@@ -50,9 +50,9 @@ const TagList = ({
     >
       <Vstack gap="sm" className="h-[314px] items-center justify-start">
         <Hstack className="w-full items-start justify-start self-start">
-          <p className="text-sm font-medium">{`사용가능한 태그 (${total_count}개)`}</p>
+          <p className="text-sm font-medium">{`사용가능한 태그 (${responseData.total_count}개)`}</p>
         </Hstack>
-        {tags?.map((el) => (
+        {responseData.tags?.map((el) => (
           <TagCard
             key={el.id + el.name}
             name={el.name}
@@ -65,7 +65,7 @@ const TagList = ({
 
       <TagPagination
         currentPage={page}
-        totalPage={Math.ceil(total_count / 5)}
+        totalPage={Math.ceil(responseData.total_count / 5)}
         // currentPage={page} //페이지 네이션 테스트
         // totalPage={15}
         onPageChange={onPageChange}
