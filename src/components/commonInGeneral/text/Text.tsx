@@ -10,12 +10,12 @@ const convertToTextColor = (color?: Color, isMuted?: boolean) => {
   }
 }
 
-interface TextProps {
+interface WithTextProps {
   color?: Color // 더 추가될 예정
   isMuted?: boolean
 }
 
-const Text = ({ color, isMuted = false, ...props }: TextProps & PProps) => {
+const Text = ({ color, isMuted = false, ...props }: PProps & WithTextProps) => {
   const { children, className, ...rest } = props
 
   const colorResult = convertToTextColor(color, isMuted)
