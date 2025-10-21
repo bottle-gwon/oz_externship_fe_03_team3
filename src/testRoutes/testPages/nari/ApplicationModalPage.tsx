@@ -14,6 +14,8 @@ const ApplicationModalPage = () => {
   const [has_study_experience, setHas_study_experience] = useState(false)
   const [study_experience, setStudy_experience] = useState('')
 
+  const expDisabled = !has_study_experience
+
   return (
     <>
       <Modal
@@ -24,7 +26,9 @@ const ApplicationModalPage = () => {
         <Modal.Header>
           <div className="space-y-1">
             <div className="text-lg font-semibold">스터디 지원서 작성</div>
-            <div className="text-sm text-gray-500">지원서 타이틀</div>
+            <div className="text-sm text-gray-500">
+              나중에 상세페이지에서 타이틀 값받아와야해요!
+            </div>
           </div>
         </Modal.Header>
         <form>
@@ -116,8 +120,12 @@ const ApplicationModalPage = () => {
                   value={study_experience}
                   onChange={(e) => setStudy_experience(e.target.value)}
                   maxLength={500}
+                  disabled={expDisabled}
                   placeholder="스터디 경험이 없으시면 비워두셔도 됩니다."
-                  className="m-0 h-25 w-full resize-none rounded-md border border-gray-300 bg-gray-100 p-3 text-xs text-gray-500 outline-none focus:ring-2"
+                  className={[
+                    'm-0 h-25 w-full resize-none rounded-md border border-gray-300 p-3 text-xs text-gray-500 outline-none focus:ring-2',
+                    expDisabled ? 'bg-gray-100' : 'bg-white',
+                  ].join('')}
                 />
                 <div className="text-left text-xs text-gray-500">
                   {study_experience.length}/500
@@ -156,6 +164,7 @@ const ApplicationModalPage = () => {
           </div>
         </Modal.Footer>
       </Modal>
+
       <Vstack padding="xxl">
         <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
       </Vstack>
