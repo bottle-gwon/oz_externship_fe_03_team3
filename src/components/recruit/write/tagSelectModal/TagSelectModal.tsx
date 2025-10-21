@@ -120,11 +120,8 @@ const TagSelectModal = ({
           />
         )}
         <TagList
-          tags={responseData.tags}
-          // page={EXAMPLE_DATA.page}
+          responseData={responseData}
           page={current} // 페이지 네이션 테스트
-          page_size={responseData.page_size}
-          total_count={responseData.total_count}
           onPageChange={handlePageChange}
           onSelectTag={onClickTag}
           selectArray={selectTagArray}
