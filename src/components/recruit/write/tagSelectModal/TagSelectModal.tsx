@@ -2,7 +2,7 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import TagSearch from './feat/TagSearch'
 import TagSelection from './feat/TagSelection'
 import TagList from './feat/TagList'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 
@@ -40,6 +40,11 @@ const TagSelectModal = ({
   const [current, setCurrent] = useState(1) // 현재 페이지
   const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
   const [selectTagArray, setSelectTagArray] = useState(tagArray)
+
+  // 삭제 반영
+  useEffect(() => {
+    setSelectTagArray(tagArray)
+  }, [tagArray])
 
   const handlePageChange = (newPage: number) => {
     setCurrent(newPage)
