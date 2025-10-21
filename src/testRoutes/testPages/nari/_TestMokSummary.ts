@@ -1,7 +1,7 @@
 import img from '@/testRoutes/testPages/nari/d8b6dce9691774374a170cfc1d2c92b1b571c146.jpg'
-import type { recruit } from '@/types/_interfaceSummary'
+import type { recruits } from '@/types/_interfaceSummary'
 
-export const mockSummaryCard: recruit[] = [
+export const mockSummaryCard: recruits[] = [
   {
     id: 301,
     title: '웹 개발 스터디 모집',

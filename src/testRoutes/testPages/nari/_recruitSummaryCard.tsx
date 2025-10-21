@@ -1,7 +1,13 @@
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import type { recruits } from '@/types/_interfaceSummary'
 import { Clock3, FileText, Megaphone } from 'lucide-react'
 
-const RecruitSummaryCard = () => {
+type SummaryProps = { recruits: recruits[] }
+
+const RecruitSummaryCard = ({ recruits }: SummaryProps) => {
+  const totalCount = recruits.length
+  const openCount = recruits.filter((item) => item.status === 'open').length
+  const closedCount = recruits.filter((item) => item.status === 'closed').length
   return (
     <div className="flex flex-wrap items-start justify-start gap-5">
       <RoundBox
@@ -24,7 +30,7 @@ const RecruitSummaryCard = () => {
           </RoundBox>
           <div className="flex h-11 flex-col justify-center">
             <span className="flex items-center truncate text-xl font-bold text-gray-900">
-              4
+              {totalCount}
             </span>
             <span className="text-xs text-gray-600">전체</span>
           </div>
@@ -51,7 +57,7 @@ const RecruitSummaryCard = () => {
           </RoundBox>
           <div className="flex h-11 flex-col justify-center">
             <span className="flex items-center truncate text-xl font-bold text-gray-900">
-              3
+              {openCount}
             </span>
             <span className="text-xs text-gray-600">모집중</span>
           </div>
@@ -77,7 +83,7 @@ const RecruitSummaryCard = () => {
           </RoundBox>
           <div className="flex h-11 flex-col justify-center">
             <span className="flex items-center truncate text-xl font-bold text-gray-900">
-              1
+              {closedCount}
             </span>
             <span className="text-xs text-gray-600">마감됨</span>
           </div>

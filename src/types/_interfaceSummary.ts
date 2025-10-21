@@ -1,4 +1,4 @@
-export interface recruit {
+export interface recruits {
   id: number
   title: string
   thumbnail_url: string
