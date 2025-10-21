@@ -3,6 +3,7 @@ import TagSearch from './feat/TagSearch'
 import TagSelection from './feat/TagSelection'
 import TagList from './feat/TagList'
 import { useState } from 'react'
+import { Vstack } from '@/components/commonInGeneral/layout'
 
 interface TagSelectModal {
   isOn: boolean
@@ -80,7 +81,12 @@ const TagSelectModal = ({
 
   return (
     <Modal isOn={isOn} onClose={onClose} width="sm">
-      <Modal.Header>헤더</Modal.Header>
+      <Modal.Header>
+        <Vstack gap="xs">
+          <h2 className="text-lg font-semibold">태그 선택</h2>
+          <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${tagArray.length}/5)`}</p>
+        </Vstack>
+      </Modal.Header>
       <Modal.Body>
         <TagSearch onSearch={onSearchTag} />
         {tagArray.length !== 0 && (
