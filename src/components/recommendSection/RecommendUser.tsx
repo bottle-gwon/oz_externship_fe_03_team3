@@ -9,6 +9,7 @@ import LectureCard from '../lecture/lectureCard/LectureCard'
 import type { recruit } from '@/types/interfaceRecruit'
 import Container from '../commonInGeneral/layout/_Container'
 import Tag from '../commonInProject/tag/Tag'
+import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 
 const RecommendUser = <T extends RecommendPageType>({
   type,
@@ -19,39 +20,42 @@ const RecommendUser = <T extends RecommendPageType>({
     type === 'recruit' ? ` 님을 위한 맟춤 스터디 공고` : ` 님을 위한 추천 강의`
 
   return (
-    <Container
-      width="lg"
-      isPadded
-      className="rounded-xl border border-[#FEF08A] bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)]"
-    >
-      <Vstack gap="none">
-        <Hstack gap="xxl" className="mb-6 items-center">
-          <h3 className="text-2xl font-semibold text-[#3E454C]">
-            <span className="text-[#CA8A04]">{userName}</span>
-            {title}
-          </h3>
-          <Tag color="danger" isVivid>
-            개인화 추천
-          </Tag>
-        </Hstack>
+    <Container width="lg">
+      <RoundBox
+        color="primary"
+        isBordered
+        padding="xxl"
+        className="bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)]"
+      >
+        <Vstack gap="none">
+          <Hstack gap="xxl" className="mb-6 items-center">
+            <h3 className="text-2xl font-semibold text-[#3E454C]">
+              <span className="text-[#CA8A04]">{userName}</span>
+              {title}
+            </h3>
+            <Tag color="danger" isVivid>
+              개인화 추천
+            </Tag>
+          </Hstack>
 
-        <GridContainer>
-          {type === 'recruit' &&
-            recommendedArray.map((recommend) => (
-              <RecruitCard
-                key={recommend.uuid}
-                recruit={recommend as recruit}
-              />
-            ))}
-          {type === 'lecture' &&
-            recommendedArray.map((recommend) => (
-              <LectureCard
-                key={recommend.uuid}
-                lecture={recommend as Lecture}
-              />
-            ))}
-        </GridContainer>
-      </Vstack>
+          <GridContainer>
+            {type === 'recruit' &&
+              recommendedArray.map((recommend) => (
+                <RecruitCard
+                  key={recommend.uuid}
+                  recruit={recommend as recruit}
+                />
+              ))}
+            {type === 'lecture' &&
+              recommendedArray.map((recommend) => (
+                <LectureCard
+                  key={recommend.uuid}
+                  lecture={recommend as Lecture}
+                />
+              ))}
+          </GridContainer>
+        </Vstack>
+      </RoundBox>
     </Container>
   )
 }
