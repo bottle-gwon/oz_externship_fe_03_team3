@@ -10,8 +10,19 @@
 
 export interface StudyHubState {
   example: number // 타입 정의 예시 1
+  setExample: (example: number) => void
   addDiffOnExample: (diff: number) => void // 타입 정의 예시 2
 
   // 아래에 추가할 전역 변수의 타입들을 선언해주시면 됩니다
+
+  // auth
   accessToken: string | null
+
+  // recruit
+
+  // lecture
+
+  // chat
+
+  // notification
 }
