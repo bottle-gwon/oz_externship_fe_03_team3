@@ -1,13 +1,14 @@
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-import type { recruits } from '@/types/_interfaceSummary'
+import type { MyRecruit } from '@/types'
+
 import { Clock3, FileText, Megaphone } from 'lucide-react'
 
-type SummaryProps = { recruits: recruits[] }
+type SummaryProps = { recruits: MyRecruit[] }
 
 const RecruitSummaryCard = ({ recruits }: SummaryProps) => {
   const totalCount = recruits.length
-  const openCount = recruits.filter((item) => item.status === 'open').length
-  const closedCount = recruits.filter((item) => item.status === 'closed').length
+  const openCount = recruits.filter((item) => item.is_closed === false).length
+  const closedCount = recruits.filter((item) => item.is_closed === true).length
   return (
     <div className="flex flex-wrap items-start justify-start gap-5">
       <RoundBox
