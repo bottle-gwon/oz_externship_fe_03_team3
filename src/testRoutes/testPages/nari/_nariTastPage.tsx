@@ -1,4 +1,4 @@
-import RecruitCard from '@/components/recruit/RecruitCard'
+import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
 import { mockRecruits } from './_TestMokData'
 import RecruitSummaryCard from '../../../components/recruit/manage/_recruitSummaryCard'
 import { mockSummaryCard } from './_TestMokSummary'
