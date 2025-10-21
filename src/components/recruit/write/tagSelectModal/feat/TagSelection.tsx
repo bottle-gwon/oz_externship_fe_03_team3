@@ -14,7 +14,7 @@ const TagSelection = ({ tagArray, onDeleteTag }: TagSelection) => {
   return (
     <Vstack
       gap="sm"
-      className="h-[89px] w-[672px] items-start justify-center border-b border-gray-200 px-6"
+      className="-mx-6 h-[89px] w-[672px] items-start justify-center border-b border-gray-200 px-6"
     >
       <span className="h-[20px] text-sm">{`선택된 태그 (${tagArray.length}/5)`}</span>
       <Hstack>
