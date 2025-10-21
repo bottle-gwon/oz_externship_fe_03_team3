@@ -16,7 +16,7 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
       className="h-[372px] w-[672px] items-center justify-center border-b border-gray-200"
     >
       <RoundBox
-        color=""
+        color="primary"
         className="bg-primary-50 border-primary-300 h-[72px] w-[624px] border-2 border-dashed"
       >
         {/* 새로 등록하시겠습니까? 안내멘트및 등록 버튼 */}
