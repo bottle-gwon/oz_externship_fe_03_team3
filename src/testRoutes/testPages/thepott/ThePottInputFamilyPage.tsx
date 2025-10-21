@@ -15,21 +15,27 @@ const ThePottInputFamilyPage = () => {
         <Textarea isInDanger placeholder="not short in danger" />
 
         <Labeled>
-          <Labeled.BigLabel>레이블 그룹 사용</Labeled.BigLabel>
-          <Input placeholder="SmallLabel 안에 아무것도 없어도 괜찮습니다" />
-          <Labeled.SmallLabel></Labeled.SmallLabel>
+          <Labeled.Header>레이블 그룹 사용</Labeled.Header>
+          <Input placeholder="Footer 안에 아무것도 없어도 괜찮습니다" />
+          <Labeled.Footer></Labeled.Footer>
         </Labeled>
 
         <Labeled isInDanger>
-          <Labeled.BigLabel>비밀번호</Labeled.BigLabel>
+          <Labeled.Header>비밀번호</Labeled.Header>
           <Labeled.Input placeholder="비밀번호를 입력하세요" />
-          <Labeled.SmallLabel>올바른 형식으로 입력해주세요</Labeled.SmallLabel>
+          <Labeled.Footer>올바른 형식으로 입력해주세요</Labeled.Footer>
         </Labeled>
 
-        <Labeled isInDanger>
-          <Labeled.BigLabel>비밀번호</Labeled.BigLabel>
-          <Labeled.Input placeholder="비밀번호를 입력하세요" />
-          <Labeled.SmallLabel>올바른 형식으로 입력해주세요</Labeled.SmallLabel>
+        <Labeled isInDanger isRequired>
+          <Labeled.Header>비밀번호</Labeled.Header>
+          <Labeled.Input placeholder="LabeledInput을 쓰면 isDanger가 알아서 전달됩니다" />
+          <Labeled.Footer>올바른 형식으로 입력해주세요</Labeled.Footer>
+        </Labeled>
+
+        <Labeled isInDanger isRequired>
+          <Labeled.Header>비밀번호</Labeled.Header>
+          <Labeled.Textarea placeholder="Textarea도 마찬가지입니다." />
+          <Labeled.Footer>올바른 형식으로 입력해주세요</Labeled.Footer>
         </Labeled>
       </Vstack>
     </Container>

@@ -5,13 +5,13 @@ import LabeledContext from './LabeledContext'
 import useLabeledContext from './useLabeledContext'
 import Textarea from './Textarea'
 
-const BigLabel = (props: PProps) => {
+const LabeledHeader = (props: PProps) => {
   const { className, children, ...rest } = props
 
   const { isRequired } = useLabeledContext()
 
   return (
-    <Hstack>
+    <Hstack gap="xs">
       <p {...rest} className={`${className} text-sm font-medium`}>
         {children}
       </p>
@@ -20,7 +20,7 @@ const BigLabel = (props: PProps) => {
   )
 }
 
-const SmallLabel = (props: PProps) => {
+const LabeledFooter = (props: PProps) => {
   const { className, children, ...rest } = props
   const { isInDanger } = useLabeledContext()
 
@@ -64,9 +64,9 @@ const Labeled = ({
   )
 }
 
-Labeled.BigLabel = BigLabel
+Labeled.Header = LabeledHeader
 Labeled.Input = LabeledInput
 Labeled.Textarea = LabeledTextarea
-Labeled.SmallLabel = SmallLabel
+Labeled.Footer = LabeledFooter
 
 export default Labeled
