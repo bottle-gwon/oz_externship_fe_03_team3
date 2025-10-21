@@ -8,17 +8,26 @@ import {
 const HyejeongRecommendSection = () => {
   return (
     <Vstack gap="xxl">
-      {/* <RecommendSection /> */}
+      <RecommendSection
+        isLoggedIn={false}
+        type="lecture"
+        recommendedArray={[]}
+      />
       <RecommendSection
         isLoggedIn
         type="lecture"
         recommendedArray={dummyLectureRecommendArray}
       />
-      {/* <RecommendSection */}
-      {/*   isLoggedIn */}
-      {/*   type="recruit" */}
-      {/*   recommendedArray={dummyRecruitRecommendArray} */}
-      {/* /> */}
+      <RecommendSection
+        isLoggedIn={false}
+        type="recruit"
+        recommendedArray={[]}
+      />
+      <RecommendSection
+        isLoggedIn
+        type="recruit"
+        recommendedArray={dummyRecruitRecommendArray}
+      />
     </Vstack>
   )
 }

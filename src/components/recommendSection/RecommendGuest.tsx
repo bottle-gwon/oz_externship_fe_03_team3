@@ -3,7 +3,7 @@ import Vstack from '../commonInGeneral/layout/_Vstack'
 import Hstack from '../commonInGeneral/layout/_Hstack'
 import RecommendPreviewCard from './RecommendPreviwCard'
 import UserStar from '../../assets/user-star.svg'
-import type { RecommendPageProps } from '@/types'
+import type { RecommendPageType } from '@/types'
 
 const emptyStateContent = {
   recruit: {
@@ -11,14 +11,14 @@ const emptyStateContent = {
     description:
       ' 로그인하시면 관심 분야와 수강 강의를 바탕으로 맞춤형 스터디 공고를 추천해드립니다',
   },
-  course: {
+  lecture: {
     title: '개인 맞춤 강의를 추천 받아보세요',
     description:
       ' 로그인하시면 관심 분야를 바탕으로 맞춤형 강의를 추천해드립니다',
   },
 }
 
-const RecommendGuest = ({ type }: RecommendPageProps) => {
+const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
   const content = emptyStateContent[type]
 
   return (
