@@ -18,46 +18,50 @@ const ApplicationModalPage = () => {
         </Modal.Header>
         <Modal.Body>
           <div>
-            <div>
-              <div>자기소개</div>
-              <div>입력 인풋</div>
+            <section>
+              <label htmlFor="">자기소개</label>
+              <textarea className="resize-none" />
               <div>글자수</div>
-            </div>
-            <div>
-              <div>지원 동기</div>
-              <div>입력 인풋</div>
+            </section>
+            <section>
+              <label htmlFor="">지원 동기</label>
+              <textarea className="resize-none" />
               <div>글자수</div>
-            </div>
-            <div>
-              <div>스터디 목표</div>
-              <div>입력 인풋</div>
+            </section>
+            <section>
+              <label htmlFor="">스터디 목표</label>
+              <textarea className="resize-none" />
               <div>글자수</div>
-            </div>
-            <div>
-              <div>가능한 시간대</div>
-              <div>입력 인풋</div>
+            </section>
+            <section>
+              <label htmlFor="">가능한 시간대</label>
+              <textarea className="resize-none" />
               <div>글자수</div>
-            </div>
-            <div>
-              <div>스터디 경험 유무</div>
-              <div>체크박스</div>
-              <div>스터디 참여 경험이 있습니다</div>
-            </div>
-            <div>
-              <div>구체적인 스터디 경험</div>
-              <div>입력 인풋</div>
+            </section>
+            <section>
+              <label htmlFor="">스터디 경험 유무</label>
+              <label htmlFor="">
+                <input type="checkbox" /> 스터디 참여 경험이 있습니다.
+              </label>
               <div>글자수</div>
-            </div>
+            </section>
+            <section>
+              <label htmlFor="">구체적인 스터디 경험</label>
+              <textarea className="resize-none" />
+              <div>글자수</div>
+            </section>
           </div>
         </Modal.Body>
         <Modal.Footer>
           <div>
             <div>* 표시된 항목은 필수 입력 사항입니다.</div>
-            <button>취소</button>
-            <button>
-              <Send />
-              지원서 제출
-            </button>
+            <div>
+              <button>취소</button>
+              <button>
+                <Send />
+                지원서 제출
+              </button>
+            </div>
           </div>
         </Modal.Footer>
       </Modal>
