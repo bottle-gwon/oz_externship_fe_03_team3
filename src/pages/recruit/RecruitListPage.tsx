@@ -3,7 +3,6 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import Select from '@/components/commonInGeneral/select/Select'
-import Header from '@/components/layout/header/Header'
 import RecommendSection from '@/components/recommendSection/RecommendSection'
 import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
 import { dummyRecruitArray } from '@/components/recruit/recruitListDummy'
@@ -15,7 +14,6 @@ const RecruitListPage = () => {
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-[#F9FAFB]">
-      <Header />
       <TitleSection type="recruit" isLoggedIn={isLoggedIn} />
       <RecommendSection
         type="recruit"
