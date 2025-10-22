@@ -1,8 +1,10 @@
 import Button from '@/components/commonInGeneral/button/Button'
+import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
+import Textarea from '@/components/commonInGeneral/inputFamily/textarea/Textarea'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import { Send } from 'lucide-react'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
@@ -35,15 +37,15 @@ const ApplicationModalPage = () => {
           <Modal.Body>
             <div className="space-y-6">
               <section className="space-y-1">
-                <label className="flex items-center gap-1 text-sm font-medium">
-                  자기소개 <span className="text-red-500">*</span>
-                </label>
-                <textarea
+                <Labeled isRequired>
+                  <Labeled.Header>자기소개</Labeled.Header>
+                </Labeled>
+                <Textarea
                   value={self_introduction}
                   onChange={(e) => setSelf_introduction(e.target.value)}
                   maxLength={500}
                   placeholder="본인에 대해 간략하게 소개해주세요. (학습 배경, 관심 분야, 현재 수준 등)"
-                  className="m-0 h-25 w-full resize-none rounded-md border border-gray-300 p-2 text-xs outline-none focus:ring-2"
+                  className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
                   {self_introduction.length}/500
@@ -51,15 +53,15 @@ const ApplicationModalPage = () => {
               </section>
 
               <section className="space-y-1">
-                <label className="flex items-center gap-1 text-sm font-medium">
-                  지원 동기 <span className="text-red-500">*</span>
-                </label>
-                <textarea
+                <Labeled isRequired>
+                  <Labeled.Header>지원 동기</Labeled.Header>
+                </Labeled>
+                <Textarea
                   value={motivation}
                   onChange={(e) => setMotivation(e.target.value)}
                   maxLength={500}
                   placeholder="이 스터디에 지원하게 된 동기를 작성해주세요."
-                  className="m-0 h-25 w-full resize-none rounded-md border border-gray-300 p-3 text-xs outline-none focus:ring-2"
+                  className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
                   {motivation.length}/500
@@ -67,15 +69,15 @@ const ApplicationModalPage = () => {
               </section>
 
               <section className="space-y-1">
-                <label className="flex items-center gap-1 text-sm font-medium">
-                  스터디 목표 <span className="text-red-500">*</span>
-                </label>
-                <textarea
+                <Labeled isRequired>
+                  <Labeled.Header>스터디 목표</Labeled.Header>
+                </Labeled>
+                <Textarea
                   value={objective}
                   onChange={(e) => setObjective(e.target.value)}
                   maxLength={500}
                   placeholder="이 스터디를 통해 달성하고 싶은 목표를 작성해주세요."
-                  className="m-0 h-25 w-full resize-none rounded-md border border-gray-300 p-3 text-xs outline-none focus:ring-2"
+                  className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
                   {objective.length}/500
@@ -83,15 +85,16 @@ const ApplicationModalPage = () => {
               </section>
 
               <section className="space-y-1">
-                <label className="flex items-center gap-1 text-sm font-medium">
-                  가능한 시간대 <span className="text-red-500">*</span>
-                </label>
-                <textarea
+                <Labeled isRequired>
+                  <Labeled.Header>가능한 시간대</Labeled.Header>
+                </Labeled>
+                <Textarea
+                  isShort
                   value={available_time}
                   onChange={(e) => setAvailable_time(e.target.value)}
                   maxLength={500}
                   placeholder="스터디 참여가 가능한 요일과 시간대를 작성해주세요. (예 : 평일 저녁 7-9시, 주말오후)"
-                  className="m-0 h-20 w-full resize-none rounded-md border border-gray-300 p-3 text-xs outline-none focus:ring-2"
+                  className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
                   {available_time.length}/500
@@ -99,9 +102,9 @@ const ApplicationModalPage = () => {
               </section>
 
               <section className="space-y-1">
-                <label className="flex items-center gap-1 text-sm font-medium">
-                  스터디 경험 유무
-                </label>
+                <Labeled>
+                  <Labeled.Header>스터디 경험 유무</Labeled.Header>
+                </Labeled>
                 <label className="flex items-center gap-2 p-0.5 text-sm font-medium">
                   <input
                     type="checkbox"
@@ -113,17 +116,17 @@ const ApplicationModalPage = () => {
               </section>
 
               <section className="space-y-1">
-                <label className="flex items-center gap-1 text-sm font-medium">
-                  구체적인 스터디 경험
-                </label>
-                <textarea
+                <Labeled>
+                  <Labeled.Header>구체적인 스터디 경험</Labeled.Header>
+                </Labeled>
+                <Textarea
                   value={study_experience}
                   onChange={(e) => setStudy_experience(e.target.value)}
                   maxLength={500}
                   disabled={expDisabled}
                   placeholder="스터디 경험이 없으시면 비워두셔도 됩니다."
                   className={[
-                    'm-0 h-25 w-full resize-none rounded-md border border-gray-300 p-3 text-xs text-gray-500 outline-none focus:ring-2',
+                    'w-full',
                     expDisabled ? 'bg-gray-100' : 'bg-white',
                   ].join(' ')}
                 />
