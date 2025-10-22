@@ -10,8 +10,10 @@ import RecommendSection from '../recommendSection/RecommendSection'
 import LectureSearchInput from './_LectureSearchInput'
 import useStudyHubStore from '@/store/store'
 import { dummyLectureArray } from './dummyLectureArray'
+import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 
 const LectureContent = () => {
+  const [isSearching, setIsSearching] = useState(false)
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
@@ -46,11 +48,13 @@ const LectureContent = () => {
           </GridContainer>
         </RoundBox>
 
-        <GridContainer className="gap-oz-xl">
-          {lectureArray.map((lecture) => (
-            <LectureCard key={lecture.uuid} lecture={lecture} />
-          ))}
-        </GridContainer>
+        <NoSearchResult />
+
+        {/* <GridContainer className="gap-oz-xl"> */}
+        {/*   {lectureArray.map((lecture) => ( */}
+        {/*     <LectureCard key={lecture.uuid} lecture={lecture} /> */}
+        {/*   ))} */}
+        {/* </GridContainer> */}
       </Vstack>
     </Container>
   )
