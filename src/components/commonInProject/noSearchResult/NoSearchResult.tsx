@@ -1,17 +1,17 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import useStudyHubStore from '@/store/store'
 import { Search } from 'lucide-react'
 
-interface NoSearchResultProps {
-  onFilterReset: () => void
-  onNewSearch: () => void
-}
+const NoSearchResult = () => {
+  const setIsClearingSearch = useStudyHubStore(
+    (state) => state.setIsClearingSearch
+  )
+  const setIsFocusingSearch = useStudyHubStore(
+    (state) => state.setIsFocusingSearch
+  )
 
-const NoSearchResult = ({
-  onFilterReset,
-  onNewSearch,
-}: NoSearchResultProps) => {
   return (
     <RoundBox
       color="mono-dim"
@@ -29,10 +29,14 @@ const NoSearchResult = ({
       </Vstack>
 
       <Hstack>
-        <Button color="primary" variant="contained" onClick={onFilterReset}>
+        <Button
+          color="primary"
+          variant="contained"
+          onClick={() => setIsClearingSearch(true)}
+        >
           필터 초기화
         </Button>
-        <Button variant="outlined" onClick={onNewSearch}>
+        <Button variant="outlined" onClick={() => setIsFocusingSearch(true)}>
           새로운 검색
         </Button>
       </Hstack>

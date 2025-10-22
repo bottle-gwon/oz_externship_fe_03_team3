@@ -17,8 +17,13 @@ export interface StudyHubState {
 
   // 아래에 추가할 전역 변수의 타입들을 선언해주시면 됩니다
 
-  // auth
+  // common
   accessToken: string | null
+
+  isClearingSearch: boolean // true 가 감지되면 인풋 필드를 비워주세요
+  setIsClearingSearch: (isClearingSearch: boolean) => void
+  isFocusingSearch: boolean // true 가 감지되면 인풋 필드에 포커스해주세요
+  setIsFocusingSearch: (isFocusingSearch: boolean) => void
 
   // recruit
 
