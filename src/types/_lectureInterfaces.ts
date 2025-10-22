@@ -18,3 +18,17 @@ export interface Lecture {
   average_rating: number
   url_link: string
 }
+
+export type LectureReviewRating =
+  | '1_OUT_OF_5_STARS'
+  | '2_OUT_OF_5_STARS'
+  | '3_OUT_OF_5_STARS'
+  | '4_OUT_OF_5_STARS'
+  | '5_OUT_OF_5_STARS'
+
+export interface LectureReview {
+  id: number
+  rating: LectureReviewRating
+  content: string
+  created_at: string
+}
