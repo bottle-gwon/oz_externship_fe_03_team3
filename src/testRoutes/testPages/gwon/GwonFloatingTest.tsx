@@ -11,16 +11,19 @@ const GwonFloating = () => {
   const testArray = Array.from({ length: 40 }, (_, index) => index + 1)
 
   const onClickTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' })
+    const html = document.querySelector('html')
+    // window.scrollTo({ top: 0, behavior: 'smooth' })
+    document.getElementById('root')?.scrollTo(0, 0)
+    // document.getElementById("root").scrollTo(0,0)
   }
 
   return (
     <>
       <h1 className="text-4xl font-bold">TOP</h1>
       플로팅 테스트임당
-      {testArray.map((el) => (
+      {/* {testArray.map((el) => (
         <RoundBox key={el}>테스트 내용 채우기</RoundBox>
-      ))}
+      ))} */}
       <FloatingButtonContainer>
         {/* 위로가기 아이콘 */}
         <FloatingButton theme="mono" onClick={onClickTop}>
