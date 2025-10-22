@@ -27,7 +27,7 @@ const LectureSearchInput = ({ setIsSearching }: LectureSearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [searchText, setSearchText] = useState('')
   const [debounceValue, cancel] = useDebounce(searchText, 500)
-  useNoSearchResult(inputRef, setSearchText)
+  useNoSearchResult(inputRef, setSearchText, cancel)
 
   useEffect(() => {
     dummySearchApi(debounceValue)
