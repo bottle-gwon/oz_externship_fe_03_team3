@@ -32,7 +32,6 @@ const LectureSearchInput = () => {
     }
 
     cancel()
-    dummySearchApi(searchText) // TODO: cancel 시 debounceValue 갱신되게 수정되면 삭제해야
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

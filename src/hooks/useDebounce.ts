@@ -9,6 +9,8 @@ const useDebounce = <T>(value: T, delay: number): [T, () => void] => {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
     }
+
+    setDebounceValue(value)
   }
 
   useEffect(() => {
