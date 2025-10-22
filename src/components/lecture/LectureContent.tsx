@@ -8,11 +8,12 @@ import { dummyLectureArray } from './lectureListDummy'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
 import RecommendSection from '../recommendSection/RecommendSection'
-import Input from '../commonInGeneral/inputFamily/input/Input'
 import LectureSearchInput from './_LectureSearchInput'
+import useStudyHubStore from '@/store/store'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
+  const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
   // TODO: 더미 데이터 사용중. 나중에 삭제해야 합니다!
   return (
@@ -47,7 +48,7 @@ const LectureContent = () => {
         </RoundBox>
 
         <GridContainer className="gap-oz-xl">
-          {dummyLectureArray.map((lecture) => (
+          {lectureArray.map((lecture) => (
             <LectureCard key={lecture.uuid} lecture={lecture} />
           ))}
         </GridContainer>

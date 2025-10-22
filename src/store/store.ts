@@ -28,6 +28,8 @@ const useStudyHubStore = create<StudyHubState>()(
       // recruit
 
       // lecture
+      lectureArray: [],
+      setLectureArray: (lectureArray) => set({ lectureArray }),
 
       // chat
 
@@ -36,7 +38,7 @@ const useStudyHubStore = create<StudyHubState>()(
     {
       name: 'food-storage', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
-      // partialize: (state) => ({ foo: state.foo }),
+      partialize: (state) => ({ example: state.example }),
     }
   )
 )
