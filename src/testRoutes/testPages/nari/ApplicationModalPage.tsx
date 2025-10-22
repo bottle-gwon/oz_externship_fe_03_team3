@@ -6,70 +6,47 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
 import ApplicationPoopUp from './ApplicationPoopUp'
+import {
+  applicationSchema,
+  dangerHelperText,
+  defaultApplicationValues,
+  helperText,
+  type ApplicationForm,
+} from '@/lib/zodSchema'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm, type SubmitHandler } from 'react-hook-form'
 
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
-
-  const [selfIntroduction, setSelfIntroduction] = useState('')
-  const [motivation, setMotivation] = useState('')
-  const [objective, setObjective] = useState('')
-  const [availableTime, setAvailableTime] = useState('')
-  const [hasStudyExperience, setHasStudyExperience] = useState(false)
-  const [studyExperience, setStudyExperience] = useState('')
-  const [errors, setErrors] = useState({
-    selfIntroduction: false,
-    motivation: false,
-    objective: false,
-    availableTime: false,
-    studyExperience: false,
-  })
-
   const [confirmOn, setConfirmOn] = useState(false)
 
+  const {
+    register,
+    handleSubmit,
+    formState: { isSubmitting, errors },
+    watch,
+    reset,
+  } = useForm<ApplicationForm>({
+    resolver: zodResolver(applicationSchema),
+    defaultValues: defaultApplicationValues,
+    mode: 'onSubmit',
+  })
+
+  const hasStudyExperience = watch('hasStudyExperience')
   const expDisabled = !hasStudyExperience
 
-  const basePlaceholder = {
-    selfIntroduction:
-      '본인에 대해 간략하게 소개해주세요. (학습 배경, 관심 분야, 현재 수준 등)',
-    motivation: '이 스터디에 지원하게 된 동기를 작성해주세요.',
-    objective: '이 스터디를 통해 달성하고 싶은 목표를 작성해주세요.',
-    availableTime:
-      '스터디 참여가 가능한 요일과 시간대를 작성해주세요. (예: 평일 19-21시, 주말 오후)',
-    studyExperience: '스터디 경험이 없으시면 비워두셔도 됩니다.',
-  } as const
+  type textFieldKey = Exclude<keyof ApplicationForm, 'hasStudyExperience'>
+  const applicationText = (k: textFieldKey) =>
+    errors[k] ? dangerHelperText[k] : helperText[k]
 
-  const dangerPlaceholder = {
-    selfIntroduction: '자기소개를 작성해주세요. (필수입력)',
-    motivation: '지원 동기를 작성해주세요. (필수입력)',
-    objective: '스터디 목표를 작성해주세요. (필수입력)',
-    availableTime: '가능한 시간대를 작성해주세요. (필수입력)',
-    studyExperience: '경험을 체크했다면 간단히 작성해주세요.',
-  } as const
+  const onSubmit: SubmitHandler<ApplicationForm> = () => setConfirmOn(true)
 
-  const textHelper = (k: keyof typeof basePlaceholder) =>
-    errors[k] ? dangerPlaceholder[k] : basePlaceholder[k]
-
-  const errorMessageChange = (next: Partial<typeof errors>) =>
-    setErrors((prev) => ({ ...prev, ...next }))
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-
-    const textCountErrors = {
-      selfIntroduction: selfIntroduction.trim().length === 0,
-      motivation: motivation.trim().length === 0,
-      objective: objective.trim().length === 0,
-      availableTime: availableTime.trim().length === 0,
-      studyExperience:
-        hasStudyExperience && studyExperience.trim().length === 0,
-    }
-
-    setErrors(textCountErrors)
-
-    const hasAnyError = Object.values(textCountErrors).some(Boolean)
-    if (hasAnyError) return
-    setConfirmOn(true)
+  const closeAllAndReset = () => {
+    reset(defaultApplicationValues)
+    setConfirmOn(false)
+    setIsOn(false)
   }
+
   return (
     <>
       <Modal
@@ -85,7 +62,7 @@ const ApplicationModalPage = () => {
             </div>
           </div>
         </Modal.Header>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <Modal.Body>
             <div className="space-y-6">
               <section className="space-y-1">
@@ -93,21 +70,15 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>자기소개</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  value={selfIntroduction}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setSelfIntroduction(value)
-                    if (value.trim().length > 0 && errors.selfIntroduction) {
-                      errorMessageChange({ selfIntroduction: false })
-                    }
-                  }}
+                  {...register('selfIntroduction')}
+                  disabled={isSubmitting}
                   maxLength={500}
-                  placeholder={textHelper('selfIntroduction')}
-                  isInDanger={errors.selfIntroduction}
+                  placeholder={applicationText('selfIntroduction')}
+                  isInDanger={!!errors.selfIntroduction}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {selfIntroduction.length}/500
+                  {(watch('selfIntroduction') ?? '').length}/500
                 </div>
               </section>
 
@@ -116,21 +87,15 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>지원 동기</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  value={motivation}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setMotivation(value)
-                    if (value.trim().length > 0 && errors.motivation) {
-                      errorMessageChange({ motivation: false })
-                    }
-                  }}
+                  {...register('motivation')}
+                  disabled={isSubmitting}
                   maxLength={500}
-                  placeholder={textHelper('motivation')}
-                  isInDanger={errors.motivation}
+                  placeholder={applicationText('motivation')}
+                  isInDanger={!!errors.motivation}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {motivation.length}/500
+                  {(watch('motivation') ?? '').length}/500
                 </div>
               </section>
 
@@ -139,21 +104,15 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>스터디 목표</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  value={objective}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setObjective(value)
-                    if (value.trim().length > 0 && errors.objective) {
-                      errorMessageChange({ objective: false })
-                    }
-                  }}
+                  {...register('objective')}
+                  disabled={isSubmitting}
                   maxLength={500}
-                  placeholder={textHelper('objective')}
-                  isInDanger={errors.objective}
+                  placeholder={applicationText('objective')}
+                  isInDanger={!!errors.objective}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {objective.length}/500
+                  {(watch('objective') ?? '').length}/500
                 </div>
               </section>
 
@@ -163,21 +122,15 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   isShort
-                  value={availableTime}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setAvailableTime(value)
-                    if (value.trim().length > 0 && errors.availableTime) {
-                      errorMessageChange({ availableTime: false })
-                    }
-                  }}
+                  {...register('availableTime')}
+                  disabled={isSubmitting}
                   maxLength={500}
-                  placeholder={textHelper('availableTime')}
-                  isInDanger={errors.availableTime}
+                  placeholder={applicationText('availableTime')}
+                  isInDanger={!!errors.availableTime}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {availableTime.length}/500
+                  {(watch('availableTime') ?? '').length}/500
                 </div>
               </section>
 
@@ -188,13 +141,8 @@ const ApplicationModalPage = () => {
                 <label className="flex items-center gap-2 p-0.5 text-sm font-medium">
                   <input
                     type="checkbox"
-                    checked={hasStudyExperience}
-                    onChange={(e) => {
-                      const checked = e.target.checked
-                      setHasStudyExperience(checked)
-                      if (!checked)
-                        errorMessageChange({ studyExperience: false })
-                    }}
+                    disabled={isSubmitting}
+                    {...register('hasStudyExperience')}
                   />{' '}
                   스터디 참여 경험이 있습니다.
                 </label>
@@ -205,25 +153,18 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>구체적인 스터디 경험</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  value={studyExperience}
-                  onChange={(e) => {
-                    const value = e.target.value
-                    setStudyExperience(value)
-                    if (value.trim().length > 0 && errors.studyExperience) {
-                      errorMessageChange({ studyExperience: false })
-                    }
-                  }}
+                  {...register('studyExperience')}
                   maxLength={500}
-                  disabled={expDisabled}
-                  placeholder={textHelper('studyExperience')}
-                  isInDanger={!expDisabled && errors.studyExperience}
+                  disabled={expDisabled || isSubmitting}
+                  placeholder={applicationText('studyExperience')}
+                  isInDanger={!expDisabled && !!errors.studyExperience}
                   className={[
                     'w-full',
                     expDisabled ? 'bg-gray-100' : 'bg-white',
                   ].join(' ')}
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {studyExperience.length}/500
+                  {(watch('studyExperience') ?? '').length}/500
                 </div>
               </section>
             </div>
@@ -240,6 +181,7 @@ const ApplicationModalPage = () => {
                   status="enabled"
                   size="md"
                   className="text-black"
+                  type="button"
                   onClick={() => setIsOn(false)}
                 >
                   취소
@@ -263,30 +205,7 @@ const ApplicationModalPage = () => {
       <Vstack padding="xxl">
         <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
       </Vstack>
-
-      {confirmOn && (
-        <ApplicationPoopUp
-          open={confirmOn}
-          onClose={() => {
-            setIsOn(false)
-            setSelfIntroduction('')
-            setMotivation('')
-            setObjective('')
-            setAvailableTime('')
-            setHasStudyExperience(false)
-            setStudyExperience('')
-            setErrors({
-              selfIntroduction: false,
-              motivation: false,
-              objective: false,
-              availableTime: false,
-              studyExperience: false,
-            })
-            setConfirmOn(false)
-            setIsOn(false)
-          }}
-        ></ApplicationPoopUp>
-      )}
+      <ApplicationPoopUp open={confirmOn} onClose={closeAllAndReset} />
     </>
   )
 }

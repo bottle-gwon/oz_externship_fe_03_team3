@@ -32,7 +32,7 @@ export const applicationSchema = z
       .trim()
       .min(1, dangerHelperText.availableTime)
       .max(500),
-    hasStudyExperience: z.boolean().default(false),
+    hasStudyExperience: z.boolean(),
     studyExperience: z.string().trim().max(500).optional(),
   })
   .superRefine((vel, ctx) => {
