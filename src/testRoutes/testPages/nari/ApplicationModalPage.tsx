@@ -2,7 +2,7 @@ import Button from '@/components/commonInGeneral/button/Button'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import { Send } from 'lucide-react'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
@@ -125,7 +125,7 @@ const ApplicationModalPage = () => {
                   className={[
                     'm-0 h-25 w-full resize-none rounded-md border border-gray-300 p-3 text-xs text-gray-500 outline-none focus:ring-2',
                     expDisabled ? 'bg-gray-100' : 'bg-white',
-                  ].join('')}
+                  ].join(' ')}
                 />
                 <div className="text-left text-xs text-gray-500">
                   {study_experience.length}/500
@@ -133,36 +133,36 @@ const ApplicationModalPage = () => {
               </section>
             </div>
           </Modal.Body>
+          <Modal.Footer>
+            <div className="flex w-full items-center justify-between">
+              <div className="text-xs text-gray-500">
+                * 표시된 항목은 필수 입력 사항입니다.
+              </div>
+              <div className="flex gap-2">
+                <Button
+                  color="mono"
+                  variant="outlined"
+                  status="enabled"
+                  size="md"
+                  className="text-black"
+                  onClick={() => setIsOn(false)}
+                >
+                  취소
+                </Button>
+                <Button
+                  color="primary"
+                  variant="contained"
+                  status="enabled"
+                  size="md"
+                  type="submit"
+                >
+                  <Send className="h-4 w-4" />
+                  지원서 제출
+                </Button>
+              </div>
+            </div>
+          </Modal.Footer>
         </form>
-        <Modal.Footer>
-          <div className="flex w-full items-center justify-between">
-            <div className="text-xs text-gray-500">
-              * 표시된 항목은 필수 입력 사항입니다.
-            </div>
-            <div className="flex gap-2">
-              <Button
-                color="mono"
-                variant="outlined"
-                status="enabled"
-                size="md"
-                className="text-black"
-                onClick={() => setIsOn(false)}
-              >
-                취소
-              </Button>
-              <Button
-                color="primary"
-                variant="contained"
-                status="enabled"
-                size="md"
-                type="submit"
-              >
-                <Send className="h-4 w-4" />
-                지원서 제출
-              </Button>
-            </div>
-          </div>
-        </Modal.Footer>
       </Modal>
 
       <Vstack padding="xxl">
