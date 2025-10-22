@@ -62,7 +62,9 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
             className="p-0"
             onClick={handleClick}
           >
-            <ChevronDown />
+            <ChevronDown
+              className={`${isReviewExpanded ? 'rotate-180' : ''} transition`}
+            />
             리뷰 보기
           </Button>
           <Button color="primary" onClick={handleRedirect}>
