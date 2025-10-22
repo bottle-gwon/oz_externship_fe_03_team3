@@ -9,8 +9,10 @@ import { dummyLectureArray } from './dummyLectureArray'
 const dummySearchApi = (debounceValue: string) => {
   const setLectureArray = useStudyHubStore.getState().setLectureArray
 
-  const filteredLectureArray = dummyLectureArray.filter((lecture) =>
-    lecture.title.includes(debounceValue)
+  const filteredLectureArray = dummyLectureArray.filter(
+    (lecture) =>
+      lecture.title.includes(debounceValue) ||
+      lecture.instructor.includes(debounceValue)
   )
 
   setLectureArray(filteredLectureArray)
@@ -30,6 +32,7 @@ const LectureSearchInput = () => {
     }
 
     cancel()
+    dummySearchApi(searchText) // TODO: cancel 시 debounceValue 갱신되게 수정되면 삭제해야
   }
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {

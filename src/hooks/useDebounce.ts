@@ -9,8 +9,8 @@ const useDebounce = <T>(value: T, delay: number): [T, () => void] => {
     if (timerRef.current) {
       clearTimeout(timerRef.current)
     }
-
-    setDebounceValue(value) // <<---- 병권님께 여쭤보기: 취소할 때 값을 갱신하면 사용할 땐 debounceValue만 감지하면 될 것 같습니다!
+    //
+    // setDebounceValue(value) // <<---- 병권님께 여쭤보기: 취소할 때 값을 갱신하면 사용할 땐 debounceValue만 감지하면 될 것 같습니다!
   }
 
   useEffect(() => {
