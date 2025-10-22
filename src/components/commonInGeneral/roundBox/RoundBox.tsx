@@ -2,34 +2,46 @@ import { paddingMap, radiusMap } from '@/lib/tailwindClassNameMap'
 import type { Color, DivProps, None, XsToXxl } from '@/types'
 
 export type RoundBoxColor = Exclude<Color, 'mono'> | 'mono-bright' | 'mono-dim'
+export type BorderStyle = 'none' | 'solid' | 'dashed'
 export interface WithRoundBoxProps {
   color?: RoundBoxColor
   isShadowed?: boolean
-  isBordered?: boolean
+  isBordered?: boolean // DEPRECATED 이거 말고 borderStyle을 사용해주세요
+  borderStyle?: BorderStyle
   padding?: XsToXxl | None
   radius?: 'sm' | 'md' | 'lg' | 'full'
 }
 
-const makeBorderResult = (color: RoundBoxColor, isBordered: boolean) => {
-  if (!isBordered) {
+const makeBorderResult = (
+  color: RoundBoxColor,
+  isBordered: boolean,
+  borderStyle: BorderStyle
+) => {
+  if (!isBordered && borderStyle === 'none') {
     return ''
   }
 
-  switch (color) {
-    case 'mono-bright':
-    case 'mono-dim':
-      return 'border border-gray-200'
-    case 'primary':
-      return 'border border-primary-200'
-    case 'danger':
-      return 'border border-danger-border'
-    case 'success':
-      return 'border border-success-border'
-    case 'blue':
-      return 'border border-blue-100'
-  }
-}
+  const borderColorResult = (() => {
+    switch (color) {
+      case 'mono-bright':
+      case 'mono-dim':
+        return 'border-gray-200'
+      case 'primary':
+        return 'border-primary-200'
+      case 'danger':
+        return 'border-danger-border'
+      case 'success':
+        return 'border-success-border'
+      case 'blue':
+        return 'border-blue-100'
+    }
+  })()
 
+  const borderStyleResult =
+    isBordered && borderStyle !== 'dashed' ? 'border' : 'border-2 border-dashed'
+
+  return `${borderColorResult} ${borderStyleResult}`
+}
 const makeBgResult = (color: RoundBoxColor) => {
   switch (color) {
     case 'mono-bright':
@@ -46,7 +58,6 @@ const makeBgResult = (color: RoundBoxColor) => {
       return 'bg-blue-50'
   }
 }
-
 const makeTextColorResult = (color: RoundBoxColor) => {
   switch (color) {
     case 'mono-bright':
@@ -66,6 +77,7 @@ const makeTextColorResult = (color: RoundBoxColor) => {
 const RoundBox = ({
   color = 'mono-bright',
   isBordered = true,
+  borderStyle = 'solid',
   isShadowed,
   padding = 'md',
   radius = 'md',
@@ -76,7 +88,7 @@ const RoundBox = ({
   const colorResult = makeBgResult(color)
   const textColorResult = makeTextColorResult(color)
   const shadowResult = isShadowed ? 'shadow-md' : ''
-  const borderResult = makeBorderResult(color, isBordered)
+  const borderResult = makeBorderResult(color, isBordered, borderStyle)
   const paddingResult = paddingMap[padding] ?? ''
   const radiusResult = radiusMap[radius]
   const result = `${colorResult} ${textColorResult} ${borderResult} ${shadowResult} ${paddingResult} ${radiusResult}`

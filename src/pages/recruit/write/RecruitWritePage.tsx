@@ -28,7 +28,8 @@ const WriteBox = ({ children }: { children: ReactNode }) => {
 
 const RecruitWritePage = () => {
   // TODO: 나중에 이미지 업로드와 연동해야
-  const [dummyImageCount, setDummyImageCount] = useState(0)
+  const [dummyImageCount, _setDummyImageCount] = useState(0)
+  const [dummyTagCount, _setDummyTagCount] = useState(0)
 
   return (
     <Container width="md" isPadded>
@@ -119,7 +120,7 @@ const RecruitWritePage = () => {
                 </Hstack>
               </Button>
             </Hstack>
-            <RoundBox color="mono-bright" padding="xl">
+            <RoundBox color="mono-bright" padding="xl" borderStyle="dashed">
               <Vstack gap="sm" className="items-center text-gray-500">
                 <img src={TagIcon} />
                 <Vstack gap="none" className="items-center">
@@ -137,7 +138,7 @@ const RecruitWritePage = () => {
 
           <Labeled>
             <Labeled.Header>참고 파일 업로드</Labeled.Header>
-            <RoundBox color="mono-bright" padding="xl">
+            <RoundBox color="mono-bright" padding="xl" borderStyle="dashed">
               <Vstack gap="sm" className="items-center text-gray-500">
                 <img src={UploadIcon} />
                 <Vstack gap="none" className="items-center">
@@ -149,7 +150,7 @@ const RecruitWritePage = () => {
               </Vstack>
             </RoundBox>
             <Labeled.Footer>
-              태그는 최대 5개까지 선택할 수 있습니다. ({0}/5)
+              태그는 최대 5개까지 선택할 수 있습니다. ({dummyTagCount}/5)
             </Labeled.Footer>
           </Labeled>
         </WriteBox>
