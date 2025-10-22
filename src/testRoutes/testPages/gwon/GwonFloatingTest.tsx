@@ -2,6 +2,7 @@ import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
 import { ArrowUp, MessageCircle } from 'lucide-react'
 
 const GwonFloating = () => {
+  const badgeTest = 12
   return (
     <>
       플로팅 테스트임당
@@ -10,7 +11,7 @@ const GwonFloating = () => {
         <ArrowUp size={24} strokeWidth={4} />
       </FloatingButton>
       {/* 메시지 아이콘 */}
-      <FloatingButton theme="primary">
+      <FloatingButton theme="primary" badge={badgeTest}>
         <MessageCircle size={24} />
       </FloatingButton>
     </>
