@@ -1,11 +1,12 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import type { Color } from '@/types'
-import type { ReactNode } from 'react'
+import type { ReactEventHandler, ReactNode } from 'react'
 
 export interface FloatingIconProps {
   children: ReactNode
   theme?: Color //테마
   badge?: ReactNode //메시지 배지
+  onClick?: ReactEventHandler
 }
 
 const themeResult = (theme: Color) => {
@@ -27,12 +28,14 @@ const FloatingButton = ({
   children,
   theme = 'mono',
   badge,
+  onClick,
 }: FloatingIconProps) => {
   const themeColor = themeResult(theme)
   return (
     <div className="relative h-16 w-16">
       <button
         className={`${themeColor} h-16 w-16 cursor-pointer rounded-full shadow-[0_10px_15px_-3px_rgb(0_0_0_/_0.1),_0_4px_6px_-4px_rgb(0_0_0_/_0.1)]`}
+        onClick={onClick}
       >
         <Hstack className="items-center justify-center">{children}</Hstack>
 
