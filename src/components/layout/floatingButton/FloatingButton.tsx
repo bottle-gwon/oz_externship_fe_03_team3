@@ -2,7 +2,7 @@ import { Hstack } from '@/components/commonInGeneral/layout'
 import type { Color } from '@/types'
 import type { ReactNode } from 'react'
 
-interface FloatingIconProps {
+export interface FloatingIconProps {
   children: ReactNode
   theme?: Color //테마
   badge?: ReactNode //메시지 배지
