@@ -3,9 +3,9 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import Textarea from '@/components/commonInGeneral/inputFamily/textarea/Textarea'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
-import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
+import ApplicationPoopUp from './ApplicationPoopUp'
 
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
@@ -280,46 +280,10 @@ const ApplicationModalPage = () => {
       </Vstack>
 
       {confirmOn && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
-          <RoundBox
-            color="mono-bright"
-            isBordered
-            radius="lg"
-            padding="lg"
-            className="w-[320px]"
-          >
-            <div className="mb-2 text-lg font-semibold">알림</div>
-            <div className="mb-4 text-sm">제출이 완료되었습니다.</div>
-            <div className="flex justify-end">
-              <Button
-                color="primary"
-                variant="contained"
-                status="enabled"
-                size="md"
-                onClick={() => {
-                  // 폼 리셋 후 전부 닫기
-                  setSelfIntroduction('')
-                  setMotivation('')
-                  setObjective('')
-                  setAvailableTime('')
-                  setHasStudyExperience(false)
-                  setStudyExperience('')
-                  setErrors({
-                    selfIntroduction: false,
-                    motivation: false,
-                    objective: false,
-                    availableTime: false,
-                    studyExperience: false,
-                  })
-                  setConfirmOn(false)
-                  setIsOn(false)
-                }}
-              >
-                확인
-              </Button>
-            </div>
-          </RoundBox>
-        </div>
+        <ApplicationPoopUp
+          open={confirmOn}
+          onClose={() => setConfirmOn(false)}
+        ></ApplicationPoopUp>
       )}
     </>
   )
