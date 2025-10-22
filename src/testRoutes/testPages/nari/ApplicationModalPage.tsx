@@ -3,6 +3,7 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import Textarea from '@/components/commonInGeneral/inputFamily/textarea/Textarea'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
 
@@ -23,6 +24,8 @@ const ApplicationModalPage = () => {
     studyExperience: false,
   })
 
+  const [confirmOn, setConfirmOn] = useState(false)
+
   const expDisabled = !hasStudyExperience
 
   const basePlaceholder = {
@@ -36,23 +39,23 @@ const ApplicationModalPage = () => {
   } as const
 
   const dangerPlaceholder = {
-    selfIntroduction: '필수 입력: 자기소개를 작성해주세요.',
-    motivation: '필수 입력: 지원 동기를 작성해주세요.',
-    objective: '필수 입력: 스터디 목표를 작성해주세요.',
-    availableTime: '필수 입력: 가능한 시간대를 작성해주세요.',
+    selfIntroduction: '자기소개를 작성해주세요. (필수입력)',
+    motivation: '지원 동기를 작성해주세요. (필수입력)',
+    objective: '스터디 목표를 작성해주세요. (필수입력)',
+    availableTime: '가능한 시간대를 작성해주세요. (필수입력)',
     studyExperience: '경험을 체크했다면 간단히 작성해주세요.',
   } as const
 
-  const TextHelper = (k: keyof typeof basePlaceholder) =>
+  const textHelper = (k: keyof typeof basePlaceholder) =>
     errors[k] ? dangerPlaceholder[k] : basePlaceholder[k]
 
-  const markError = (next: Partial<typeof errors>) =>
+  const errorMessageChange = (next: Partial<typeof errors>) =>
     setErrors((prev) => ({ ...prev, ...next }))
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
-    const nextErrors = {
+    const textCountErrors = {
       selfIntroduction: selfIntroduction.trim().length === 0,
       motivation: motivation.trim().length === 0,
       objective: objective.trim().length === 0,
@@ -61,12 +64,26 @@ const ApplicationModalPage = () => {
         hasStudyExperience && studyExperience.trim().length === 0,
     }
 
-    setErrors(nextErrors)
+    setErrors(textCountErrors)
 
-    const hasAnyError = Object.values(nextErrors).some(Boolean)
+    const hasAnyError = Object.values(textCountErrors).some(Boolean)
     if (hasAnyError) return
+    setConfirmOn(true)
 
     setIsOn(false)
+    setSelfIntroduction('')
+    setMotivation('')
+    setObjective('')
+    setAvailableTime('')
+    setHasStudyExperience(false)
+    setStudyExperience('')
+    setErrors({
+      selfIntroduction: false,
+      motivation: false,
+      objective: false,
+      availableTime: false,
+      studyExperience: false,
+    })
   }
   return (
     <>
@@ -83,7 +100,7 @@ const ApplicationModalPage = () => {
             </div>
           </div>
         </Modal.Header>
-        <form>
+        <form onSubmit={onSubmit}>
           <Modal.Body>
             <div className="space-y-6">
               <section className="space-y-1">
@@ -92,10 +109,16 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   value={selfIntroduction}
-                  onChange={(e) => setSelfIntroduction(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setSelfIntroduction(value)
+                    if (value.trim().length > 0 && errors.selfIntroduction) {
+                      errorMessageChange({ selfIntroduction: false })
+                    }
+                  }}
                   maxLength={500}
-                  placeholder="본인에 대해 간략하게 소개해주세요. (학습 배경, 관심 분야, 현재 수준 등)"
-                  isInDanger
+                  placeholder={textHelper('selfIntroduction')}
+                  isInDanger={errors.selfIntroduction}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
@@ -109,10 +132,16 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   value={motivation}
-                  onChange={(e) => setMotivation(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setMotivation(value)
+                    if (value.trim().length > 0 && errors.motivation) {
+                      errorMessageChange({ motivation: false })
+                    }
+                  }}
                   maxLength={500}
-                  placeholder="이 스터디에 지원하게 된 동기를 작성해주세요."
-                  isInDanger
+                  placeholder={textHelper('motivation')}
+                  isInDanger={errors.motivation}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
@@ -126,10 +155,16 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   value={objective}
-                  onChange={(e) => setObjective(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setObjective(value)
+                    if (value.trim().length > 0 && errors.objective) {
+                      errorMessageChange({ objective: false })
+                    }
+                  }}
                   maxLength={500}
-                  placeholder="이 스터디를 통해 달성하고 싶은 목표를 작성해주세요."
-                  isInDanger
+                  placeholder={textHelper('objective')}
+                  isInDanger={errors.objective}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
@@ -144,10 +179,16 @@ const ApplicationModalPage = () => {
                 <Textarea
                   isShort
                   value={availableTime}
-                  onChange={(e) => setAvailableTime(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setAvailableTime(value)
+                    if (value.trim().length > 0 && errors.availableTime) {
+                      errorMessageChange({ availableTime: false })
+                    }
+                  }}
                   maxLength={500}
-                  placeholder="스터디 참여가 가능한 요일과 시간대를 작성해주세요. (예 : 평일 저녁 7-9시, 주말오후)"
-                  isInDanger
+                  placeholder={textHelper('availableTime')}
+                  isInDanger={errors.availableTime}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
@@ -163,7 +204,12 @@ const ApplicationModalPage = () => {
                   <input
                     type="checkbox"
                     checked={hasStudyExperience}
-                    onChange={(e) => setHasStudyExperience(e.target.checked)}
+                    onChange={(e) => {
+                      const checked = e.target.checked
+                      setHasStudyExperience(checked)
+                      if (!checked)
+                        errorMessageChange({ studyExperience: false })
+                    }}
                   />{' '}
                   스터디 참여 경험이 있습니다.
                 </label>
@@ -175,11 +221,17 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   value={studyExperience}
-                  onChange={(e) => setStudyExperience(e.target.value)}
+                  onChange={(e) => {
+                    const value = e.target.value
+                    setStudyExperience(value)
+                    if (value.trim().length > 0 && errors.studyExperience) {
+                      errorMessageChange({ studyExperience: false })
+                    }
+                  }}
                   maxLength={500}
                   disabled={expDisabled}
-                  placeholder="스터디 경험이 없으시면 비워두셔도 됩니다."
-                  isInDanger
+                  placeholder={textHelper('studyExperience')}
+                  isInDanger={!expDisabled && errors.studyExperience}
                   className={[
                     'w-full',
                     expDisabled ? 'bg-gray-100' : 'bg-white',
@@ -226,6 +278,49 @@ const ApplicationModalPage = () => {
       <Vstack padding="xxl">
         <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
       </Vstack>
+
+      {confirmOn && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center bg-black/30">
+          <RoundBox
+            color="mono-bright"
+            isBordered
+            radius="lg"
+            padding="lg"
+            className="w-[320px]"
+          >
+            <div className="mb-2 text-lg font-semibold">알림</div>
+            <div className="mb-4 text-sm">제출이 완료되었습니다.</div>
+            <div className="flex justify-end">
+              <Button
+                color="primary"
+                variant="contained"
+                status="enabled"
+                size="md"
+                onClick={() => {
+                  // 폼 리셋 후 전부 닫기
+                  setSelfIntroduction('')
+                  setMotivation('')
+                  setObjective('')
+                  setAvailableTime('')
+                  setHasStudyExperience(false)
+                  setStudyExperience('')
+                  setErrors({
+                    selfIntroduction: false,
+                    motivation: false,
+                    objective: false,
+                    availableTime: false,
+                    studyExperience: false,
+                  })
+                  setConfirmOn(false)
+                  setIsOn(false)
+                }}
+              >
+                확인
+              </Button>
+            </div>
+          </RoundBox>
+        </div>
+      )}
     </>
   )
 }
