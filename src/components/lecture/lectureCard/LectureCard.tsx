@@ -8,10 +8,17 @@ import Text from '@/components/commonInGeneral/text/Text'
 import DifficultyTag from './_DifficultyTag'
 import ReviewSummary from './_ReviewSummary'
 import LectureThumbnailSection from './thumbnailSection/LectureThumnailSection'
+import ExpandedReviewSection from './expandedReviewSection/ExpandedReviewSection'
+import { useState } from 'react'
 
 const LectureCard = ({ lecture }: { lecture: Lecture }) => {
+  const [isReviewExpanded, setIsReviewExpanded] = useState(false)
   const handleRedirect = () => {
     window.location.href = lecture.url_link
+  }
+
+  const handleClick = () => {
+    setIsReviewExpanded(!isReviewExpanded)
   }
 
   return (
@@ -49,7 +56,12 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
         </Hstack>
 
         <Hstack className="items-center justify-between">
-          <Button color="primary" variant="ghost" className="p-0">
+          <Button
+            color="primary"
+            variant="ghost"
+            className="p-0"
+            onClick={handleClick}
+          >
             <ChevronDown />
             리뷰 보기
           </Button>
@@ -57,6 +69,8 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
             강의 보러 가기
           </Button>
         </Hstack>
+
+        {isReviewExpanded && <ExpandedReviewSection lecture={lecture} />}
       </Vstack>
     </RoundBox>
   )
