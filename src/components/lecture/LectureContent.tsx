@@ -8,7 +8,7 @@ import { dummyLectureArray } from './lectureListDummy'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
 import RecommendSection from '../recommendSection/RecommendSection'
-import Input from '../commonInGeneral/inputFamily/Input'
+import Input from '../commonInGeneral/inputFamily/input/Input'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
