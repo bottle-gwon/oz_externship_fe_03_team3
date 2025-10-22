@@ -9,15 +9,65 @@ import { useState } from 'react'
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
 
-  const [self_introduction, setSelf_introduction] = useState('')
+  const [selfIntroduction, setSelfIntroduction] = useState('')
   const [motivation, setMotivation] = useState('')
   const [objective, setObjective] = useState('')
-  const [available_time, setAvailable_time] = useState('')
-  const [has_study_experience, setHas_study_experience] = useState(false)
-  const [study_experience, setStudy_experience] = useState('')
+  const [availableTime, setAvailableTime] = useState('')
+  const [hasStudyExperience, setHasStudyExperience] = useState(false)
+  const [studyExperience, setStudyExperience] = useState('')
+  const [errors, setErrors] = useState({
+    selfIntroduction: false,
+    motivation: false,
+    objective: false,
+    availableTime: false,
+    studyExperience: false,
+  })
 
-  const expDisabled = !has_study_experience
+  const expDisabled = !hasStudyExperience
 
+  const basePlaceholder = {
+    selfIntroduction:
+      '본인에 대해 간략하게 소개해주세요. (학습 배경, 관심 분야, 현재 수준 등)',
+    motivation: '이 스터디에 지원하게 된 동기를 작성해주세요.',
+    objective: '이 스터디를 통해 달성하고 싶은 목표를 작성해주세요.',
+    availableTime:
+      '스터디 참여가 가능한 요일과 시간대를 작성해주세요. (예: 평일 19-21시, 주말 오후)',
+    studyExperience: '스터디 경험이 없으시면 비워두셔도 됩니다.',
+  } as const
+
+  const dangerPlaceholder = {
+    selfIntroduction: '필수 입력: 자기소개를 작성해주세요.',
+    motivation: '필수 입력: 지원 동기를 작성해주세요.',
+    objective: '필수 입력: 스터디 목표를 작성해주세요.',
+    availableTime: '필수 입력: 가능한 시간대를 작성해주세요.',
+    studyExperience: '경험을 체크했다면 간단히 작성해주세요.',
+  } as const
+
+  const TextHelper = (k: keyof typeof basePlaceholder) =>
+    errors[k] ? dangerPlaceholder[k] : basePlaceholder[k]
+
+  const markError = (next: Partial<typeof errors>) =>
+    setErrors((prev) => ({ ...prev, ...next }))
+
+  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+
+    const nextErrors = {
+      selfIntroduction: selfIntroduction.trim().length === 0,
+      motivation: motivation.trim().length === 0,
+      objective: objective.trim().length === 0,
+      availableTime: availableTime.trim().length === 0,
+      studyExperience:
+        hasStudyExperience && studyExperience.trim().length === 0,
+    }
+
+    setErrors(nextErrors)
+
+    const hasAnyError = Object.values(nextErrors).some(Boolean)
+    if (hasAnyError) return
+
+    setIsOn(false)
+  }
   return (
     <>
       <Modal
@@ -41,14 +91,15 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>자기소개</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  value={self_introduction}
-                  onChange={(e) => setSelf_introduction(e.target.value)}
+                  value={selfIntroduction}
+                  onChange={(e) => setSelfIntroduction(e.target.value)}
                   maxLength={500}
                   placeholder="본인에 대해 간략하게 소개해주세요. (학습 배경, 관심 분야, 현재 수준 등)"
+                  isInDanger
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {self_introduction.length}/500
+                  {selfIntroduction.length}/500
                 </div>
               </section>
 
@@ -61,6 +112,7 @@ const ApplicationModalPage = () => {
                   onChange={(e) => setMotivation(e.target.value)}
                   maxLength={500}
                   placeholder="이 스터디에 지원하게 된 동기를 작성해주세요."
+                  isInDanger
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
@@ -77,6 +129,7 @@ const ApplicationModalPage = () => {
                   onChange={(e) => setObjective(e.target.value)}
                   maxLength={500}
                   placeholder="이 스터디를 통해 달성하고 싶은 목표를 작성해주세요."
+                  isInDanger
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
@@ -90,14 +143,15 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   isShort
-                  value={available_time}
-                  onChange={(e) => setAvailable_time(e.target.value)}
+                  value={availableTime}
+                  onChange={(e) => setAvailableTime(e.target.value)}
                   maxLength={500}
                   placeholder="스터디 참여가 가능한 요일과 시간대를 작성해주세요. (예 : 평일 저녁 7-9시, 주말오후)"
+                  isInDanger
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {available_time.length}/500
+                  {availableTime.length}/500
                 </div>
               </section>
 
@@ -108,8 +162,8 @@ const ApplicationModalPage = () => {
                 <label className="flex items-center gap-2 p-0.5 text-sm font-medium">
                   <input
                     type="checkbox"
-                    checked={has_study_experience}
-                    onChange={(e) => setHas_study_experience(e.target.checked)}
+                    checked={hasStudyExperience}
+                    onChange={(e) => setHasStudyExperience(e.target.checked)}
                   />{' '}
                   스터디 참여 경험이 있습니다.
                 </label>
@@ -120,18 +174,19 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>구체적인 스터디 경험</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  value={study_experience}
-                  onChange={(e) => setStudy_experience(e.target.value)}
+                  value={studyExperience}
+                  onChange={(e) => setStudyExperience(e.target.value)}
                   maxLength={500}
                   disabled={expDisabled}
                   placeholder="스터디 경험이 없으시면 비워두셔도 됩니다."
+                  isInDanger
                   className={[
                     'w-full',
                     expDisabled ? 'bg-gray-100' : 'bg-white',
                   ].join(' ')}
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {study_experience.length}/500
+                  {studyExperience.length}/500
                 </div>
               </section>
             </div>
