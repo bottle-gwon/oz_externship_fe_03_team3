@@ -15,7 +15,6 @@ const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
-  // TODO: 더미 데이터 사용중. 나중에 삭제해야 합니다!
   return (
     <Container className="py-oz-xxl">
       {/* header -- 제작해주시는 것으로 교체할 예정 */}

@@ -2,15 +2,27 @@ import { Search } from 'lucide-react'
 import Input from '../commonInGeneral/inputFamily/input/Input'
 import { useEffect, useState } from 'react'
 import useDebounce from '@/hooks/useDebounce'
+import useStudyHubStore from '@/store/store'
+import { dummyLectureArray } from './lectureListDummy'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
-const dummySearchApi = () => {}
+const dummySearchApi = (debounceValue: string) => {
+  const setLectureArray = useStudyHubStore.getState().setLectureArray
+
+  const filteredLectureArray = dummyLectureArray.filter((lecture) =>
+    lecture.title.includes(debounceValue)
+  )
+
+  setLectureArray(filteredLectureArray)
+}
 
 const LectureSearchInput = () => {
   const [searchText, setSearchText] = useState('')
   const [devounceValue, cancel] = useDebounce(searchText, 500)
 
-  useEffect(() => {}, [devounceValue])
+  useEffect(() => {
+    dummySearchApi(devounceValue)
+  }, [devounceValue])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
