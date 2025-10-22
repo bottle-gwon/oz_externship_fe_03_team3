@@ -12,7 +12,7 @@ const ExpandedReviewSection = ({ lecture }: { lecture: Lecture }) => {
 
   return (
     <Vstack className="mt-oz-lg pt-oz-lg gap-oz-md border-t border-t-gray-200">
-      <h3>최근 리뷰</h3>
+      <h3 className="font-medium">최근 리뷰</h3>
       {reviewArray.map((review) => (
         <ReviewCard key={review.id} review={review} />
       ))}
