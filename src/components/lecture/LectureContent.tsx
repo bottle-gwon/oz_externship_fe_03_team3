@@ -4,12 +4,12 @@ import { GridContainer, Vstack } from '../commonInGeneral/layout'
 import Container from '../commonInGeneral/layout/_Container'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Select from '../commonInGeneral/select/Select'
-import { dummyLectureArray } from './lectureListDummy'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
 import RecommendSection from '../recommendSection/RecommendSection'
 import LectureSearchInput from './_LectureSearchInput'
 import useStudyHubStore from '@/store/store'
+import { dummyLectureArray } from './dummyLectureArray'
 
 const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)

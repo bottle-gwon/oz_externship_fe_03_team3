@@ -3,7 +3,7 @@ import Input from '../commonInGeneral/inputFamily/input/Input'
 import { useEffect, useState } from 'react'
 import useDebounce from '@/hooks/useDebounce'
 import useStudyHubStore from '@/store/store'
-import { dummyLectureArray } from './lectureListDummy'
+import { dummyLectureArray } from './dummyLectureArray'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
 const dummySearchApi = (debounceValue: string) => {

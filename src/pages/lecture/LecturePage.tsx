@@ -1,5 +1,5 @@
+import { dummyLectureArray } from '@/components/lecture/dummyLectureArray'
 import LectureContent from '@/components/lecture/LectureContent'
-import { dummyLectureArray } from '@/components/lecture/lectureListDummy'
 import LectureSkeleton from '@/components/lecture/LectureSkeleton'
 import useStudyHubStore from '@/store/store'
 import { sleep } from '@/utils/sleep'
