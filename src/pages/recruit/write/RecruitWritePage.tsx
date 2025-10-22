@@ -9,10 +9,11 @@ import Container from '@/components/commonInGeneral/layout/_Container'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
-import { Plus } from 'lucide-react'
+import { Plane, Plus, Send } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import UploadIcon from '@/assets/upload.svg'
 import TagIcon from '@/assets/tag.svg'
+import Divider from '@/components/commonInGeneral/divider/Divider'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -114,10 +115,8 @@ const RecruitWritePage = () => {
             <Hstack className="items-end justify-between">
               <Labeled.Header>사용자 정의 태그</Labeled.Header>
               <Button color="primary" size="sm" className="mb-oz-xs">
-                <Hstack className="items-center" gap="xs">
-                  <Plus size={14} />
-                  <p>태그 검색</p>
-                </Hstack>
+                <Plus size={14} />
+                태그 검색
               </Button>
             </Hstack>
             <RoundBox color="mono-bright" padding="xl" borderStyle="dashed">
@@ -132,7 +131,7 @@ const RecruitWritePage = () => {
               </Vstack>
             </RoundBox>
             <Labeled.Footer>
-              태그는 최대 5개까지 선택할 수 있습니다. ({0}/5)
+              태그는 최대 5개까지 선택할 수 있습니다. ({dummyTagCount}/5)
             </Labeled.Footer>
           </Labeled>
 
@@ -149,11 +148,20 @@ const RecruitWritePage = () => {
                 </Vstack>
               </Vstack>
             </RoundBox>
-            <Labeled.Footer>
-              태그는 최대 5개까지 선택할 수 있습니다. ({dummyTagCount}/5)
-            </Labeled.Footer>
+            <Labeled.Footer></Labeled.Footer>
           </Labeled>
         </WriteBox>
+
+        <Vstack gap="xl">
+          <Divider />
+          <Hstack className="justify-end">
+            <Button>취소</Button>
+            <Button color="primary">
+              <Send size={16} />
+              공고 등록하기
+            </Button>
+          </Hstack>
+        </Vstack>
       </Vstack>
     </Container>
   )

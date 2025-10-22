@@ -111,7 +111,7 @@ const Button = ({
       disabled={status !== 'enabled'}
       className={`${className} ${result} cursor-pointer transition disabled:opacity-50`}
     >
-      <Hstack gap="none" className="items-center">
+      <Hstack gap="xs" className="items-center">
         {status === 'pending' && (
           <Spinner variant={variant} size={size} color={color} />
         )}
