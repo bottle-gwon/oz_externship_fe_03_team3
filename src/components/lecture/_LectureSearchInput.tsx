@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react'
 import useDebounce from '@/hooks/useDebounce'
 import useStudyHubStore from '@/store/store'
 import { dummyLectureArray } from './dummyLectureArray'
+import useNoSearchResult from '@/hooks/useNoSearchResult'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
 const dummySearchApi = (debounceValue: string) => {
@@ -21,41 +22,12 @@ const dummySearchApi = (debounceValue: string) => {
 const LectureSearchInput = () => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [searchText, setSearchText] = useState('')
-
-  const isClearingSearch = useStudyHubStore((state) => state.isClearingSearch)
-  const setIsClearingSearch = useStudyHubStore(
-    (state) => state.setIsClearingSearch
-  )
-  const isFocusingSearch = useStudyHubStore((state) => state.isFocusingSearch)
-  const setIsFocusingSearch = useStudyHubStore(
-    (state) => state.setIsFocusingSearch
-  )
-
   const [devounceValue, cancel] = useDebounce(searchText, 500)
+  useNoSearchResult(inputRef, setSearchText)
 
   useEffect(() => {
     dummySearchApi(devounceValue)
   }, [devounceValue])
-
-  useEffect(() => {
-    setSearchText('')
-    setIsClearingSearch(false)
-
-    if (!inputRef.current) {
-      return
-    }
-    inputRef.current.focus()
-    setIsFocusingSearch(false)
-  }, [isClearingSearch])
-
-  useEffect(() => {
-    if (!inputRef.current) {
-      return
-    }
-
-    inputRef.current.focus()
-    setIsFocusingSearch(false)
-  }, [isFocusingSearch])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
@@ -64,7 +36,6 @@ const LectureSearchInput = () => {
 
     cancel()
   }
-
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value)
   }
