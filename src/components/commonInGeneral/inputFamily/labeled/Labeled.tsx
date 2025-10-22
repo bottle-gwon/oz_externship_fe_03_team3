@@ -1,9 +1,9 @@
-import { Hstack, Vstack } from '../layout'
 import type { DivProps, InputProps, PProps, TextareaProps } from '@/types'
-import Input from './Input'
 import LabeledContext from './LabeledContext'
 import useLabeledContext from './useLabeledContext'
-import Textarea from './Textarea'
+import { Hstack, Vstack } from '../../layout'
+import Input from '../input/Input'
+import Textarea from '../textarea/Textarea'
 
 const LabeledHeader = (props: PProps) => {
   const { className, children, ...rest } = props
