@@ -34,5 +34,5 @@ const ApplicationPoopUp = ({ open, onClose }: ApplicationPoopUpProps) => {
     </div>
   )
 }
-
+//추후 제출이 완료되었습니다. 제출에 실패하였습니다. 이런 오류 별로 팝업창 뜰수 있게 조정
 export default ApplicationPoopUp
