@@ -3,7 +3,15 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import { Search } from 'lucide-react'
 
-const NoSearchResult = () => {
+interface NoSearchResultProps {
+  onFilterReset: () => void
+  onNewSearch: () => void
+}
+
+const NoSearchResult = ({
+  onFilterReset,
+  onNewSearch,
+}: NoSearchResultProps) => {
   return (
     <RoundBox
       color="mono-dim"
@@ -21,11 +29,11 @@ const NoSearchResult = () => {
       </Vstack>
 
       <Hstack>
-        <Button color="primary" variant="contained">
+        <Button color="primary" variant="contained" onClick={onFilterReset}>
           필터 초기화
         </Button>
-        <Button color="primary" variant="outlined">
-          다시 검색하기
+        <Button variant="outlined" onClick={onNewSearch}>
+          새로운 검색
         </Button>
       </Hstack>
     </RoundBox>

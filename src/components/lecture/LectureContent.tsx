@@ -17,6 +17,9 @@ const LectureContent = () => {
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
+  const handleFilterReset = () => {}
+  const handleNewSearch = () => {}
+
   return (
     <Container className="py-oz-xxl">
       {/* header -- 제작해주시는 것으로 교체할 예정 */}
