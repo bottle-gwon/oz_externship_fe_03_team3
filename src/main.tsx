@@ -46,14 +46,21 @@ const routeArray = [
   },
 ]
 
-const suspendedRouterArray = routeArray.map((route) => ({
+const suspendedTestRouteArray = testRouteArray.map((route) => ({
+  path: route.path,
+  element: (
+    <Suspense fallback={<p>test route fallback</p>}>{route.element}</Suspense>
+  ),
+}))
+
+const suspendedRouteArray = routeArray.map((route) => ({
   path: route.path,
   element: <Suspense fallback={route.fallback}>{route.element}</Suspense>,
 }))
 
 const router = createBrowserRouter([
-  ...testRouteArray,
-  { element: <Layout />, children: suspendedRouterArray },
+  ...suspendedTestRouteArray,
+  { element: <Layout />, children: suspendedRouteArray },
   { path: '*', element: <NotFoundPage /> },
 ])
 

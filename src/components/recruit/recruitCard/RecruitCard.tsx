@@ -7,7 +7,7 @@ import {
   Trash2,
   Users,
 } from 'lucide-react'
-import RoundBox from '../commonInGeneral/roundBox/RoundBox'
+import RoundBox from '../../commonInGeneral/roundBox/RoundBox'
 import type { Recruit } from '@/types'
 
 export type RecruitCardProps = {

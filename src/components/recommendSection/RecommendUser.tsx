@@ -9,7 +9,7 @@ import type {
   RecommendPageType,
   Recruit,
 } from '@/types'
-import RecruitCard from '../recruit/RecruitCard'
+import RecruitCard from '../recruit/recruitCard/RecruitCard'
 import LectureCard from '../lecture/lectureCard/LectureCard'
 import Container from '../commonInGeneral/layout/_Container'
 import Tag from '../commonInProject/tag/Tag'
@@ -24,7 +24,7 @@ const RecommendUser = <T extends RecommendPageType>({
     type === 'recruit' ? ` 님을 위한 맟춤 스터디 공고` : ` 님을 위한 추천 강의`
 
   return (
-    <Container width="lg">
+    <Container width="lg" className="my-6">
       <RoundBox
         color="primary"
         isBordered
