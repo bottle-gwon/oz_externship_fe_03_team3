@@ -19,15 +19,27 @@ const dummySearchApi = (debounceValue: string) => {
   setLectureArray(filteredLectureArray)
 }
 
-const LectureSearchInput = () => {
+interface LectureSearchInputProps {
+  setIsSearching: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const LectureSearchInput = ({ setIsSearching }: LectureSearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
   const [searchText, setSearchText] = useState('')
-  const [devounceValue, cancel] = useDebounce(searchText, 500)
+  const [debounceValue, cancel] = useDebounce(searchText, 500)
   useNoSearchResult(inputRef, setSearchText)
 
   useEffect(() => {
-    dummySearchApi(devounceValue)
-  }, [devounceValue])
+    dummySearchApi(debounceValue)
+
+    if (debounceValue === '') {
+      setIsSearching(false)
+    } else {
+      setIsSearching(true)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounceValue])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {

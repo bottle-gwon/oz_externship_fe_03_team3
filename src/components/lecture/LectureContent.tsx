@@ -36,7 +36,7 @@ const LectureContent = () => {
       <Vstack className="px-oz-xxl gap-oz-xxl">
         <RoundBox>
           <GridContainer className="gap-oz-lg">
-            <LectureSearchInput />
+            <LectureSearchInput setIsSearching={setIsSearching} />
 
             <Select onOptionSelect={() => null} className="w-full">
               <Select.Trigger>전체 카테고리(자리 확인용)</Select.Trigger>
@@ -48,13 +48,15 @@ const LectureContent = () => {
           </GridContainer>
         </RoundBox>
 
-        <NoSearchResult />
-
-        {/* <GridContainer className="gap-oz-xl"> */}
-        {/*   {lectureArray.map((lecture) => ( */}
-        {/*     <LectureCard key={lecture.uuid} lecture={lecture} /> */}
-        {/*   ))} */}
-        {/* </GridContainer> */}
+        {isSearching && lectureArray.length === 0 && <NoSearchResult />}
+        {lectureArray.length > 0 && (
+          <GridContainer className="gap-oz-xl">
+            {lectureArray.map((lecture) => (
+              <LectureCard key={lecture.uuid} lecture={lecture} />
+            ))}
+          </GridContainer>
+        )}
+        {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
       </Vstack>
     </Container>
   )
