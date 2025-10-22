@@ -1,3 +1,4 @@
+import { ArrowBigDown } from 'lucide-react'
 import { Vstack } from '../layout'
 import Container from '../layout/_Container'
 import Input from './input/Input'
@@ -9,6 +10,10 @@ const HowToUseInputFamily = () => {
     <Container isPadded>
       <Vstack>
         <Input placeholder="보통 인풋" />
+        <Input
+          placeholder="아이콘은 자동으로 회색이 됩니다"
+          icon={<ArrowBigDown />}
+        />
 
         <Input isInDanger placeholder="빨간 테투리" />
 
@@ -24,8 +29,15 @@ const HowToUseInputFamily = () => {
         <Labeled>
           <Labeled.Header>Labeled 사용 예시</Labeled.Header>
           <Input placeholder="Labeled 안에서 원하는 인풋 혹은 textarea를 사용해도 되지만" />
-          <Labeled.Input placeholder="Labeled.Input을 쓰면 Labeled의 isDanger가 자동 전달됩니다" />
           <Labeled.Footer></Labeled.Footer>
+        </Labeled>
+
+        <Labeled>
+          <Labeled.Header>Labeled 사용 예시</Labeled.Header>
+          <Labeled.Input placeholder="Labeled.Input을 쓰면 Labeled의 isDanger가 자동 전달됩니다" />
+          <Labeled.Footer>
+            푸터는 칠드런이 있을 때만 공간을 차지합니다
+          </Labeled.Footer>
         </Labeled>
 
         <Labeled isInDanger>

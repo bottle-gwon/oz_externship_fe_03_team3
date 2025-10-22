@@ -16,8 +16,8 @@ const Textarea = ({
   const { cols: _cols, className, ...rest } = props
 
   const dangerResult = isInDanger
-    ? 'border-danger-100 text-danger-600  focus:outline-danger-100'
-    : 'border-gray-300  focus:outline-gray-300'
+    ? 'border-danger-100 focus:outline-danger-100'
+    : 'border-gray-300 focus:border-primary-500 focus:outline-primary-500'
 
   return (
     <textarea
