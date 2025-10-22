@@ -1,5 +1,6 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import type { LectureReviewRating } from '@/types'
+import { ratingToNumber } from '@/utils/simpleMaps'
 import { Star } from 'lucide-react'
 
 type WhatReviewStarIsFor = 'average' | 'individual'
@@ -11,14 +12,6 @@ type Rating<T extends WhatReviewStarIsFor> = T extends 'average'
 interface ReviewInStarProps<T extends WhatReviewStarIsFor> {
   whatFor: WhatReviewStarIsFor
   rating: Rating<T>
-}
-
-const ratingToNumber: Record<LectureReviewRating, number> = {
-  '1_OUT_OF_5_STARS': 1,
-  '2_OUT_OF_5_STARS': 2,
-  '3_OUT_OF_5_STARS': 3,
-  '4_OUT_OF_5_STARS': 4,
-  '5_OUT_OF_5_STARS': 5,
 }
 
 const ReviewInStar = <T extends WhatReviewStarIsFor>({
