@@ -13,7 +13,7 @@ const HowToUseSubHeader = () => {
   return (
     <SubHeader>
       <Hstack gap="none" className="items-center">
-        <SubHeader.BackButton isBackButtonVisible={true} />
+        <SubHeader.BackButton isBackButtonVisible />
         <SubHeaderTitleSection>
           <SubHeader.Title>스터디 구인 공고</SubHeader.Title>
           <SubHeader.Subtitle>
