@@ -69,21 +69,6 @@ const ApplicationModalPage = () => {
     const hasAnyError = Object.values(textCountErrors).some(Boolean)
     if (hasAnyError) return
     setConfirmOn(true)
-
-    setIsOn(false)
-    setSelfIntroduction('')
-    setMotivation('')
-    setObjective('')
-    setAvailableTime('')
-    setHasStudyExperience(false)
-    setStudyExperience('')
-    setErrors({
-      selfIntroduction: false,
-      motivation: false,
-      objective: false,
-      availableTime: false,
-      studyExperience: false,
-    })
   }
   return (
     <>
@@ -282,7 +267,24 @@ const ApplicationModalPage = () => {
       {confirmOn && (
         <ApplicationPoopUp
           open={confirmOn}
-          onClose={() => setConfirmOn(false)}
+          onClose={() => {
+            setIsOn(false)
+            setSelfIntroduction('')
+            setMotivation('')
+            setObjective('')
+            setAvailableTime('')
+            setHasStudyExperience(false)
+            setStudyExperience('')
+            setErrors({
+              selfIntroduction: false,
+              motivation: false,
+              objective: false,
+              availableTime: false,
+              studyExperience: false,
+            })
+            setConfirmOn(false)
+            setIsOn(false)
+          }}
         ></ApplicationPoopUp>
       )}
     </>
