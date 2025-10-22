@@ -16,7 +16,7 @@ const GridContainer = ({
   return (
     <div
       {...rest}
-      className={`${className} ${gapResult} grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]`}
+      className={`${className} ${gapResult} grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))]`}
     >
       {children}
     </div>

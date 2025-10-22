@@ -4,16 +4,18 @@ import { GridContainer, Vstack } from '../commonInGeneral/layout'
 import Container from '../commonInGeneral/layout/_Container'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
 import Select from '../commonInGeneral/select/Select'
-import { dummyLectureArray } from './lectureListDummy'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
 import RecommendSection from '../recommendSection/RecommendSection'
-import Input from '../commonInGeneral/inputFamily/input/Input'
+import LectureSearchInput from './_LectureSearchInput'
+import useStudyHubStore from '@/store/store'
+import { dummyLectureArray } from './dummyLectureArray'
+import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 
 const LectureContent = () => {
+  const [isSearching, setIsSearching] = useState(false)
   const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
-
-  // TODO: 더미 데이터 사용중. 나중에 삭제해야 합니다!
+  const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
   return (
     <Container className="py-oz-xxl">
@@ -24,29 +26,37 @@ const LectureContent = () => {
         </Button>
         <TitleSection isLoggedIn={isLoggedInForDebug} type="lecture" />
       </Vstack>
+
       <RecommendSection
         type="lecture"
         isLoggedIn={isLoggedInForDebug}
         recommendedArray={dummyLectureArray.slice(0, 3)}
       />
+
       <Vstack className="px-oz-xxl gap-oz-xxl">
         <RoundBox>
           <GridContainer className="gap-oz-lg">
-            <Input placeholder="검색어를 입력하세요" />
+            <LectureSearchInput setIsSearching={setIsSearching} />
+
             <Select onOptionSelect={() => null} className="w-full">
               <Select.Trigger>전체 카테고리(자리 확인용)</Select.Trigger>
             </Select>
+
             <Select onOptionSelect={() => null} className="w-full">
               <Select.Trigger>최신순(눌리지 않음)</Select.Trigger>
             </Select>
           </GridContainer>
         </RoundBox>
 
-        <GridContainer className="gap-oz-xl">
-          {dummyLectureArray.map((lecture) => (
-            <LectureCard key={lecture.uuid} lecture={lecture} />
-          ))}
-        </GridContainer>
+        {isSearching && lectureArray.length === 0 && <NoSearchResult />}
+        {lectureArray.length > 0 && (
+          <GridContainer className="gap-oz-xl">
+            {lectureArray.map((lecture) => (
+              <LectureCard key={lecture.uuid} lecture={lecture} />
+            ))}
+          </GridContainer>
+        )}
+        {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
       </Vstack>
     </Container>
   )
