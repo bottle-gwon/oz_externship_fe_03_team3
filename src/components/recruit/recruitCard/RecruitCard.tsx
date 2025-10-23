@@ -11,6 +11,7 @@ import RoundBox from '../../commonInGeneral/roundBox/RoundBox'
 import type { Recruit } from '@/types'
 import Tag from '@/components/commonInProject/tag/Tag'
 import Button from '@/components/commonInGeneral/button/Button'
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -40,11 +41,11 @@ const RecruitCard = ({
       isBordered
       borderStyle="solid"
       isShadowed={false}
-      padding="xl"
+      padding="md"
       radius="md"
-      className={`outBox bg-white ${cardClassName}`}
+      className={`outBox ${cardClassName}`}
     >
-      <div className="flex gap-3">
+      <Hstack gap="md" padding="xs">
         <RoundBox
           color="mono-bright"
           isBordered={false}
@@ -58,19 +59,27 @@ const RecruitCard = ({
           <img
             src={thumbnail_img_url}
             alt="imgBox"
-            className={`${imageClassName}`}
+            className={imageClassName}
           />
         </RoundBox>
 
-        <div className="min-w-0 flex-1">
-          <div className="flex items-start justify-between gap-2">
+        <Vstack gap="xs" padding="none" className="flex-1">
+          <Hstack
+            gap="none"
+            padding="none"
+            className="items-start justify-between"
+          >
             <h1
               aria-label="제목"
-              className="truncate text-xl font-bold text-gray-900"
+              className="truncate text-base font-bold text-gray-900"
             >
               {title}
             </h1>
-            <div className="flex shrink-0 items-center gap-3 text-xs leading-none text-gray-500">
+            <Hstack
+              gap="sm"
+              padding="xs"
+              className="shrink-0 items-center text-[11px] leading-none text-gray-500"
+            >
               <span
                 aria-label="조회수"
                 className="viewCount inline-flex items-center gap-1"
@@ -99,76 +108,82 @@ const RecruitCard = ({
                   </button>
                 </span>
               )}
-            </div>
-          </div>
+            </Hstack>
+          </Hstack>
 
-          <div className="h-2" />
-
-          <div className="mt-2 flex flex-col gap-1 text-sm text-gray-700">
-            <div
+          <Vstack gap="lg" padding="xs" className="mt-2 text-xs text-gray-500">
+            <Hstack
+              gap="xs"
+              padding="none"
               aria-label="모집인원수"
-              className="expected_personnel inline-flex items-center gap-1"
+              className="items-center"
             >
               <Users className="size-4" />
               {/* 추후 svg 아이콘으로 추가 */}
               모집인원 : {expected_headcount ?? ''}명
-            </div>
+            </Hstack>
 
-            <div className="h-2" />
-            <span
+            <Hstack
+              gap="xs"
+              padding="none"
               aria-label="마감일"
-              className="inline-flex items-center gap-1"
+              className="items-center"
             >
               <Calendar className="size-4" />
               {/* 추후 svg 아이콘으로 추가 */}
-              마감일 : {(due_date ?? '').slice(0, 10).replace(/-/g, '.') + '.'}
-            </span>
-          </div>
+              마감일 : {(due_date ?? '').slice(0, 10).replace(/-/g, '. ') + '.'}
+            </Hstack>
+          </Vstack>
 
-          <div className="h-2" />
-
-          <div className="mt-2">
-            <div className="text-sm">강의 목록 :</div>
-            <ul className="lectures mt-1 list-inside list-disc">
+          <Vstack gap="xs" padding="none" className="mt-2 text-gray-500">
+            <Hstack gap="sm" padding="xs" className="text-xs">
+              강의 목록 :
+            </Hstack>
+            <ul className="list-inside list-disc pl-2">
               {lectures.map((lectures) => (
-                <li
-                  key={lectures.id}
-                  aria-label="강의목록"
-                  className="description text-sm text-gray-600"
-                >
+                <li key={lectures.id} aria-label="강의목록" className="text-xs">
                   {lectures.title}-{lectures.instructor}
                 </li>
               ))}
             </ul>
-          </div>
+          </Vstack>
 
-          <div className="mt-2 grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-2">
-            <div aria-label="태그" className="tags mt-2 flex flex-wrap gap-2">
+          <Hstack
+            gap="xs"
+            padding="xs"
+            className="items-center justify-between"
+          >
+            <Hstack
+              gap="sm"
+              padding="none"
+              aria-label="태그"
+              className="flex-wrap"
+            >
               {tags.map((tag) => (
                 <Tag key={tag.id} color="primary" isVivid={false}>
                   {tag.name}
                 </Tag>
               ))}
-            </div>
+            </Hstack>
             {isMine && (
-              <div className="row-span-2 self-center">
+              <Hstack gap="none" padding="none" className="self-center">
                 <Button
                   color="blue"
                   variant="contained"
                   status="enabled"
                   size="md"
                   shape="rectangle"
-                  className="gap-2 px-6 py-2 text-sm"
+                  className="gap-2 px-6 py-2 text-xs"
                 >
-                  <FileText className="flex size-4" />
+                  <FileText className="size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
-                  <button className="flex">지원내역</button>
+                  <span>지원내역</span>
                 </Button>
-              </div>
+              </Hstack>
             )}
-          </div>
-        </div>
-      </div>
+          </Hstack>
+        </Vstack>
+      </Hstack>
     </RoundBox>
   )
 }
