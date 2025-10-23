@@ -18,6 +18,8 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
       <RoundBox
         color="mono-bright"
         isBordered
+        borderStyle="solid"
+        isShadowed={false}
         padding="lg"
         radius="sm"
         className="h-20 w-62"
@@ -26,6 +28,8 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
           <RoundBox
             color="mono-dim"
             isBordered={false}
+            borderStyle="none"
+            isShadowed={false}
             padding="md"
             radius="md"
             className="h-10 w-10"
@@ -45,6 +49,8 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
       <RoundBox
         color="mono-bright"
         isBordered
+        borderStyle="solid"
+        isShadowed={false}
         padding="lg"
         radius="sm"
         className="h-20 w-62"
@@ -53,6 +59,8 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
           <RoundBox
             color="success"
             isBordered={false}
+            borderStyle="none"
+            isShadowed={false}
             padding="md"
             radius="md"
             className="h-10 w-10"
@@ -72,6 +80,8 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
       <RoundBox
         color="mono-bright"
         isBordered
+        borderStyle="solid"
+        isShadowed={false}
         padding="lg"
         radius="sm"
         className="h-20 w-62"
@@ -80,6 +90,8 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
           <RoundBox
             color="danger"
             isBordered={false}
+            borderStyle="none"
+            isShadowed={false}
             padding="md"
             radius="md"
             className="h-10 w-10"

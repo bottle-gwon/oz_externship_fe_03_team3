@@ -9,6 +9,8 @@ import {
 } from 'lucide-react'
 import RoundBox from '../../commonInGeneral/roundBox/RoundBox'
 import type { Recruit } from '@/types'
+import Tag from '@/components/commonInProject/tag/Tag'
+import Button from '@/components/commonInGeneral/button/Button'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -28,7 +30,7 @@ const RecruitCard = ({
     bookmark_count,
     lectures,
   },
-  isMine = false,
+  isMine = true,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
@@ -36,6 +38,8 @@ const RecruitCard = ({
     <RoundBox
       color="mono-bright"
       isBordered
+      borderStyle="solid"
+      isShadowed={false}
       padding="xl"
       radius="md"
       className={`outBox bg-white ${cardClassName}`}
@@ -44,6 +48,8 @@ const RecruitCard = ({
         <RoundBox
           color="mono-bright"
           isBordered={false}
+          borderStyle="none"
+          isShadowed={false}
           padding="none"
           radius="lg"
           className={`${imageClassName} flex-none overflow-hidden bg-gray-200`}
@@ -139,31 +145,25 @@ const RecruitCard = ({
           <div className="mt-2 grid grid-cols-[1fr_auto] items-start gap-x-3 gap-y-2">
             <div aria-label="태그" className="tags mt-2 flex flex-wrap gap-2">
               {tags.map((tag) => (
-                <RoundBox
-                  key={tag.id}
-                  color="mono-bright"
-                  isBordered={false}
-                  padding="none"
-                  radius="sm"
-                  className="bg-yellow-100 px-3 py-1 text-[12px] text-yellow-800"
-                >
+                <Tag key={tag.id} color="primary" isVivid={false}>
                   {tag.name}
-                </RoundBox>
+                </Tag>
               ))}
             </div>
             {isMine && (
               <div className="row-span-2 self-center">
-                <RoundBox
-                  color="mono-bright"
-                  isBordered
-                  padding="none"
-                  radius="sm"
-                  className="inline-flex items-center gap-2 bg-blue-500 px-5 py-2 text-xs text-white"
+                <Button
+                  color="blue"
+                  variant="contained"
+                  status="enabled"
+                  size="md"
+                  shape="rectangle"
+                  className="gap-2 px-6 py-2 text-sm"
                 >
                   <FileText className="flex size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
                   <button className="flex">지원내역</button>
-                </RoundBox>
+                </Button>
               </div>
             )}
           </div>
