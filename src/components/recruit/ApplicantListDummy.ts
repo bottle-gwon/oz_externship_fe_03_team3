@@ -1,4 +1,5 @@
 import type { Applicant } from '@/types/_applicantInterface'
+import img from '../../testRoutes/testPages/hyejeong/profile-img.jpg'
 
 export const dummyApplicantArray: Applicant[] = [
   {
@@ -6,7 +7,7 @@ export const dummyApplicantArray: Applicant[] = [
     application: {
       nickname: 'dev_juwon',
       gender: '남성',
-      profile_image: 'https://cdn.example.com/profiles/juwon.png',
+      profile_image: img,
     },
     available_time: '평일 저녁, 주말 오전',
     has_study_experience: true,
@@ -30,7 +31,7 @@ export const dummyApplicantArray: Applicant[] = [
     application: {
       nickname: 'dev_juwon',
       gender: '남성',
-      profile_image: 'https://cdn.example.com/profiles/juwon.png',
+      profile_image: img,
     },
     available_time: '평일 저녁, 주말 오전',
     has_study_experience: true,
