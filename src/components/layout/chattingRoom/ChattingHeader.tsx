@@ -8,7 +8,7 @@ interface ChattingHeader {
 }
 
 const ChattingHeader = ({ children }: ChattingHeader) => {
-  const { closeChatUI } = useStudyHubStore()
+  const closeChatUI = useStudyHubStore((state) => state.closeChatUI)
 
   return (
     <Hstack
