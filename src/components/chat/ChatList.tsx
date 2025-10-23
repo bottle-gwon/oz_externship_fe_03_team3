@@ -1,4 +1,4 @@
-import ChattingLayout from '../layout/chattingRoom/chattingLayout'
+import ChattingLayout from '@/components/layout/chattingRoom/chattingLayout'
 import ChatListCard from './ChatListCard'
 
 // TODO api 연결할때 지우기!
