@@ -17,7 +17,7 @@ const makeBorderResult = (
   isBordered: boolean,
   borderStyle: BorderStyle
 ) => {
-  if (!isBordered && borderStyle === 'none') {
+  if (!isBordered || borderStyle === 'none') {
     return ''
   }
 
@@ -38,7 +38,7 @@ const makeBorderResult = (
   })()
 
   const borderStyleResult =
-    isBordered && borderStyle !== 'dashed' ? 'border' : 'border-2 border-dashed'
+    borderStyle === 'dashed' ? 'border-2 border-dashed' : 'border'
 
   return `${borderColorResult} ${borderStyleResult}`
 }
