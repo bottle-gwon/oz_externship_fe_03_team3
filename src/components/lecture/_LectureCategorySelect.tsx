@@ -1,18 +1,5 @@
-import useStudyHubStore from '@/store/store'
 import Select from '../commonInGeneral/select/Select'
 import { dummyLectureArray } from './dummyLectureArray'
-
-// TODO: LECT 카테고리 목록 API & LECT-001 강의 목록 조회 API 연결되면 삭제
-const dummyFilterApi = (category: string) => {
-  const setLectureArray = useStudyHubStore.getState().setLectureArray
-  const filteredLectureArray = dummyLectureArray.filter((lecture) => {
-    const nameArray = lecture.categories.map(
-      (tempCategory) => tempCategory.name
-    )
-    return nameArray.includes(category)
-  })
-  setLectureArray(filteredLectureArray)
-}
 
 const calcCategoryArray = () => {
   const categoryRecords = dummyLectureArray.reduce((outerAcc, lecture) => {
@@ -28,16 +15,22 @@ const calcCategoryArray = () => {
     return newOuterAcc
   }, {})
 
-  return categoryRecords
+  const categoryArray = Object.values(categoryRecords).sort() as string[]
+  return categoryArray
 }
 
-const LectureCategorySelect = () => {
-  const categoryRecords = calcCategoryArray()
+interface LectureCategorySelectProps {
+  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
+}
+
+const LectureCategorySelect = ({
+  setSelectedCategory,
+}: LectureCategorySelectProps) => {
+  const categoryArray = calcCategoryArray()
   // TODO: push 전에 처음부터 array로 로직 짜기
-  const categoryArray = Object.values(categoryRecords).sort() as string[]
 
   return (
-    <Select onOptionSelect={dummyFilterApi}>
+    <Select onOptionSelect={(option) => setSelectedCategory(option)}>
       <Select.Trigger>카테고리 어쩌구</Select.Trigger>
       <Select.Content>
         {categoryArray.map((category) => (

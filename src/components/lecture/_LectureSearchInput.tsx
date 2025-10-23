@@ -1,53 +1,30 @@
 import { Search } from 'lucide-react'
 import Input from '../commonInGeneral/inputFamily/input/Input'
-import { useEffect, useRef, useState } from 'react'
-import useDebounce from '@/hooks/useDebounce'
-import useStudyHubStore from '@/store/store'
-import { dummyLectureArray } from './dummyLectureArray'
+import { useRef } from 'react'
 import useNoSearchResult from '@/hooks/useNoSearchResult'
 
-// TODO: 이건 api 연결하면서 삭제해야 함!
-const dummySearchApi = (debounceValue: string) => {
-  const setLectureArray = useStudyHubStore.getState().setLectureArray
-
-  const filteredLectureArray = dummyLectureArray.filter(
-    (lecture) =>
-      lecture.title.includes(debounceValue) ||
-      lecture.instructor.includes(debounceValue)
-  )
-
-  setLectureArray(filteredLectureArray)
-}
-
 interface LectureSearchInputProps {
-  setIsSearching: React.Dispatch<React.SetStateAction<boolean>>
+  searchText: string
+  setSearchText: React.Dispatch<React.SetStateAction<string>>
+  cancelDebounce: () => void
 }
 
-const LectureSearchInput = ({ setIsSearching }: LectureSearchInputProps) => {
+const LectureSearchInput = ({
+  searchText,
+  setSearchText,
+  cancelDebounce,
+}: LectureSearchInputProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
-  const [searchText, setSearchText] = useState('')
-  const [debounceValue, cancel] = useDebounce(searchText, 500)
-  useNoSearchResult(inputRef, setSearchText, cancel)
-
-  useEffect(() => {
-    dummySearchApi(debounceValue)
-
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceValue])
+  useNoSearchResult(inputRef, setSearchText, cancelDebounce)
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
       return
     }
 
-    cancel()
+    cancelDebounce()
   }
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value)
   }

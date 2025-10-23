@@ -1,8 +1,7 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { GridContainer, Vstack } from '../commonInGeneral/layout'
 import Container from '../commonInGeneral/layout/_Container'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
-import Select from '../commonInGeneral/select/Select'
 import LectureCard from './lectureCard/LectureCard'
 import TitleSection from '../titleSection/TitleSection'
 import RecommendSection from '../recommendSection/RecommendSection'
@@ -12,11 +11,56 @@ import { dummyLectureArray } from './dummyLectureArray'
 import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 import LectureCategorySelect from './_LectureCategorySelect'
 import LectureOrderingSelect from './_LectureOrderingSelect'
+import useDebounce from '@/hooks/useDebounce'
+import type { LectureOrderingInText } from '@/types'
+
+// TODO: 이건 api 연결하면서 삭제해야 함!
+const dummySearchApi = (debounceValue: string) => {
+  const setLectureArray = useStudyHubStore.getState().setLectureArray
+
+  const filteredLectureArray = dummyLectureArray.filter(
+    (lecture) =>
+      lecture.title.includes(debounceValue) ||
+      lecture.instructor.includes(debounceValue)
+  )
+
+  setLectureArray(filteredLectureArray)
+}
+
+// TODO: LECT 카테고리 목록 API & LECT-001 강의 목록 조회 API 연결되면 삭제
+const dummyFilterApi = (category: string) => {
+  const setLectureArray = useStudyHubStore.getState().setLectureArray
+  const filteredLectureArray = dummyLectureArray.filter((lecture) => {
+    const nameArray = lecture.categories.map(
+      (tempCategory) => tempCategory.name
+    )
+    return nameArray.includes(category)
+  })
+  setLectureArray(filteredLectureArray)
+}
 
 const LectureContent = () => {
   const [isSearching, setIsSearching] = useState(false)
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)
+
+  const [searchText, setSearchText] = useState('')
+  const [debounceValue, cancel] = useDebounce(searchText, 500)
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
+  const [selectedOrderingInText, setSelectedOrderingInText] =
+    useState<LectureOrderingInText>('최신순')
+
+  useEffect(() => {
+    dummySearchApi(debounceValue)
+
+    if (debounceValue === '') {
+      setIsSearching(false)
+    } else {
+      setIsSearching(true)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounceValue])
 
   return (
     <Container className="py-oz-xxl">
@@ -34,7 +78,11 @@ const LectureContent = () => {
       <Vstack className="px-oz-xxl gap-oz-xxl">
         <RoundBox>
           <GridContainer className="gap-oz-lg">
-            <LectureSearchInput setIsSearching={setIsSearching} />
+            <LectureSearchInput
+              searchText={searchText}
+              setSearchText={setSearchText}
+              cancelDebounce={cancel}
+            />
 
             <LectureCategorySelect />
 
