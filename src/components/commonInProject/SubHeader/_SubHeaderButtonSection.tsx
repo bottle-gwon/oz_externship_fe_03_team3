@@ -6,7 +6,7 @@ interface ButtonSectionProps {
 }
 
 const SubHeaderButtonSection = ({ children }: ButtonSectionProps) => {
-  return <Hstack gap="none">{children}</Hstack>
+  return <Hstack gap="md">{children}</Hstack>
 }
 
 export default SubHeaderButtonSection

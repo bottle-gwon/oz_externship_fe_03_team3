@@ -10,7 +10,7 @@ import RecommendSection from '@/components/recommendSection/RecommendSection'
 import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
 import { dummyRecruitArray } from '@/components/recruit/recruitListDummy'
 import ScrollText from '../../assets/scroll-text.svg'
-import { Search } from 'lucide-react'
+import { LogIn, Search } from 'lucide-react'
 import { useNavigate } from 'react-router'
 
 const RecruitListPage = () => {
@@ -20,34 +20,45 @@ const RecruitListPage = () => {
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-[#F9FAFB]">
-      <SubHeader>
-        <Hstack gap="none" className="items-center">
-          <SubHeader.BackButton />
-          <SubHeaderTitleSection>
-            <SubHeader.Title>스터디 구인 공고</SubHeader.Title>
-            <SubHeader.Subtitle>
-              새로운 스터디 멤버를 찾거나 관심있는 스터디에 참여해보세요
-            </SubHeader.Subtitle>
-          </SubHeaderTitleSection>
-        </Hstack>
+      <SubHeader isBackButtonVisible={false}>
+        <SubHeaderTitleSection>
+          <SubHeader.Title>스터디 구인 공고</SubHeader.Title>
+          <SubHeader.Subtitle>
+            새로운 스터디 멤버를 찾거나 관심있는 스터디에 참여해보세요
+          </SubHeader.Subtitle>
+        </SubHeaderTitleSection>
         <SubHeaderButtonSection>
-          <Button
-            color="primary"
-            variant="outlined"
-            size="lg"
-            onClick={() => handleClick('/recruit/manager')}
-          >
-            <img src={ScrollText} />
-            공고 관리
-          </Button>
-          <Button
-            color="primary"
-            variant="contained"
-            size="lg"
-            className="ml-3"
-          >
-            + 공고 작성하기
-          </Button>
+          {isLoggedIn ? (
+            <>
+              <Button
+                color="primary"
+                variant="outlined"
+                size="lg"
+                onClick={() => handleClick('/recruit/manager')}
+              >
+                <img src={ScrollText} />
+                공고 관리
+              </Button>
+              <Button
+                color="primary"
+                variant="contained"
+                size="lg"
+                onClick={() => handleClick('/recruit/create')}
+              >
+                + 공고 작성하기
+              </Button>
+            </>
+          ) : (
+            <Button
+              color="primary"
+              variant="contained"
+              size="lg"
+              onClick={() => handleClick('/login')}
+            >
+              <LogIn className="mr-2" />
+              로그인 후 공고 작성
+            </Button>
+          )}
         </SubHeaderButtonSection>
       </SubHeader>
       <RecommendSection

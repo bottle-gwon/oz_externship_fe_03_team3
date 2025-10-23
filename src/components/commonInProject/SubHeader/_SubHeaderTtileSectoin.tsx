@@ -6,7 +6,7 @@ interface TitleSectionProps {
 
 const SubHeaderTitleSection = ({ children }: TitleSectionProps) => {
   return (
-    <Vstack gap="none" className="h-[68px]">
+    <Vstack gap="none" className="h-[68px] flex-grow">
       {children}
     </Vstack>
   )
