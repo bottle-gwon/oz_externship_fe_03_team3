@@ -55,6 +55,8 @@ const AnnouncementManagementPage = () => {
         </Select>
       </RoundBox>
       <h1>내 공고 목록 ()</h1>
+      <RecruitSummaryCard />
+      <RecruitCard />
     </div>
   )
 }
