@@ -25,6 +25,8 @@ const useStudyHubStore = create<StudyHubState>()(
       // common
       accessToken: null,
       setAccessToken: (accessToken) => set({ accessToken }),
+      me: null,
+      setMe: (me) => set({ me }),
 
       isClearingSearch: false,
       setIsClearingSearch: (isClearingSearch) => set({ isClearingSearch }),
