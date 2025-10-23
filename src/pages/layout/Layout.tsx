@@ -14,7 +14,9 @@ import ChattingRoom from '@/components/chat/ChattingRoom'
 const Layout = () => {
   const topRef = useRef<HTMLDivElement>(null) // 스크롤 되는 페이지
   const badgeTest = 12 // 안 읽은 메시지
-  const { chatState, openChatList, closeChatUI } = useStudyHubStore()
+  const chatState = useStudyHubStore((state) => state.chatState)
+  const openChatList = useStudyHubStore((state) => state.openChatList)
+  const closeChatUI = useStudyHubStore((state) => state.closeChatUI)
 
   const onClickTop = () => {
     if (topRef.current) {
