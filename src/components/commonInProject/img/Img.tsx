@@ -13,7 +13,7 @@ const Img = ({
   fallbackImageUrl = placeholder,
   ...props
 }: ImgProps & WithImgProps) => {
-  const wideResult = isWide ? 'aspect-video' : 'aspect-[4/3]'
+  const { className, ...rest } = props
   const handleLoad: React.ReactEventHandler<HTMLImageElement> = (event) => {
     if (!fallbackImageUrl) {
       return
@@ -34,10 +34,14 @@ const Img = ({
   }
   return (
     <img
-      {...props}
+      {...rest}
       onLoad={handleLoad}
       onError={handleError}
-      className={`${wideResult} w-full object-cover`}
+      className={[
+        className,
+        isWide ? 'aspect-video' : 'aspect-[4/3]',
+        'w-full object-cover',
+      ].join(' ')}
     />
   )
 }

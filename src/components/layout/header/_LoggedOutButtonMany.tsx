@@ -7,10 +7,10 @@ const LoggedOutButtonMany = () => {
   const redirectToSignup = () => (window.location.href = 'https://google.com')
   return (
     <>
-      <Button variant="ghost" onClick={redirectToLogin}>
+      <Button variant="ghost" size="lg" onClick={redirectToLogin}>
         로그인
       </Button>
-      <Button color="primary" onClick={redirectToSignup}>
+      <Button color="primary" size="lg" onClick={redirectToSignup}>
         회원가입
       </Button>
     </>

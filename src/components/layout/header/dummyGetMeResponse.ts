@@ -1,4 +1,11 @@
-export const dummyGetMeResponse = {
+import type { Me } from '@/types'
+
+interface DummyGetMeResponse {
+  detail: string
+  data: Me
+}
+
+export const dummyGetMeResponse: DummyGetMeResponse = {
   detail: '내 정보를 조회합니다.',
   data: {
     id: 1,

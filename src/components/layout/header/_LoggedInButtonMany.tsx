@@ -1,31 +1,46 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack } from '@/components/commonInGeneral/layout'
-import { Bell, UserRound } from 'lucide-react'
+import Img from '@/components/commonInProject/img/Img'
+import useStudyHubStore from '@/store/store'
+import { Bell } from 'lucide-react'
+import UserRound from '@/assets/user-round.svg'
+import type { Me } from '@/types'
 
-// TODO: 속성은 api 응답에 맞춰야
-const ProfileButton = ({ name }: { name: string }) => {
+const ProfileImage = ({ url }: { url: string }) => {
   return (
-    <Hstack>
-      <UserRound />
-    </Hstack>
+    <div className="h-[32px] w-[32px]">
+      <Img
+        src={url}
+        fallbackImageUrl={UserRound}
+        className="bg-primary-100 p-oz-sm h-full rounded-full"
+      />
+    </div>
+  )
+}
+
+const ProfileButton = ({ me }: { me: Me }) => {
+  return (
+    <Button color="primary" variant="ghost" size="lg" className="h-fit w-fit">
+      <Hstack className="items-center">
+        <ProfileImage url={me.profile_image_url} />
+        <p className="shrink-0 text-gray-700">{me.name}</p>
+      </Hstack>
+    </Button>
   )
 }
 
 const LoggedInButtonMany = () => {
-  // TODO: 액세스 토큰 받으면 내 정보 받아오기 해야 함
-  //
-  const dummyName = '김오즈'
+  const me = useStudyHubStore((state) => state.me)
+  if (!me) {
+    return null
+  }
+
   return (
     <>
-      <Button variant="ghost">
+      <Button variant="ghost" size="lg">
         <Bell />
       </Button>
-      <Button variant="ghost">
-        <div className="bg-primary-50">
-          <UserRound />
-        </div>
-        {dummyName}
-      </Button>
+      <ProfileButton me={me} />
     </>
   )
 }

@@ -21,7 +21,7 @@ export interface StudyHubState {
   accessToken: string | null
   setAccessToken: (accessToken: string | null) => void
   me: Me | null
-  setMe: (me: Me) => void
+  setMe: (me: Me | null) => void
 
   isClearingSearch: boolean // true 가 감지되면 인풋 필드를 비워주세요
   setIsClearingSearch: (isClearingSearch: boolean) => void
