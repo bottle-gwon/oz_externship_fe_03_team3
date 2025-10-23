@@ -14,6 +14,10 @@ const HyejeongSubHeader = lazy(
   () => import('./testPages/hyejeong/HyejeongSubHeader')
 )
 
+const HyejeongApplicantCardModal = lazy(
+  () => import('./testPages/hyejeong/HyejeongApplicantCardModal')
+)
+
 const hyejeongTestRouteArray = [
   {
     path: '/test/hyejeong',
@@ -27,6 +31,10 @@ const hyejeongTestRouteArray = [
   {
     path: '/test/hyejeong/subheader',
     element: <HyejeongSubHeader />,
+  },
+  {
+    path: 'test/hyejeong/apllicantcard',
+    element: <HyejeongApplicantCardModal />,
   },
 ]
 
