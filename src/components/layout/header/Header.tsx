@@ -41,7 +41,7 @@ const Header = () => {
           </div>
           <DebugLoginButton />
           <CommonButtonMany />
-          <LoggedInButtonMany />
+          {accessToken && <LoggedInButtonMany />}
           {!accessToken && <LoggedOutButtonMany />}
         </Hstack>
       </Container>
