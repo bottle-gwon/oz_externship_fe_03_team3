@@ -19,6 +19,7 @@ export interface StudyHubState {
 
   // common
   accessToken: string | null
+  setAccessToken: (accessToken: string | null) => void
 
   isClearingSearch: boolean // true 가 감지되면 인풋 필드를 비워주세요
   setIsClearingSearch: (isClearingSearch: boolean) => void
