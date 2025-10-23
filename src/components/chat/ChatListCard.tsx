@@ -23,7 +23,7 @@ const ChatListCard = ({ room }: ChatListCardInterface) => {
   return (
     <Vstack
       gap="none"
-      className="min-h-[76px] w-[318px] cursor-pointer border-b border-gray-200 p-3 hover:bg-gray-100 active:bg-gray-200"
+      className="min-h-[76px] w-full cursor-pointer border-b border-gray-200 p-3 transition hover:bg-gray-100 active:bg-gray-200"
     >
       <Hstack className="justify-between">
         <p className="text-sm text-gray-900">{room.title}</p>
