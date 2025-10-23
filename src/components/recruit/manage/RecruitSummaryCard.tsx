@@ -1,9 +1,9 @@
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-import type { MyRecruit } from '@/types'
+import type { Recruit } from '@/types'
 
 import { Clock3, FileText, Megaphone } from 'lucide-react'
 
-type SummaryProps = { myRecruitArray: MyRecruit[] }
+export type SummaryProps = { myRecruitArray: Recruit[] }
 
 const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
   const totalCount = myRecruitArray.length
