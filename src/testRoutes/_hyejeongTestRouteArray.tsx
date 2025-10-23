@@ -10,6 +10,9 @@ const HyejeongRecruitPage = lazy(
 const HyejeongRecommendSection = lazy(
   () => import('./testPages/hyejeong/HyejeongRecommendSection')
 )
+const HyejeongSubHeader = lazy(
+  () => import('./testPages/hyejeong/HyejeongSubHeader')
+)
 
 const hyejeongTestRouteArray = [
   {
@@ -20,6 +23,10 @@ const hyejeongTestRouteArray = [
   {
     path: '/test/hyejeong/recruitlist',
     element: <HyejeongRecruitPage />,
+  },
+  {
+    path: '/test/hyejeong/subheader',
+    element: <HyejeongSubHeader />,
   },
 ]
 
