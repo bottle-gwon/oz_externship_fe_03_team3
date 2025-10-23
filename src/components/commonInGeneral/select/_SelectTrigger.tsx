@@ -6,6 +6,7 @@ import useSelectContext from './_useSelectContext'
 const SelectTrigger = ({ children }: { children: string }) => {
   const { setIsOpened, selectedOption, selectedIcon, triggerRef } =
     useSelectContext()
+
   const handleClick = () => {
     setIsOpened((prev) => !prev)
   }
