@@ -12,8 +12,6 @@ import type { Recruit } from '@/types'
 
 export type RecruitCardProps = {
   recruit: Recruit
-  lectures?: string[]
-  due_date_Tag?: boolean
   isMine?: boolean
   cardClassName?: string
   imageClassName?: string
@@ -28,7 +26,7 @@ const RecruitCard = ({
     tags,
     views_count,
     bookmark_count,
-    study_group,
+    lectures,
   },
   isMine = false,
   cardClassName = '',
@@ -126,7 +124,7 @@ const RecruitCard = ({
           <div className="mt-2">
             <div className="text-sm">강의 목록 :</div>
             <ul className="lectures mt-1 list-inside list-disc">
-              {study_group.lectures.map((lectures) => (
+              {lectures.map((lectures) => (
                 <li
                   key={lectures.id}
                   aria-label="강의목록"
