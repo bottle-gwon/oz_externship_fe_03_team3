@@ -18,7 +18,7 @@ const SelectContent = ({ children }: { children: ReactNode }) => {
     <RoundBox
       style={{ top: triggerRef.current.offsetHeight + 4 }}
       padding="xs"
-      className="absolute w-full"
+      className="absolute z-10 w-full"
     >
       <Vstack gap="none">{children}</Vstack>
     </RoundBox>
