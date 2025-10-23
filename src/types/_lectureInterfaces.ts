@@ -32,3 +32,19 @@ export interface LectureReview {
   content: string
   created_at: string
 }
+
+export type LectureOrdering =
+  | '-created_at'
+  | '-price'
+  | 'price'
+  | '-rating'
+  | 'rating'
+
+export const lectureOrderingInTextArray = [
+  '최신순',
+  '가격 높은 순',
+  '가격 낮은 순',
+  '평점 높은 순',
+  '평점 낮은 순',
+] as const
+export type LectureOrderingInText = (typeof lectureOrderingInTextArray)[number]

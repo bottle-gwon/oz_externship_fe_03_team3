@@ -11,6 +11,7 @@ import useStudyHubStore from '@/store/store'
 import { dummyLectureArray } from './dummyLectureArray'
 import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 import LectureCategorySelect from './_LectureCategorySelect'
+import LectureOrderingSelect from './_LectureOrderingSelect'
 
 const LectureContent = () => {
   const [isSearching, setIsSearching] = useState(false)
@@ -37,9 +38,7 @@ const LectureContent = () => {
 
             <LectureCategorySelect />
 
-            <Select onOptionSelect={() => {}} className="w-full">
-              <Select.Trigger>최신순(눌리지 않음)</Select.Trigger>
-            </Select>
+            <LectureOrderingSelect />
           </GridContainer>
         </RoundBox>
 
