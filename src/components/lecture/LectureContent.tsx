@@ -32,15 +32,12 @@ const LectureContent = () => {
 
       <Vstack className="px-oz-xxl gap-oz-xxl">
         <RoundBox>
-          <LectureCategorySelect />
           <GridContainer className="gap-oz-lg">
             <LectureSearchInput setIsSearching={setIsSearching} />
 
-            <Select onOptionSelect={() => null} className="w-full">
-              <Select.Trigger>전체 카테고리(자리 확인용)</Select.Trigger>
-            </Select>
+            <LectureCategorySelect />
 
-            <Select onOptionSelect={() => null} className="w-full">
+            <Select onOptionSelect={() => {}} className="w-full">
               <Select.Trigger>최신순(눌리지 않음)</Select.Trigger>
             </Select>
           </GridContainer>
