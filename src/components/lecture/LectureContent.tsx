@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import Button from '../commonInGeneral/button/Button'
 import { GridContainer, Vstack } from '../commonInGeneral/layout'
 import Container from '../commonInGeneral/layout/_Container'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
@@ -14,22 +13,19 @@ import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 
 const LectureContent = () => {
   const [isSearching, setIsSearching] = useState(false)
-  const [isLoggedInForDebug, setIsLoggedInForDebug] = useState(false)
+  const accessToken = useStudyHubStore((state) => state.accessToken)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
   return (
     <Container className="py-oz-xxl">
       {/* header -- 제작해주시는 것으로 교체할 예정 */}
       <Vstack className="px-oz-xxl">
-        <Button onClick={() => setIsLoggedInForDebug(!isLoggedInForDebug)}>
-          로그인 여부 토글 ____ 디버그용
-        </Button>
-        <TitleSection isLoggedIn={isLoggedInForDebug} type="lecture" />
+        <TitleSection isLoggedIn={Boolean(accessToken)} type="lecture" />
       </Vstack>
 
       <RecommendSection
         type="lecture"
-        isLoggedIn={isLoggedInForDebug}
+        isLoggedIn={Boolean(accessToken)}
         recommendedArray={dummyLectureArray.slice(0, 3)}
       />
 
