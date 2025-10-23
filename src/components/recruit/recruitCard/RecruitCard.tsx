@@ -31,7 +31,7 @@ const RecruitCard = ({
     bookmark_count,
     lectures,
   },
-  isMine = true,
+  isMine = false,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
