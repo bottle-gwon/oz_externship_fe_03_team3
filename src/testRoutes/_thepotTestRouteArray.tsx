@@ -1,8 +1,21 @@
-import ThePottButtonPage from './testPages/thepott/ThePottButtonPage'
-import ThePottInputFamilyPage from './testPages/thepott/ThePottInputFamilyPage'
-import ThePottModalPage from './testPages/thepott/ThePottModalPage'
-import ThePottRoundBoxPage from './testPages/thepott/ThePottRoundBoxPage'
-import ThepottTestPage from './testPages/thepott/ThepottTestPage'
+import { lazy } from 'react'
+
+// 테스트 라우트에서도 코드 스플리팅을 하려고 합니다!
+const ThePottButtonPage = lazy(
+  () => import('./testPages/thepott/ThePottButtonPage')
+)
+const ThePottInputFamilyPage = lazy(
+  () => import('./testPages/thepott/ThePottInputFamilyPage')
+)
+const ThePottModalPage = lazy(
+  () => import('./testPages/thepott/ThePottModalPage')
+)
+const ThePottRoundBoxPage = lazy(
+  () => import('./testPages/thepott/ThePottRoundBoxPage')
+)
+const ThepottTestPage = lazy(
+  () => import('./testPages/thepott/ThepottTestPage')
+)
 
 const thepottTestRouteArray = [
   { path: '/test/thepott', element: <ThepottTestPage /> },

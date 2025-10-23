@@ -22,12 +22,19 @@ const useStudyHubStore = create<StudyHubState>()(
         set({ example: something })
       }, // 자주 쓰이는 복잡한 로직은 이런 식으로 전역 함수로 만들 수도 있습니다
 
-      // auth
+      // common
       accessToken: null,
+
+      isClearingSearch: false,
+      setIsClearingSearch: (isClearingSearch) => set({ isClearingSearch }),
+      isFocusingSearch: false,
+      setIsFocusingSearch: (isFocusingSearch) => set({ isFocusingSearch }),
 
       // recruit
 
       // lecture
+      lectureArray: [],
+      setLectureArray: (lectureArray) => set({ lectureArray }),
 
       // chat
 
@@ -36,7 +43,7 @@ const useStudyHubStore = create<StudyHubState>()(
     {
       name: 'food-storage', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
-      // partialize: (state) => ({ foo: state.foo }),
+      partialize: (state) => ({ example: state.example }),
     }
   )
 )

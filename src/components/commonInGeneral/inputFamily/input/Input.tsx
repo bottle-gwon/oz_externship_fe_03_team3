@@ -15,9 +15,9 @@ const Input = ({ isInDanger, icon, ...props }: InputProps & WithInputProps) => {
 
   return (
     <Hstack
-      className={`${className} ${dangerResult} gap-0 rounded-lg border px-3 py-2 outline outline-transparent transition`}
+      className={`${className} ${dangerResult} gap-oz-md items-center rounded-lg border px-3 py-2 outline outline-transparent transition`}
     >
-      <div className="text-gray-400">{icon && icon}</div>
+      {icon && <div className="text-gray-400">{icon}</div>}
       <input {...rest} className="w-full border-0 outline-0" />
     </Hstack>
   )
