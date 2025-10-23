@@ -1,9 +1,10 @@
-import ChattingLayout from '@/components/layout/chattingRoom/chattingLayout'
+import ChatList from '@/components/chat/ChatList'
+// import ChattingLayout from '@/components/layout/chattingRoom/chattingLayout'
 
 const GwonChatTest = () => {
   return (
     <>
-      <ChattingLayout>
+      {/* <ChattingLayout>
         <ChattingLayout.Header>
           <h3 className="text-[16px] font-semibold">테스트 중</h3>
           <span className="text-xs">테스트 데이터</span>
@@ -12,7 +13,8 @@ const GwonChatTest = () => {
           <p className="">xptm</p>
           <p>dddd</p>
         </ChattingLayout.Body>
-      </ChattingLayout>
+      </ChattingLayout> */}
+      <ChatList />
       테스트
     </>
   )
