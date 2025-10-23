@@ -4,11 +4,13 @@ import { lazy } from 'react'
 const GwonTagModalTest = lazy(() => import('./testPages/gwon/GwonTagModalTest'))
 const GwonTestPage = lazy(() => import('./testPages/gwon/GwonTestPage'))
 const GwonFloating = lazy(() => import('./testPages/gwon/GwonFloatingTest'))
+const GwonChatTest = lazy(() => import('./testPages/gwon/GwonChatTest'))
 
 const gwonTestRouteArray = [
   { path: '/test/gwon', element: <GwonTestPage /> },
   { path: 'test/gwon/modal', element: <GwonTagModalTest /> },
   { path: 'test/gwon/floating', element: <GwonFloating /> },
+  { path: 'test/gwon/chat', element: <GwonChatTest /> },
 ]
 
 export default gwonTestRouteArray
