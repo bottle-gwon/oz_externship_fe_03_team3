@@ -40,6 +40,11 @@ const useStudyHubStore = create<StudyHubState>()(
       setLectureArray: (lectureArray) => set({ lectureArray }),
 
       // chat
+      chatState: { status: 'off' },
+      openChatList: () => set({ chatState: { status: 'chatList' } }),
+      openChatRoom: (id, title) =>
+        set({ chatState: { status: 'chatRoom', id, title } }),
+      closeChatUI: () => set({ chatState: { status: 'off' } }),
 
       // notification
     }),
