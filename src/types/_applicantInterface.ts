@@ -16,7 +16,7 @@ export const experienceStyles: Record<
   { content: string; style: RoundBoxColor }
 > = {
   true: { content: '경험 있음', style: 'success' },
-  false: { content: '경험 없음', style: 'blue' },
+  false: { content: '경험 없음', style: 'primary' },
 }
 
 export interface Applicant {

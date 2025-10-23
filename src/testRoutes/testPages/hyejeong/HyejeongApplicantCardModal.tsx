@@ -5,7 +5,7 @@ const HyejeongApplicantCardModal = () => {
   return (
     <>
       {dummyApplicantArray.map((applicant) => (
-        <ApplicantCard applicant={applicant} />
+        <ApplicantCard key={applicant.id} applicant={applicant} />
       ))}
     </>
   )
