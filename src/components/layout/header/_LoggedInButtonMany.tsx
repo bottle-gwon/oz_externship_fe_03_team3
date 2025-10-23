@@ -20,7 +20,7 @@ const ProfileImage = ({ url }: { url: string }) => {
 
 const ProfileButton = ({ me }: { me: Me }) => {
   return (
-    <Button color="primary" variant="ghost" size="lg" className="h-fit w-fit">
+    <Button color="primary" variant="ghost" size="lg" className="py-oz-sm p-0">
       <Hstack className="items-center">
         <ProfileImage url={me.profile_image_url} />
         <p className="shrink-0 text-gray-700">{me.name}</p>
