@@ -27,8 +27,8 @@ const SelectContent = ({ children }: { children: ReactNode }) => {
       return
     }
 
-    window.addEventListener('mousedown', handleClick)
-    return () => window.removeEventListener('mousedown', handleClick)
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
   }, [isOpened])
 
   if (!isOpened) {

@@ -2,13 +2,18 @@ import { useRef, useState, type ChangeEvent } from 'react'
 import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
+import type { FieldValues, UseFormRegister } from 'react-hook-form'
 
 interface LabeledFile {
   id: number
   file: File
 }
 
-const FileDropzone = () => {
+const FileDropzone = ({
+  register,
+}: {
+  register: UseFormRegister<FieldValues>
+}) => {
   const [isDragEntered, setIsDragEntered] = useState(false)
   const [labeledFileArray, setLabeledFileArray] = useState<LabeledFile[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
@@ -38,7 +43,6 @@ const FileDropzone = () => {
     inputRef.current?.click()
   }
 
-  console.log({ labeledFileArray })
   return (
     <RoundBox
       color={isDragEntered ? 'primary' : 'mono-bright'}
@@ -49,6 +53,7 @@ const FileDropzone = () => {
       onClick={handleClick}
     >
       <input
+        {...register('attachments')}
         ref={inputRef}
         hidden
         onChange={handleChangeFromClick}
