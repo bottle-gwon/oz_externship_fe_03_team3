@@ -15,27 +15,31 @@ import useDebounce from '@/hooks/useDebounce'
 import type { LectureOrderingInText } from '@/types'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
-const dummySearchApi = (debounceValue: string) => {
+const dummyGetLectureWithParametersApi = (
+  debounceValue: string,
+  category: string | null,
+  orderingInText: LectureOrderingInText
+) => {
   const setLectureArray = useStudyHubStore.getState().setLectureArray
 
-  const filteredLectureArray = dummyLectureArray.filter(
-    (lecture) =>
-      lecture.title.includes(debounceValue) ||
-      lecture.instructor.includes(debounceValue)
-  )
-
-  setLectureArray(filteredLectureArray)
-}
-
-// TODO: LECT 카테고리 목록 API & LECT-001 강의 목록 조회 API 연결되면 삭제
-const dummyFilterApi = (category: string) => {
-  const setLectureArray = useStudyHubStore.getState().setLectureArray
-  const filteredLectureArray = dummyLectureArray.filter((lecture) => {
-    const nameArray = lecture.categories.map(
-      (tempCategory) => tempCategory.name
+  const filteredLectureArray = dummyLectureArray
+    .filter(
+      (lecture) =>
+        lecture.title.includes(debounceValue) ||
+        lecture.instructor.includes(debounceValue)
     )
-    return nameArray.includes(category)
-  })
+    .filter((lecture) => {
+      if (!category) {
+        return true
+      }
+      const nameArray = lecture.categories.map(
+        (tempCategory) => tempCategory.name
+      )
+      return nameArray.includes(category)
+    })
+
+  debugger
+
   setLectureArray(filteredLectureArray)
 }
 
@@ -51,7 +55,11 @@ const LectureContent = () => {
     useState<LectureOrderingInText>('최신순')
 
   useEffect(() => {
-    dummySearchApi(debounceValue)
+    dummyGetLectureWithParametersApi(
+      debounceValue,
+      selectedCategory,
+      selectedOrderingInText
+    )
 
     if (debounceValue === '') {
       setIsSearching(false)
@@ -60,7 +68,7 @@ const LectureContent = () => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [debounceValue])
+  }, [debounceValue, selectedCategory, selectedOrderingInText])
 
   return (
     <Container className="py-oz-xxl">
@@ -84,7 +92,7 @@ const LectureContent = () => {
               cancelDebounce={cancel}
             />
 
-            <LectureCategorySelect />
+            <LectureCategorySelect setSelectedCategory={setSelectedCategory} />
 
             <LectureOrderingSelect />
           </GridContainer>
