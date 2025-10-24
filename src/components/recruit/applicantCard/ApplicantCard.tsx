@@ -1,25 +1,12 @@
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
-import Img from '@/components/commonInProject/img/Img'
 import {
   experienceStyles,
   statusStyles,
   type Applicant,
 } from '@/types/_applicantInterface'
 import { Calendar } from 'lucide-react'
-import UserRound from '@/assets/user-round.svg'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-
-const ProfileImage = ({ url }: { url: string | null }) => {
-  return (
-    <div className="h-12 w-12">
-      <Img
-        src={url || UserRound}
-        fallbackImageUrl={UserRound}
-        className={`bg-primary-100 h-full rounded-full ${url || 'p-oz-sm'}`}
-      />
-    </div>
-  )
-}
+import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 
 const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
   const statusStyle = statusStyles[applicant.status]
@@ -34,7 +21,7 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
     >
       <Hstack gap="lg" className="h-[64px] w-[384px]">
         <Hstack className="items-center">
-          <ProfileImage url={applicant.application.profile_image} />
+          <ProfileImage url={applicant.application.profile_image} size="lg" />
         </Hstack>
         <Hstack gap="none" className="h-11 w-80 justify-between">
           <Vstack gap="none">
