@@ -1,5 +1,5 @@
 import { lazy } from 'react'
-import RecruitManagementPage from './testPages/nari/RecruitManagementPage'
+import RecruitManagementPage from '../pages/recruit/manage/RecruitManagePage'
 import HowToUseSelect from '@/components/commonInGeneral/select/HowToUseSelect'
 
 // 테스트 라우트에서도 코드 스플리팅을 하려고 합니다!
