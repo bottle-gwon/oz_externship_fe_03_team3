@@ -10,7 +10,7 @@ import useStudyHubStore from '@/store/store'
 import { dummyLectureArray } from './dummyLectureArray'
 import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 import LectureCategorySelect from './_LectureCategorySelect'
-import LectureOrderingSelectProps from './_LectureOrderingSelect'
+import LectureOrderingSelect from './_LectureOrderingSelect'
 import useDebounce from '@/hooks/useDebounce'
 import type { LectureOrderingInText } from '@/types'
 
@@ -66,8 +66,6 @@ const LectureContent = () => {
     } else {
       setIsSearching(true)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debounceValue, selectedCategory, selectedOrderingInText])
 
   return (
@@ -94,7 +92,9 @@ const LectureContent = () => {
 
             <LectureCategorySelect setSelectedCategory={setSelectedCategory} />
 
-            <LectureOrderingSelect />
+            <LectureOrderingSelect
+              setSelectedOrderingInText={setSelectedOrderingInText}
+            />
           </GridContainer>
         </RoundBox>
 
