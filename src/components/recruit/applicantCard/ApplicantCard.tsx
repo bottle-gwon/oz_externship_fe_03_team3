@@ -5,7 +5,7 @@ import {
   type Applicant,
 } from '@/types/_applicantInterface'
 import { Calendar } from 'lucide-react'
-import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import Tag from '@/components/commonInProject/tag/Tag'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 
 const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
@@ -32,14 +32,9 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
               {applicant.application.gender}
             </p>
           </Vstack>
-          <RoundBox
-            radius="sm"
-            color={statusStyle.style}
-            isBordered={false}
-            className="h-6 px-2 py-1 text-xs"
-          >
+          <Tag color={statusStyle.style} className="h-6">
             {statusStyle.content}
-          </RoundBox>
+          </Tag>
         </Hstack>
       </Hstack>
       <Vstack gap="md" className="pl-16 text-sm leading-5 text-[#4B5563]">
@@ -57,14 +52,7 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
           <div className="text-xs leading-4 font-medium text-[#374151]">
             스터디 경험:
           </div>
-          <RoundBox
-            radius="sm"
-            color={experienceStyle.style}
-            isBordered={false}
-            className="px-2 py-1 text-xs"
-          >
-            {experienceStyle.content}
-          </RoundBox>
+          <Tag color={experienceStyle.style}>{experienceStyle.content}</Tag>
         </Hstack>
       </Vstack>
     </Vstack>

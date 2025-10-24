@@ -1,10 +1,10 @@
-import type { RoundBoxColor } from '@/components/commonInGeneral/roundBox/RoundBox'
+import type { Color } from './_commonInGeneralInterfaces'
 
 export type ApplicantStatus = 'pending' | 'accepted' | 'rejected'
 
 export const statusStyles: Record<
   ApplicantStatus,
-  { content: string; style: RoundBoxColor }
+  { content: string; style: Color }
 > = {
   pending: { content: '대기중', style: 'primary' },
   accepted: { content: '승인됨', style: 'success' },
@@ -13,10 +13,10 @@ export const statusStyles: Record<
 
 export const experienceStyles: Record<
   'true' | 'false',
-  { content: string; style: RoundBoxColor }
+  { content: string; style: Color }
 > = {
   true: { content: '경험 있음', style: 'success' },
-  false: { content: '경험 없음', style: 'primary' },
+  false: { content: '경험 없음', style: 'mono' },
 }
 
 export interface Applicant {
