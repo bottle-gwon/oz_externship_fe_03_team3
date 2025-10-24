@@ -3,6 +3,7 @@ import type { ReactNode } from 'react'
 import ChattingHeader from './ChattingHeader'
 import ModalBody from '@/components/commonInGeneral/modal/_ModalBody'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import ChattingStatus from './ChattingStatus'
 
 interface Chatting {
   roomType?: string // 룸 종류
@@ -23,6 +24,7 @@ const ChattingLayout = ({ children }: Chatting) => {
 
 ChattingLayout.Header = ChattingHeader
 // ChattingLayout.Body = ChattingBody
+ChattingLayout.UserStatus = ChattingStatus
 ChattingLayout.Body = ModalBody //모달 바디 재활용
 
 export default ChattingLayout
