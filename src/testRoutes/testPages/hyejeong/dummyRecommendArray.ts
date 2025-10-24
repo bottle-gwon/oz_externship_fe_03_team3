@@ -47,7 +47,7 @@ export const dummyLectureRecommendArray: Lecture[] = [
     url_link: 'https://inflearn.com/course/django-guide',
   },
   {
-    uuid: '550e8400-e29b-41d4-a716-446652440000',
+    uuid: '550e8400-e29b-41d4-a716-446652440010',
     title: 'Django 완벽 가이드',
     instructor: '홍길동',
     thumbnail_img_url: 'https://example.com/image.jpg',
@@ -75,8 +75,11 @@ export const dummyRecruitRecommendArray: Recruit[] = [
     id: 101,
     uuid: 'b0f8e91E-4a33-4e91-bf80-4f4e5e89d123',
     title: 'AI 스터디 모집합니다!',
+    content: '프론트엔드 기초 스터디 참여자를 모집합니다.',
     thumbnail_img_url: img,
     expected_headcount: 5,
+    current_headcount: 4,
+    estimated_fee: 0,
     views_count: 153,
     bookmark_count: 8,
     due_date: '2025-10-30T23:59:59Z',
@@ -86,22 +89,11 @@ export const dummyRecruitRecommendArray: Recruit[] = [
       { id: 2, name: 'Python' },
       { id: 3, name: '딥러닝' },
     ],
+    lectures: [{ id: 201, title: '프론트엔드 기초', instructor: '김강사' }],
     study_group: {
       id: 12,
       uuid: '3fcd9e3e-1a12-4af8-8899-ec2df3f9b333',
       name: 'AI 기초반',
-      lectures: [
-        {
-          id: 201,
-          title: '파이썬으로 배우는 인공지능 입문',
-          instructor: '홍길동',
-        },
-        {
-          id: 202,
-          title: '딥러닝 기본 개념',
-          instructor: '이영희',
-        },
-      ],
     },
     author: {
       id: 3,
@@ -110,13 +102,17 @@ export const dummyRecruitRecommendArray: Recruit[] = [
     },
     is_bookmarked: true,
     created_at: '2025-10-14T11:22:00Z',
+    updated_at: '2025-10-13T09:30:00Z',
   },
   {
     id: 101,
     uuid: 'b0f8e91a-4a33-4e91-bf80-4f4e5e89d123',
     title: 'AI 스터디 모집합니다!',
+    content: '프론트엔드 기초 스터디 참여자를 모집합니다.',
     thumbnail_img_url: img,
     expected_headcount: 5,
+    current_headcount: 4,
+    estimated_fee: 0,
     views_count: 153,
     bookmark_count: 8,
     due_date: '2025-10-30T23:59:59Z',
@@ -126,22 +122,11 @@ export const dummyRecruitRecommendArray: Recruit[] = [
       { id: 2, name: 'Python' },
       { id: 3, name: '딥러닝' },
     ],
+    lectures: [{ id: 201, title: '프론트엔드 기초', instructor: '김강사' }],
     study_group: {
       id: 12,
       uuid: '3fcd9f3e-1a12-4af8-8899-ec2df3f9b333',
       name: 'AI 기초반',
-      lectures: [
-        {
-          id: 201,
-          title: '파이썬으로 배우는 인공지능 입문',
-          instructor: '홍길동',
-        },
-        {
-          id: 202,
-          title: '딥러닝 기본 개념',
-          instructor: '이영희',
-        },
-      ],
     },
     author: {
       id: 3,
@@ -150,13 +135,17 @@ export const dummyRecruitRecommendArray: Recruit[] = [
     },
     is_bookmarked: true,
     created_at: '2025-10-14T11:22:00Z',
+    updated_at: '2025-10-13T09:30:00Z',
   },
   {
     id: 101,
     uuid: 'b0f8e91b-4a33-4e91-bf80-4f4e5e89d123',
     title: 'AI 스터디 모집합니다!',
+    content: '프론트엔드 기초 스터디 참여자를 모집합니다.',
     thumbnail_img_url: img,
     expected_headcount: 5,
+    current_headcount: 4,
+    estimated_fee: 0,
     views_count: 153,
     bookmark_count: 8,
     due_date: '2025-10-30T23:59:59Z',
@@ -166,22 +155,11 @@ export const dummyRecruitRecommendArray: Recruit[] = [
       { id: 2, name: 'Python' },
       { id: 3, name: '딥러닝' },
     ],
+    lectures: [{ id: 201, title: '프론트엔드 기초', instructor: '김강사' }],
     study_group: {
       id: 12,
       uuid: '3fcd9f3e-1a12-4af8-8899-ec2df3f9b333',
       name: 'AI 기초반',
-      lectures: [
-        {
-          id: 201,
-          title: '파이썬으로 배우는 인공지능 입문',
-          instructor: '홍길동',
-        },
-        {
-          id: 202,
-          title: '딥러닝 기본 개념',
-          instructor: '이영희',
-        },
-      ],
     },
     author: {
       id: 3,
@@ -190,5 +168,6 @@ export const dummyRecruitRecommendArray: Recruit[] = [
     },
     is_bookmarked: true,
     created_at: '2025-10-14T11:22:00Z',
+    updated_at: '2025-10-13T09:30:00Z',
   },
 ]
