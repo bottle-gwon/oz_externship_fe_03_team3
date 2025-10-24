@@ -7,7 +7,8 @@ const CommonButtonMany = () => {
   const navigateToLecture = () => navigate('/lecture')
   const navigateToRecruit = () => navigate('/recruit')
   // TODO: 스터디 URL 받으면 교체해야 함
-  const redirectToStudy = () => (window.location.href = 'https://google.com')
+  const redirectToStudy = () =>
+    (window.location.href = import.meta.env.VITE_STUDY_PAGE_URL)
 
   return (
     <>

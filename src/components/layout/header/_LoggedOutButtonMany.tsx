@@ -2,9 +2,11 @@ import Button from '@/components/commonInGeneral/button/Button'
 
 const LoggedOutButtonMany = () => {
   // TODO: 로그인 URL 받으면 교체해야 함
-  const redirectToLogin = () => (window.location.href = 'https://google.com')
+  const redirectToLogin = () =>
+    (window.location.href = import.meta.env.VITE_LOGIN_PAGE_URL)
   // TODO: 회원가입 URL 받으면 교체해야 함
-  const redirectToSignup = () => (window.location.href = 'https://google.com')
+  const redirectToSignup = () =>
+    (window.location.href = import.meta.env.VITE_SIGNUP_PAGE_URL)
   return (
     <>
       <Button variant="ghost" size="lg" onClick={redirectToLogin}>
