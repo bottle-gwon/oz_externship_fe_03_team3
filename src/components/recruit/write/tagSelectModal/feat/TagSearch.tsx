@@ -13,7 +13,7 @@ const TagSearch = ({ onSearch }: search) => {
 
   useEffect(() => {
     onSearch(devounceValue)
-  }, [devounceValue])
+  }, [devounceValue, onSearch])
 
   const handleKeydownEnter = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
