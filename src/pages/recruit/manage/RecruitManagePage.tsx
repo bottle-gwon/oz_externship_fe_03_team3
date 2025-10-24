@@ -45,7 +45,7 @@ const RecruitManagementPage = () => {
             </Hstack>
           </RoundBox>
 
-          <Vstack gap="lg">
+          <Vstack gap="none">
             <h1>내 공고 목록 ({mockRecruits.length})</h1>
             {mockRecruits.map((recruit) => (
               <RecruitCard isMine key={recruit.id} recruit={recruit} />
