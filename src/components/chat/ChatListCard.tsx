@@ -1,3 +1,4 @@
+import useStudyHubStore from '@/store/store'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
 
 // Todo 관련 API 나오면 고치기
@@ -20,9 +21,16 @@ const ChatListCard = ({ room }: ChatListCardInterface) => {
   const date = new Date(room.created_at)
   const month = date.getMonth()
   const day = date.getDay()
+  const openChatList = useStudyHubStore((state) => state.openChatRoom)
+
+  const onClickChatRoom = () => {
+    openChatList(room.study_group_id, room.title)
+  }
+
   return (
     <Vstack
       gap="none"
+      onClick={onClickChatRoom}
       className="min-h-[76px] w-full cursor-pointer border-b border-gray-200 p-3 transition hover:bg-gray-100 active:bg-gray-200"
     >
       <Hstack className="justify-between">

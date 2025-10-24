@@ -1,4 +1,4 @@
-import ChatList from '@/components/chat/ChatList'
+// import ChatList from '@/components/chat/ChatList'
 import ChattingRoom from '@/components/chat/ChattingRoom'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
