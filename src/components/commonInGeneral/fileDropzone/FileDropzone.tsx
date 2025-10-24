@@ -1,17 +1,30 @@
-import { useState } from 'react'
+import { useRef, useState, type ChangeEvent } from 'react'
 import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
 
+interface LabeledFile {
+  id: string
+  file: File
+}
+
 const FileDropzone = () => {
   const [isDragEntered, setIsDragEntered] = useState(false)
+  const [labeledFileArray, setLabeledFileArray] = useState<LabeledFile[]>([])
+  const inputRef = useRef<HTMLInputElement>(null)
 
   const handleDragOver = () => {
     setIsDragEntered(true)
   }
-
   const handleDragLeave = () => {
     setIsDragEntered(false)
+  }
+  const handleDrop = (event: ChangeEvent) => {
+    event.preventDefault()
+    debugger
+  }
+  const handleClick = () => {
+    inputRef.current?.click()
   }
 
   return (
@@ -21,7 +34,9 @@ const FileDropzone = () => {
       borderStyle="dashed"
       onDragOver={handleDragOver}
       onDragLeave={handleDragLeave}
+      onClick={handleClick}
     >
+      <input ref={inputRef} hidden onChange={handleDrop} type="file" />
       <Vstack
         gap="sm"
         className="pointer-events-none items-center text-gray-500"
