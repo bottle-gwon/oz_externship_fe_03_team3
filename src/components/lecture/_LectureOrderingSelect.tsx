@@ -1,13 +1,15 @@
 import Select from '../commonInGeneral/select/Select'
 import { lectureOrderingInTextArray, type LectureOrderingInText } from '@/types'
 
-interface LectureOrderingSelect {
+interface LectureOrderingSelectProps {
   setSelectedOrderingInText: React.Dispatch<
     React.SetStateAction<LectureOrderingInText>
   >
 }
 
-const LectureOrderingSelect = () => {
+const LectureOrderingSelect = ({
+  setSelectedOrderingInText,
+}: LectureOrderingSelectProps) => {
   return (
     <Select onOptionSelect={() => {}}>
       <Select.Trigger>최신순</Select.Trigger>

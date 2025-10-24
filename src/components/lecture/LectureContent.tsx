@@ -10,7 +10,7 @@ import useStudyHubStore from '@/store/store'
 import { dummyLectureArray } from './dummyLectureArray'
 import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 import LectureCategorySelect from './_LectureCategorySelect'
-import LectureOrderingSelect from './_LectureOrderingSelect'
+import LectureOrderingSelectProps from './_LectureOrderingSelect'
 import useDebounce from '@/hooks/useDebounce'
 import type { LectureOrderingInText } from '@/types'
 
