@@ -1,6 +1,7 @@
-import { Hstack } from '../commonInGeneral/layout'
-import RoundBox from '../commonInGeneral/roundBox/RoundBox'
+import { Hstack } from '../../commonInGeneral/layout'
+import RoundBox from '../../commonInGeneral/roundBox/RoundBox'
 
+// 어떻게 될지 아직 몰라서 임시 타입 입니다.
 type UserStatus = {
   name: string
   id: number
