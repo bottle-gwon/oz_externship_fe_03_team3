@@ -30,7 +30,7 @@ const dummyGetLectureWithParametersApi = (
         lecture.instructor.includes(debounceValue)
     )
     .filter((lecture) => {
-      if (!category) {
+      if (!category || category === '전체 카테고리') {
         return true
       }
       const nameArray = lecture.categories.map(
@@ -83,7 +83,7 @@ const LectureContent = () => {
 
   return (
     <Container className="py-oz-xxl">
-      <Vstack className="px-oz-xxl">
+      <div className="px-oz-xxl">
         <SubHeader isBackButtonVisible={false}>
           <SubHeaderTitleSection>
             <SubHeader.Title>IT 강의 목록</SubHeader.Title>
@@ -92,7 +92,7 @@ const LectureContent = () => {
             </SubHeader.Subtitle>
           </SubHeaderTitleSection>
         </SubHeader>
-      </Vstack>
+      </div>
 
       <RecommendSection
         type="lecture"

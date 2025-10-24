@@ -31,7 +31,7 @@ const SelectOption = ({
       className="cursor-pointer bg-white px-3 py-2 transition hover:bg-gray-50"
     >
       <Hstack>
-        {icon && icon}
+        <div className="text-gray-400">{icon && icon}</div>
         <Text>{children}</Text>
       </Hstack>
     </RoundBox>

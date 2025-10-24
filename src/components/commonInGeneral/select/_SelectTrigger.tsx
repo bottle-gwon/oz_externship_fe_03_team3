@@ -2,8 +2,14 @@ import { ChevronDown } from 'lucide-react'
 import { Hstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import useSelectContext from './_useSelectContext'
+import type { JSX } from 'react'
 
-const SelectTrigger = ({ children }: { children: string }) => {
+interface SelectTriggerProps {
+  icon?: JSX.Element
+  children: string
+}
+
+const SelectTrigger = ({ icon, children }: SelectTriggerProps) => {
   const { setIsOpened, selectedOption, selectedIcon, triggerRef } =
     useSelectContext()
 
@@ -12,6 +18,7 @@ const SelectTrigger = ({ children }: { children: string }) => {
   }
 
   const label = selectedOption ?? children
+  const iconResult = selectedIcon || icon
 
   return (
     <RoundBox
@@ -19,8 +26,8 @@ const SelectTrigger = ({ children }: { children: string }) => {
       onClick={handleClick}
       className="cursor-pointer bg-white px-3 py-2 transition hover:bg-gray-50"
     >
-      <Hstack>
-        {selectedIcon ?? selectedIcon}
+      <Hstack className="items-center">
+        <div className="text-gray-400">{iconResult ?? iconResult}</div>
         <p
           className={`grow ${selectedOption ? 'text-gray-900' : 'text-gray-500'}`}
         >

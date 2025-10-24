@@ -1,3 +1,4 @@
+import { Folder } from 'lucide-react'
 import Select from '../commonInGeneral/select/Select'
 import { dummyLectureArray } from './dummyLectureArray'
 
@@ -31,8 +32,9 @@ const LectureCategorySelect = ({
 
   return (
     <Select onOptionSelect={(option) => setSelectedCategory(option)}>
-      <Select.Trigger>카테고리 어쩌구</Select.Trigger>
+      <Select.Trigger icon={<Folder size={16} />}>전체 카테고리</Select.Trigger>
       <Select.Content>
+        <Select.Option icon={<Folder size={16} />}>전체 카테고리</Select.Option>
         {categoryArray.map((category) => (
           <Select.Option key={category}>{category}</Select.Option>
         ))}
