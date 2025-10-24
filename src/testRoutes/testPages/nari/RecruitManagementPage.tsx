@@ -8,10 +8,8 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import Select from '@/components/commonInGeneral/select/Select'
 import Text from '@/components/commonInGeneral/text/Text'
-import { useState } from 'react'
 
 const RecruitManagementPage = () => {
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
   return (
     <Vstack className="bg-[#F9FAFB]">
       <Header />
@@ -24,7 +22,7 @@ const RecruitManagementPage = () => {
             <Hstack>
               <Vstack className="w-full">
                 <Text>상태</Text>
-                <Select onOptionSelect={setSelectedOption}>
+                <Select onOptionSelect={() => null}>
                   <Select.Trigger>{`전체 (${mockRecruits.length})`}</Select.Trigger>
                   <Select.Content>
                     <Select.Option>{`전체 (${mockRecruits.length})`}</Select.Option>
@@ -35,7 +33,7 @@ const RecruitManagementPage = () => {
               </Vstack>
               <Vstack className="w-full">
                 <Text>정렬</Text>
-                <Select onOptionSelect={setSelectedOption}>
+                <Select onOptionSelect={() => null}>
                   <Select.Trigger>최신순</Select.Trigger>
                   <Select.Content>
                     <Select.Option>최신순</Select.Option>
