@@ -31,26 +31,16 @@ const RecruitCard = ({
     bookmark_count,
     lectures,
   },
-  isMine = false,
+  isMine = true,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
   return (
-    <RoundBox
-      color="mono-bright"
-      isBordered
-      borderStyle="solid"
-      isShadowed={false}
-      padding="md"
-      radius="md"
-      className={`outBox ${cardClassName}`}
-    >
-      <Hstack gap="md" padding="xs">
+    <RoundBox className={`outBox ${cardClassName}`}>
+      <Hstack padding="xs">
         <RoundBox
-          color="mono-bright"
           isBordered={false}
           borderStyle="none"
-          isShadowed={false}
           padding="none"
           radius="lg"
           className={`${imageClassName} flex-none overflow-hidden bg-gray-200`}
@@ -167,14 +157,7 @@ const RecruitCard = ({
             </Hstack>
             {isMine && (
               <Hstack gap="none" padding="none" className="self-center">
-                <Button
-                  color="blue"
-                  variant="contained"
-                  status="enabled"
-                  size="md"
-                  shape="rectangle"
-                  className="gap-2 px-6 py-2 text-xs"
-                >
+                <Button color="blue" className="gap-2 px-6 py-2 text-xs">
                   <FileText className="size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
                   <span>지원내역</span>

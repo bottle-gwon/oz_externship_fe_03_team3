@@ -15,26 +15,10 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
     (item) => item.is_closed === true
   ).length
   return (
-    <Hstack gap="xl" padding="xs" className="items-start">
-      <RoundBox
-        color="mono-bright"
-        isBordered
-        borderStyle="solid"
-        isShadowed={false}
-        padding="lg"
-        radius="sm"
-        className="h-20 w-62"
-      >
+    <Hstack gap="lg" padding="xs" className="items-start">
+      <RoundBox padding="lg" className="h-20 w-62">
         <Hstack gap="sm" padding="xs" className="items-center">
-          <RoundBox
-            color="mono-dim"
-            isBordered={false}
-            borderStyle="none"
-            isShadowed={false}
-            padding="md"
-            radius="md"
-            className="h-10 w-10"
-          >
+          <RoundBox color="mono-dim" borderStyle="none" className="h-10 w-10">
             <FileText className="size-4" />
             {/* 추후 svg 아이콘으로 추가 */}
           </RoundBox>
@@ -47,25 +31,9 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
         </Hstack>
       </RoundBox>
 
-      <RoundBox
-        color="mono-bright"
-        isBordered
-        borderStyle="solid"
-        isShadowed={false}
-        padding="lg"
-        radius="sm"
-        className="h-20 w-62"
-      >
+      <RoundBox padding="lg" className="h-20 w-62">
         <Hstack gap="sm" padding="xs" className="items-center">
-          <RoundBox
-            color="success"
-            isBordered={false}
-            borderStyle="none"
-            isShadowed={false}
-            padding="md"
-            radius="md"
-            className="h-10 w-10"
-          >
+          <RoundBox color="success" borderStyle="none" className="h-10 w-10">
             <Megaphone className="size-4" />
             {/* 추후 svg 아이콘으로 추가 */}
           </RoundBox>
@@ -78,25 +46,9 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
         </Hstack>
       </RoundBox>
 
-      <RoundBox
-        color="mono-bright"
-        isBordered
-        borderStyle="solid"
-        isShadowed={false}
-        padding="lg"
-        radius="sm"
-        className="h-20 w-62"
-      >
+      <RoundBox padding="lg" className="h-20 w-62">
         <Hstack gap="sm" padding="xs" className="items-center">
-          <RoundBox
-            color="danger"
-            isBordered={false}
-            borderStyle="none"
-            isShadowed={false}
-            padding="md"
-            radius="md"
-            className="h-10 w-10"
-          >
+          <RoundBox color="danger" borderStyle="none" className="h-10 w-10">
             <Clock3 className="size-4" />
           </RoundBox>
           <Vstack gap="xs" padding="xs" className="h-11 justify-center">
