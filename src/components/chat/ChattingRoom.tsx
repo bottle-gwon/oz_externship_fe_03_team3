@@ -3,6 +3,7 @@ import useStudyHubStore from '@/store/store'
 import { ArrowLeft } from 'lucide-react'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
 import ChatUserStatus from './feat/ChatUserStatus'
+import ChatInput from './feat/ChatInput'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -51,7 +52,10 @@ const ChattingRoom = () => {
       </ChattingLayout.UserStatus>
 
       {/* 채팅창 */}
-      <ChattingLayout.Body className="h-[217px]">채팅 방</ChattingLayout.Body>
+      <ChattingLayout.Body className="my-[-24px] grow justify-between border-transparent">
+        <p>채팅</p>
+        <ChatInput />
+      </ChattingLayout.Body>
     </ChattingLayout>
   )
 }
