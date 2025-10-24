@@ -13,6 +13,8 @@ import LectureCategorySelect from './_LectureCategorySelect'
 import LectureOrderingSelect from './_LectureOrderingSelect'
 import useDebounce from '@/hooks/useDebounce'
 import type { LectureOrderingInText } from '@/types'
+import SubHeader from '../commonInProject/SubHeader/SubHeader'
+import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
 const dummyGetLectureWithParametersApi = (
@@ -82,9 +84,15 @@ const LectureContent = () => {
 
   return (
     <Container className="py-oz-xxl">
-      {/* header -- 제작해주시는 것으로 교체할 예정 */}
       <Vstack className="px-oz-xxl">
-        <TitleSection isLoggedIn={Boolean(accessToken)} type="lecture" />
+        <SubHeader isBackButtonVisible={false}>
+          <SubHeaderTitleSection>
+            <SubHeader.Title>IT 강의 목록</SubHeader.Title>
+            <SubHeader.Subtitle>
+              전문 강사들의 고품질 IT 강의를 만나보세요
+            </SubHeader.Subtitle>
+          </SubHeaderTitleSection>
+        </SubHeader>
       </Vstack>
 
       <RecommendSection
