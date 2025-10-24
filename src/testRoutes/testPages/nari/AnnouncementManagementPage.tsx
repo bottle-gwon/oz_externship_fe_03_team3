@@ -15,30 +15,24 @@ import Container from '@/components/commonInGeneral/layout/_Container'
 
 const AnnouncementManagementPage = (isMine = false) => {
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
-  const [selectedOrderingInText, setSelectedOrderingInText] =
-    useState<LectureOrderingInText>('최신순')
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
   return (
     <Vstack className="bg-[#F9FAFB]">
       <Header />
       <Container className="py-oz-xxl flex flex-col bg-[#F9FAFB]">
         <TitleSection type="manage" />
-        <Vstack gap="xl" padding="">
+        <Vstack gap="xl">
           <RecruitSummaryCard myRecruitArray={mockRecruits} />
 
-          <RoundBox isShadowed={false}>
-            <GridContainer />
-            <LectureCategorySelect setSelectedCategory={setSelectedCategory} />
-            <LectureOrderingSelect
-              setSelectedOrderingInText={setSelectedOrderingInText}
-            />
-          </RoundBox>
-          <h1>내 공고 목록 ({mockRecruits.length})</h1>
+          <RoundBox isShadowed={false}></RoundBox>
+
+          <Vstack gap="lg">
+            <h1>내 공고 목록 ({mockRecruits.length})</h1>
+            {mockRecruits.map((recruit) => (
+              <RecruitCard isMine={true} key={recruit.id} recruit={recruit} />
+            ))}
+          </Vstack>
         </Vstack>
-        {mockRecruits.map((recruit) => (
-          <RecruitCard isMine={true} key={recruit.id} recruit={recruit} />
-        ))}
       </Container>
     </Vstack>
   )
