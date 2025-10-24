@@ -15,7 +15,7 @@ const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
     (item) => item.is_closed === true
   ).length
   return (
-    <Hstack gap="lg" padding="xs" className="items-start">
+    <Hstack gap="lg" className="items-start">
       <RoundBox padding="lg" className="h-20 w-62">
         <Hstack gap="sm" padding="xs" className="items-center">
           <RoundBox color="mono-dim" borderStyle="none" className="h-10 w-10">
