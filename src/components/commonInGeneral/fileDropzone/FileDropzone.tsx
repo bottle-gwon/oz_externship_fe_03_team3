@@ -4,7 +4,7 @@ import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
 
 interface LabeledFile {
-  id: string
+  id: number
   file: File
 }
 
@@ -13,20 +13,32 @@ const FileDropzone = () => {
   const [labeledFileArray, setLabeledFileArray] = useState<LabeledFile[]>([])
   const inputRef = useRef<HTMLInputElement>(null)
 
+  const addFiles = (files: FileList) => {
+    const newArray: LabeledFile[] = [...files].map((file) => ({
+      id: Date.now(),
+      file,
+    }))
+    setLabeledFileArray([...labeledFileArray, ...newArray])
+  }
+
   const handleDragOver = () => {
     setIsDragEntered(true)
   }
   const handleDragLeave = () => {
     setIsDragEntered(false)
   }
-  const handleDrop = (event: ChangeEvent) => {
+  const handleChangeFromClick = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
-    debugger
+    if (!event.target.files) {
+      return
+    }
+    addFiles(event.target.files)
   }
   const handleClick = () => {
     inputRef.current?.click()
   }
 
+  console.log({ labeledFileArray })
   return (
     <RoundBox
       color={isDragEntered ? 'primary' : 'mono-bright'}
@@ -36,7 +48,12 @@ const FileDropzone = () => {
       onDragLeave={handleDragLeave}
       onClick={handleClick}
     >
-      <input ref={inputRef} hidden onChange={handleDrop} type="file" />
+      <input
+        ref={inputRef}
+        hidden
+        onChange={handleChangeFromClick}
+        type="file"
+      />
       <Vstack
         gap="sm"
         className="pointer-events-none items-center text-gray-500"
