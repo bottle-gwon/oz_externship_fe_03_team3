@@ -2,7 +2,7 @@ import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import useStudyHubStore from '@/store/store'
 import { ArrowLeft } from 'lucide-react'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
-import ChatUserStatus from './ChatUserStatus'
+import ChatUserStatus from './feat/ChatUserStatus'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -22,6 +22,7 @@ const ChattingRoom = () => {
 
   return (
     <ChattingLayout>
+      {/* 헤더 */}
       <ChattingLayout.Header>
         <Hstack gap="lg" className="items-center">
           <ArrowLeft
@@ -50,7 +51,7 @@ const ChattingRoom = () => {
       </ChattingLayout.UserStatus>
 
       {/* 채팅창 */}
-      <ChattingLayout.Body>채팅 방</ChattingLayout.Body>
+      <ChattingLayout.Body className="h-[217px]">채팅 방</ChattingLayout.Body>
     </ChattingLayout>
   )
 }

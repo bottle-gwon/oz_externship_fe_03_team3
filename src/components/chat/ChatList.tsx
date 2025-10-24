@@ -1,5 +1,5 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
-import ChatListCard from './ChatListCard'
+import ChatListCard from './feat/ChatListCard'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.

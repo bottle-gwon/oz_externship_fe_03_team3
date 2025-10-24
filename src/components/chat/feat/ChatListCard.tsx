@@ -1,5 +1,5 @@
 import useStudyHubStore from '@/store/store'
-import { Hstack, Vstack } from '../commonInGeneral/layout'
+import { Hstack, Vstack } from '../../commonInGeneral/layout'
 
 // Todo 관련 API 나오면 고치기
 // Note 관련 API가 없는 관계로 UI확인용으로 임의로 작성 했습니다.
