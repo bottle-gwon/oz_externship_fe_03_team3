@@ -1,11 +1,32 @@
+import { useState } from 'react'
 import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
 
 const FileDropzone = () => {
+  const [isDragEntered, setIsDragEntered] = useState(false)
+
+  const handleDragOver = () => {
+    setIsDragEntered(true)
+  }
+
+  const handleDragLeave = () => {
+    setIsDragEntered(false)
+  }
+
   return (
-    <RoundBox color="mono-bright" padding="xl" borderStyle="dashed">
-      <Vstack gap="sm" className="items-center text-gray-500">
+    <RoundBox
+      color={isDragEntered ? 'primary' : 'mono-bright'}
+      padding="xl"
+      borderStyle="dashed"
+      onDragOver={handleDragOver}
+      onDragLeave={handleDragLeave}
+    >
+      <Vstack
+        gap="sm"
+        className="pointer-events-none items-center text-gray-500"
+        draggable={false}
+      >
         <img src={UploadIcon} />
         <Vstack gap="none" className="items-center">
           <h4 className="text-sm">파일을 드래그하거나 클릭하여 업로드</h4>
