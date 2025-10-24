@@ -37,8 +37,20 @@ const dummyGetLectureWithParametersApi = (
       )
       return nameArray.includes(category)
     })
-
-  debugger
+    .sort((a, b) => {
+      switch (orderingInText) {
+        case '최신순':
+          return 1
+        case '가격 높은 순':
+          return b.discount_price - a.discount_price
+        case '가격 낮은 순':
+          return a.discount_price - b.discount_price
+        case '평점 높은 순':
+          return b.average_rating - a.average_rating
+        case '평점 낮은 순':
+          return a.average_rating - b.average_rating
+      }
+    })
 
   setLectureArray(filteredLectureArray)
 }

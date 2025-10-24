@@ -11,7 +11,11 @@ const LectureOrderingSelect = ({
   setSelectedOrderingInText,
 }: LectureOrderingSelectProps) => {
   return (
-    <Select onOptionSelect={() => {}}>
+    <Select
+      onOptionSelect={(option) =>
+        setSelectedOrderingInText(option as LectureOrderingInText)
+      }
+    >
       <Select.Trigger>최신순</Select.Trigger>
       <Select.Content>
         {lectureOrderingInTextArray.map((orderingInText) => (
