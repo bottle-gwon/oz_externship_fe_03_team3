@@ -7,6 +7,7 @@ import CommonButtonMany from './_CommonButtonMany'
 import LoggedInButtonMany from './_LoggedInButtonMany'
 import LoggedOutButtonMany from './_LoggedOutButtonMany'
 import { dummyGetMeResponse } from './dummyGetMeResponse'
+import { useNavigate } from 'react-router'
 
 // TODO: 리프레시 토큰 캐시로 받고 로그인 api 연결하면 삭제해야!
 const DebugLoginButton = () => {
@@ -31,13 +32,27 @@ const DebugLoginButton = () => {
 
 const Header = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
+  const navigate = useNavigate()
+
+  const handleLogoClick = () => {
+    if (accessToken) {
+      navigate('/lecture')
+      return
+    }
+
+    window.location.href = import.meta.env.VITE_LANDING_PAGE_URL
+  }
 
   return (
     <div className="overflow-x-hidden overflow-y-scroll border border-b-gray-200 bg-white">
       <Container width="lg" className="px-oz-xxl py-oz-sm">
         <Hstack className="items-center gap-0">
           <div className="grow">
-            <img src={Logo} />
+            <img
+              src={Logo}
+              onClick={handleLogoClick}
+              className="cursor-pointer"
+            />
           </div>
           <DebugLoginButton />
           <CommonButtonMany />
