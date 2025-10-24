@@ -1,5 +1,6 @@
 import Select from '../commonInGeneral/select/Select'
 import { lectureOrderingInTextArray, type LectureOrderingInText } from '@/types'
+import SortIcon from '@/assets/sort.svg'
 
 interface LectureOrderingSelectProps {
   setSelectedOrderingInText: React.Dispatch<
@@ -16,7 +17,7 @@ const LectureOrderingSelect = ({
         setSelectedOrderingInText(option as LectureOrderingInText)
       }
     >
-      <Select.Trigger>최신순</Select.Trigger>
+      <Select.Trigger icon={<img src={SortIcon} />}>최신순</Select.Trigger>
       <Select.Content>
         {lectureOrderingInTextArray.map((orderingInText) => (
           <Select.Option key={orderingInText}>{orderingInText}</Select.Option>

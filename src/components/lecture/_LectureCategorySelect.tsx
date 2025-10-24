@@ -34,7 +34,7 @@ const LectureCategorySelect = ({
     <Select onOptionSelect={(option) => setSelectedCategory(option)}>
       <Select.Trigger icon={<Folder size={16} />}>전체 카테고리</Select.Trigger>
       <Select.Content>
-        <Select.Option icon={<Folder size={16} />}>전체 카테고리</Select.Option>
+        <Select.Option>전체 카테고리</Select.Option>
         {categoryArray.map((category) => (
           <Select.Option key={category}>{category}</Select.Option>
         ))}
