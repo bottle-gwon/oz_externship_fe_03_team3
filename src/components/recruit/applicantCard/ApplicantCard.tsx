@@ -17,7 +17,7 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
     <Vstack
       gap="lg"
       padding="lg"
-      className="h-[204px] w-[416px] rounded-lg bg-[#F9FAFB]"
+      className="h-[204px] w-[408px] rounded-lg bg-[#F9FAFB]"
     >
       <Hstack gap="lg" className="h-[64px] w-[384px]">
         <Hstack className="items-center">

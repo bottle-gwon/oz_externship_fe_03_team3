@@ -13,9 +13,11 @@ const HyejeongRecommendSection = lazy(
 const HyejeongSubHeader = lazy(
   () => import('./testPages/hyejeong/HyejeongSubHeader')
 )
-
 const HyejeongApplicantCardModal = lazy(
   () => import('./testPages/hyejeong/HyejeongApplicantCardModal')
+)
+const HyejeongManageModal = lazy(
+  () => import('./testPages/hyejeong/HyejeongManageModal')
 )
 
 const hyejeongTestRouteArray = [
@@ -35,6 +37,10 @@ const hyejeongTestRouteArray = [
   {
     path: 'test/hyejeong/apllicantcard',
     element: <HyejeongApplicantCardModal />,
+  },
+  {
+    path: 'test/hyejeong/managemodal',
+    element: <HyejeongManageModal />,
   },
 ]
 

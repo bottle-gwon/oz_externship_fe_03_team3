@@ -1,5 +1,56 @@
-const ManageModal = () => {
-  return <div></div>
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
+import Modal from '@/components/commonInGeneral/modal/Modal'
+import type { Applicant } from '@/types/_applicantInterface'
+import ApplicantCard from '../applicantCard/ApplicantCard'
+
+interface ManageModal {
+  isOn: boolean
+  onClose: React.Dispatch<React.SetStateAction<boolean>>
+  recruitContent: string
+  applicantArray: Applicant[]
+}
+
+const ManageModal = ({
+  isOn,
+  onClose,
+  recruitContent,
+  applicantArray,
+}: ManageModal) => {
+  const handleClose = () => {
+    onClose(false)
+  }
+
+  return (
+    <Modal isOn={isOn} onClose={handleClose} width="md">
+      <Modal.Header>
+        <Vstack gap="xs">
+          <h2 className="text-lg leading-7 font-semibold text-[#111827]">
+            지원현황관리
+          </h2>
+          <p className="text-sm leading-5">{`${recruitContent} - 총 ${applicantArray.length}명이 지원했습니다`}</p>
+        </Vstack>
+      </Modal.Header>
+      <Modal.Body>
+        {applicantArray.length > 0 ? (
+          <Hstack
+            gap="lg"
+            className="h-[444px] flex-wrap overflow-y-scroll pr-[1px]"
+          >
+            {applicantArray.map((applicant) => (
+              <ApplicantCard key={applicant.id} applicant={applicant} />
+            ))}
+            {applicantArray.map((applicant) => (
+              <ApplicantCard key={applicant.id} applicant={applicant} />
+            ))}
+          </Hstack>
+        ) : (
+          <Vstack gap="none" className="text-center text-gray-500">
+            아직 지원자가 없습니다
+          </Vstack>
+        )}
+      </Modal.Body>
+    </Modal>
+  )
 }
 
 export default ManageModal
