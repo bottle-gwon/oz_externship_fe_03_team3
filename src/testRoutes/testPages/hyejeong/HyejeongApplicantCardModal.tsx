@@ -5,7 +5,11 @@ const HyejeongApplicantCardModal = () => {
   return (
     <>
       {dummyApplicantArray.map((applicant) => (
-        <ApplicantCard key={applicant.id} applicant={applicant} />
+        <ApplicantCard
+          key={applicant.id}
+          applicant={applicant}
+          onClick={() => {}}
+        />
       ))}
     </>
   )
