@@ -6,7 +6,7 @@ import { useState } from 'react'
 
 const HyejeongManageModal = () => {
   const [isOn, setIsOn] = useState(false)
-  const recruitContent = 'Node.js 백엔드 개발 스터디원 구합니다' // 임시 모집 공고 content, 추후 내가 작성한 구인공고에서 클릭된 공고의 content로 변경 예정
+  const recruitContent = 'Node.js 백엔드 개발 스터디원 구합니다' // 임시 모집 공고 content, 추후 구인공고관리에서 클릭된 공고의 content로 변경 예정
   const applicantArray = dummyApplicantArray // 임시 지원자 데이터, 추후 해당 공고에 지원한 지원자 데이터로 변경 예정
 
   const onOpen = () => {
