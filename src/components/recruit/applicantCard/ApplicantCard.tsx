@@ -8,7 +8,12 @@ import { Calendar } from 'lucide-react'
 import Tag from '@/components/commonInProject/tag/Tag'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 
-const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
+interface ApplicantCardProps {
+  applicant: Applicant
+  onClick: () => void
+}
+
+const ApplicantCard = ({ applicant, onClick }: ApplicantCardProps) => {
   const statusStyle = statusStyles[applicant.status]
   const experienceStyle =
     experienceStyles[String(applicant.has_study_experience) as 'true' | 'false']
@@ -17,7 +22,8 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
     <Vstack
       gap="lg"
       padding="lg"
-      className="h-[204px] w-[408px] rounded-lg bg-[#F9FAFB]"
+      className="h-[204px] w-[408px] cursor-pointer rounded-lg bg-[#F9FAFB]"
+      onClick={onClick}
     >
       <Hstack gap="lg" className="h-[64px] w-[384px]">
         <Hstack className="items-center">
