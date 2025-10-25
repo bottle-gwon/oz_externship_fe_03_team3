@@ -4,6 +4,8 @@ import { ArrowLeft } from 'lucide-react'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
 import ChatUserStatus from './feat/ChatUserStatus'
 import ChatInput from './feat/ChatInput'
+import ChatBox from './feat/ChatBox'
+import ChatDisplay from './feat/ChatDisplay'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -14,6 +16,62 @@ const TestUserStatus = {
     { name: '장길동', id: 34, isConnected: true, isLeader: false },
     { name: '주길동', id: 35, isConnected: false, isLeader: false },
     { name: '이길동', id: 36, isConnected: true, isLeader: false },
+  ],
+}
+
+//채팅 더미
+const TestChat = {
+  messages: [
+    {
+      id: 201,
+      sender_id: 5,
+      sender_nickname: '홍길동',
+      study_group_id: 100,
+      content: '오늘 스터디 7시에 시작합니다.',
+      file_url: null,
+      is_read: true,
+      created_at: '2025-10-15T10:30:00Z',
+    },
+    {
+      id: 201,
+      sender_id: 6,
+      sender_nickname: '김길동',
+      study_group_id: 100,
+      content: 'ㅇㅋㅇㅋ',
+      file_url: null,
+      is_read: true,
+      created_at: '2025-10-15T10:35:00Z',
+    },
+    {
+      id: 201,
+      sender_id: 7,
+      sender_nickname: '이길동',
+      study_group_id: 100,
+      content: '넵',
+      file_url: null,
+      is_read: true,
+      created_at: '2025-10-15T10:37:00Z',
+    },
+    {
+      id: 201,
+      sender_id: 8,
+      sender_nickname: '장길동',
+      study_group_id: 100,
+      content: '테스트 중입니다.',
+      file_url: null,
+      is_read: true,
+      created_at: '2025-10-15T11:40:00Z',
+    },
+    {
+      id: 201,
+      sender_id: 9,
+      sender_nickname: '선길동',
+      study_group_id: 100,
+      content: '테스트 중입니다.',
+      file_url: null,
+      is_read: true,
+      created_at: '2025-10-15T11:45:00Z',
+    },
   ],
 }
 
@@ -53,7 +111,7 @@ const ChattingRoom = () => {
 
       {/* 채팅창 */}
       <ChattingLayout.Body className="my-[-24px] grow justify-between border-transparent">
-        <p>채팅</p>
+        <ChatDisplay messages={TestChat.messages} />
         <ChatInput />
       </ChattingLayout.Body>
     </ChattingLayout>
