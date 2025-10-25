@@ -57,7 +57,7 @@ const TestChat = {
       sender_id: 8,
       sender_nickname: '장길동',
       study_group_id: 100,
-      content: '테스트 중입니다.',
+      content: '테스트 중입니다. 조금 긴 메시지 테스트',
       file_url: null,
       is_read: true,
       created_at: '2025-10-15T11:40:00Z',
