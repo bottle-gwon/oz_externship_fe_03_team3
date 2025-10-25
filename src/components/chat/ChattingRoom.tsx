@@ -4,7 +4,6 @@ import { ArrowLeft } from 'lucide-react'
 import { Hstack, Vstack } from '../commonInGeneral/layout'
 import ChatUserStatus from './feat/ChatUserStatus'
 import ChatInput from './feat/ChatInput'
-import ChatBox from './feat/ChatBox'
 import ChatDisplay from './feat/ChatDisplay'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
