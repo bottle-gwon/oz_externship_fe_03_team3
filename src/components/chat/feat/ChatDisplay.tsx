@@ -8,7 +8,7 @@ interface ChatArray {
 
 const ChatDisplay = ({ messages }: ChatArray) => {
   return (
-    <Vstack className="mx-[-24px] h-[195px] overflow-y-scroll px-3">
+    <Vstack className="mx-[-24px] h-full overflow-y-scroll px-3">
       {messages.map((el) => (
         <ChatBox key={el.id + el.created_at} chat={el} />
       ))}
