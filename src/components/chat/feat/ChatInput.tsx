@@ -12,7 +12,7 @@ const ChatInput = () => {
         placeholder="메시지를 입력하세요..."
         className="h-[38px] w-full rounded-3xl border border-gray-300 px-[13px] py-[9px]"
       />
-      <button className="flex size-8 cursor-pointer items-center justify-center rounded-full bg-gray-300 p-2 hover:bg-gray-400 active:bg-gray-500">
+      <button className="flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full bg-gray-300 p-2 hover:bg-gray-400 active:bg-gray-500">
         <img src={SendIcon} />
       </button>
     </Hstack>
