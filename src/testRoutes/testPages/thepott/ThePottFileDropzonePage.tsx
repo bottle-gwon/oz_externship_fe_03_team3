@@ -1,10 +1,11 @@
+import Button from '@/components/commonInGeneral/button/Button'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import { useForm } from 'react-hook-form'
 
 const ThePottFileDropzonePage = () => {
-  const { register, handleSubmit } = useForm()
+  const { handleSubmit, setValue } = useForm()
 
   const onSubmit = (data: any) => {
     console.log({ data })
@@ -14,8 +15,9 @@ const ThePottFileDropzonePage = () => {
     <Container isPadded>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Vstack>
-          <FileDropzone register={register} />
+          <FileDropzone setValue={setValue} />
         </Vstack>
+        <Button>Submit</Button>
       </form>
     </Container>
   )

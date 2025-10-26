@@ -1,29 +1,31 @@
-import { useRef, useState, type ChangeEvent } from 'react'
+import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
-import type { FieldValues, UseFormRegister } from 'react-hook-form'
+import type { FieldValues, UseFormSetValue } from 'react-hook-form'
 
-interface LabeledFile {
-  id: number
-  file: File
-}
+type FileRecord = Record<number, File>
 
 const FileDropzone = ({
-  register,
+  setValue,
 }: {
-  register: UseFormRegister<FieldValues>
+  setValue: UseFormSetValue<FieldValues>
 }) => {
   const [isDragEntered, setIsDragEntered] = useState(false)
-  const [labeledFileArray, setLabeledFileArray] = useState<LabeledFile[]>([])
+  const [fileRecord, setFileRecord] = useState<FileRecord>({})
   const inputRef = useRef<HTMLInputElement>(null)
 
+  useEffect(() => {
+    const fileArray = Object.values(fileRecord)
+    setValue('attachments', fileArray)
+  }, [fileRecord, setValue])
+
   const addFiles = (files: FileList) => {
-    const newArray: LabeledFile[] = [...files].map((file) => ({
-      id: Date.now(),
-      file,
-    }))
-    setLabeledFileArray([...labeledFileArray, ...newArray])
+    const newRecord: FileRecord = [...files].reduce((acc: FileRecord, file) => {
+      acc[Date.now()] = file
+      return acc
+    }, {})
+    setFileRecord({ ...fileRecord, ...newRecord })
   }
 
   const handleDragOver = () => {
@@ -53,7 +55,6 @@ const FileDropzone = ({
       onClick={handleClick}
     >
       <input
-        {...register('attachments')}
         ref={inputRef}
         hidden
         onChange={handleChangeFromClick}
