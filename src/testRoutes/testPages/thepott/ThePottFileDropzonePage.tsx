@@ -2,13 +2,15 @@ import Button from '@/components/commonInGeneral/button/Button'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
-import { useForm } from 'react-hook-form'
+import { useState } from 'react'
+import { useForm, type FieldValues } from 'react-hook-form'
 
 const ThePottFileDropzonePage = () => {
+  const [fieldValues, setFieldValues] = useState<FieldValues | null>(null)
   const { handleSubmit, setValue } = useForm()
 
-  const onSubmit = (data: any) => {
-    console.log({ data })
+  const onSubmit = (data: FieldValues) => {
+    setFieldValues(data)
   }
 
   return (
@@ -19,9 +21,9 @@ const ThePottFileDropzonePage = () => {
         </Vstack>
         <Hstack>
           <Button>Submit</Button>
-          <Button>Console.log</Button>
         </Hstack>
       </form>
+      <p>{JSON.stringify(fieldValues)}</p>
     </Container>
   )
 }

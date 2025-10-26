@@ -21,13 +21,16 @@ const FileDropzoneUploadedItem = memo(
       })
     }
 
+    const size = Math.round(file.size / 10_000) / 100
+
     return (
       <RoundBox>
-        <Hstack className="items-center">
+        <Hstack className="gap-oz-sm items-center">
           <Hstack className="gap-oz-sm grow items-center text-sm">
             <FileText size={14} className="text-gray-400" />
             {file.name}
           </Hstack>
+          <p className="text-xs text-gray-500">{size}MB</p>
           <Button variant="ghost" className="p-0">
             <X onClick={handleXClick} size={14} />
           </Button>

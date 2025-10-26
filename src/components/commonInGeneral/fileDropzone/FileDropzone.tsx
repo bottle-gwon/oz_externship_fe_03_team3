@@ -83,9 +83,10 @@ const FileDropzone = ({
             type="file"
             multiple
           />
+
           <Vstack
             gap="sm"
-            className="pointer-events-none items-center text-gray-500"
+            className="pb-oz-lg pointer-events-none items-center text-gray-500"
             draggable={false}
           >
             <img src={UploadIcon} />
@@ -94,9 +95,9 @@ const FileDropzone = ({
               <p className="text-xs">최대 3개 파일, 각 5MB 이하</p>
             </Vstack>
           </Vstack>
-        </RoundBox>
 
-        <FileDropzoneUploadedSection />
+          <FileDropzoneUploadedSection />
+        </RoundBox>
       </Vstack>
     </FileDropzoneContext.Provider>
   )

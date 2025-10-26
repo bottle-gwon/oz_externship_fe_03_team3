@@ -1,3 +1,4 @@
+import Labeled from '../inputFamily/labeled/Labeled'
 import { Vstack } from '../layout'
 import FileDropzoneUploadedItem from './_FileDropzoneUploadedItem'
 import useFileDropzoneContext from './_useFileDropzoneContext'
@@ -11,16 +12,18 @@ const FileDropzoneUploadedSection = () => {
   }
 
   return (
-    <Vstack>
-      <p>업로드된 파일:</p>
-      {fileEntryArray.map((entry) => (
-        <FileDropzoneUploadedItem
-          key={entry[0]}
-          fileId={Number(entry[0])}
-          file={entry[1]}
-        />
-      ))}
-    </Vstack>
+    <Labeled>
+      <Labeled.Header>업로드된 파일:</Labeled.Header>
+      <Vstack gap="sm">
+        {fileEntryArray.map((entry) => (
+          <FileDropzoneUploadedItem
+            key={entry[0]}
+            fileId={Number(entry[0])}
+            file={entry[1]}
+          />
+        ))}
+      </Vstack>
+    </Labeled>
   )
 }
 
