@@ -20,19 +20,35 @@ const FileDropzone = ({
     setValue('attachments', fileArray)
   }, [fileRecord, setValue])
 
+  let nextFileId: number = 0
   const addFiles = (files: FileList) => {
     const newRecord: FileRecord = [...files].reduce((acc: FileRecord, file) => {
-      acc[Date.now()] = file
+      acc[nextFileId] = file
+      nextFileId += 1
       return acc
     }, {})
     setFileRecord({ ...fileRecord, ...newRecord })
   }
 
-  const handleDragOver = () => {
+  const handleDragEnter = () => {
     setIsDragEntered(true)
+  }
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    // 새 탭 안 열리게 하는 데에 필수 1/2
+    event.preventDefault()
   }
   const handleDragLeave = () => {
     setIsDragEntered(false)
+  }
+  const handleDrop = (event: React.DragEvent<HTMLDivElement>) => {
+    // 새 탭 안 열리게 하는 데에 필수 2/2
+    event.preventDefault()
+    setIsDragEntered(false)
+
+    if (event.dataTransfer) {
+      const files = event.dataTransfer.files
+      addFiles(files)
+    }
   }
   const handleChangeFromClick = (event: ChangeEvent<HTMLInputElement>) => {
     event.preventDefault()
@@ -46,32 +62,38 @@ const FileDropzone = ({
   }
 
   return (
-    <RoundBox
-      color={isDragEntered ? 'primary' : 'mono-bright'}
-      padding="xl"
-      borderStyle="dashed"
-      onDragOver={handleDragOver}
-      onDragLeave={handleDragLeave}
-      onClick={handleClick}
-    >
-      <input
-        ref={inputRef}
-        hidden
-        onChange={handleChangeFromClick}
-        type="file"
-      />
-      <Vstack
-        gap="sm"
-        className="pointer-events-none items-center text-gray-500"
-        draggable={false}
+    <Vstack>
+      <RoundBox
+        color={isDragEntered ? 'primary' : 'mono-bright'}
+        padding="xl"
+        borderStyle="dashed"
+        onDragEnter={handleDragEnter}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
+        onClick={handleClick}
       >
-        <img src={UploadIcon} />
-        <Vstack gap="none" className="items-center">
-          <h4 className="text-sm">파일을 드래그하거나 클릭하여 업로드</h4>
-          <p className="text-xs">최대 3개 파일, 각 5MB 이하</p>
+        <input
+          ref={inputRef}
+          hidden
+          onChange={handleChangeFromClick}
+          type="file"
+          multiple
+        />
+        <Vstack
+          gap="sm"
+          className="pointer-events-none items-center text-gray-500"
+          draggable={false}
+        >
+          <img src={UploadIcon} />
+          <Vstack gap="none" className="items-center">
+            <h4 className="text-sm">파일을 드래그하거나 클릭하여 업로드</h4>
+            <p className="text-xs">최대 3개 파일, 각 5MB 이하</p>
+          </Vstack>
         </Vstack>
-      </Vstack>
-    </RoundBox>
+      </RoundBox>
+      <p>{JSON.stringify(fileRecord)}</p>
+    </Vstack>
   )
 }
 
