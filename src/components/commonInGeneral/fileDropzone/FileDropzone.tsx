@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
-import { Vstack } from '../layout'
+import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
 import type { FieldValues, UseFormSetValue } from 'react-hook-form'
 import Button from '../button/Button'
+import { X } from 'lucide-react'
 
 type FileRecord = Record<number, File>
 
@@ -61,6 +62,11 @@ const FileDropzone = ({
   const handleClick = () => {
     inputRef.current?.click()
   }
+  const handleDeleteClick = (id: number) => {
+    const copiedFileRecord = { ...fileRecord }
+    delete copiedFileRecord[id]
+    setFileRecord(copiedFileRecord)
+  }
 
   const fileEntryArray = Object.entries(fileRecord)
 
@@ -101,7 +107,10 @@ const FileDropzone = ({
         </Vstack>
       </RoundBox>
       {fileEntryArray.map((entry) => (
-        <RoundBox key={entry[0]}>{entry[1].name}</RoundBox>
+        <Hstack key={entry[0]}>
+          <RoundBox key={entry[0]}>{entry[1].name}</RoundBox>
+          <X onClick={() => handleDeleteClick(Number(entry[0]))} />
+        </Hstack>
       ))}
       <p>{JSON.stringify(fileRecord)}</p>
       <Button onClick={handleDebugClick}>DEBUG</Button>
