@@ -24,7 +24,7 @@ const FileDropzoneUploadedItem = memo(
     const size = Math.round(file.size / 10_000) / 100
 
     return (
-      <RoundBox>
+      <RoundBox onClick={(event) => event.stopPropagation()}>
         <Hstack className="gap-oz-sm items-center">
           <Hstack className="gap-oz-sm grow items-center text-sm">
             <FileText size={14} className="text-gray-400" />
