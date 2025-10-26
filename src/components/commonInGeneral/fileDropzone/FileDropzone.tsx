@@ -22,11 +22,11 @@ const FileDropzone = ({
     setValue('attachments', fileArray)
   }, [fileRecord, setValue])
 
-  let nextFileId: number = 0
   const addFiles = (files: FileList) => {
+    let iteration = 0
     const newRecord: FileRecord = [...files].reduce((acc: FileRecord, file) => {
-      acc[nextFileId] = file
-      nextFileId += 1
+      acc[Date.now() + iteration] = file
+      iteration += 1
       return acc
     }, {})
     setFileRecord({ ...fileRecord, ...newRecord })
