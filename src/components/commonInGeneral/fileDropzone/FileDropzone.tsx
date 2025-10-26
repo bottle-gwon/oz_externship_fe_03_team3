@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
-import { Hstack, Vstack } from '../layout'
+import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
 import type { FieldValues, UseFormSetValue } from 'react-hook-form'
-import Button from '../button/Button'
-import { X } from 'lucide-react'
+import { FileDropzoneContext } from './_FileRecordContext'
+import FileDropzoneUploadedSection from './_FileDropzoneUploadedSection'
 
-type FileRecord = Record<number, File>
+export type FileRecord = Record<number, File>
 
 const FileDropzone = ({
   setValue,
@@ -62,59 +62,43 @@ const FileDropzone = ({
   const handleClick = () => {
     inputRef.current?.click()
   }
-  const handleDeleteClick = (id: number) => {
-    const copiedFileRecord = { ...fileRecord }
-    delete copiedFileRecord[id]
-    setFileRecord(copiedFileRecord)
-  }
-
-  const fileEntryArray = Object.entries(fileRecord)
-
-  const handleDebugClick = () => {
-    console.log({ fileRecord })
-    debugger
-  }
 
   return (
-    <Vstack>
-      <RoundBox
-        color={isDragEntered ? 'primary' : 'mono-bright'}
-        padding="xl"
-        borderStyle="dashed"
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragOver}
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        onClick={handleClick}
-      >
-        <input
-          ref={inputRef}
-          hidden
-          onChange={handleChangeFromClick}
-          type="file"
-          multiple
-        />
-        <Vstack
-          gap="sm"
-          className="pointer-events-none items-center text-gray-500"
-          draggable={false}
+    <FileDropzoneContext.Provider value={{ fileRecord, setFileRecord }}>
+      <Vstack>
+        <RoundBox
+          color={isDragEntered ? 'primary' : 'mono-bright'}
+          padding="xl"
+          borderStyle="dashed"
+          onDragEnter={handleDragEnter}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+          onClick={handleClick}
         >
-          <img src={UploadIcon} />
-          <Vstack gap="none" className="items-center">
-            <h4 className="text-sm">파일을 드래그하거나 클릭하여 업로드</h4>
-            <p className="text-xs">최대 3개 파일, 각 5MB 이하</p>
+          <input
+            ref={inputRef}
+            hidden
+            onChange={handleChangeFromClick}
+            type="file"
+            multiple
+          />
+          <Vstack
+            gap="sm"
+            className="pointer-events-none items-center text-gray-500"
+            draggable={false}
+          >
+            <img src={UploadIcon} />
+            <Vstack gap="none" className="items-center">
+              <h4 className="text-sm">파일을 드래그하거나 클릭하여 업로드</h4>
+              <p className="text-xs">최대 3개 파일, 각 5MB 이하</p>
+            </Vstack>
           </Vstack>
-        </Vstack>
-      </RoundBox>
-      {fileEntryArray.map((entry) => (
-        <Hstack key={entry[0]}>
-          <RoundBox key={entry[0]}>{entry[1].name}</RoundBox>
-          <X onClick={() => handleDeleteClick(Number(entry[0]))} />
-        </Hstack>
-      ))}
-      <p>{JSON.stringify(fileRecord)}</p>
-      <Button onClick={handleDebugClick}>DEBUG</Button>
-    </Vstack>
+        </RoundBox>
+
+        <FileDropzoneUploadedSection />
+      </Vstack>
+    </FileDropzoneContext.Provider>
   )
 }
 
