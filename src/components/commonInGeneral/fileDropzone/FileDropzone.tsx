@@ -3,6 +3,7 @@ import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
 import type { FieldValues, UseFormSetValue } from 'react-hook-form'
+import Button from '../button/Button'
 
 type FileRecord = Record<number, File>
 
@@ -61,6 +62,13 @@ const FileDropzone = ({
     inputRef.current?.click()
   }
 
+  const fileEntryArray = Object.entries(fileRecord)
+
+  const handleDebugClick = () => {
+    console.log({ fileRecord })
+    debugger
+  }
+
   return (
     <Vstack>
       <RoundBox
@@ -92,7 +100,11 @@ const FileDropzone = ({
           </Vstack>
         </Vstack>
       </RoundBox>
+      {fileEntryArray.map((entry) => (
+        <RoundBox key={entry[0]}>{entry[1].name}</RoundBox>
+      ))}
       <p>{JSON.stringify(fileRecord)}</p>
+      <Button onClick={handleDebugClick}>DEBUG</Button>
     </Vstack>
   )
 }
