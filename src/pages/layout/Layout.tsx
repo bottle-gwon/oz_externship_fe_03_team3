@@ -9,6 +9,7 @@ import { useRef } from 'react'
 import useStudyHubStore from '@/store/store'
 import ChatList from '@/components/chat/ChatList'
 import ChattingRoom from '@/components/chat/ChattingRoom'
+import ChatWidget from '@/components/chat/ChatWidget'
 
 // Todo 현재는 안읽은 메시지를 더미값으로 전달 하고 있지만 추후에 zustand 활용해서 안읽은 메시지값을 전달할것
 const Layout = () => {
@@ -57,8 +58,7 @@ const Layout = () => {
       </FloatingButtonContainer>
 
       {/* 채팅 */}
-      {chatState.status === 'chatList' ? <ChatList /> : null}
-      {chatState.status === 'chatRoom' ? <ChattingRoom /> : null}
+      <ChatWidget />
     </FullScreen>
   )
 }
