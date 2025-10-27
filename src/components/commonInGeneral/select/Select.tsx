@@ -7,7 +7,7 @@ import SelectContent from './_SelectContent'
 import SelectOption from './_SelectOption'
 
 interface WithSelectProps {
-  onOptionSelect: (option: string) => void
+  onOptionSelect: (option: string | number) => void
 }
 
 const Select = ({
@@ -17,7 +17,9 @@ const Select = ({
   ...props
 }: DivProps & WithSelectProps) => {
   const [isOpened, setIsOpened] = useState<boolean>(false)
-  const [selectedOption, setSelectedOption] = useState<string | null>(null)
+  const [selectedOption, setSelectedOption] = useState<string | number | null>(
+    null
+  )
   const [selectedIcon, setSelectedIcon] = useState<JSX.Element | null>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
 

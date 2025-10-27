@@ -6,9 +6,11 @@ import Text from '../text/Text'
 
 const SelectOption = ({
   icon,
+  value,
   children,
 }: {
   icon?: JSX.Element
+  value?: string | number
   children: string
 }) => {
   const { onOptionSelect, setIsOpened, setSelectedOption, setSelectedIcon } =
@@ -18,7 +20,7 @@ const SelectOption = ({
     setSelectedIcon(icon ?? null)
 
     setIsOpened(false)
-    setSelectedOption(children)
+    setSelectedOption(value || children)
 
     onOptionSelect(children)
   }

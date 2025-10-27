@@ -1,4 +1,4 @@
-import { useEffect, useRef, type ReactNode } from 'react'
+import { useCallback, useEffect, useRef, type ReactNode } from 'react'
 import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import useSelectContext from './_useSelectContext'
@@ -8,19 +8,22 @@ const SelectContent = ({ children }: { children: ReactNode }) => {
 
   const contentRef = useRef<HTMLDivElement>(null)
 
-  const handleClick = (event: MouseEvent) => {
-    if (!contentRef.current) {
-      return
-    }
-    if (
-      contentRef.current.contains(event.target as Node) ||
-      triggerRef.current?.contains(event.target as Node)
-    ) {
-      return
-    }
+  const handleClick = useCallback(
+    (event: MouseEvent) => {
+      if (!contentRef.current) {
+        return
+      }
+      if (
+        contentRef.current.contains(event.target as Node) ||
+        triggerRef.current?.contains(event.target as Node)
+      ) {
+        return
+      }
 
-    setIsOpened(false)
-  }
+      setIsOpened(false)
+    },
+    [setIsOpened, triggerRef]
+  )
 
   useEffect(() => {
     if (!isOpened) {
@@ -29,7 +32,7 @@ const SelectContent = ({ children }: { children: ReactNode }) => {
 
     window.addEventListener('click', handleClick)
     return () => window.removeEventListener('click', handleClick)
-  }, [isOpened])
+  }, [isOpened, handleClick])
 
   if (!isOpened) {
     return null

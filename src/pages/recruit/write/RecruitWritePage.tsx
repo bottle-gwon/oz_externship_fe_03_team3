@@ -10,12 +10,14 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Plus, Send } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import TagIcon from '@/assets/tag.svg'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
 import { useForm, type FieldValues } from 'react-hook-form'
+import useStudyHubStore from '@/store/store'
+import dummyGetStudyGroupsResponse from './dummyGetStudyGroupsResponse'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -33,10 +35,25 @@ const RecruitWritePage = () => {
   // TODO: 나중에 이미지 업로드와 연동해야
   const [dummyImageCount, _setDummyImageCount] = useState(0)
   const [dummyTagCount, _setDummyTagCount] = useState(0)
+  const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
+  const setStudyGroupArray = useStudyHubStore(
+    (state) => state.setStudyGroupArray
+  )
 
-  const { handleSubmit, setValue } = useForm()
+  const { handleSubmit, setValue, register } = useForm()
 
-  const onSubmit = (_data: FieldValues) => {
+  // TODO: api 연결할 땐 useQuery로 교체해야
+  useEffect(() => {
+    const dummyResponse = dummyGetStudyGroupsResponse
+    const array = dummyResponse.data.study_groups
+    setStudyGroupArray(array)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const onSubmit = (data: FieldValues) => {
+    console.log({ data })
+    debugger
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
   }
@@ -53,19 +70,21 @@ const RecruitWritePage = () => {
             <H2>기본 정보</H2>
             <Labeled isRequired>
               <Labeled.Header>공고 제목</Labeled.Header>
-              <Labeled.Input />
+              <Labeled.Input {...register('title')} />
               <Labeled.Footer></Labeled.Footer>
             </Labeled>
             <Labeled isRequired>
               <Labeled.Header>대상 스터디 그룹</Labeled.Header>
-              <Select onOptionSelect={() => null}>
+              <Select
+                onOptionSelect={(option) => setValue('study_group_id', option)}
+              >
                 <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
                 <Select.Content>
-                  <Select.Option>점프 투 파이썬</Select.Option>
-                  <Select.Option>자료구조와 C</Select.Option>
-                  <Select.Option>파이썬으로 크롤러 만들기</Select.Option>
-                  <Select.Option>UI와UX 알아보기</Select.Option>
-                  <Select.Option>모던 자바스크립트</Select.Option>
+                  {studyGroupArray.map((studyGroup) => (
+                    <Select.Option key={studyGroup.id} value={studyGroup.id}>
+                      {studyGroup.name}
+                    </Select.Option>
+                  ))}
                 </Select.Content>
               </Select>
               <Labeled.Footer></Labeled.Footer>
@@ -74,18 +93,25 @@ const RecruitWritePage = () => {
             <GridContainer>
               <Labeled isRequired>
                 <Labeled.Header>공고 마감 기한</Labeled.Header>
-                <Labeled.Input type="date" />
+                <Labeled.Input {...register('due-date')} type="date" />
                 <Labeled.Footer></Labeled.Footer>
               </Labeled>
               <Labeled isRequired>
                 <Labeled.Header>예상 모집 인원</Labeled.Header>
-                <Select onOptionSelect={() => null}>
+                <Select
+                  onOptionSelect={(option) =>
+                    setValue('expected_personnel', option)
+                  }
+                >
                   <Select.Trigger>예상 모집 인원을 선택하세요</Select.Trigger>
                   <Select.Content>
-                    <Select.Option>1명</Select.Option>
-                    <Select.Option>2명</Select.Option>
-                    <Select.Option>3명</Select.Option>
-                    <Select.Option>에이 모르겠다</Select.Option>
+                    {Array(10)
+                      .fill(0)
+                      .map((_, index) => (
+                        <Select.Option
+                          key={index}
+                        >{`${index + 1}명`}</Select.Option>
+                      ))}
                   </Select.Content>
                 </Select>
               </Labeled>
