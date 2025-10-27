@@ -45,3 +45,10 @@
   padding-left: 12px !important;
   padding-right: 12px !important;
 }
+
+.w-md-editor {
+  border-radius: 0 !important;
+}
+.w-md-editor-text {
+  height: 100% !important;
+}

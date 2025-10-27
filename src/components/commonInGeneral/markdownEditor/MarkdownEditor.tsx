@@ -1,6 +1,6 @@
 import './markdown.css'
 import MDEditor from '@uiw/react-md-editor'
-import { Vstack } from '../layout'
+import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import { useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
@@ -53,10 +53,14 @@ const MarkdownEditor = () => {
               },
             }}
           />
-          <div className="bg-gray-50">
-            <div>마크다운 문법을 사용할 수 있습니다.</div>
-            <div>예아 베이비</div>
-          </div>
+          <Hstack className="gap-oz-xs px-oz-lg py-oz-sm bg-gray-50 text-xs text-gray-600">
+            <p>마크다운 문법을 사용할 수 있습니다.</p>
+            <p>**굵게**</p>
+            <p>*기울일*</p>
+            <p>`코드`</p>
+            <p>[링크](URL)</p>
+            <p>## 제목</p>
+          </Hstack>
         </Vstack>
       </RoundBox>
     </>
