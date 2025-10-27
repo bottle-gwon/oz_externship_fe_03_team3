@@ -11,11 +11,11 @@ const ChatIcon = (isOff: boolean) => {
 }
 
 const ChatFloatingButton = () => {
-  const badgeTest = 12 // 안 읽은 메시지
   const chatState = useStudyHubStore((state) => state.chatState)
   const openChatList = useStudyHubStore((state) => state.openChatList)
   const closeChatUI = useStudyHubStore((state) => state.closeChatUI)
   const accessToken = useStudyHubStore((state) => state.accessToken)
+  const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
 
   const isOff = chatState.status === 'off'
 
@@ -27,7 +27,8 @@ const ChatFloatingButton = () => {
     }
   }
 
-  const badgeNumber = isOff ? badgeTest : null
+  // 채팅방이 꺼져 있고 안읽은 메시지가 1이상일때만출력
+  const badgeNumber = isOff && unreadCounter >= 1 ? unreadCounter : null
 
   if (!accessToken) {
     return null
