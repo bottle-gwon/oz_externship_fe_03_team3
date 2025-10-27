@@ -43,7 +43,8 @@ const FloatingButton = ({
         {(badge || badge === 0) && (
           <Hstack
             gap="none"
-            className="bg-danger-500 absolute top-[-8px] right-[-8px] h-6 items-center rounded-full p-2 text-xs"
+            padding="none"
+            className="bg-danger-500 absolute top-[-8px] right-[-8px] h-6 min-w-6 items-center justify-center rounded-full p-2 text-xs"
           >
             <span className="font-semibold">{badge}</span>
           </Hstack>
