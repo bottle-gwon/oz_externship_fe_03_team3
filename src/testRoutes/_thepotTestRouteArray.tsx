@@ -15,10 +15,12 @@ const ThePottRoundBoxPage = lazy(
 const ThepottTestPage = lazy(
   () => import('./testPages/thepott/ThepottTestPage')
 )
+const ThePottMarkdownPage = lazy(
+  () => import('./testPages/thepott/ThePottMarkdownPage')
+)
 const ThePottFileDropzonePage = lazy(
   () => import('./testPages/thepott/ThePottFileDropzonePage')
 )
-
 const ThePottSkeletonPage = lazy(
   () => import('./testPages/thepott/ThePottSkeletonPage')
 )
@@ -29,6 +31,7 @@ const thepottTestRouteArray = [
   { path: '/test/thepott/roundbox', element: <ThePottRoundBoxPage /> },
   { path: 'test/thepott/modal', element: <ThePottModalPage /> },
   { path: '/test/thepott/input-family', element: <ThePottInputFamilyPage /> },
+  { path: '/test/thepott/markdown', element: <ThePottMarkdownPage /> },
   { path: '/test/thepott/skeleton', element: <ThePottSkeletonPage /> },
   { path: '/test/thepott/file-dropzone', element: <ThePottFileDropzonePage /> },
 ]

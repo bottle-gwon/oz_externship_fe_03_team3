@@ -13,6 +13,7 @@ import { Plus, Send } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import TagIcon from '@/assets/tag.svg'
 import Divider from '@/components/commonInGeneral/divider/Divider'
+import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
 import { useForm, type FieldValues } from 'react-hook-form'
 
@@ -95,13 +96,13 @@ const RecruitWritePage = () => {
             <H2>공고 내용</H2>
             <Labeled isRequired>
               <Labeled.Header>스터디 그룹 소개</Labeled.Header>
-              <Hstack className="justify-between text-xs">
+              <Hstack className="justify-between text-xs text-gray-500">
                 <p>마크다운 문법을 사용할 수 있습니다</p>
                 <p>이미지 {dummyImageCount}/5개</p>
               </Hstack>
-              <RoundBox className="h-[284px]" color="mono-dim">
-                마크다운 에디터 라이브러리를 설치 후 채울 영역입니다
-              </RoundBox>
+
+              <MarkdownEditor />
+
               <Labeled.Footer>
                 • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
               </Labeled.Footer>
