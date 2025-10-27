@@ -7,6 +7,7 @@ import ModalBody from './_ModalBody'
 import ModalFooter from './_ModalFooter'
 import ModalHeader from './_ModdalHeader'
 import { useEffect } from 'react'
+import { Vstack } from '../layout'
 
 interface WithModalProps {
   isOn: boolean
@@ -51,9 +52,9 @@ const Modal = ({
           style={{ ...style, zIndex: zIndex + 1 }}
           isBordered={false}
           padding="none"
-          className={`${className} ${widthResult}`}
+          className={`${className} ${widthResult} max-h-screen overflow-hidden`}
         >
-          {children}
+          <Vstack className="h-full gap-0">{children}</Vstack>
         </RoundBox>
       </FullScreen>
     </ModalContext.Provider>

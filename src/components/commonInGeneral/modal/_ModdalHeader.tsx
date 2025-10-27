@@ -8,7 +8,7 @@ const ModalHeader = ({ ...props }: DivProps) => {
   const { className, children, ...rest } = props
   const { onClose } = useModalContext()
   return (
-    <ModalBody {...rest} className={`${className} grow`}>
+    <ModalBody {...rest} className={`${className}`}>
       <Hstack className="items-center justify-between">
         {children}
         <X onClick={onClose} />

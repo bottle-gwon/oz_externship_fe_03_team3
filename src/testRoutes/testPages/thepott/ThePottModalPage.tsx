@@ -12,7 +12,11 @@ const ThePottModalPage = () => {
     <>
       <Modal isOn={isOn} onClose={() => setIsOn(false)}>
         <Modal.Header>이게 헤더</Modal.Header>
-        <Modal.Body>이게 바디</Modal.Body>
+        <Modal.Body className="overflow-x-hidden overflow-y-scroll">
+          {longIndexArray.map((index) => (
+            <Text key={index}>가나다라</Text>
+          ))}
+        </Modal.Body>
         <Modal.Footer>이게 푸터</Modal.Footer>
       </Modal>
       <Vstack padding="xxl">
