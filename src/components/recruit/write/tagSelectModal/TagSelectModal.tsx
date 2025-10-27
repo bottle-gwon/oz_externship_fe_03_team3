@@ -40,6 +40,7 @@ const TagSelectModal = ({
   const [current, setCurrent] = useState(1) // 현재 페이지
   const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
   const [selectTagArray, setSelectTagArray] = useState(tagArray)
+  const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
 
   // 삭제 반영
   useEffect(() => {
@@ -126,6 +127,7 @@ const TagSelectModal = ({
           onSelectTag={onClickTag}
           selectArray={selectTagArray}
           keyword={searchKeyword}
+          isLoading={isPending}
         />
       </Modal.Body>
       <Modal.Footer>
