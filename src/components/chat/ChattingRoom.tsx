@@ -78,6 +78,10 @@ const ChattingRoom = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
   const openChatList = useStudyHubStore((state) => state.openChatList)
 
+  if (chatState.status !== 'chatRoom') {
+    return
+  }
+
   return (
     <ChattingLayout>
       {/* 헤더 */}
@@ -89,14 +93,10 @@ const ChattingRoom = () => {
             onClick={openChatList}
           />
           <Vstack gap="none">
-            {chatState.status === 'chatRoom' ? (
-              <>
-                <p className="text-base font-semibold text-gray-900">
-                  {chatState.status === 'chatRoom' ? chatState.title : ''}
-                </p>
-                <p className="text-xs text-gray-600">{`0명 온라인`}</p>
-              </>
-            ) : null}
+            <p className="text-base font-semibold text-gray-900">
+              {chatState.title}
+            </p>
+            <p className="text-xs text-gray-600">{`0명 온라인`}</p>
           </Vstack>
         </Hstack>
       </ChattingLayout.Header>

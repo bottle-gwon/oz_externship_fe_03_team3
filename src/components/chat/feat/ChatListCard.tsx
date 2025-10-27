@@ -27,6 +27,10 @@ const ChatListCard = ({ room }: ChatListCardInterface) => {
     openChatList(room.study_group_id, room.title)
   }
 
+  const roomContent = room.content
+    ? `${room.sender_nickname}: ${room.content}`
+    : '(대화가 없습니다. 대화를 시작해보세요)'
+
   return (
     <Vstack
       gap="none"
@@ -37,17 +41,15 @@ const ChatListCard = ({ room }: ChatListCardInterface) => {
         <p className="text-sm text-gray-900">{room.title}</p>
         <Hstack>
           <p className="text-xs text-gray-500">{`${month}월 ${day}일`}</p>
-          <p className="bg-danger-500 h-[20px] min-w-[20px] rounded-full px-[6px] py-[2px] text-center text-xs text-white">
-            {room.new_message >= 1 ? room.new_message : null}
-          </p>
+          {room.new_message >= 1 && (
+            <p className="bg-danger-500 h-[20px] min-w-[20px] rounded-full px-[6px] py-[2px] text-center text-xs text-white">
+              {room.new_message}
+            </p>
+          )}
         </Hstack>
       </Hstack>
       <Hstack>
-        <p className="text-xs text-gray-600">
-          {room.content
-            ? `${room.sender_nickname}: ${room.content}`
-            : '(대화가 없습니다. 대화를 시작해보세요)'}
-        </p>
+        <p className="text-xs text-gray-600">{roomContent}</p>
       </Hstack>
     </Vstack>
   )

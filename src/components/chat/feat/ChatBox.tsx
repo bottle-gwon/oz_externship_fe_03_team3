@@ -34,9 +34,9 @@ const ChatBox = ({ chat }: ChatBoxInterface) => {
 
   return (
     <Vstack gap="xs" className={`w-full ${boxStyle.align}`}>
-      {chat.sender_id !== USER_ID ? (
+      {chat.sender_id !== USER_ID && (
         <span className="text-xs text-gray-600">{chat.sender_nickname}</span>
-      ) : null}
+      )}
       <RoundBox
         padding="sm"
         radius="lg"
