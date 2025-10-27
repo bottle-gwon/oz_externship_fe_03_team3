@@ -1,6 +1,7 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import type { Color } from '@/types'
 import type { ReactEventHandler, ReactNode } from 'react'
+import IconBadge from './Badge'
 
 export interface FloatingIconProps {
   children: ReactNode
@@ -23,7 +24,6 @@ const themeResult = (theme: Color) => {
       return 'bg-primary-500 text-white hover:bg-primary-600 active:bg-primary-700'
   }
 }
-
 const FloatingButton = ({
   children,
   theme = 'mono',
@@ -31,6 +31,8 @@ const FloatingButton = ({
   onClick,
 }: FloatingIconProps) => {
   const themeColor = themeResult(theme)
+  const badgeValid = !!(badge || badge === 0)
+
   return (
     <div className="relative h-16 w-16">
       <button
@@ -40,15 +42,7 @@ const FloatingButton = ({
         <Hstack className="items-center justify-center">{children}</Hstack>
 
         {/* 배지 존재 하면 출력 */}
-        {(badge || badge === 0) && (
-          <Hstack
-            gap="none"
-            padding="none"
-            className="bg-danger-500 absolute top-[-8px] right-[-8px] h-6 min-w-6 items-center justify-center rounded-full p-2 text-xs"
-          >
-            <span className="font-semibold">{badge}</span>
-          </Hstack>
-        )}
+        <IconBadge isValid={badgeValid} badgeValue={badge} />
       </button>
     </div>
   )
