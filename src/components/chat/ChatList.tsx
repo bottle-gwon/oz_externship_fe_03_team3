@@ -42,7 +42,7 @@ const DUMMY_CHATLIST = {
         sender_id: 5,
         sender_nickname: '홍길동',
         content: null,
-        new_message: 1,
+        new_message: 0,
         created_at: '2025-10-15T10:30:00Z',
       },
       {
@@ -51,7 +51,7 @@ const DUMMY_CHATLIST = {
         sender_id: 5,
         sender_nickname: '홍길동',
         content: null,
-        new_message: 1,
+        new_message: 0,
         created_at: '2025-10-15T10:30:00Z',
       },
       {
