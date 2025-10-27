@@ -20,6 +20,7 @@ const Select = ({
   const [selectedOption, setSelectedOption] = useState<string | number | null>(
     null
   )
+  // const [selectedV]
   const [selectedIcon, setSelectedIcon] = useState<JSX.Element | null>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
 
