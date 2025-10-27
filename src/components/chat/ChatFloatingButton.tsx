@@ -16,6 +16,7 @@ const ChatFloatingButton = () => {
   const closeChatUI = useStudyHubStore((state) => state.closeChatUI)
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
+  // const setUnreadCounter = useStudyHubStore((state) => state.setUnReadCounter) //안읽은 메시지 카운터
 
   const isOff = chatState.status === 'off'
 
