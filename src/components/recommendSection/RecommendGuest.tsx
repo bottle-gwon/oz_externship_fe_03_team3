@@ -58,10 +58,7 @@ const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
             <p className="text-center text-sm text-gray-500">
               로그인 후 이런 맞춤 추천을 받을 수 있어요
             </p>
-            <GridContainer
-              gap="lg"
-              className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
-            >
+            <GridContainer gap="lg">
               {[1, 2, 3].map((i) => (
                 <RecommendPreviewCard key={i} />
               ))}

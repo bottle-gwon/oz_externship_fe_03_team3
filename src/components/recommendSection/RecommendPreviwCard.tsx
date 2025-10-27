@@ -19,7 +19,7 @@ const RecommendPreviewCard = () => {
         </Vstack>
       </Hstack>
       <Vstack gap="sm">
-        <div className="h-3 w-80 rounded-sm bg-gray-100/90"></div>
+        <div className="h-3 w-full rounded-sm bg-gray-100/90"></div>
         <div className="h-3 w-56 rounded-sm bg-gray-100/90"></div>
       </Vstack>
       <Hstack gap="xs">

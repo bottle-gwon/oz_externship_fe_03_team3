@@ -23,7 +23,7 @@ const SubHeader = ({
       {isBackButtonVisible && (
         <button
           onClick={handleBack}
-          className="mr-oz-lg flex h-10 w-10 items-center justify-center rounded-[50%] bg-gray-100 py-2 hover:bg-gray-200"
+          className="flex h-10 w-10 items-center justify-center rounded-[50%] bg-gray-100 py-2 hover:bg-gray-200"
         >
           <ArrowLeft size={17} className="text-gray-600" />
         </button>
