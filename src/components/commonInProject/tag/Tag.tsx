@@ -3,15 +3,15 @@ import type { Color, DivProps } from '@/types'
 const makeBgResult = (color: Color, isVivid: boolean) => {
   switch (color) {
     case 'mono':
-      return 'bg-gray-50'
+      return 'bg-gray-100'
     case 'primary':
-      return isVivid ? 'bg-primary-500' : 'bg-primary-50'
+      return isVivid ? 'bg-primary-500' : 'bg-primary-100'
     case 'danger':
-      return isVivid ? 'bg-danger-500' : 'bg-danger-50'
+      return isVivid ? 'bg-danger-500' : 'bg-danger-tag'
     case 'success':
-      return isVivid ? 'bg-success-500' : 'bg-success-50'
+      return isVivid ? 'bg-success-500' : 'bg-success-100'
     case 'blue':
-      return isVivid ? 'bg-blue-500' : 'bg-blue-50'
+      return isVivid ? 'bg-blue-500' : 'bg-blue-100'
   }
 }
 

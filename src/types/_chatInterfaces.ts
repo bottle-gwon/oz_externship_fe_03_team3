@@ -1,4 +1,4 @@
-export interface messageList {
+export interface MessageList {
   id: number
   sender_id: number
   sender_nickname: string

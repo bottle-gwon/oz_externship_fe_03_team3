@@ -8,7 +8,12 @@ import { Calendar } from 'lucide-react'
 import Tag from '@/components/commonInProject/tag/Tag'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 
-const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
+interface ApplicantCardProps {
+  applicant: Applicant
+  onClick: () => void
+}
+
+const ApplicantCard = ({ applicant, onClick }: ApplicantCardProps) => {
   const statusStyle = statusStyles[applicant.status]
   const experienceStyle =
     experienceStyles[String(applicant.has_study_experience) as 'true' | 'false']
@@ -17,18 +22,17 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
     <Vstack
       gap="lg"
       padding="lg"
-      className="h-[204px] w-[416px] rounded-lg bg-[#F9FAFB]"
+      className="cursor-pointer rounded-lg bg-gray-50"
+      onClick={onClick}
     >
-      <Hstack gap="lg" className="h-[64px] w-[384px]">
+      <Hstack gap="lg">
         <Hstack className="items-center">
           <ProfileImage url={applicant.application.profile_image} size="lg" />
         </Hstack>
-        <Hstack gap="none" className="h-11 w-80 justify-between">
+        <Hstack gap="none" className="w-full justify-between">
           <Vstack gap="none">
-            <h3 className="leading-6 font-medium text-[#111827]">
-              {applicant.application.nickname}
-            </h3>
-            <p className="text-sm leading-5 text-[#4B5563]">
+            <h3 className="font-medium">{applicant.application.nickname}</h3>
+            <p className="text-sm text-gray-600">
               {applicant.application.gender}
             </p>
           </Vstack>
@@ -37,21 +41,17 @@ const ApplicantCard = ({ applicant }: { applicant: Applicant }) => {
           </Tag>
         </Hstack>
       </Hstack>
-      <Vstack gap="md" className="pl-16 text-sm leading-5 text-[#4B5563]">
+      <Vstack gap="md" className="pl-16 text-sm text-gray-600">
         <Hstack gap="sm" className="items-center">
-          <Calendar size={14} className="text-[#8A929F]" />
+          <Calendar size={14} className="text-gray-400" />
           지원일시: {applicant.created_at}
         </Hstack>
         <Vstack gap="none">
-          <p className="text-xs leading-4 font-medium text-[#374151]">
-            가능한 시간대
-          </p>
+          <p className="text-xs font-medium text-gray-700">가능한 시간대</p>
           <p>{applicant.available_time}</p>
         </Vstack>
         <Hstack gap="sm" className="items-center">
-          <div className="text-xs leading-4 font-medium text-[#374151]">
-            스터디 경험:
-          </div>
+          <div className="text-xs font-medium text-gray-700">스터디 경험:</div>
           <Tag color={experienceStyle.style}>{experienceStyle.content}</Tag>
         </Hstack>
       </Vstack>

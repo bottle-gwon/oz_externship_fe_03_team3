@@ -45,6 +45,8 @@ const useStudyHubStore = create<StudyHubState>()(
       openChatRoom: (id, title) =>
         set({ chatState: { status: 'chatRoom', id, title } }),
       closeChatUI: () => set({ chatState: { status: 'off' } }),
+      unReadCounter: 0,
+      setUnReadCounter: (newCount) => set({ unReadCounter: newCount }),
 
       // notification
     }),

@@ -54,6 +54,7 @@
 
   /* Danger (위험/에러) */
   --color-danger-50: #fef2f2;
+  --color-danger-tag: #fee2e2;
   --color-danger-border: #fecaca;
   --color-danger-100: #fca5a5;
   --color-danger-500: #ef4444;

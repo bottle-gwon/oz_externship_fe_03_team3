@@ -1,6 +1,6 @@
 .skeleton {
-  --skeleton-vivid: oklch(0 0 0 / 0.05), oklch(1 0 0 / 0.05);
-  --skeleton-muted: oklch(0 0 0 / 0.03), oklch(1 0 0 / 0.03);
+  --skeleton-vivid: oklch(0 0 0 / 0.05);
+  --skeleton-muted: oklch(0 0 0 / 0.03);
 
   background: linear-gradient(
     90deg,
@@ -11,6 +11,9 @@
   background-size: 200% 100%;
   animation: loading 3s infinite;
   border-radius: 6px;
+
+  width: var(--width);
+  height: var(--height);
 }
 
 @keyframes loading {
