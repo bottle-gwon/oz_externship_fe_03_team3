@@ -12,6 +12,7 @@ import type { Recruit } from '@/types'
 import Tag from '@/components/commonInProject/tag/Tag'
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
+import { useNavigate } from 'react-router'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -35,6 +36,9 @@ const RecruitCard = ({
   cardClassName = '',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
+  const navigate = useNavigate()
+  const handleClick = (url: string) => navigate(url)
+
   return (
     <RoundBox className={`outBox ${cardClassName}`}>
       <Hstack padding="xs">
@@ -87,12 +91,14 @@ const RecruitCard = ({
                   <button
                     aria-label="수정"
                     className="text-gray-500 hover:text-blue-600"
+                    onClick={() => handleClick('/recruit/create')}
                   >
                     <Pencil className="size-3.5" />
                   </button>
                   <button
                     aria-label="삭제"
                     className="text-gray-500 hover:text-red-600"
+                    onClick={() => null}
                   >
                     <Trash2 className="size-3.5" />
                   </button>
@@ -157,7 +163,11 @@ const RecruitCard = ({
             </Hstack>
             {isMine && (
               <Hstack gap="none" padding="none" className="self-center">
-                <Button color="blue" className="gap-2 px-6 py-2 text-xs">
+                <Button
+                  color="blue"
+                  className="gap-2 px-6 py-2 text-xs"
+                  onClick={() => handleClick('/recruit/manage')}
+                >
                   <FileText className="size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
                   <span>지원내역</span>
