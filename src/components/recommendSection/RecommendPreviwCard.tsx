@@ -1,28 +1,32 @@
 import CircleStar from '../../assets/circle-star.svg'
+import { Hstack, Vstack } from '../commonInGeneral/layout'
 
 const RecommendPreviewCard = () => {
   return (
-    <div className="relative h-[142px] w-[372px] gap-2 rounded-lg border border-[#E5E7EB] bg-white p-4">
+    <Vstack
+      padding="lg"
+      className="relative h-[142px] w-full rounded-lg border border-gray-200/70 bg-white/50"
+    >
       <div className="absolute -top-1 -right-1">
         <img src={CircleStar} />
       </div>
 
-      <div className="mb-3 flex">
-        <div className="mr-3 h-8 w-12 rounded-sm bg-[#F3F4F6]"></div>
-        <div className="flex flex-col">
-          <div className="mb-1 h-4 w-52 rounded-sm bg-[#F3F4F6]"></div>
-          <div className="h-3 w-36 rounded-sm bg-[#F3F4F6]"></div>
-        </div>
-      </div>
-      <div className="flex flex-col">
-        <div className="h-3 w-80 rounded-sm bg-[#F3F4F6]"></div>
-        <div className="mt-2 h-3 w-56 rounded-sm bg-[#F3F4F6]"></div>
-      </div>
-      <div className="mt-3 flex gap-1">
-        <div className="h-5 w-12 rounded-sm bg-[#FEF9C3]"></div>
-        <div className="h-5 w-16 rounded-sm bg-[#FEF9C3]"></div>
-      </div>
-    </div>
+      <Hstack gap="md">
+        <div className="h-8 w-12 rounded-sm bg-gray-100/90"></div>
+        <Vstack gap="xs">
+          <div className="h-4 w-52 rounded-sm bg-gray-100/90"></div>
+          <div className="h-3 w-36 rounded-sm bg-gray-100/90"></div>
+        </Vstack>
+      </Hstack>
+      <Vstack gap="sm">
+        <div className="h-3 w-80 rounded-sm bg-gray-100/90"></div>
+        <div className="h-3 w-56 rounded-sm bg-gray-100/90"></div>
+      </Vstack>
+      <Hstack gap="xs">
+        <div className="bg-primary-100/60 h-5 w-12 rounded-sm"></div>
+        <div className="bg-primary-100/60 h-5 w-16 rounded-sm"></div>
+      </Hstack>
+    </Vstack>
   )
 }
 

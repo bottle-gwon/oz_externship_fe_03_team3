@@ -32,9 +32,9 @@ const RecommendUser = <T extends RecommendPageType>({
         className="bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)]"
       >
         <Vstack gap="none">
-          <Hstack gap="xxl" className="mb-6 items-center">
-            <h3 className="text-2xl font-semibold text-[#3E454C]">
-              <span className="text-[#CA8A04]">{userName}</span>
+          <Hstack gap="xxl" className="mb-oz-xl items-center">
+            <h3 className="text-2xl font-semibold text-gray-600">
+              <span className="text-primary-600">{userName}</span>
               {title}
             </h3>
             <Tag color="danger" isVivid>

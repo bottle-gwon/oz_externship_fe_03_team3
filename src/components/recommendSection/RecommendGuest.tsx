@@ -7,6 +7,7 @@ import type { RecommendPageType } from '@/types'
 import Container from '../commonInGeneral/layout/_Container'
 import Button from '../commonInGeneral/button/Button'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
+import { GridContainer } from '../commonInGeneral/layout'
 
 const emptyStateContent = {
   recruit: {
@@ -33,11 +34,14 @@ const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
         className="bg-[linear-gradient(to_right,#FEFCE8,#FFF7ED)]"
       >
         <Vstack gap="none" className="items-center">
-          <img src={UserStar} className="h-6 w-6" />
-          <h3 className="mb-3 text-2xl leading-8 font-semibold text-[#111827]">
-            {content.title}
-          </h3>
-          <p className="mb-6 w-md text-center text-base leading-6 font-normal text-[#4B5563]">
+          <Vstack
+            gap="none"
+            className="bg-primary-100 mb-oz-lg size-16 items-center justify-center rounded-[50%]"
+          >
+            <img src={UserStar} className="size-6" />
+          </Vstack>
+          <h3 className="mb-oz-md text-2xl font-semibold">{content.title}</h3>
+          <p className="mb-oz-xl max-w-md text-center text-base font-normal text-gray-600">
             {content.description}
           </p>
           <Hstack gap="lg">
@@ -50,15 +54,18 @@ const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
               회원가입하기
             </Button>
           </Hstack>
-          <Vstack gap="lg" className="mt-8">
-            <p className="text-center text-sm text-[#6B7280]">
+          <Vstack gap="lg" className="mt-oz-xxl">
+            <p className="text-center text-sm text-gray-500">
               로그인 후 이런 맞춤 추천을 받을 수 있어요
             </p>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            <GridContainer
+              gap="lg"
+              className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
+            >
               {[1, 2, 3].map((i) => (
                 <RecommendPreviewCard key={i} />
               ))}
-            </div>
+            </GridContainer>
           </Vstack>
         </Vstack>
       </RoundBox>

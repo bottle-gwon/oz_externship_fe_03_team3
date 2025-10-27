@@ -18,14 +18,14 @@ const SubHeader = ({
   return (
     <Hstack
       gap="lg"
-      className="h-[100px] w-[1216px] items-center justify-between pb-8"
+      className="pb-oz-xxl h-[100px] w-full max-w-[1216px] items-center justify-between"
     >
       {isBackButtonVisible && (
         <button
           onClick={handleBack}
-          className="mr-4 flex h-10 w-10 items-center justify-center rounded-[50%] bg-[#F3F4F6] py-2 hover:bg-[#E5E7EB]"
+          className="mr-oz-lg flex h-10 w-10 items-center justify-center rounded-[50%] bg-gray-100 py-2 hover:bg-gray-200"
         >
-          <ArrowLeft size={17} className="text-[#3B4350]" />
+          <ArrowLeft size={17} className="text-gray-600" />
         </button>
       )}
       {children}

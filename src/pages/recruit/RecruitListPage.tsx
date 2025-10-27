@@ -19,7 +19,7 @@ const RecruitListPage = () => {
   const isLoggedIn = true //로그인 여부 추후에 변경
 
   return (
-    <Container className="py-oz-xxl flex flex-col items-center bg-[#F9FAFB]">
+    <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
       <SubHeader isBackButtonVisible={false}>
         <SubHeaderTitleSection>
           <SubHeader.Title>스터디 구인 공고</SubHeader.Title>
@@ -28,7 +28,7 @@ const RecruitListPage = () => {
           </SubHeader.Subtitle>
         </SubHeaderTitleSection>
         <SubHeaderButtonSection>
-          {isLoggedIn ? (
+          {isLoggedIn && (
             <>
               <Button
                 color="primary"
@@ -48,14 +48,15 @@ const RecruitListPage = () => {
                 + 공고 작성하기
               </Button>
             </>
-          ) : (
+          )}
+          {!isLoggedIn && (
             <Button
               color="primary"
               variant="contained"
               size="lg"
               onClick={() => handleClick('/login')}
             >
-              <LogIn className="mr-2" />
+              <LogIn className="mr-oz-sm" />
               로그인 후 공고 작성
             </Button>
           )}
@@ -66,55 +67,57 @@ const RecruitListPage = () => {
         isLoggedIn={isLoggedIn}
         recommendedArray={dummyRecruitArray.slice(0, 3)}
       />
-      <RoundBox
-        isShadowed={false}
-        color={'mono-bright'}
-        padding="xl"
-        radius="lg"
-        className="mb-8 h-[191px] w-[1216px] justify-center"
-      >
-        <Hstack
-          gap="none"
-          className="p-oz-md mb-6 h-[50px] w-[448px] items-center rounded-md border border-[#D1D5DB] bg-white"
+      <Vstack gap="xxl" className="px-oz-xxl w-full">
+        <RoundBox
+          isShadowed={false}
+          color="mono-bright"
+          padding="xl"
+          radius="lg"
+          className="justify-center"
         >
-          <Search className="size-4 text-gray-400" />
-          <input
-            type="text"
-            placeholder="공고 제목으로 검색..."
-            className="m-3 h-full w-[394px]"
-          />
-        </Hstack>
-        <Hstack gap="none" className="w-full gap-9">
-          <Vstack gap="none" className="w-full">
-            <p className="mb-2 h-5">태그</p>
-            <Select onOptionSelect={() => null}>
-              <Select.Trigger>전체 태그</Select.Trigger>
-            </Select>
+          <Hstack
+            gap="none"
+            className="p-oz-md mb-oz-xl h-[50px] w-[448px] items-center rounded-md border border-gray-300 bg-white"
+          >
+            <Search className="size-4 text-gray-400" />
+            <input
+              type="text"
+              placeholder="공고 제목으로 검색..."
+              className="m-3 w-full"
+            />
+          </Hstack>
+          <Hstack gap="none" className="gap-9">
+            <Vstack gap="none" className="w-full">
+              <p className="mb-oz-sm">태그</p>
+              <Select onOptionSelect={() => null}>
+                <Select.Trigger>전체 태그</Select.Trigger>
+              </Select>
+            </Vstack>
+            <Vstack gap="none" className="w-full">
+              <p className="mb-oz-sm">정렬</p>
+              <Select onOptionSelect={() => null}>
+                <Select.Trigger>최신순</Select.Trigger>
+              </Select>
+            </Vstack>
+          </Hstack>
+        </RoundBox>
+        <Vstack gap="none">
+          {/* 추후에 변경 */}
+          <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
+            전체 공고({dummyRecruitArray.length})
           </Vstack>
           <Vstack gap="none" className="w-full">
-            <p className="mb-2">정렬</p>
-            <Select onOptionSelect={() => null}>
-              <Select.Trigger>최신순</Select.Trigger>
-            </Select>
+            {dummyRecruitArray.map((recruit) => (
+              <RecruitCard key={recruit.id} recruit={recruit} />
+            ))}
           </Vstack>
-        </Hstack>
-      </RoundBox>
-      <Vstack gap="none">
-        {/* 추후에 변경 */}
-        <Vstack gap="none" className="mb-6 text-lg font-semibold">
-          전체 공고({dummyRecruitArray.length})
-        </Vstack>
-        <Vstack gap="none" className="w-[1216px]">
-          {dummyRecruitArray.map((recruit) => (
-            <RecruitCard key={recruit.id} recruit={recruit} />
-          ))}
         </Vstack>
       </Vstack>
       <Button
         variant="contained"
         status="enabled"
         size="lg"
-        className="mt-12 mb-8"
+        className="mb-oz-xxl mt-12"
       >
         + 더 많은 공고 보기
       </Button>
