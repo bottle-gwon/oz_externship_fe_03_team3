@@ -27,12 +27,14 @@ const ChatFloatingButton = () => {
     }
   }
 
+  const badgeNumber = isOff ? badgeTest : null
+
   if (!accessToken) {
     return null
   }
 
   return (
-    <FloatingButton theme="primary" badge={badgeTest} onClick={onClickChat}>
+    <FloatingButton theme="primary" badge={badgeNumber} onClick={onClickChat}>
       {ChatIcon(isOff)}
     </FloatingButton>
   )
