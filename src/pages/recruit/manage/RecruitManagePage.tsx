@@ -13,8 +13,11 @@ import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubH
 import FloatingButtonContainer from '@/components/layout/floatingButton/FloatingButtonContainer'
 import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
 import { MessageCircle } from 'lucide-react'
+import { useNavigate } from 'react-router'
 
 const RecruitManagementPage = () => {
+  const navigate = useNavigate()
+  const handleClick = (url: string) => navigate(url)
   const badgeTest = 12
   return (
     <Container isPadded className="py-oz-xxl bg-[#F9FAFB]">
@@ -26,7 +29,12 @@ const RecruitManagementPage = () => {
           </SubHeader.Subtitle>
         </SubHeaderTitleSection>
         <SubHeaderButtonSection>
-          <Button color="primary" variant="contained" size="lg">
+          <Button
+            color="primary"
+            variant="contained"
+            size="lg"
+            onClick={() => handleClick('/recruit/create')}
+          >
             + 새 공고 작성하기
           </Button>
         </SubHeaderButtonSection>
