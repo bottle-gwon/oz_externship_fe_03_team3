@@ -27,6 +27,7 @@ const TagCard = ({ name, isChecked, onClickTag }: TagCard) => {
             id="tag-check"
             className="peer hidden appearance-none"
             checked={isChecked}
+            readOnly
           />
           <Hstack className="h-[20px] w-[20px] items-center justify-center rounded-sm border-2 border-gray-300 text-transparent peer-checked:border-transparent peer-checked:bg-[#eab308] peer-checked:text-white">
             <Check className="size-3.5" />

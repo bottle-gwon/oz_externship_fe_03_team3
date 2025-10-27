@@ -2,7 +2,7 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import TagSearch from './feat/TagSearch'
 import TagSelection from './feat/TagSelection'
 import TagList from './feat/TagList'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 
@@ -85,7 +85,7 @@ const TagSelectModal = ({
   }
   //임시 검색 함수
   //임시라서 간단하게만 담겨 있습니다.(실제 검색은 be에서 담당함) 차후에 api 요청으로 변경해야함
-  const onSearchTag = (tagName: string) => {
+  const onSearchTag = useCallback((tagName: string) => {
     setSearchKeyword(tagName)
     if (tagName === '') {
       setResponseData(EXAMPLE_DATA)
@@ -98,7 +98,7 @@ const TagSelectModal = ({
       total_count: filtered.length,
     }))
     setCurrent(1)
-  }
+  }, [])
 
   if (!tagArray || !setTagArray) {
     return
