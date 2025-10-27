@@ -94,22 +94,22 @@ const RecruitWritePage = () => {
 
           <WriteBox>
             <H2>공고 내용</H2>
-              <Labeled isRequired>
-                <Labeled.Header>스터디 그룹 소개</Labeled.Header>
-                <Hstack className="justify-between text-xs">
-                  <p>마크다운 문법을 사용할 수 있습니다</p>
-                  <p>이미지 {dummyImageCount}/5개</p>
-                </Hstack>
+            <Labeled isRequired>
+              <Labeled.Header>스터디 그룹 소개</Labeled.Header>
+              <Hstack className="justify-between text-xs text-gray-500">
+                <p>마크다운 문법을 사용할 수 있습니다</p>
+                <p>이미지 {dummyImageCount}/5개</p>
+              </Hstack>
 
-                <MarkdownEditor />
+              <MarkdownEditor />
 
-                <Labeled.Footer>
-                  • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
-                </Labeled.Footer>
-                <Labeled.Footer>
-                  • 이미지 추가: ![설명](이미지URL) - 최대 5개, 각 5MB 이하
-                </Labeled.Footer>
-              </Labeled>
+              <Labeled.Footer>
+                • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
+              </Labeled.Footer>
+              <Labeled.Footer>
+                • 이미지 추가: ![설명](이미지URL) - 최대 5개, 각 5MB 이하
+              </Labeled.Footer>
+            </Labeled>
           </WriteBox>
 
           <WriteBox>

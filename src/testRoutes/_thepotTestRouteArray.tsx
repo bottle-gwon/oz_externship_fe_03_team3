@@ -17,6 +17,7 @@ const ThepottTestPage = lazy(
 )
 const ThePottMarkdownPage = lazy(
   () => import('./testPages/thepott/ThePottMarkdownPage')
+)
 const ThePottFileDropzonePage = lazy(
   () => import('./testPages/thepott/ThePottFileDropzonePage')
 )

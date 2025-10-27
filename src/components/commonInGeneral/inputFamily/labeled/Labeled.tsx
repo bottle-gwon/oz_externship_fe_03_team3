@@ -24,7 +24,7 @@ const LabeledFooter = (props: PProps) => {
   const { className, children, ...rest } = props
   const { isInDanger } = useLabeledContext()
 
-  const dangerResult = isInDanger ? 'text-danger-600' : ''
+  const dangerResult = isInDanger ? 'text-danger-600' : 'text-gray-500'
 
   return (
     <p {...rest} className={`${className} ${dangerResult} text-sm`}>
