@@ -45,5 +45,8 @@ export interface StudyHubState {
   openChatRoom: (id: number, title: string) => void
   closeChatUI: () => void //채팅방 닫기
 
+  unReadCounter: number //안읽은 메시지 카운터
+  setUnReadCounter: (newCount: number) => void
+
   // notification
 }

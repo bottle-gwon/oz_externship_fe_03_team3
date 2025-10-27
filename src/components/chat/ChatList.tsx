@@ -1,5 +1,6 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import ChatListCard from './feat/ChatListCard'
+import useStudyHubStore from '@/store/store'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
@@ -75,12 +76,13 @@ const DUMMY_CHATLIST = {
 // 채팅 목록
 const ChatList = () => {
   const responseData = DUMMY_CHATLIST
+  const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
 
   return (
     <ChattingLayout>
       <ChattingLayout.Header>
         <h3 className="text-[16px] font-semibold">채팅방</h3>
-        <span className="text-primary-600 text-xs">{`0개의 읽지 않은 메시지`}</span>
+        <span className="text-primary-600 text-xs">{`${unreadCounter}개의 읽지 않은 메시지`}</span>
       </ChattingLayout.Header>
       <ChattingLayout.Body className="h-[309px] overflow-y-scroll border-transparent p-[0px]">
         {responseData.data.room.map((el) => (
