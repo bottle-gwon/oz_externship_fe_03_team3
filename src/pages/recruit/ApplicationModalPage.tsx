@@ -50,22 +50,23 @@ const ApplicationModalPage = () => {
 
   return (
     <>
-      <Modal
-        isOn={isOn}
-        onClose={() => setIsOn(false)}
-        className="overflow-y-auto"
-      >
-        <Modal.Header>
-          <div className="space-y-1">
-            <div className="text-lg font-semibold">스터디 지원서 작성</div>
-            <div className="text-sm text-gray-500">
-              나중에 상세페이지에서 타이틀 값받아와야해요!
-              {/* 추후 상세페이지 제작 되면 재진행 */}
+      {/* 은정님 안녕하세요 하흥주입니다! */}
+      {/* Modal.Body에 overflow만 넣으면 알아서 스크롤이 되도록 수정을 했습니다! */}
+      {/* 다만 이 경우 Header, Body, Footer가 Modal의 자식이 되어야 해서 */}
+      {/* 부득이하게 form을 모달 바깥으로 뺐습니다! */}
+      {/* 이 주석은 삭제하셔도 괜찮습니다! */}
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Modal isOn={isOn} onClose={() => setIsOn(false)}>
+          <Modal.Header>
+            <div className="space-y-1">
+              <div className="text-lg font-semibold">스터디 지원서 작성</div>
+              <div className="text-sm text-gray-500">
+                나중에 상세페이지에서 타이틀 값받아와야해요!
+                {/* 추후 상세페이지 제작 되면 재진행 */}
+              </div>
             </div>
-          </div>
-        </Modal.Header>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Modal.Body>
+          </Modal.Header>
+          <Modal.Body className="overflow-x-hidden overflow-y-scroll">
             <div className="space-y-6">
               <section className="space-y-1">
                 <Labeled isRequired>
@@ -201,8 +202,8 @@ const ApplicationModalPage = () => {
               </div>
             </div>
           </Modal.Footer>
-        </form>
-      </Modal>
+        </Modal>
+      </form>
 
       <Vstack padding="xxl">
         <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
