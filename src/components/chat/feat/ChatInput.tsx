@@ -6,7 +6,7 @@ const ChatInput = () => {
     <Hstack
       gap="xs"
       padding="md"
-      className="mx-[-24px] items-center border-t border-gray-200"
+      className="mx-[-24px] min-h-[63px] items-center border-t border-gray-200"
     >
       <input
         placeholder="메시지를 입력하세요..."

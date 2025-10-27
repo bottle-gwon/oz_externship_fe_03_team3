@@ -21,7 +21,7 @@ const ChatUserStatus = ({ status }: StatusInterface) => {
     <RoundBox
       padding="none"
       isBordered={false}
-      className="flex h-[24px] flex-shrink-0 px-3 py-1"
+      className="flex min-h-[24px] flex-shrink-0 px-3 py-1"
     >
       <Hstack gap="xs" padding="none" className="items-center justify-center">
         <div className={`h-2 w-2 rounded-full ${indicator}`}></div>

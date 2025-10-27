@@ -109,7 +109,7 @@ const ChattingRoom = () => {
       </ChattingLayout.UserStatus>
 
       {/* 채팅창 */}
-      <ChattingLayout.Body className="my-[-24px] h-[280px] grow justify-between border-transparent">
+      <ChattingLayout.Body className="h-[280px] grow justify-between border-transparent !py-0">
         <ChatDisplay messages={TestChat.messages} />
         <ChatInput />
       </ChattingLayout.Body>
