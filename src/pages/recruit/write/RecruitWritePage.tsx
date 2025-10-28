@@ -195,7 +195,12 @@ const RecruitWritePage = () => {
             <Labeled isInDanger={Boolean(errors.tags)}>
               <Hstack className="items-end justify-between">
                 <Labeled.Header>사용자 정의 태그</Labeled.Header>
-                <Button color="primary" size="sm" className="mb-oz-xs">
+                <Button
+                  type="button"
+                  color="primary"
+                  size="sm"
+                  className="mb-oz-xs"
+                >
                   <Plus size={14} />
                   태그 검색
                 </Button>
