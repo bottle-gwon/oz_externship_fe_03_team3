@@ -17,7 +17,9 @@ const ThePottFileDropzonePage = () => {
     <Container isPadded>
       <form onSubmit={handleSubmit(onSubmit)}>
         <Vstack>
-          <FileDropzone setValue={setValue} />
+          <FileDropzone
+            onChange={(fileArray) => setValue('attachments', fileArray)}
+          />
         </Vstack>
         <Hstack>
           <Button>Submit</Button>

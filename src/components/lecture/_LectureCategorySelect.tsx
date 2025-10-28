@@ -30,8 +30,15 @@ const LectureCategorySelect = ({
   const categoryArray = calcCategoryArray()
   // TODO: push 전에 처음부터 array로 로직 짜기
 
+  const handleOptionSelect = (option: string | number) => {
+    if (typeof option !== 'string') {
+      throw new Error('---- 카테고리는 스트링이어야 합니다!')
+    }
+    setSelectedCategory(option)
+  }
+
   return (
-    <Select onOptionSelect={(option) => setSelectedCategory(option)}>
+    <Select onOptionSelect={handleOptionSelect}>
       <Select.Trigger icon={<Folder size={16} />}>전체 카테고리</Select.Trigger>
       <Select.Content>
         <Select.Option>전체 카테고리</Select.Option>
