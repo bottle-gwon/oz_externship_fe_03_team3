@@ -7,6 +7,7 @@ import ChatInput from './feat/ChatInput'
 import ChatDisplay from './feat/ChatDisplay'
 import { useEffect, useRef, useState } from 'react'
 import ChattingStatusSkeleton from './skeleton/ChattingStatusSkeleton'
+import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -76,6 +77,20 @@ const TestChat = {
   ],
 }
 
+const OnlineUser = ({
+  isPending,
+  online,
+}: {
+  isPending: boolean
+  online: number
+}) => {
+  if (isPending) {
+    return <Skeleton widthInPixel={162} heightInPixel={14} />
+  }
+
+  return <p className="text-xs text-gray-600">{`${online}명 온라인`}</p>
+}
+
 const ChattingRoom = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
   const openChatList = useStudyHubStore((state) => state.openChatList)
@@ -110,13 +125,13 @@ const ChattingRoom = () => {
             <p className="text-base font-semibold text-gray-900">
               {chatState.title}
             </p>
-            <p className="text-xs text-gray-600">{`0명 온라인`}</p>
+            <OnlineUser isPending={isPending} online={0} />
           </Vstack>
         </Hstack>
       </ChattingLayout.Header>
 
       {/* 채팅방 사용자들 스테이터스 */}
-      <ChattingLayout.UserStatus>
+      <ChattingLayout.UserStatus isPending={isPending}>
         {isPending && <ChattingStatusSkeleton />}
         {TestUserStatus.result.map((el) => (
           <ChatUserStatus key={el.id} status={el} />

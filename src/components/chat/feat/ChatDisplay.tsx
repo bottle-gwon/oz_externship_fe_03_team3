@@ -9,8 +9,10 @@ interface ChatArray {
 }
 
 const ChatDisplay = ({ messages, isPending }: ChatArray) => {
+  const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
+
   return (
-    <Vstack padding="md" className="mx-[-24px] h-full overflow-y-scroll">
+    <Vstack padding="md" className={`mx-[-24px] h-full ${overflow}`}>
       {/* 테스트를 위해서 위로 올려 뒀습니다. */}
       {isPending && <ChattingRoomSkeleton />}
       {messages.map((el) => (

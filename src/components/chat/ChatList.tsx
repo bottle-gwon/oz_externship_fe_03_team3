@@ -92,6 +92,7 @@ const ChatList = () => {
     }
   }, [])
 
+  const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
   return (
     <ChattingLayout>
       <ChattingLayout.Header>
@@ -99,7 +100,9 @@ const ChatList = () => {
         <span className="text-primary-600 text-xs">{`${unreadCounter}개의 읽지 않은 메시지`}</span>
       </ChattingLayout.Header>
 
-      <ChattingLayout.Body className="h-[309px] overflow-y-scroll border-transparent p-[0px]">
+      <ChattingLayout.Body
+        className={`h-[309px] border-transparent p-[0px] ${overflow}`}
+      >
         {/* 테스트를 위해 스켈레톤을 카드보다 위로 올려 놨습니다. */}
         {isPending && <ChatListSkeleton />}
         {responseData.data.room.map((el) => (
