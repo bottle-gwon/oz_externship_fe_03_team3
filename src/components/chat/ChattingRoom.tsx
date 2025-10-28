@@ -5,6 +5,8 @@ import { Hstack, Vstack } from '../commonInGeneral/layout'
 import ChatUserStatus from './feat/ChatUserStatus'
 import ChatInput from './feat/ChatInput'
 import ChatDisplay from './feat/ChatDisplay'
+import { useEffect, useRef, useState } from 'react'
+import ChattingStatusSkeleton from './skeleton/ChattingStatusSkeleton'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -77,6 +79,18 @@ const TestChat = {
 const ChattingRoom = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
   const openChatList = useStudyHubStore((state) => state.openChatList)
+  const [isPending, setIsPending] = useState(true) //임시 로딩
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    setIsPending(true)
+    timerRef.current = setTimeout(() => setIsPending(false), 1500)
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+    }
+  }, [])
 
   if (chatState.status !== 'chatRoom') {
     return
@@ -103,6 +117,7 @@ const ChattingRoom = () => {
 
       {/* 채팅방 사용자들 스테이터스 */}
       <ChattingLayout.UserStatus>
+        {isPending && <ChattingStatusSkeleton />}
         {TestUserStatus.result.map((el) => (
           <ChatUserStatus key={el.id} status={el} />
         ))}
@@ -110,7 +125,7 @@ const ChattingRoom = () => {
 
       {/* 채팅창 */}
       <ChattingLayout.Body className="h-[280px] grow justify-between border-transparent !py-0">
-        <ChatDisplay messages={TestChat.messages} />
+        <ChatDisplay messages={TestChat.messages} isPending={isPending} />
         <ChatInput />
       </ChattingLayout.Body>
     </ChattingLayout>
