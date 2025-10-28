@@ -8,7 +8,7 @@ const TagSkeleton = () => {
     <Vstack padding="xl" gap="sm" className="items-center justify-center">
       <Skeleton widthInPixel={135} heightInPixel={23} className="self-start" />
       {skeletonArray.map((_, i) => (
-        <TagSkeletonCard key={i + Math.random()} />
+        <TagSkeletonCard key={crypto.randomUUID()} />
       ))}
     </Vstack>
   )
