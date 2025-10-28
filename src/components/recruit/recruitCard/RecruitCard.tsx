@@ -15,7 +15,7 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import ManageModal from '../manageModal/ManageModal'
-import { dummyApplicantArray } from '../ApplicantListDummy'
+import { dummyApplicantArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantList'
 
 export type RecruitCardProps = {
   recruit: Recruit
