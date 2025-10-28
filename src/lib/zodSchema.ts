@@ -61,7 +61,7 @@ export const recruitWriteSchema = z.object({
   content: z.string().min(1, '스터디 그룹을 소개해주세요'),
   due_data: z.date(), // 어떻게 필수로 만들지?
   expected_personnel: z.number().min(1, '모집 인원을 선택해주세요'),
-  study_group_id: z.number.min(1, '스터디 그룹을 선택해주세요'),
+  study_group_id: z.number(), // 필수로 만들어야
   estimated_cost: z.number(),
   tags: z.array(z.string()),
   attachments: z.array(z.file()),
