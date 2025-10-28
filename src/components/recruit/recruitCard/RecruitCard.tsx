@@ -12,15 +12,16 @@ import type { Recruit } from '@/types'
 import Tag from '@/components/commonInProject/tag/Tag'
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
+import { useNavigate } from 'react-router'
+import { useState } from 'react'
+import ManageModal from '../manageModal/ManageModal'
+import { dummyApplicantArray } from '../ApplicantListDummy'
 
 export type RecruitCardProps = {
   recruit: Recruit
   isMine?: boolean
   cardClassName?: string
   imageClassName?: string
-  onManage?: (recruit: Recruit) => void
-  onEdit?: (recruit: Recruit) => void
-  onDelete?: (recruit: Recruit) => void
 }
 
 const RecruitCard = ({
@@ -28,11 +29,9 @@ const RecruitCard = ({
   isMine = false,
   cardClassName = '',
   imageClassName = 'h-20 w-28',
-  onManage,
-  onEdit,
-  onDelete,
 }: RecruitCardProps) => {
   const {
+    id,
     thumbnail_img_url,
     title,
     expected_headcount,
@@ -42,6 +41,23 @@ const RecruitCard = ({
     bookmark_count,
     lectures,
   } = recruit
+
+  const navigate = useNavigate()
+  const [manageOpen, setManageOpen] = useState(false)
+  const [isDelete, setIsDelete] = useState(false)
+
+  const handleEdit = () => {
+    navigate(`/recruit/write?edit=${id}`)
+  }
+
+  const handleDelete = () => {
+    if (!window.confirm(`[${title}]공고를 삭제할까요?`)) return
+    // 실제 삭제 API 연동 전까지는 카드만 숨김
+    // 삭제 모달 공통컴포넌트 제작 후 교체 예정
+    setIsDelete(true)
+  }
+
+  if (isDelete) return null
 
   return (
     <RoundBox className={`outBox ${cardClassName}`}>
@@ -95,14 +111,14 @@ const RecruitCard = ({
                   <button
                     aria-label="수정"
                     className="text-gray-500 hover:text-blue-600"
-                    onClick={() => onEdit?.(recruit)}
+                    onClick={handleEdit}
                   >
                     <Pencil className="size-3.5" />
                   </button>
                   <button
                     aria-label="삭제"
                     className="text-gray-500 hover:text-red-600"
-                    onClick={() => onDelete?.(recruit)}
+                    onClick={handleDelete}
                   >
                     <Trash2 className="size-3.5" />
                   </button>
@@ -167,10 +183,17 @@ const RecruitCard = ({
             </Hstack>
             {isMine && (
               <Hstack gap="none" padding="none" className="self-center">
+                <ManageModal
+                  isOn={manageOpen}
+                  onClose={setManageOpen}
+                  recruitContent={title}
+                  applicantArray={dummyApplicantArray}
+                />
+                {/* 지원내역 버튼부터 모달 시작되는 부분 수정요청 해야함 */}
                 <Button
                   color="blue"
                   className="gap-2 px-6 py-2 text-xs"
-                  onClick={() => onManage?.(recruit)}
+                  onClick={() => setManageOpen(true)}
                 >
                   <FileText className="size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
