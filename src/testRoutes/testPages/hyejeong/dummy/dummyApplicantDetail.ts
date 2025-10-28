@@ -1,5 +1,5 @@
 import type { ApplicantDetail } from '@/types'
-import img from '../../hyejeong/profile-img.jpg'
+import img from '../profile-img.jpg'
 
 export const dummyApplicantDetail: ApplicantDetail = {
   id: 123,
