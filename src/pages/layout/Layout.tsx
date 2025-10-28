@@ -5,9 +5,14 @@ import Header from '../../components/layout/header/Header'
 import FloatingButtonContainer from '@/components/layout/floatingButton/FloatingButtonContainer'
 import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
 import { ArrowUp } from 'lucide-react'
-import { useRef } from 'react'
-import ChatWidget from '@/components/chat/ChatWidget'
-import ChatFloatingButton from '@/components/chat/ChatFloatingButton'
+import { lazy, Suspense, useRef } from 'react'
+import FloatingButtonSkeleton from '@/components/chat/skeleton/FloatingButtonSkeleton'
+import ChatWidgetSkeleton from '@/components/chat/skeleton/ChatWidgetSkeleton'
+
+const ChatWidget = lazy(() => import('@/components/chat/ChatWidget'))
+const ChatFloatingButton = lazy(
+  () => import('@/components/chat/ChatFloatingButton')
+)
 
 // Todo 현재는 안읽은 메시지를 더미값으로 전달 하고 있지만 추후에 zustand 활용해서 안읽은 메시지값을 전달할것
 const Layout = () => {
@@ -36,11 +41,15 @@ const Layout = () => {
         </FloatingButton>
 
         {/* 메시지 아이콘 */}
-        <ChatFloatingButton />
+        <Suspense fallback={<FloatingButtonSkeleton />}>
+          <ChatFloatingButton />
+        </Suspense>
       </FloatingButtonContainer>
 
       {/* 채팅 */}
-      <ChatWidget />
+      <Suspense fallback={<ChatWidgetSkeleton />}>
+        <ChatWidget />
+      </Suspense>
     </FullScreen>
   )
 }

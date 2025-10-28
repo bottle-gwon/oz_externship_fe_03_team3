@@ -15,7 +15,7 @@ const ChattingLayout = ({ children }: Chatting) => {
   return (
     <RoundBox
       padding="none"
-      className="fixed right-6 bottom-24 min-h-[384px] w-[320px] border border-gray-200 shadow-[0_25px_50px_-12px_rgb(0_0_0_/_0.25)]"
+      className="fixed right-6 bottom-24 z-2 min-h-[384px] w-[320px] border border-gray-200 shadow-[0_25px_50px_-12px_rgb(0_0_0_/_0.25)]"
     >
       <Vstack gap="none" className="h-full">
         {children}

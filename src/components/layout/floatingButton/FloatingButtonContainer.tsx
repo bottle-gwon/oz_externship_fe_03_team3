@@ -11,7 +11,7 @@ const FloatingButtonContainer = ({ children }: FloatingContainer) => {
   return (
     <Vstack
       gap="none"
-      className="fixed right-6 bottom-6 items-center gap-[31px]"
+      className="fixed right-6 bottom-6 z-1 items-center gap-[31px]"
     >
       {children}
     </Vstack>
