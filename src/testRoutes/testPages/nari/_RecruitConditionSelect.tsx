@@ -9,11 +9,13 @@ interface RecruitConditionSelectProps {
     React.SetStateAction<RecruitConditionInText>
   >
   selectedCondition?: RecruitConditionInText
+  triggerLabel?: string
 }
 
-const _RecruitConditionSelect = ({
+const RecruitConditionSelect = ({
   setRecruitConditionSelectProps,
   selectedCondition = '전체',
+  triggerLabel,
 }: RecruitConditionSelectProps) => {
   return (
     <Select
@@ -21,7 +23,7 @@ const _RecruitConditionSelect = ({
         setRecruitConditionSelectProps(option as RecruitConditionInText)
       }
     >
-      <Select.Trigger>{selectedCondition}</Select.Trigger>
+      <Select.Trigger>{triggerLabel ?? selectedCondition}</Select.Trigger>
       <Select.Content>
         {recruitConditionInTextArray.map((conditionInText) => (
           <Select.Option key={conditionInText}>{conditionInText}</Select.Option>
@@ -31,4 +33,4 @@ const _RecruitConditionSelect = ({
   )
 }
 
-export default _RecruitConditionSelect
+export default RecruitConditionSelect

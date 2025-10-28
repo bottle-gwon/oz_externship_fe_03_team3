@@ -13,7 +13,7 @@ type ChatUIState =
 // NOTE:     - 부모에서 자식으로 상태를 넘겨 줄 때 한 번보다 더 많이 내려줘야 할 때만 사용합니다.
 // NOTE:     - 한 번만 내려줘서 해결되면 전역 상태로 등록하지 않습니다.
 
-import type { Lecture, Me, StudyGroup } from '@/types'
+import type { Lecture, Me, StudyGroup, Recruit } from '@/types'
 
 export interface StudyHubState {
   example: number // 타입 정의 예시 1
@@ -36,6 +36,9 @@ export interface StudyHubState {
   // recruit
   studyGroupArray: StudyGroup[]
   setStudyGroupArray: (studyGroupArray: StudyGroup[]) => void
+
+  recruitArray: Recruit[]
+  setRecruitArray: (recruitArray: Recruit[]) => void
 
   // lecture
   lectureArray: Lecture[]
