@@ -10,7 +10,7 @@ const HowToUseSubHeader = () => {
   const handleClick = (url: string) => navigate(url)
 
   return (
-    <SubHeader isBackButtonVisible={true}>
+    <SubHeader isBackButtonVisible>
       <SubHeaderTitleSection>
         <SubHeader.Title>스터디 구인 공고</SubHeader.Title>
         <SubHeader.Subtitle>
