@@ -1,6 +1,8 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import ChatListCard from './feat/ChatListCard'
 import useStudyHubStore from '@/store/store'
+import { useEffect, useRef, useState } from 'react'
+import ChatListSkeleton from './skeleton/ChatListSkeleton'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
@@ -77,6 +79,18 @@ const DUMMY_CHATLIST = {
 const ChatList = () => {
   const responseData = DUMMY_CHATLIST
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
+  const [isPending, setIsPending] = useState(false)
+  const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  useEffect(() => {
+    setIsPending(true)
+    timerRef.current = setTimeout(() => setIsPending(false), 1500)
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current)
+      }
+    }
+  }, [])
 
   return (
     <ChattingLayout>
@@ -84,7 +98,10 @@ const ChatList = () => {
         <h3 className="text-[16px] font-semibold">채팅방</h3>
         <span className="text-primary-600 text-xs">{`${unreadCounter}개의 읽지 않은 메시지`}</span>
       </ChattingLayout.Header>
+
       <ChattingLayout.Body className="h-[309px] overflow-y-scroll border-transparent p-[0px]">
+        {/* 테스트를 위해 스켈레톤을 카드보다 위로 올려 놨습니다. */}
+        {isPending && <ChatListSkeleton />}
         {responseData.data.room.map((el) => (
           <ChatListCard key={el.study_group_id} room={el} />
         ))}
