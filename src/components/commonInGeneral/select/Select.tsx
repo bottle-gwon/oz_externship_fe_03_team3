@@ -10,17 +10,14 @@ interface WithSelectProps {
   onOptionSelect: (option: string | number) => void
 }
 
-const Select = ({
-  onOptionSelect,
-  className,
-  children,
-  ...props
-}: DivProps & WithSelectProps) => {
+const Select = ({ onOptionSelect, ...props }: DivProps & WithSelectProps) => {
+  const { className, children, ...rest } = props
+
   const [isOpened, setIsOpened] = useState<boolean>(false)
-  const [selectedOption, setSelectedOption] = useState<string | number | null>(
-    null
-  )
-  // const [selectedV]
+  const [selectedValue, setSelectedValue] = useState<
+    string | number | undefined
+  >(undefined)
+  const [selectedChildren, setSelectedChildren] = useState<string | null>(null)
   const [selectedIcon, setSelectedIcon] = useState<JSX.Element | null>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
 
@@ -30,14 +27,16 @@ const Select = ({
         onOptionSelect,
         isOpened,
         setIsOpened,
-        selectedOption,
-        setSelectedOption,
+        selectedValue,
+        setSelectedValue,
+        selectedChildren,
+        setSelectedChildren,
         selectedIcon,
         setSelectedIcon,
         triggerRef,
       }}
     >
-      <Vstack {...props} gap="xs" className={`${className} relative gap-0`}>
+      <Vstack {...rest} gap="xs" className={`${className} relative gap-0`}>
         {children}
       </Vstack>
     </SelectContext>

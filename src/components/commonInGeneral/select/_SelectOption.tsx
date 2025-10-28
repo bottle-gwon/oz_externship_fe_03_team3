@@ -13,15 +13,19 @@ const SelectOption = ({
   value?: string | number
   children: string
 }) => {
-  const { onOptionSelect, setIsOpened, setSelectedOption, setSelectedIcon } =
-    useSelectContext()
+  const {
+    onOptionSelect,
+    setIsOpened,
+    setSelectedValue,
+    setSelectedChildren,
+    setSelectedIcon,
+  } = useSelectContext()
 
   const handleClick = () => {
     setSelectedIcon(icon ?? null)
-
     setIsOpened(false)
-    setSelectedOption(value ?? children)
-
+    setSelectedValue(value)
+    setSelectedChildren(children)
     onOptionSelect(value ?? children)
   }
 
