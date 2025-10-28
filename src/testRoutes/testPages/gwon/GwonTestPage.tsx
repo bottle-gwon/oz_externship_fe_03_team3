@@ -80,6 +80,7 @@ const GwonTestPage = () => {
         onSelectTag={onClickTag}
         selectArray={testSelectArray}
         keyword={searchKeyword}
+        isLoading
       />
     </div>
   )
