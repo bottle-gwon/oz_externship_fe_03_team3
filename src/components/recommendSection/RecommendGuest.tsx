@@ -54,7 +54,7 @@ const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
               회원가입하기
             </Button>
           </Hstack>
-          <Vstack gap="lg" className="mt-oz-xxl">
+          <Vstack gap="lg" className="mt-oz-xxl w-full">
             <p className="text-center text-sm text-gray-500">
               로그인 후 이런 맞춤 추천을 받을 수 있어요
             </p>
