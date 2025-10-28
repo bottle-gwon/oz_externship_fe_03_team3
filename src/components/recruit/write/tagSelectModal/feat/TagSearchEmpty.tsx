@@ -1,7 +1,7 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-import { Tag } from 'lucide-react'
+import TagIcon from '@/assets/tag.svg'
 
 interface TagEmpty {
   keyword: string
@@ -13,7 +13,7 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
     <Vstack
       gap="lg"
       padding="xl"
-      className="-mx-6 h-[372px] w-[672px] items-center justify-center border-b border-gray-200"
+      className="-mx-6 h-[372px] w-[672px] items-center justify-center"
     >
       <RoundBox
         color="primary"
@@ -48,7 +48,7 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
           gap="none"
           className="mb-1 size-16 items-center justify-center rounded-full bg-gray-100"
         >
-          <Tag className="size-[25px] rotate-90 text-gray-400" />
+          <img src={TagIcon} />
         </Hstack>
         <p className="text-lg font-medium">검색된 결과가 없습니다.</p>
         <p className="text-base">
