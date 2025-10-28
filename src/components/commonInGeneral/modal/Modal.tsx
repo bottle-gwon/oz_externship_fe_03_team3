@@ -12,8 +12,7 @@ import { Vstack } from '../layout'
 interface WithModalProps {
   isOn: boolean
   modalZIndex?: number
-  width?: SmToLg
-
+  width?: 'xs' | SmToLg
   onClose: () => void
 }
 

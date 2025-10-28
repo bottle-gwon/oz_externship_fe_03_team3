@@ -7,6 +7,7 @@ import Button from '../button/Button'
 // isOn: boolean ---- 켜지고 꺼지는 조건
 //
 // width
+// - xs: 320px, 확인 및 경고 모달
 // - sm: 672px, 좁은 모달 -- 지원 내역 모달 외 전부
 // - md: 896px, 넓은 모달 -- 지원 내역 모달
 //
