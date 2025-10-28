@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import Modal from '../Modal'
+import { Hstack, Vstack } from '../../layout'
 
 const ConfirmationModalTitle = ({ children }: { children: ReactNode }) => {
   return <div className="text-lg font-semibold">{children}</div>
@@ -13,23 +14,25 @@ const ConfirmationModalButtonSection = ({
 }: {
   children: ReactNode
 }) => {
-  return <div className="grid auto-cols-[50px]">{children}</div>
+  return <Hstack className="mt-oz-xxl">{children}</Hstack>
 }
 
 interface ConfirmationModalProps {
   isOn: boolean
   onClose: () => void
   children: ReactNode
+  modalZIndex?: number
 }
 
 const ConfirmationModal = ({
   isOn,
   onClose,
   children,
+  modalZIndex,
 }: ConfirmationModalProps) => {
   return (
-    <Modal width="xs" isOn={isOn} onClose={onClose}>
-      {children}
+    <Modal width="xs" modalZIndex={modalZIndex} isOn={isOn} onClose={onClose}>
+      <Vstack className="p-oz-xxl items-center gap-0">{children}</Vstack>
     </Modal>
   )
 }
