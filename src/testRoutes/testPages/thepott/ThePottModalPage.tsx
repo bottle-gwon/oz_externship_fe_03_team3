@@ -9,11 +9,6 @@ const ThePottModalPage = () => {
   const [isOn, setIsOn] = useState(false)
   const [isOn1, setIsOn1] = useState(false)
   const [isOn2, setIsOn2] = useState(false)
-  const [isOn3, setIsOn3] = useState(false)
-  const [isOn4, setIsOn4] = useState(false)
-  const [isOn5, setIsOn5] = useState(false)
-  const [isOn6, setIsOn6] = useState(false)
-  const [isOn7, setIsOn7] = useState(false)
   const longIndexArray = [...Object.keys(Array(50).fill(0))]
 
   return (
