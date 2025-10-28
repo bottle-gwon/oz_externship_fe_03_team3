@@ -141,7 +141,7 @@ const ChattingRoom = () => {
       {/* 채팅창 */}
       <ChattingLayout.Body className="h-[280px] grow justify-between border-transparent !py-0">
         <ChatDisplay messages={TestChat.messages} isPending={isPending} />
-        <ChatInput />
+        <ChatInput isPending={isPending} />
       </ChattingLayout.Body>
     </ChattingLayout>
   )
