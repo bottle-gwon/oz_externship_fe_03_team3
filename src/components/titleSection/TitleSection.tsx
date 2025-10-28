@@ -39,7 +39,7 @@ const title: Record<string, TitleContentType> = {
               label: '+ 공고 작성하기',
               color: 'primary',
               variant: 'contained',
-              url: '/recruit/create',
+              url: '/recruit/write',
             },
           ]
         : [
@@ -78,7 +78,7 @@ const title: Record<string, TitleContentType> = {
       {
         label: '+ 새 공고 작성하기',
         color: 'primary',
-        url: '/recruit/create',
+        url: '/recruit/write',
       },
     ],
   },

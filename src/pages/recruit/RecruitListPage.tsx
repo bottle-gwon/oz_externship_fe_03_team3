@@ -43,7 +43,7 @@ const RecruitListPage = () => {
                 color="primary"
                 variant="contained"
                 size="lg"
-                onClick={() => handleClick('/recruit/create')}
+                onClick={() => handleClick('/recruit/write')}
               >
                 + 공고 작성하기
               </Button>

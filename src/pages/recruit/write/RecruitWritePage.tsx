@@ -110,6 +110,7 @@ const RecruitWritePage = () => {
                       .map((_, index) => (
                         <Select.Option
                           key={index}
+                          value={index + 1}
                         >{`${index + 1}명`}</Select.Option>
                       ))}
                   </Select.Content>
@@ -127,7 +128,7 @@ const RecruitWritePage = () => {
                 <p>이미지 {dummyImageCount}/5개</p>
               </Hstack>
 
-              <MarkdownEditor />
+              <MarkdownEditor setValue={setValue} />
 
               <Labeled.Footer>
                 • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등

@@ -2,13 +2,22 @@ import './markdown.css'
 import MDEditor from '@uiw/react-md-editor'
 import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
 import { commandArray, extraCommandArray } from './_commandArray'
 import markdownPlaceholder from './_markdownPlaceholder'
+import type { UseFormSetValue, FieldValues } from 'react-hook-form'
 
-const MarkdownEditor = () => {
-  const [value, setValue] = useState<string | undefined>('')
+interface MarkdownEditorProps {
+  setValue: UseFormSetValue<FieldValues>
+}
+
+const MarkdownEditor = ({ setValue }: MarkdownEditorProps) => {
+  const [text, setText] = useState<string | undefined>('')
+
+  useEffect(() => {
+    setValue('content', text)
+  }, [text, setValue])
 
   return (
     <>
@@ -21,8 +30,8 @@ const MarkdownEditor = () => {
       >
         <Vstack className="gap-0">
           <MDEditor
-            value={value}
-            onChange={setValue}
+            value={text}
+            onChange={setText}
             height={284}
             visibleDragbar={false}
             previewOptions={{
