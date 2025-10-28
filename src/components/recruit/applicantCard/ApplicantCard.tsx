@@ -1,9 +1,5 @@
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
-import {
-  experienceStyles,
-  statusStyles,
-  type Applicant,
-} from '@/types/_applicantInterface'
+import { experienceStyles, statusStyles, type Applicant } from '@/types'
 import { Calendar } from 'lucide-react'
 import Tag from '@/components/commonInProject/tag/Tag'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'

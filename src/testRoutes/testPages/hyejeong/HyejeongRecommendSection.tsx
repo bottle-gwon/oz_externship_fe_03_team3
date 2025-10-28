@@ -3,7 +3,7 @@ import RecommendSection from '@/components/recommendSection/RecommendSection'
 import {
   dummyLectureRecommendArray,
   dummyRecruitRecommendArray,
-} from './dummyRecommendArray'
+} from './dummy/dummyRecommendArray'
 
 const HyejeongRecommendSection = () => {
   return (

@@ -19,6 +19,9 @@ const HyejeongApplicantCardModal = lazy(
 const HyejeongManageModal = lazy(
   () => import('./testPages/hyejeong/HyejeongManageModal')
 )
+const HyejeongManageDetailModal = lazy(
+  () => import('./testPages/hyejeong/HyejeongManageDetailModal')
+)
 
 const hyejeongTestRouteArray = [
   {
@@ -41,6 +44,10 @@ const hyejeongTestRouteArray = [
   {
     path: 'test/hyejeong/managemodal',
     element: <HyejeongManageModal />,
+  },
+  {
+    path: 'test/hyejeong/managedetail',
+    element: <HyejeongManageDetailModal />,
   },
 ]
 
