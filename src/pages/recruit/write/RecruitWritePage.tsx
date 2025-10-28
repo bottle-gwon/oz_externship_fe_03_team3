@@ -144,7 +144,10 @@ const RecruitWritePage = () => {
 
             <Labeled>
               <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
-              <Labeled.Input placeholder="미입력시 강의 비용 자동 계산" />
+              <Labeled.Input
+                {...register('estimated_cost')}
+                placeholder="미입력시 강의 비용 자동 계산"
+              />
               <Labeled.Footer></Labeled.Footer>
             </Labeled>
 
