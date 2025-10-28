@@ -12,17 +12,27 @@ import type { Recruit } from '@/types'
 import Tag from '@/components/commonInProject/tag/Tag'
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
-import { useNavigate } from 'react-router'
 
 export type RecruitCardProps = {
   recruit: Recruit
   isMine?: boolean
   cardClassName?: string
   imageClassName?: string
+  onManage?: (recruit: Recruit) => void
+  onEdit?: (recruit: Recruit) => void
+  onDelete?: (recruit: Recruit) => void
 }
 
 const RecruitCard = ({
-  recruit: {
+  recruit,
+  isMine = false,
+  cardClassName = '',
+  imageClassName = 'h-20 w-28',
+  onManage,
+  onEdit,
+  onDelete,
+}: RecruitCardProps) => {
+  const {
     thumbnail_img_url,
     title,
     expected_headcount,
@@ -31,13 +41,7 @@ const RecruitCard = ({
     views_count,
     bookmark_count,
     lectures,
-  },
-  isMine = false,
-  cardClassName = '',
-  imageClassName = 'h-20 w-28',
-}: RecruitCardProps) => {
-  const navigate = useNavigate()
-  const handleClick = (url: string) => navigate(url)
+  } = recruit
 
   return (
     <RoundBox className={`outBox ${cardClassName}`}>
@@ -91,14 +95,14 @@ const RecruitCard = ({
                   <button
                     aria-label="수정"
                     className="text-gray-500 hover:text-blue-600"
-                    onClick={() => handleClick('/recruit/create')}
+                    onClick={() => onEdit?.(recruit)}
                   >
                     <Pencil className="size-3.5" />
                   </button>
                   <button
                     aria-label="삭제"
                     className="text-gray-500 hover:text-red-600"
-                    onClick={() => null}
+                    onClick={() => onDelete?.(recruit)}
                   >
                     <Trash2 className="size-3.5" />
                   </button>
@@ -166,7 +170,7 @@ const RecruitCard = ({
                 <Button
                   color="blue"
                   className="gap-2 px-6 py-2 text-xs"
-                  onClick={() => handleClick('/recruit/manage')}
+                  onClick={() => onManage?.(recruit)}
                 >
                   <FileText className="size-4" />
                   {/* 추후 svg 아이콘으로 추가 */}
