@@ -1,11 +1,13 @@
 import { createContext, type JSX } from 'react'
 
 interface SelectContextProps {
-  onOptionSelect: (option: string) => void
+  onOptionSelect: (option: string | number) => void
   isOpened: boolean
   setIsOpened: React.Dispatch<React.SetStateAction<boolean>>
-  selectedOption: string | null
-  setSelectedOption: React.Dispatch<React.SetStateAction<string | null>>
+  selectedOption: string | number | null
+  setSelectedOption: React.Dispatch<
+    React.SetStateAction<string | number | null>
+  >
   selectedIcon: JSX.Element | null
   setSelectedIcon: React.Dispatch<React.SetStateAction<JSX.Element | null>>
   triggerRef: React.RefObject<HTMLDivElement | null>

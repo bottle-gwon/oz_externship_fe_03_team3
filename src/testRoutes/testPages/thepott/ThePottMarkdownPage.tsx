@@ -4,7 +4,7 @@ import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/Markdown
 const ThePottMarkdownPage = () => {
   return (
     <Container isPadded>
-      <MarkdownEditor />
+      <MarkdownEditor onChange={() => {}} />
     </Container>
   )
 }

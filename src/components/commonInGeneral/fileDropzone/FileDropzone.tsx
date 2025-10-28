@@ -2,16 +2,15 @@ import { useEffect, useRef, useState, type ChangeEvent } from 'react'
 import { Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import UploadIcon from '@/assets/upload.svg'
-import type { FieldValues, UseFormSetValue } from 'react-hook-form'
 import { FileDropzoneContext } from './_FileRecordContext'
 import FileDropzoneUploadedSection from './_FileDropzoneUploadedSection'
 
 export type FileRecord = Record<number, File>
 
 const FileDropzone = ({
-  setValue,
+  onChange,
 }: {
-  setValue: UseFormSetValue<FieldValues>
+  onChange: (fileArray: File[]) => void
 }) => {
   const [isDragEntered, setIsDragEntered] = useState(false)
   const [fileRecord, setFileRecord] = useState<FileRecord>({})
@@ -19,8 +18,8 @@ const FileDropzone = ({
 
   useEffect(() => {
     const fileArray = Object.values(fileRecord)
-    setValue('attachments', fileArray)
-  }, [fileRecord, setValue])
+    onChange(fileArray)
+  }, [fileRecord, onChange])
 
   const addFiles = (files: FileList) => {
     let iteration = 0

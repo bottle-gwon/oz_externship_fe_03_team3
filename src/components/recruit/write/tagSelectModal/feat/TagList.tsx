@@ -3,6 +3,8 @@ import TagCard from './TagCard'
 import TagPagination from './TagPagination'
 import type { TagApiResponse } from '@/types'
 import TagSearchEmpty from './TagSearchEmpty'
+import TagSkeleton from '../skeleton/TagSkeleton'
+import TagPaginationSkeleton from '../skeleton/TagPaginationSkeleton'
 
 // 페이지 네이션 타입
 type pageChange = (newPage: number) => void
@@ -15,6 +17,12 @@ export interface TagPaginationInterface {
   maxPage?: number
 }
 
+// 이후 API 연결할때 테스트
+// interface TagLoading {
+//   isPending: boolean      //isPending
+//   isPaginating: boolean   //페이지네이션으로 이동시(isFetching)
+// }
+
 // {tags, page, page_size, total_count} :TagApiResponse
 // api 적용시 사용
 interface TagListInterface {
@@ -24,6 +32,7 @@ interface TagListInterface {
   onSelectTag: tagSelect
   selectArray: string[]
   keyword: string //검색 키워드
+  isLoading: boolean //로딩중
 }
 
 const TagList = ({
@@ -33,9 +42,20 @@ const TagList = ({
   onSelectTag,
   selectArray,
   keyword,
+  isLoading,
 }: TagListInterface) => {
   if (!responseData || !page) {
     return
+  }
+
+  //Todo 현재는 페이지 네이션을 해도 스켈레톤이 출력되지만 이후api 연동할때 분기 처리 할것
+  if (isLoading) {
+    return (
+      <Vstack gap="none" className="items-center justify-center">
+        <TagSkeleton />
+        <TagPaginationSkeleton />
+      </Vstack>
+    )
   }
 
   // 검색 결과 없음 새로운 태그 추가

@@ -2,13 +2,21 @@ import './markdown.css'
 import MDEditor from '@uiw/react-md-editor'
 import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
-import { useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
 import { commandArray, extraCommandArray } from './_commandArray'
 import markdownPlaceholder from './_markdownPlaceholder'
 
-const MarkdownEditor = () => {
-  const [value, setValue] = useState<string | undefined>('')
+interface MarkdownEditorProps {
+  onChange: (value: string | undefined) => void
+}
+
+const MarkdownEditor = memo(({ onChange }: MarkdownEditorProps) => {
+  const [text, setText] = useState<string | undefined>('')
+
+  useEffect(() => {
+    onChange(text)
+  }, [text, onChange])
 
   return (
     <>
@@ -21,8 +29,8 @@ const MarkdownEditor = () => {
       >
         <Vstack className="gap-0">
           <MDEditor
-            value={value}
-            onChange={setValue}
+            value={text}
+            onChange={setText}
             height={284}
             visibleDragbar={false}
             previewOptions={{
@@ -65,6 +73,7 @@ const MarkdownEditor = () => {
       </RoundBox>
     </>
   )
-}
+})
 
+MarkdownEditor.displayName = 'MarkdownEditor'
 export default MarkdownEditor

@@ -34,6 +34,8 @@ const useStudyHubStore = create<StudyHubState>()(
       setIsFocusingSearch: (isFocusingSearch) => set({ isFocusingSearch }),
 
       // recruit
+      studyGroupArray: [],
+      setStudyGroupArray: (studyGroupArray) => set({ studyGroupArray }),
 
       // lecture
       lectureArray: [],
