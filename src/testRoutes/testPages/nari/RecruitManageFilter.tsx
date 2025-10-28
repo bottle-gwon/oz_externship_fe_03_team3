@@ -21,8 +21,10 @@ type RecruitManageFilterProps = {
 const conditionOptions = (optionText: string): RecruitConditionInText => {
   if (optionText.startsWith('전체')) return '전체'
   if (optionText.startsWith('모집중')) return '모집중'
-  return '마감됨'
+  if (optionText.startsWith('마감됨')) return '마감됨'
+  return '전체'
 }
+
 const filterRecruitsManageApi = (
   condition: RecruitConditionInText,
   arrangement: RecruitArrangementInText
@@ -47,7 +49,7 @@ const filterRecruitsManageApi = (
           return Date.parse(b.created_at) - Date.parse(a.created_at)
       }
     })
-  useStudyHubStore.getState().setRecruitArray(filteredRecruitsManageArray)
+
   return filteredRecruitsManageArray
 }
 
@@ -57,13 +59,16 @@ const RecruitManageFilter = ({ onChange }: RecruitManageFilterProps) => {
   const [selectedArrangement, setSelectedArrangement] =
     useState<RecruitArrangementInText>('최신순')
 
+  const setRecruitArray = useStudyHubStore((state) => state.setRecruitArray)
+
   useEffect(() => {
     const filteredRecruits = filterRecruitsManageApi(
       selectedCondition,
       selectedArrangement
     )
+    setRecruitArray(filteredRecruits)
     onChange(filteredRecruits)
-  }, [selectedCondition, selectedArrangement, onChange])
+  }, [selectedCondition, selectedArrangement, onChange, setRecruitArray])
 
   const totalCount = mockRecruits.length
   const openCount = mockRecruits.filter((item) => !item.is_closed).length
