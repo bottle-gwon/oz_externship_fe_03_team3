@@ -9,10 +9,10 @@ import {
   type RecruitConditionInText,
 } from '@/types'
 import { mockRecruits } from '@/testRoutes/testPages/nari/_TestMokData'
-import RecruitManageSelect from '@/testRoutes/testPages/nari/_RecruitManageSelect'
 
 import useStudyHubStore from '@/store/store'
 import Select from '@/components/commonInGeneral/select/Select'
+import RecruitManageSelect from './_RecruitManageSelect'
 
 type RecruitManageFilterProps = {
   onChange: (filteredRecruitsManageArray: Recruit[]) => void

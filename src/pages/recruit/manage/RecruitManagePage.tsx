@@ -12,8 +12,9 @@ import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
 import { MessageCircle } from 'lucide-react'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
-import RecruitManageFilter from '@/testRoutes/testPages/nari/RecruitManageFilter'
+
 import type { Recruit } from '@/types'
+import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
 
 const RecruitManagementPage = () => {
   const navigate = useNavigate()
