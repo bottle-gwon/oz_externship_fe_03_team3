@@ -32,7 +32,7 @@ const ManageDetailModal = ({
         <h2 className="text-lg font-semibold">지원자 상세 정보</h2>
       </Modal.Header>
 
-      <Modal.Body>
+      <Modal.Body className="overflow-auto">
         <Vstack gap="xl">
           <RoundBox isBordered={false} padding="lg" color="mono-dim">
             <Vstack>
@@ -93,7 +93,9 @@ const ManageDetailModal = ({
       </Modal.Body>
 
       <Modal.Footer>
-        {applicant.status === 'pending' && <ManageDetailModalButtons />}
+        {applicant.status === 'pending' && (
+          <ManageDetailModalButtons onClose={handleClose} />
+        )}
       </Modal.Footer>
     </Modal>
   )
