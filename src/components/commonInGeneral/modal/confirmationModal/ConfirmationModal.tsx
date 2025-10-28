@@ -14,7 +14,7 @@ const ConfirmationModalButtonSection = ({
 }: {
   children: ReactNode
 }) => {
-  return <Hstack className="mt-oz-xxl justify-end">{children}</Hstack>
+  return <Hstack className="mt-oz-xxl w-full justify-end">{children}</Hstack>
 }
 
 interface ConfirmationModalProps {
