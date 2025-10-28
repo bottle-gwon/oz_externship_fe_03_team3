@@ -10,13 +10,19 @@ import {
 } from '@/types'
 import { mockRecruits } from '@/testRoutes/testPages/nari/_TestMokData'
 import RecruitManageSelect from '@/testRoutes/testPages/nari/_RecruitManageSelect'
-import RecruitConditionSelect from '@/testRoutes/testPages/nari/_RecruitConditionSelect'
+
 import useStudyHubStore from '@/store/store'
+import Select from '@/components/commonInGeneral/select/Select'
 
 type RecruitManageFilterProps = {
   onChange: (filteredRecruitsManageArray: Recruit[]) => void
 }
 
+const conditionOptions = (optionText: string): RecruitConditionInText => {
+  if (optionText.startsWith('전체')) return '전체'
+  if (optionText.startsWith('모집중')) return '모집중'
+  return '마감됨'
+}
 const filterRecruitsManageApi = (
   condition: RecruitConditionInText,
   arrangement: RecruitArrangementInText
@@ -26,6 +32,7 @@ const filterRecruitsManageApi = (
       if (condition === '전체') return true
       if (condition === '모집중') return !recruit.is_closed
       if (condition === '마감됨') return recruit.is_closed
+      return true
     })
 
     .sort((a, b) => {
@@ -37,7 +44,7 @@ const filterRecruitsManageApi = (
         case '조회수 많은 순':
           return (b.views_count ?? 0) - (a.views_count ?? 0)
         default:
-          return 0
+          return Date.parse(b.created_at) - Date.parse(a.created_at)
       }
     })
   useStudyHubStore.getState().setRecruitArray(filteredRecruitsManageArray)
@@ -59,8 +66,8 @@ const RecruitManageFilter = ({ onChange }: RecruitManageFilterProps) => {
   }, [selectedCondition, selectedArrangement, onChange])
 
   const totalCount = mockRecruits.length
-  const openCount = mockRecruits.filter((i) => !i.is_closed).length
-  const closedCount = mockRecruits.filter((i) => i.is_closed).length
+  const openCount = mockRecruits.filter((item) => !item.is_closed).length
+  const closedCount = mockRecruits.filter((item) => item.is_closed).length
 
   const conditionTriggerLabel =
     selectedCondition === '전체'
@@ -74,11 +81,18 @@ const RecruitManageFilter = ({ onChange }: RecruitManageFilterProps) => {
       <Hstack>
         <Vstack className="w-full">
           <Text>상태</Text>
-          <RecruitConditionSelect
-            selectedCondition={selectedCondition}
-            triggerLabel={conditionTriggerLabel}
-            setRecruitConditionSelectProps={setSelectedCondition}
-          />
+          <Select
+            onOptionSelect={(opt) =>
+              setSelectedCondition(conditionOptions(String(opt)))
+            }
+          >
+            <Select.Trigger>{conditionTriggerLabel}</Select.Trigger>
+            <Select.Content>
+              <Select.Option>{`전체 (${totalCount})`}</Select.Option>
+              <Select.Option>{`모집중 (${openCount})`}</Select.Option>
+              <Select.Option>{`마감됨 (${closedCount})`}</Select.Option>
+            </Select.Content>
+          </Select>
         </Vstack>
 
         <Vstack className="w-full">
