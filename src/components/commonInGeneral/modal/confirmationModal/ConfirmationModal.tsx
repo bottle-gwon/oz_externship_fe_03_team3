@@ -38,7 +38,7 @@ const ConfirmationModal = ({
       onClose={onClose}
       className="p-oz-xxl"
     >
-      <Vstack className="items-center">{children}</Vstack>
+      <Vstack className="items-center gap-0">{children}</Vstack>
     </Modal>
   )
 }
