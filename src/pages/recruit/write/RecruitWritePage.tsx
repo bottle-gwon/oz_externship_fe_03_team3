@@ -17,9 +17,11 @@ import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/Markdown
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
 import { Controller, useForm, type FieldValues } from 'react-hook-form'
 import useStudyHubStore from '@/store/store'
-import dummyGetStudyGroupsResponse from './dummyGetStudyGroupsResponse'
+import dummyGetStudyGroupsResponse from './_dummyGetStudyGroupsResponse'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { recruitWriteSchema } from '@/lib/zodSchema'
+import { useNavigate } from 'react-router'
+import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -41,6 +43,8 @@ const RecruitWritePage = () => {
   const setStudyGroupArray = useStudyHubStore(
     (state) => state.setStudyGroupArray
   )
+
+  const navigate = useNavigate()
 
   const {
     handleSubmit,
@@ -114,6 +118,7 @@ const RecruitWritePage = () => {
                 <Labeled.Input {...register('due_date')} type="date" />
                 <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
               </Labeled>
+
               <Labeled
                 isRequired
                 isInDanger={Boolean(errors.expected_personnel)}
@@ -128,7 +133,7 @@ const RecruitWritePage = () => {
                         예상 모집 인원을 선택하세요
                       </Select.Trigger>
                       <Select.Content>
-                        {Array(10)
+                        {Array(RECRUIT_WRITE_CONFIG.MAX_PERSONNEL)
                           .fill(0)
                           .map((_, index) => (
                             <Select.Option
@@ -167,7 +172,9 @@ const RecruitWritePage = () => {
                 • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
               </Labeled.Footer>
               <Labeled.Footer>
-                • 이미지 추가: ![설명](이미지URL) - 최대 5개, 각 5MB 이하
+                • 이미지 추가: ![설명](이미지URL) - 최대{' '}
+                {RECRUIT_WRITE_CONFIG.MAX_IMAGE}개, 각{' '}
+                {RECRUIT_WRITE_CONFIG.MAX_IMAGE_FILE_SIZE} 이하
               </Labeled.Footer>
             </Labeled>
           </WriteBox>
@@ -206,7 +213,8 @@ const RecruitWritePage = () => {
               </RoundBox>
               <Labeled.Footer>{errors?.tags?.message}</Labeled.Footer>
               <Labeled.Footer>
-                태그는 최대 5개까지 선택할 수 있습니다. ({dummyTagCount}/5)
+                태그는 최대 {RECRUIT_WRITE_CONFIG.MAX_TAG}개까지 선택할 수
+                있습니다. ({dummyTagCount}/{RECRUIT_WRITE_CONFIG.MAX_TAG})
               </Labeled.Footer>
             </Labeled>
 
@@ -222,7 +230,9 @@ const RecruitWritePage = () => {
           <Vstack gap="xl">
             <Divider />
             <Hstack className="justify-end">
-              <Button>취소</Button>
+              <Button type="button" onClick={() => navigate(-1)}>
+                취소
+              </Button>
               <Button color="primary">
                 <Send size={16} />
                 공고 등록하기
