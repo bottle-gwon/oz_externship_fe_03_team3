@@ -2,7 +2,7 @@ import './markdown.css'
 import MDEditor from '@uiw/react-md-editor'
 import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
-import { useEffect, useState } from 'react'
+import { memo, useEffect, useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
 import { commandArray, extraCommandArray } from './_commandArray'
 import markdownPlaceholder from './_markdownPlaceholder'
@@ -11,7 +11,7 @@ interface MarkdownEditorProps {
   onChange: (value: string | undefined) => void
 }
 
-const MarkdownEditor = ({ onChange }: MarkdownEditorProps) => {
+const MarkdownEditor = memo(({ onChange }: MarkdownEditorProps) => {
   const [text, setText] = useState<string | undefined>('')
 
   useEffect(() => {
@@ -73,6 +73,7 @@ const MarkdownEditor = ({ onChange }: MarkdownEditorProps) => {
       </RoundBox>
     </>
   )
-}
+})
 
+MarkdownEditor.displayName = 'MarkdownEditor'
 export default MarkdownEditor

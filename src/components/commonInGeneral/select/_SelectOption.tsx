@@ -20,9 +20,9 @@ const SelectOption = ({
     setSelectedIcon(icon ?? null)
 
     setIsOpened(false)
-    setSelectedOption(value || children)
+    setSelectedOption(value ?? children)
 
-    onOptionSelect(children)
+    onOptionSelect(value ?? children)
   }
 
   // TODO: 나중에 p 태그는 Text로 교체

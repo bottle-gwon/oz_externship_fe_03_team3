@@ -15,7 +15,7 @@ import TagIcon from '@/assets/tag.svg'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
-import { useForm, type FieldValues } from 'react-hook-form'
+import { Controller, useForm, type FieldValues } from 'react-hook-form'
 import useStudyHubStore from '@/store/store'
 import dummyGetStudyGroupsResponse from './dummyGetStudyGroupsResponse'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -46,6 +46,7 @@ const RecruitWritePage = () => {
     handleSubmit,
     setValue,
     register,
+    control,
     formState: { errors },
   } = useForm({ resolver: zodResolver(recruitWriteSchema) })
 
@@ -59,7 +60,10 @@ const RecruitWritePage = () => {
   }, [])
 
   const onSubmit = (_data: FieldValues) => {
+    // ---- 테스트할 땐 여기 주석을 해제해주세요
     // console.log({ _data })
+    // debugger
+    // ---- 여기까지
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
   }
@@ -82,20 +86,25 @@ const RecruitWritePage = () => {
 
             <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
               <Labeled.Header>대상 스터디 그룹</Labeled.Header>
-              <Select
-                onOptionSelect={(option) =>
-                  setValue('study_group_id', option as number)
-                }
-              >
-                <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
-                <Select.Content>
-                  {studyGroupArray.map((studyGroup) => (
-                    <Select.Option key={studyGroup.id} value={studyGroup.id}>
-                      {studyGroup.name}
-                    </Select.Option>
-                  ))}
-                </Select.Content>
-              </Select>
+              <Controller
+                control={control}
+                name="study_group_id"
+                render={({ field: { onChange } }) => (
+                  <Select onOptionSelect={onChange}>
+                    <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
+                    <Select.Content>
+                      {studyGroupArray.map((studyGroup) => (
+                        <Select.Option
+                          key={studyGroup.id}
+                          value={studyGroup.id}
+                        >
+                          {studyGroup.name}
+                        </Select.Option>
+                      ))}
+                    </Select.Content>
+                  </Select>
+                )}
+              />
               <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
             </Labeled>
 
@@ -110,23 +119,27 @@ const RecruitWritePage = () => {
                 isInDanger={Boolean(errors.expected_personnel)}
               >
                 <Labeled.Header>예상 모집 인원</Labeled.Header>
-                <Select
-                  onOptionSelect={(option) =>
-                    setValue('expected_personnel', option as number)
-                  }
-                >
-                  <Select.Trigger>예상 모집 인원을 선택하세요</Select.Trigger>
-                  <Select.Content>
-                    {Array(10)
-                      .fill(0)
-                      .map((_, index) => (
-                        <Select.Option
-                          key={index}
-                          value={index + 1}
-                        >{`${index + 1}명`}</Select.Option>
-                      ))}
-                  </Select.Content>
-                </Select>
+                <Controller
+                  control={control}
+                  name="expected_personnel"
+                  render={({ field: { onChange } }) => (
+                    <Select onOptionSelect={onChange}>
+                      <Select.Trigger>
+                        예상 모집 인원을 선택하세요
+                      </Select.Trigger>
+                      <Select.Content>
+                        {Array(10)
+                          .fill(0)
+                          .map((_, index) => (
+                            <Select.Option
+                              key={index}
+                              value={index + 1}
+                            >{`${index + 1}명`}</Select.Option>
+                          ))}
+                      </Select.Content>
+                    </Select>
+                  )}
+                />
                 <Labeled.Footer>
                   {errors?.expected_personnel?.message}
                 </Labeled.Footer>
@@ -142,9 +155,12 @@ const RecruitWritePage = () => {
                 <p>마크다운 문법을 사용할 수 있습니다</p>
                 <p>이미지 {dummyImageCount}/5개</p>
               </Hstack>
-
-              <MarkdownEditor
-                onChange={(value) => setValue('content', value ?? '')}
+              <Controller
+                control={control}
+                name="content"
+                render={({ field: { onChange } }) => (
+                  <MarkdownEditor onChange={onChange} />
+                )}
               />
               <Labeled.Footer>{errors?.content?.message}</Labeled.Footer>
               <Labeled.Footer>
