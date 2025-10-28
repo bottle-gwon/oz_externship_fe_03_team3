@@ -31,9 +31,8 @@ const ThePottModalPage = () => {
       <ConfirmationModal isOn={isOn1} onClose={() => setIsOn1(false)}>
         <ConfirmationModal.Title>완전 중요한 거</ConfirmationModal.Title>
         <ConfirmationModal.Content>
-          으하하하 으하하항 으하하하 으하하하 으하하항 으하하하 으하하하
-          으하하항 으하하하 으하하하 으하하항 으하하하 으하하하 으하하항
-          으하하하 으하하하 으하하항 으하하하
+          으하하하 으하항 으하 으하하하 항 으하하 으하하하 으 으하하 으하하하
+          으하하항 으하하하 으하하하 으하하항 으하 으하하하 으 하하
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
           <Button onClick={() => setIsOn1(false)}>확인</Button>

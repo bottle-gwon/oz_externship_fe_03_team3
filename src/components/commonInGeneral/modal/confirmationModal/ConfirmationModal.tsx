@@ -3,10 +3,10 @@ import Modal from '../Modal'
 import { Hstack, Vstack } from '../../layout'
 
 const ConfirmationModalTitle = ({ children }: { children: ReactNode }) => {
-  return <div className="text-lg font-semibold">{children}</div>
+  return <div className="text-center text-lg font-semibold">{children}</div>
 }
 const ConfirmationModalContent = ({ children }: { children: ReactNode }) => {
-  return <div className="mt-oz-lg">{children}</div>
+  return <div className="mt-oz-lg inline-block w-fit text-left">{children}</div>
 }
 
 const ConfirmationModalButtonSection = ({
@@ -14,7 +14,7 @@ const ConfirmationModalButtonSection = ({
 }: {
   children: ReactNode
 }) => {
-  return <Hstack className="mt-oz-xxl">{children}</Hstack>
+  return <Hstack className="mt-oz-xxl justify-end">{children}</Hstack>
 }
 
 interface ConfirmationModalProps {
@@ -31,8 +31,14 @@ const ConfirmationModal = ({
   modalZIndex,
 }: ConfirmationModalProps) => {
   return (
-    <Modal width="xs" modalZIndex={modalZIndex} isOn={isOn} onClose={onClose}>
-      <Vstack className="p-oz-xxl items-center gap-0">{children}</Vstack>
+    <Modal
+      width="xs"
+      modalZIndex={modalZIndex}
+      isOn={isOn}
+      onClose={onClose}
+      className="p-oz-xxl"
+    >
+      <Vstack className="items-center">{children}</Vstack>
     </Modal>
   )
 }
