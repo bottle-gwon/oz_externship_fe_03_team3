@@ -18,6 +18,8 @@ import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone
 import { useForm, type FieldValues } from 'react-hook-form'
 import useStudyHubStore from '@/store/store'
 import dummyGetStudyGroupsResponse from './dummyGetStudyGroupsResponse'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { recruitWriteSchema } from '@/lib/zodSchema'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -40,7 +42,12 @@ const RecruitWritePage = () => {
     (state) => state.setStudyGroupArray
   )
 
-  const { handleSubmit, setValue, register } = useForm()
+  const {
+    handleSubmit,
+    setValue,
+    register,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(recruitWriteSchema) })
 
   // TODO: api 연결할 땐 useQuery로 교체해야
   useEffect(() => {
@@ -51,9 +58,8 @@ const RecruitWritePage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const onSubmit = (data: FieldValues) => {
-    console.log({ data })
-    debugger
+  const onSubmit = (_data: FieldValues) => {
+    // console.log({ _data })
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
   }
@@ -64,19 +70,22 @@ const RecruitWritePage = () => {
         <Vstack gap="xxl">
           {/* 여기 바텀 패딩이 없어야할 거 같은데 */}
           {/* isPaddedBottom 옵션 넣어달라고 하고 우선 이대로 진행하자 */}
-          <TitleSection type="create" />
+          <TitleSection type="write" />
 
           <WriteBox>
             <H2>기본 정보</H2>
-            <Labeled isRequired>
+            <Labeled isRequired isInDanger={Boolean(errors.title)}>
               <Labeled.Header>공고 제목</Labeled.Header>
               <Labeled.Input {...register('title')} />
-              <Labeled.Footer></Labeled.Footer>
+              <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
             </Labeled>
-            <Labeled isRequired>
+
+            <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
               <Labeled.Header>대상 스터디 그룹</Labeled.Header>
               <Select
-                onOptionSelect={(option) => setValue('study_group_id', option)}
+                onOptionSelect={(option) =>
+                  setValue('study_group_id', option as number)
+                }
               >
                 <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
                 <Select.Content>
@@ -87,20 +96,23 @@ const RecruitWritePage = () => {
                   ))}
                 </Select.Content>
               </Select>
-              <Labeled.Footer></Labeled.Footer>
+              <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
             </Labeled>
 
             <GridContainer>
-              <Labeled isRequired>
+              <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
                 <Labeled.Header>공고 마감 기한</Labeled.Header>
-                <Labeled.Input {...register('due-date')} type="date" />
-                <Labeled.Footer></Labeled.Footer>
+                <Labeled.Input {...register('due_date')} type="date" />
+                <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
               </Labeled>
-              <Labeled isRequired>
+              <Labeled
+                isRequired
+                isInDanger={Boolean(errors.expected_personnel)}
+              >
                 <Labeled.Header>예상 모집 인원</Labeled.Header>
                 <Select
                   onOptionSelect={(option) =>
-                    setValue('expected_personnel', option)
+                    setValue('expected_personnel', option as number)
                   }
                 >
                   <Select.Trigger>예상 모집 인원을 선택하세요</Select.Trigger>
@@ -115,21 +127,26 @@ const RecruitWritePage = () => {
                       ))}
                   </Select.Content>
                 </Select>
+                <Labeled.Footer>
+                  {errors?.expected_personnel?.message}
+                </Labeled.Footer>
               </Labeled>
             </GridContainer>
           </WriteBox>
 
           <WriteBox>
             <H2>공고 내용</H2>
-            <Labeled isRequired>
+            <Labeled isRequired isInDanger={Boolean(errors.content)}>
               <Labeled.Header>스터디 그룹 소개</Labeled.Header>
               <Hstack className="justify-between text-xs text-gray-500">
                 <p>마크다운 문법을 사용할 수 있습니다</p>
                 <p>이미지 {dummyImageCount}/5개</p>
               </Hstack>
 
-              <MarkdownEditor setValue={setValue} />
-
+              <MarkdownEditor
+                onChange={(value) => setValue('content', value ?? '')}
+              />
+              <Labeled.Footer>{errors?.content?.message}</Labeled.Footer>
               <Labeled.Footer>
                 • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
               </Labeled.Footer>
@@ -142,16 +159,17 @@ const RecruitWritePage = () => {
           <WriteBox>
             <H2>추가 정보</H2>
 
-            <Labeled>
+            <Labeled isInDanger={Boolean(errors.estimated_cost)}>
               <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
               <Labeled.Input
                 {...register('estimated_cost')}
+                type="number"
                 placeholder="미입력시 강의 비용 자동 계산"
               />
-              <Labeled.Footer></Labeled.Footer>
+              <Labeled.Footer>{errors?.estimated_cost?.message}</Labeled.Footer>
             </Labeled>
 
-            <Labeled>
+            <Labeled isInDanger={Boolean(errors.tags)}>
               <Hstack className="items-end justify-between">
                 <Labeled.Header>사용자 정의 태그</Labeled.Header>
                 <Button color="primary" size="sm" className="mb-oz-xs">
@@ -170,15 +188,18 @@ const RecruitWritePage = () => {
                   </Vstack>
                 </Vstack>
               </RoundBox>
+              <Labeled.Footer>{errors?.tags?.message}</Labeled.Footer>
               <Labeled.Footer>
                 태그는 최대 5개까지 선택할 수 있습니다. ({dummyTagCount}/5)
               </Labeled.Footer>
             </Labeled>
 
-            <Labeled>
+            <Labeled isInDanger={Boolean(errors.attachments)}>
               <Labeled.Header>참고 파일 업로드</Labeled.Header>
-              <FileDropzone setValue={setValue} />
-              <Labeled.Footer></Labeled.Footer>
+              <FileDropzone
+                onChange={(fileArray) => setValue('attachments', fileArray)}
+              />
+              <Labeled.Footer>{errors?.attachments?.message}</Labeled.Footer>
             </Labeled>
           </WriteBox>
 

@@ -6,18 +6,17 @@ import { useEffect, useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
 import { commandArray, extraCommandArray } from './_commandArray'
 import markdownPlaceholder from './_markdownPlaceholder'
-import type { UseFormSetValue, FieldValues } from 'react-hook-form'
 
 interface MarkdownEditorProps {
-  setValue: UseFormSetValue<FieldValues>
+  onChange: (value: string | undefined) => void
 }
 
-const MarkdownEditor = ({ setValue }: MarkdownEditorProps) => {
+const MarkdownEditor = ({ onChange }: MarkdownEditorProps) => {
   const [text, setText] = useState<string | undefined>('')
 
   useEffect(() => {
-    setValue('content', text)
-  }, [text, setValue])
+    onChange(text)
+  }, [text, onChange])
 
   return (
     <>

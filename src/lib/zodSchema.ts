@@ -59,11 +59,18 @@ export const defaultApplicationValues: ApplicationForm = {
 export const recruitWriteSchema = z.object({
   title: z.string().min(1, '제목을 입력하세요'),
   content: z.string().min(1, '스터디 그룹을 소개해주세요'),
-  due_data: z.date().min(new Date(), '마감일은 오늘 이후여야 합니다'), // 어떻게 필수로 만들지?
-  expected_personnel: z.number().min(1, '모집 인원을 선택해주세요'),
-  study_group_id: z.number().min(1, '스터디 모집 인원을 선택해주세요'), // 필수로 만들어야
-  estimated_cost: z.number(),
-  tags: z.array(z.string()),
-  attachments: z.array(z.file()),
-  images: z.array(z.string()),
+  due_date: z.coerce
+    .date('공고 마감 기한을 선택해주세요')
+    .min(new Date(), '마감일은 오늘 이후여야 합니다'), // 어떻게 필수로 만들지?
+  expected_personnel: z
+    .number('예상 모집 입원을 선택해주세요')
+    .min(1, '예상 모집 인원을 선택해주세요'),
+  study_group_id: z.coerce
+    .number('스터디 그룹을 선택해주세요')
+    .min(1, '스터디 그룹을 선택해주세요'), // 필수로 만들어야
+  estimated_cost: z.nullish(z.coerce.number()),
+  tags: z.nullish(z.array(z.string())),
+  attachments: z.nullish(z.array(z.file())),
+  images: z.nullish(z.array(z.string())),
 })
+export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
