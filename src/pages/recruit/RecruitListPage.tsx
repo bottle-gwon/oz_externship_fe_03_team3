@@ -8,10 +8,10 @@ import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHe
 import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
 import RecommendSection from '@/components/recommendSection/RecommendSection'
 import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
-import { dummyRecruitArray } from '@/components/recruit/recruitListDummy'
 import ScrollText from '../../assets/scroll-text.svg'
 import { LogIn, Search } from 'lucide-react'
 import { useNavigate } from 'react-router'
+import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 
 const RecruitListPage = () => {
   const navigate = useNavigate()

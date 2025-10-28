@@ -1,6 +1,6 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Vstack } from '@/components/commonInGeneral/layout'
-import { dummyApplicantArray } from '@/components/recruit/ApplicantListDummy'
+import { dummyApplicantArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantList'
 import ManageModal from '@/components/recruit/manageModal/ManageModal'
 import { useState } from 'react'
 

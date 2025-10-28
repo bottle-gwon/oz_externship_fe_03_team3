@@ -1,5 +1,5 @@
 import type { Applicant } from '@/types/_applicantInterface'
-import img from '../../testRoutes/testPages/hyejeong/profile-img.jpg'
+import img from '../profile-img.jpg'
 
 export const dummyApplicantArray: Applicant[] = [
   {

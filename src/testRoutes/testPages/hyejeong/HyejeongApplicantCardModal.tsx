@@ -1,5 +1,5 @@
 import ApplicantCard from '@/components/recruit/applicantCard/ApplicantCard'
-import { dummyApplicantArray } from '@/components/recruit/ApplicantListDummy'
+import { dummyApplicantArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantList'
 
 const HyejeongApplicantCardModal = () => {
   return (

@@ -8,7 +8,7 @@ const RecommendPreviewCard = () => {
       className="relative h-[142px] w-full rounded-lg border border-gray-200/70 bg-white/50"
     >
       <div className="absolute -top-1 -right-1">
-        <img src={CircleStar} />
+        <img src={CircleStar} alt="userstar-icon" />
       </div>
 
       <Hstack gap="md">
