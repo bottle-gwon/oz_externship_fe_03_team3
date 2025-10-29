@@ -13,7 +13,6 @@ import { Send } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
-import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
 import {
   Controller,
   useForm,
