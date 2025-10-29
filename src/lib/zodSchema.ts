@@ -56,21 +56,33 @@ export const defaultApplicationValues: ApplicationForm = {
   studyExperience: '',
 }
 
-export const recruitWriteSchema = z.object({
-  title: z.string().min(1, '제목을 입력하세요'),
-  content: z.string().min(1, '스터디 그룹을 소개해주세요'),
-  due_date: z.coerce
-    .date('공고 마감 기한을 선택해주세요')
-    .min(new Date(), '마감일은 오늘 이후여야 합니다'), // 어떻게 필수로 만들지?
-  expected_personnel: z
-    .number('예상 모집 입원을 선택해주세요')
-    .min(1, '예상 모집 인원을 선택해주세요'),
-  study_group_id: z.coerce
-    .number('스터디 그룹을 선택해주세요')
-    .min(1, '스터디 그룹을 선택해주세요'), // 필수로 만들어야
-  estimated_cost: z.nullish(z.coerce.number()),
-  tags: z.nullish(z.array(z.string())),
-  attachments: z.nullish(z.array(z.file())),
-  images: z.nullish(z.array(z.string())),
-})
+export const recruitWriteSchema = z
+  .object({
+    title: z.string().min(1, '제목을 입력하세요'),
+    content: z.string().min(1, '스터디 그룹을 소개해주세요'),
+    due_date: z.coerce
+      .date('공고 마감 기한을 선택해주세요')
+      .min(new Date(), '마감일은 오늘 이후여야 합니다'),
+    expected_personnel: z
+      .number('예상 모집 입원을 선택해주세요')
+      .min(1, '예상 모집 인원을 선택해주세요'),
+    study_group_id: z.coerce
+      .number('스터디 그룹을 선택해주세요')
+      .min(1, '스터디 그룹을 선택해주세요'),
+    estimated_cost: z.nullish(z.coerce.number()),
+    tags: z
+      .array(z.string())
+      .max(5, '태그는 5개를 초과할 수 없습니다')
+      .nullish(),
+    attachments: z
+      .array(z.file())
+      .max(5, '참고 파일은 5개를 초과할 수 없습니다')
+      .nullish(),
+    images: z.nullish(z.array(z.string())),
+  })
+  .refine((data) => !data.images || data.images.length <= 5, {
+    message: '공고 내용의 이미지는 5개를 초과할 수 없습니다',
+    path: ['content'],
+  })
+
 export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
