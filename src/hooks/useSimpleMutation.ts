@@ -4,10 +4,7 @@ import { useMutation } from '@tanstack/react-query'
 interface SimpleMutationOptions<TPrevious, TNewOne> {
   queryEndpoint: string
   mutationFnWithBody: (body: unknown) => unknown
-  updateCacheForUi: (
-    previous: TPrevious | undefined,
-    newOne: TNewOne
-  ) => TPrevious
+  updateCacheForUi: (previous: TPrevious, newOne: TNewOne) => TPrevious
   handleSuccess?: () => void
   handleError?: (error: Error) => void
 }
@@ -39,8 +36,11 @@ export const useSimpleMutation = <TPrevious, TNewOne>(
       const previous: TPrevious | undefined = queryClient.getQueryData([
         queryEndpoint,
       ])
-      const newCache = updateCacheForUi(previous, newOne)
-      queryClient.setQueryData([queryEndpoint], newCache)
+
+      if (previous !== undefined) {
+        const newCache = updateCacheForUi(previous, newOne)
+        queryClient.setQueryData([queryEndpoint], newCache)
+      }
 
       return { previous }
     },
