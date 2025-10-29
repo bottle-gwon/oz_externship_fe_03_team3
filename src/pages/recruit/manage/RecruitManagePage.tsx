@@ -11,7 +11,7 @@ import FloatingButtonContainer from '@/components/layout/floatingButton/Floating
 import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
 import { MessageCircle } from 'lucide-react'
 import { useNavigate } from 'react-router'
-import { useState } from 'react'
+import { useCallback, useState } from 'react'
 
 import type { Recruit } from '@/types'
 import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
@@ -20,6 +20,10 @@ const RecruitManagementPage = () => {
   const navigate = useNavigate()
   const handleClick = (url: string) => navigate(url)
   const badgeTest = 12
+
+  const handleFilterChange = useCallback((filtered: Recruit[]) => {
+    setVisibleRecruits(filtered)
+  }, [])
 
   const [visibleRecruits, setVisibleRecruits] = useState<Recruit[]>(() => [
     ...mockRecruits,
@@ -49,11 +53,7 @@ const RecruitManagementPage = () => {
       <Vstack gap="xl">
         <RecruitSummaryCard myRecruitArray={mockRecruits} />
 
-        <RecruitManageFilter
-          onChange={(filteredRecruitsManageArray) =>
-            setVisibleRecruits(filteredRecruitsManageArray)
-          }
-        />
+        <RecruitManageFilter onChange={handleFilterChange} />
 
         <Vstack gap="none">
           <h1>내 공고 목록 ({visibleRecruits.length})</h1>
