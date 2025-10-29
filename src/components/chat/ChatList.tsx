@@ -3,6 +3,8 @@ import ChatListCard from './feat/ChatListCard'
 import useStudyHubStore from '@/store/store'
 import { useEffect, useRef, useState } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
+import Spinner from '../commonInGeneral/spinner/Spinner'
+import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
@@ -80,7 +82,31 @@ const ChatList = () => {
   const responseData = DUMMY_CHATLIST
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
   const [isPending, setIsPending] = useState(false)
+  const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
+
   const timerRef = useRef<NodeJS.Timeout | null>(null)
+  const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
+
+  const LoadingRef = useOneWayInfinityScroll(() => {
+    // 스크롤이 타겟에 들어왔을때 (훅에서는 100% 보일때로 설정해둠)
+    // 아래 타이머 관련은 추후 삭제하고 api로 연결할 예정입니다. 일단은 예시로 로딩만 볼 수 있게 했습니다.
+    if (scrollTimerIdRef.current) {
+      clearTimeout(scrollTimerIdRef.current)
+    }
+
+    setIsFetchingNextPage(true)
+    scrollTimerIdRef.current = setTimeout(
+      () => setIsFetchingNextPage(false),
+      1500
+    )
+  })
+  useEffect(() => {
+    return () => {
+      if (scrollTimerIdRef.current) {
+        clearTimeout(scrollTimerIdRef.current)
+      }
+    }
+  }, [])
 
   useEffect(() => {
     setIsPending(true)
@@ -108,6 +134,10 @@ const ChatList = () => {
         {responseData.data.room.map((el) => (
           <ChatListCard key={el.study_group_id} room={el} />
         ))}
+        {/* 테스트로 border 넣었습니다. 추후 제거  */}
+        <div ref={LoadingRef} className="h-6 w-full shrink-0 border"></div>
+
+        {isFetchingNextPage && <ChatListSkeleton />}
       </ChattingLayout.Body>
     </ChattingLayout>
   )
