@@ -74,27 +74,28 @@ const RecruitContent = () => {
 
         <Vstack gap="none">
           <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
-            전체 공고({dummyRecruitArray.length})
+            전체 공고({recruitArray.length})
           </Vstack>
           {isSearching && recruitArray.length === 0 && <NoSearchResult />}
           {recruitArray.length > 0 && (
-            <Vstack gap="none" className="w-full">
-              {recruitArray.map((recruit) => (
-                <RecruitCard key={recruit.uuid} recruit={recruit} />
-              ))}
+            <Vstack gap="none" className="items-center gap-12">
+              <Vstack gap="none" className="w-full">
+                {recruitArray.map((recruit) => (
+                  <RecruitCard key={recruit.uuid} recruit={recruit} />
+                ))}
+              </Vstack>
+              <Button
+                variant="contained"
+                status="enabled"
+                size="lg"
+                className="mb-oz-xxl"
+              >
+                + 더 많은 공고 보기
+              </Button>
             </Vstack>
           )}
         </Vstack>
       </Vstack>
-
-      <Button
-        variant="contained"
-        status="enabled"
-        size="lg"
-        className="mb-oz-xxl mt-12"
-      >
-        + 더 많은 공고 보기
-      </Button>
     </Container>
   )
 }
