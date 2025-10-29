@@ -61,8 +61,8 @@ const RecruitWritePage = () => {
 
   const onSubmit = (_data: FieldValues) => {
     // ---- 테스트할 땐 여기 주석을 해제해주세요
-    console.log({ _data })
-    debugger
+    // console.log({ _data })
+    // debugger
     // ---- 여기까지
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
