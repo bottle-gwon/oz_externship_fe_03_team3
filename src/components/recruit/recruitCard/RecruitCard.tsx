@@ -16,6 +16,7 @@ import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import ManageModal from '../manageModal/ManageModal'
 import { dummyApplicantArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantList'
+import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -45,16 +46,24 @@ const RecruitCard = ({
   const navigate = useNavigate()
   const [manageOpen, setManageOpen] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
+  const [confirmOpen, setConfirmOpen] = useState(false)
 
   const handleEdit = () => {
     navigate(`/recruit/write?edit=${id}`)
   }
 
   const handleDelete = () => {
-    if (!window.confirm(`[${title}]공고를 삭제할까요?`)) return
+    setConfirmOpen(true)
+  }
+
+  const confirmDelete = () => {
     // 실제 삭제 API 연동 전까지는 카드만 숨김
-    // 삭제 모달 공통컴포넌트 제작 후 교체 예정
     setIsDelete(true)
+    setConfirmOpen(false)
+  }
+
+  const cancelDelete = () => {
+    setConfirmOpen(false)
   }
 
   if (isDelete) return null
@@ -189,7 +198,22 @@ const RecruitCard = ({
                   recruitContent={title}
                   applicantArray={dummyApplicantArray}
                 />
-                {/* 지원내역 버튼부터 모달 시작되는 부분 수정요청 해야함 */}
+
+                <ConfirmationModal isOn={confirmOpen} onClose={cancelDelete}>
+                  <ConfirmationModal.Title>삭제 확인</ConfirmationModal.Title>
+                  <ConfirmationModal.Content>
+                    <p className="font-bold">[{title}]</p>
+                    <p className="text-sm/9">해당 공고를 삭제하시겠습니까?</p>
+                    <p className="text-sm">삭제 후 복구할 수 없습니다.</p>
+                  </ConfirmationModal.Content>
+                  <ConfirmationModal.ButtonSection>
+                    <Button onClick={confirmDelete} color="danger">
+                      삭제
+                    </Button>
+                    <Button onClick={cancelDelete}>취소</Button>
+                  </ConfirmationModal.ButtonSection>
+                </ConfirmationModal>
+
                 <Button
                   color="blue"
                   className="gap-2 px-6 py-2 text-xs"
