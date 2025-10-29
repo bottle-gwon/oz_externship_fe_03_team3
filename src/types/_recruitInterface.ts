@@ -38,5 +38,5 @@ export type RecruitConditionInText =
 // ---- recruit write
 export interface RecruitWriteChildrenProps {
   errors: FieldErrors<RecruitWriteSchema>
-  control: Control<RecruitWriteSchema>
+  control?: Control<RecruitWriteSchema>
 }

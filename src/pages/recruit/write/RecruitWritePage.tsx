@@ -11,7 +11,6 @@ import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Plus, Send } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
-import TagIcon from '@/assets/tag.svg'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
@@ -31,6 +30,7 @@ import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectM
 import type { Tag } from '@/types'
 import TagSelection from '@/components/recruit/write/tagSelectModal/feat/TagSelection'
 import useStudyHubStore from '@/store/store'
+import RWTagSelect from './_RWTagSelect'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -49,11 +49,6 @@ const RecruitWritePage = () => {
   const [dummyImageCount, _setDummyImageCount] = useState(0)
   const [dummyTagCount, _setDummyTagCount] = useState(0)
   const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
-  const setStudyGroupArray = useStudyHubStore(
-    (state) => state.setStudyGroupArray
-  )
-  const [isOn, setIsOn] = useState(false)
-  const [selectedTagArray, setSelectedTagArray] = useState<string[]>([])
 
   const navigate = useNavigate()
 
@@ -73,170 +68,153 @@ const RecruitWritePage = () => {
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
   }
-  const handleDeleteTag = (tag: string) => {
-    const filteredTagArray = selectedTagArray.filter((el) => el !== tag)
-    setSelectedTagArray(filteredTagArray)
-  }
 
   return (
-    <>
-      <Container width="md" isPadded>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Vstack gap="xxl">
-            {/* 여기 바텀 패딩이 없어야할 거 같은데 */}
-            {/* isPaddedBottom 옵션 넣어달라고 하고 우선 이대로 진행하자 */}
-            <TitleSection type="write" />
+    <Container width="md" isPadded>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Vstack gap="xxl">
+          {/* 여기 바텀 패딩이 없어야할 거 같은데 */}
+          {/* isPaddedBottom 옵션 넣어달라고 하고 우선 이대로 진행하자 */}
+          <TitleSection type="write" />
 
-            <WriteBox>
-              <H2>기본 정보</H2>
-              <Labeled isRequired isInDanger={Boolean(errors.title)}>
-                <Labeled.Header>공고 제목</Labeled.Header>
-                <Labeled.Input {...register('title')} />
-                <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
+          <WriteBox>
+            <H2>기본 정보</H2>
+            <Labeled isRequired isInDanger={Boolean(errors.title)}>
+              <Labeled.Header>공고 제목</Labeled.Header>
+              <Labeled.Input {...register('title')} />
+              <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
+            </Labeled>
+
+            <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
+              <Labeled.Header>대상 스터디 그룹</Labeled.Header>
+              <Controller
+                control={control}
+                name="study_group_id"
+                render={({ field: { onChange } }) => (
+                  <Select onOptionSelect={onChange}>
+                    <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
+                    <Select.Content>
+                      {studyGroupArray.map((studyGroup) => (
+                        <Select.Option
+                          key={studyGroup.id}
+                          value={studyGroup.id}
+                        >
+                          {studyGroup.name}
+                        </Select.Option>
+                      ))}
+                    </Select.Content>
+                  </Select>
+                )}
+              />
+              <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
+            </Labeled>
+
+            <GridContainer>
+              <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
+                <Labeled.Header>공고 마감 기한</Labeled.Header>
+                <Labeled.Input {...register('due_date')} type="date" />
+                <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
               </Labeled>
 
-              <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
-                <Labeled.Header>대상 스터디 그룹</Labeled.Header>
+              <Labeled
+                isRequired
+                isInDanger={Boolean(errors.expected_personnel)}
+              >
+                <Labeled.Header>예상 모집 인원</Labeled.Header>
                 <Controller
                   control={control}
-                  name="study_group_id"
+                  name="expected_personnel"
                   render={({ field: { onChange } }) => (
                     <Select onOptionSelect={onChange}>
                       <Select.Trigger>
-                        스터디 그룹을 선택해주세요
+                        예상 모집 인원을 선택하세요
                       </Select.Trigger>
                       <Select.Content>
-                        {studyGroupArray.map((studyGroup) => (
-                          <Select.Option
-                            key={studyGroup.id}
-                            value={studyGroup.id}
-                          >
-                            {studyGroup.name}
-                          </Select.Option>
-                        ))}
+                        {Array(RECRUIT_WRITE_CONFIG.MAX_PERSONNEL)
+                          .fill(0)
+                          .map((_, index) => (
+                            <Select.Option
+                              key={index}
+                              value={index + 1}
+                            >{`${index + 1}명`}</Select.Option>
+                          ))}
                       </Select.Content>
                     </Select>
                   )}
                 />
                 <Labeled.Footer>
-                  {errors?.study_group_id?.message}
+                  {errors?.expected_personnel?.message}
                 </Labeled.Footer>
               </Labeled>
+            </GridContainer>
+          </WriteBox>
 
-              <GridContainer>
-                <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
-                  <Labeled.Header>공고 마감 기한</Labeled.Header>
-                  <Labeled.Input {...register('due_date')} type="date" />
-                  <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
-                </Labeled>
-
-                <Labeled
-                  isRequired
-                  isInDanger={Boolean(errors.expected_personnel)}
-                >
-                  <Labeled.Header>예상 모집 인원</Labeled.Header>
-                  <Controller
-                    control={control}
-                    name="expected_personnel"
-                    render={({ field: { onChange } }) => (
-                      <Select onOptionSelect={onChange}>
-                        <Select.Trigger>
-                          예상 모집 인원을 선택하세요
-                        </Select.Trigger>
-                        <Select.Content>
-                          {Array(RECRUIT_WRITE_CONFIG.MAX_PERSONNEL)
-                            .fill(0)
-                            .map((_, index) => (
-                              <Select.Option
-                                key={index}
-                                value={index + 1}
-                              >{`${index + 1}명`}</Select.Option>
-                            ))}
-                        </Select.Content>
-                      </Select>
-                    )}
-                  />
-                  <Labeled.Footer>
-                    {errors?.expected_personnel?.message}
-                  </Labeled.Footer>
-                </Labeled>
-              </GridContainer>
-            </WriteBox>
-
-            <WriteBox>
-              <H2>공고 내용</H2>
-              <Labeled isRequired isInDanger={Boolean(errors.content)}>
-                <Labeled.Header>스터디 그룹 소개</Labeled.Header>
-                <Hstack className="justify-between text-xs text-gray-500">
-                  <p>마크다운 문법을 사용할 수 있습니다</p>
-                  <p>이미지 {dummyImageCount}/5개</p>
-                </Hstack>
-                <Controller
-                  control={control}
-                  name="content"
-                  render={({ field: { onChange } }) => (
-                    <MarkdownEditor onChange={onChange} />
-                  )}
-                />
-                <Labeled.Footer>{errors?.content?.message}</Labeled.Footer>
-                <Labeled.Footer>
-                  • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
-                </Labeled.Footer>
-                <Labeled.Footer>
-                  • 이미지 추가: ![설명](이미지URL) - 최대{' '}
-                  {RECRUIT_WRITE_CONFIG.MAX_IMAGE}개, 각{' '}
-                  {RECRUIT_WRITE_CONFIG.MAX_IMAGE_FILE_SIZE} 이하
-                </Labeled.Footer>
-              </Labeled>
-            </WriteBox>
-
-            <WriteBox>
-              <H2>추가 정보</H2>
-
-              <Labeled isInDanger={Boolean(errors.estimated_cost)}>
-                <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
-                <Labeled.Input
-                  {...register('estimated_cost')}
-                  type="number"
-                  placeholder="미입력시 강의 비용 자동 계산"
-                />
-                <Labeled.Footer>
-                  {errors?.estimated_cost?.message}
-                </Labeled.Footer>
-              </Labeled>
-
-              <Labeled isInDanger={Boolean(errors.attachments)}>
-                <Labeled.Header>참고 파일 업로드</Labeled.Header>
-                <FileDropzone
-                  onChange={(fileArray) => setValue('attachments', fileArray)}
-                />
-                <Labeled.Footer>{errors?.attachments?.message}</Labeled.Footer>
-              </Labeled>
-            </WriteBox>
-
-            <Vstack gap="xl">
-              <Divider />
-              <Hstack className="justify-end">
-                <Button type="button" onClick={() => navigate(-1)}>
-                  취소
-                </Button>
-                <Button color="primary">
-                  <Send size={16} />
-                  공고 등록하기
-                </Button>
+          <WriteBox>
+            <H2>공고 내용</H2>
+            <Labeled isRequired isInDanger={Boolean(errors.content)}>
+              <Labeled.Header>스터디 그룹 소개</Labeled.Header>
+              <Hstack className="justify-between text-xs text-gray-500">
+                <p>마크다운 문법을 사용할 수 있습니다</p>
+                <p>이미지 {dummyImageCount}/5개</p>
               </Hstack>
-            </Vstack>
-          </Vstack>
-        </form>
-      </Container>
+              <Controller
+                control={control}
+                name="content"
+                render={({ field: { onChange } }) => (
+                  <MarkdownEditor onChange={onChange} />
+                )}
+              />
+              <Labeled.Footer>{errors?.content?.message}</Labeled.Footer>
+              <Labeled.Footer>
+                • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
+              </Labeled.Footer>
+              <Labeled.Footer>
+                • 이미지 추가: ![설명](이미지URL) - 최대{' '}
+                {RECRUIT_WRITE_CONFIG.MAX_IMAGE}개, 각{' '}
+                {RECRUIT_WRITE_CONFIG.MAX_IMAGE_FILE_SIZE} 이하
+              </Labeled.Footer>
+            </Labeled>
+          </WriteBox>
 
-      <TagSelectModal
-        isOn={isOn}
-        onClose={() => setIsOn(false)}
-        tagArray={selectedTagArray}
-        setTagArray={setSelectedTagArray}
-      />
-    </>
+          <WriteBox>
+            <H2>추가 정보</H2>
+
+            <Labeled isInDanger={Boolean(errors.estimated_cost)}>
+              <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
+              <Labeled.Input
+                {...register('estimated_cost')}
+                type="number"
+                placeholder="미입력시 강의 비용 자동 계산"
+              />
+              <Labeled.Footer>{errors?.estimated_cost?.message}</Labeled.Footer>
+            </Labeled>
+
+            <RWTagSelect errors={errors as FieldErrors<RecruitWriteSchema>} />
+
+            <Labeled isInDanger={Boolean(errors.attachments)}>
+              <Labeled.Header>참고 파일 업로드</Labeled.Header>
+              <FileDropzone
+                onChange={(fileArray) => setValue('attachments', fileArray)}
+              />
+              <Labeled.Footer>{errors?.attachments?.message}</Labeled.Footer>
+            </Labeled>
+          </WriteBox>
+
+          <Vstack gap="xl">
+            <Divider />
+            <Hstack className="justify-end">
+              <Button type="button" onClick={() => navigate(-1)}>
+                취소
+              </Button>
+              <Button color="primary">
+                <Send size={16} />
+                공고 등록하기
+              </Button>
+            </Hstack>
+          </Vstack>
+        </Vstack>
+      </form>
+    </Container>
   )
 }
 
