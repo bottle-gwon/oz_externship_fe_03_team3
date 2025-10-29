@@ -8,16 +8,66 @@ import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import { Plus } from 'lucide-react'
 import TagIcon from '@/assets/tag.svg'
 import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import TagSelected from '@/components/recruit/write/tagSelectModal/feat/TagSelected'
+import type { RecruitWriteSchema } from '@/lib/zodSchema'
+import type { UseFormSetValue } from 'react-hook-form'
 
-const RWTagSelect = ({ errors }: RecruitWriteChildrenProps) => {
+const RWTagSelectEmpty = () => {
+  return (
+    <RoundBox color="mono-bright" padding="xl" borderStyle="dashed">
+      <Vstack gap="sm" className="items-center text-gray-500">
+        <img src={TagIcon} />
+        <Vstack gap="none" className="items-center">
+          <h4 className="text-sm">선택된 태그가 없습니다</h4>
+          <p className="text-xs">
+            태그 검색 버튼을 클릭해서 태그를 추가해보세요
+          </p>
+        </Vstack>
+      </Vstack>
+    </RoundBox>
+  )
+}
+
+interface RWTagSelectContainedProps {
+  selectedTagArray: string[]
+  setSelectedTagArray: React.Dispatch<React.SetStateAction<string[]>>
+}
+
+const RWTagSelectContained = ({
+  selectedTagArray,
+  setSelectedTagArray,
+}: RWTagSelectContainedProps) => {
+  const handleDelteTag = (tagName: string) => {
+    const filteredTagArray = selectedTagArray.filter((tag) => tag !== tagName)
+    setSelectedTagArray(filteredTagArray)
+  }
+
+  return (
+    <RoundBox color="mono-dim" padding="lg">
+      <Hstack className="wrap gap-oz-sm">
+        {selectedTagArray.map((tag) => (
+          <TagSelected key={tag} tag={tag} onDeleteTag={handleDelteTag} />
+        ))}
+      </Hstack>
+    </RoundBox>
+  )
+}
+
+interface WithRWTagSelectProps {
+  setValue: UseFormSetValue<RecruitWriteSchema>
+}
+
+const RWTagSelect = ({
+  setValue,
+  errors,
+}: RecruitWriteChildrenProps & WithRWTagSelectProps) => {
   const [isOn, setIsOn] = useState(false)
   const [selectedTagArray, setSelectedTagArray] = useState<string[]>([])
 
-  const handleDeleteTag = (tag: string) => {
-    const filteredTagArray = selectedTagArray.filter((el) => el !== tag)
-    setSelectedTagArray(filteredTagArray)
-  }
+  useEffect(() => {
+    setValue('tags', selectedTagArray)
+  }, [selectedTagArray, setValue])
 
   return (
     <>
@@ -35,23 +85,14 @@ const RWTagSelect = ({ errors }: RecruitWriteChildrenProps) => {
             태그 검색
           </Button>
         </Hstack>
-        <RoundBox color="mono-bright" padding="xl" borderStyle="dashed">
-          <Vstack gap="sm" className="items-center text-gray-500">
-            <img src={TagIcon} />
-            <Vstack gap="none" className="items-center">
-              <h4 className="text-sm">선택된 태그가 없습니다</h4>
-              <p className="text-xs">
-                태그 검색 버튼을 클릭해서 태그를 추가해보세요
-              </p>
+        {selectedTagArray.length === 0 && <RWTagSelectEmpty />}
+        {selectedTagArray.length > 0 && (
+          <RWTagSelectContained
+            selectedTagArray={selectedTagArray}
+            setSelectedTagArray={setSelectedTagArray}
+          />
+        )}
 
-              <TagSelection
-                tagArray={selectedTagArray}
-                onDeleteTag={handleDeleteTag}
-              />
-              <p>{JSON.stringify(selectedTagArray)}</p>
-            </Vstack>
-          </Vstack>
-        </RoundBox>
         <Labeled.Footer>{errors?.tags?.message}</Labeled.Footer>
         <Labeled.Footer>
           태그는 최대 {RECRUIT_WRITE_CONFIG.MAX_TAG}개까지 선택할 수 있습니다. (

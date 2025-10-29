@@ -20,6 +20,7 @@ import {
   type Control,
   type FieldErrors,
   type FieldValues,
+  type UseFormSetValue,
 } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { recruitWriteSchema, type RecruitWriteSchema } from '@/lib/zodSchema'
@@ -85,29 +86,10 @@ const RecruitWritePage = () => {
               <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
             </Labeled>
 
-            <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
-              <Labeled.Header>대상 스터디 그룹</Labeled.Header>
-              <Controller
-                control={control}
-                name="study_group_id"
-                render={({ field: { onChange } }) => (
-                  <Select onOptionSelect={onChange}>
-                    <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
-                    <Select.Content>
-                      {studyGroupArray.map((studyGroup) => (
-                        <Select.Option
-                          key={studyGroup.id}
-                          value={studyGroup.id}
-                        >
-                          {studyGroup.name}
-                        </Select.Option>
-                      ))}
-                    </Select.Content>
-                  </Select>
-                )}
-              />
-              <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
-            </Labeled>
+            <RWStudyGroupSelect
+              errors={errors as FieldErrors<RecruitWriteSchema>}
+              control={control as Control<RecruitWriteSchema>}
+            />
 
             <GridContainer>
               <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
@@ -189,7 +171,10 @@ const RecruitWritePage = () => {
               <Labeled.Footer>{errors?.estimated_cost?.message}</Labeled.Footer>
             </Labeled>
 
-            <RWTagSelect errors={errors as FieldErrors<RecruitWriteSchema>} />
+            <RWTagSelect
+              setValue={setValue as UseFormSetValue<RecruitWriteSchema>}
+              errors={errors as FieldErrors<RecruitWriteSchema>}
+            />
 
             <Labeled isInDanger={Boolean(errors.attachments)}>
               <Labeled.Header>참고 파일 업로드</Labeled.Header>
