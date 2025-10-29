@@ -57,6 +57,7 @@ const RecruitWritePage = () => {
   const {
     handleSubmit,
     register,
+    setValue,
     control,
     formState: { errors },
   } = useForm({ resolver: zodResolver(recruitWriteSchema) })
