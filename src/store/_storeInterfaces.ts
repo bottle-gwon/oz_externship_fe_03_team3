@@ -33,6 +33,9 @@ export interface StudyHubState {
   isFocusingSearch: boolean // true 가 감지되면 인풋 필드에 포커스해주세요
   setIsFocusingSearch: (isFocusingSearch: boolean) => void
 
+  modalKeyArray: string[]
+  setModalKeyArray: (modalKeyArray: string[]) => void
+
   // recruit
   studyGroupArray: StudyGroup[]
   setStudyGroupArray: (studyGroupArray: StudyGroup[]) => void

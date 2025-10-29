@@ -33,6 +33,9 @@ const useStudyHubStore = create<StudyHubState>()(
       isFocusingSearch: false,
       setIsFocusingSearch: (isFocusingSearch) => set({ isFocusingSearch }),
 
+      modalKeyArray: [],
+      setModalKeyArray: (modalKeyArray) => set({ modalKeyArray }),
+
       // recruit
       studyGroupArray: [],
       setStudyGroupArray: (studyGroupArray) => set({ studyGroupArray }),
