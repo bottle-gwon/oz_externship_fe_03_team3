@@ -35,6 +35,7 @@ export const recruitConditionInTextArray = ['전체', '모집중', '마감됨'] 
 export type RecruitConditionInText =
   (typeof recruitConditionInTextArray)[number]
 
+// ---- recruit write
 export interface RecruitWriteChildrenProps {
   errors: FieldErrors<RecruitWriteSchema>
   control: Control<RecruitWriteSchema>

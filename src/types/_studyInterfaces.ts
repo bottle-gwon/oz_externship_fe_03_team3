@@ -1,4 +1,4 @@
-export interface SimpleLecture {
+export interface LectureInStudyGroup {
   id: number
   title: string
   instructor: string
@@ -15,7 +15,7 @@ export interface StudyGroup {
   start_at: string
   end_at: string
   status: string
-  lectures: SimpleLecture[]
+  lectures: LectureInStudyGroup[]
   review_count: number
   star_rating_average: number
   is_reviewed: boolean

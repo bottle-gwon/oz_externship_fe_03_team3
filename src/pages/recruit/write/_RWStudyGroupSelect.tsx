@@ -2,12 +2,16 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Select from '@/components/commonInGeneral/select/Select'
 import useStudyHubStore from '@/store/store'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import dummyGetStudyGroupsResponse from './_dummyGetStudyGroupsResponse'
-import type { RecruitWriteChildrenProps } from '@/types'
+import type { RecruitWriteChildrenProps, StudyGroup } from '@/types'
+import RWStudyGroupInfo from './_RWStudyGroupInfo'
 
 const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
+  const [selectedStudyGroup, setSelectedStudyGroup] =
+    useState<StudyGroup | null>(null)
+
   // TODO: api 연결할 땐 useQuery로 교체해야
   const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
   const setStudyGroupArray = useStudyHubStore(
@@ -20,6 +24,14 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const handleOptionSelect = (study_group_id: string | number) => {
+    const result = studyGroupArray.find(({ id }) => id === study_group_id)
+    if (!result) {
+      return
+    }
+    setSelectedStudyGroup(result)
+  }
+
   return (
     <Vstack>
       <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
@@ -28,7 +40,12 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
           control={control}
           name="study_group_id"
           render={({ field: { onChange } }) => (
-            <Select onOptionSelect={onChange}>
+            <Select
+              onOptionSelect={(option) => {
+                handleOptionSelect(option)
+                onChange(option)
+              }}
+            >
               <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
               <Select.Content>
                 {studyGroupArray.map((studyGroup) => (
@@ -42,6 +59,9 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
         />
         <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
       </Labeled>
+      {selectedStudyGroup && (
+        <RWStudyGroupInfo studyGroup={selectedStudyGroup} />
+      )}
     </Vstack>
   )
 }
