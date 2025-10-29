@@ -18,13 +18,6 @@ type RecruitManageFilterProps = {
   onChange: (filteredRecruitsManageArray: Recruit[]) => void
 }
 
-const conditionOptions = (optionText: string): RecruitConditionInText => {
-  if (optionText.startsWith('전체')) return '전체'
-  if (optionText.startsWith('모집중')) return '모집중'
-  if (optionText.startsWith('마감됨')) return '마감됨'
-  return '전체'
-}
-
 const filterRecruitsManageApi = (
   condition: RecruitConditionInText,
   arrangement: RecruitArrangementInText
@@ -87,15 +80,15 @@ const RecruitManageFilter = ({ onChange }: RecruitManageFilterProps) => {
         <Vstack className="w-full">
           <Text>상태</Text>
           <Select
-            onOptionSelect={(opt) =>
-              setSelectedCondition(conditionOptions(String(opt)))
+            onOptionSelect={(val) =>
+              setSelectedCondition(val as RecruitConditionInText)
             }
           >
             <Select.Trigger>{conditionTriggerLabel}</Select.Trigger>
             <Select.Content>
-              <Select.Option>{`전체 (${totalCount})`}</Select.Option>
-              <Select.Option>{`모집중 (${openCount})`}</Select.Option>
-              <Select.Option>{`마감됨 (${closedCount})`}</Select.Option>
+              <Select.Option value="전체">{`전체 (${totalCount})`}</Select.Option>
+              <Select.Option value="모집중">{`모집중 (${openCount})`}</Select.Option>
+              <Select.Option value="마감됨">{`마감됨 (${closedCount})`}</Select.Option>
             </Select.Content>
           </Select>
         </Vstack>
