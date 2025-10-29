@@ -4,11 +4,11 @@
 // NOTE: 최상위 커스텀 후크(useRecruit) 안에서 다른 성격의 (useQuery, useMutation)의 후크들을 호출합니다
 // NOTE: 최상위 커스텀 후크는 하위 커스텀 후크들의 리턴값을 스프레드로 다시 리턴합니다
 
-import { instance } from '@/lib/axiosVariants'
 import useStudyHubStore from '@/store/store'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import useSimpleMutation from '../useSimpleMutation'
+import api from '@/api/api'
 
 const queryEndpoint = '/fruit'
 
@@ -25,7 +25,7 @@ const useFruitQuery = () => {
     // NOTE: queryKey는 엔드포인트로 통일합니다
     queryKey: [queryEndpoint],
     queryFn: async () => {
-      const response = await instance.get(queryEndpoint)
+      const response = await api.get(queryEndpoint)
       return response.data.fruits as string[]
     },
   })
@@ -51,7 +51,7 @@ const useFruitMutation = () => {
   // NOTE: 캐시된 fruitArray의 type과 새로 추가할 fruit의 타입을 적습니다
   const fruitPost = useSimpleMutation<string[], string>({
     queryEndpoint,
-    mutationFnWithBody: (body) => instance.post('/fruit', body),
+    mutationFnWithBody: (body) => api.post('/fruit', body),
     updateCacheForUi: (previous: string[], newOne: string) => [
       ...previous,
       newOne,
@@ -68,7 +68,7 @@ const useFruitMutation = () => {
   // NOTE: 요청마다 커스텀 후크를 만듭니다
   const fruitPut = useSimpleMutation<string[], string>({
     queryEndpoint,
-    mutationFnWithBody: (body) => instance.post('/fruit/5', body),
+    mutationFnWithBody: (body) => api.post('/fruit/5', body),
     updateCacheForUi: (previous: string[], newOne: string) =>
       previous.map((fruit, index) => (index === 5 ? newOne : fruit)),
   })
