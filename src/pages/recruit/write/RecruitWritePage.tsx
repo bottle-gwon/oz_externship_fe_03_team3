@@ -30,6 +30,7 @@ import RWStudyGroupSelect from './_RWStudyGroupSelect'
 import RWTagSelect from './rwTagSelect/RWTagSelect'
 import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
 import useStudyHubStore from '@/store/store'
+import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -49,6 +50,8 @@ const RecruitWritePage = () => {
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
 
+  const [isOn, setIsOn] = useState(false)
+
   const navigate = useNavigate()
 
   const {
@@ -60,12 +63,18 @@ const RecruitWritePage = () => {
   } = useForm({ resolver: zodResolver(recruitWriteSchema) })
 
   const onSubmit = (_data: FieldValues) => {
+    setIsOn(true)
     // ---- 테스트할 땐 여기 주석을 해제해주세요
     // console.log({ _data })
     // debugger
     // ---- 여기까지
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
+  }
+
+  const handleSubmitComplete = () => {
+    setIsOn(false)
+    navigate(-1)
   }
 
   return (
@@ -206,6 +215,12 @@ const RecruitWritePage = () => {
         isOn={modalKey === 'tagSelect'}
         onClose={() => setModalKey(null)}
       />
+      <ConfirmationModal isOn={isOn} onClose={handleSubmitComplete}>
+        <ConfirmationModal.Title>제출이 완료되었습니다</ConfirmationModal.Title>
+        <ConfirmationModal.ButtonSection>
+          <Button onClick={handleSubmitComplete}>확인</Button>
+        </ConfirmationModal.ButtonSection>
+      </ConfirmationModal>
     </>
   )
 }
