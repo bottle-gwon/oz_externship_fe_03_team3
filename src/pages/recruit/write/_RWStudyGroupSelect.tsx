@@ -7,10 +7,7 @@ import { Controller } from 'react-hook-form'
 import dummyGetStudyGroupsResponse from './_dummyGetStudyGroupsResponse'
 import type { RecruitWriteChildrenProps } from '@/types'
 
-const RecruitWriteStudyGroupSelect = ({
-  errors,
-  control,
-}: RecruitWriteChildrenProps) => {
+const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
   // TODO: api 연결할 땐 useQuery로 교체해야
   const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
   const setStudyGroupArray = useStudyHubStore(
@@ -49,4 +46,4 @@ const RecruitWriteStudyGroupSelect = ({
   )
 }
 
-export default RecruitWriteStudyGroupSelect
+export default RWStudyGroupSelect

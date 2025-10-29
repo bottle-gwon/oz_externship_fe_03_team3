@@ -10,19 +10,23 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Plus, Send } from 'lucide-react'
-import { useEffect, useState, type ReactNode } from 'react'
+import { useState, type ReactNode } from 'react'
 import TagIcon from '@/assets/tag.svg'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import FileDropzone from '@/components/commonInGeneral/fileDropzone/FileDropzone'
-import { Controller, useForm, type FieldValues } from 'react-hook-form'
-import useStudyHubStore from '@/store/store'
-import dummyGetStudyGroupsResponse from './_dummyGetStudyGroupsResponse'
+import {
+  Controller,
+  useForm,
+  type Control,
+  type FieldErrors,
+  type FieldValues,
+} from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { recruitWriteSchema } from '@/lib/zodSchema'
+import { recruitWriteSchema, type RecruitWriteSchema } from '@/lib/zodSchema'
 import { useNavigate } from 'react-router'
 import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
-import RecruitWriteStudyGroupSelect from './_RecruitWriteStudyGroupSelect'
+import RWStudyGroupSelect from './_RWStudyGroupSelect'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -76,7 +80,10 @@ const RecruitWritePage = () => {
               <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
             </Labeled>
 
-            <RecruitWriteStudyGroupSelect control={control} errors={errors} />
+            <RWStudyGroupSelect
+              control={control as Control<RecruitWriteSchema>}
+              errors={errors as FieldErrors<RecruitWriteSchema>}
+            />
 
             <GridContainer>
               <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
