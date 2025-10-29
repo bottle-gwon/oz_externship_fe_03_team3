@@ -16,9 +16,9 @@ type ChatUIState =
 import type { Lecture, Me, StudyGroup, Recruit } from '@/types'
 
 export interface StudyHubState {
-  example: number // 타입 정의 예시 1
-  setExample: (example: number) => void
-  addDiffOnExample: (diff: number) => void // 타입 정의 예시 2
+  fruitArray: string[] // 타입 정의 예시 1
+  setFruitArray: (fruitArrya: string[]) => void
+  addFruitToArray: (fruit: string) => void // 타입 정의 예시 2
 
   // 아래에 추가할 전역 변수의 타입들을 선언해주시면 됩니다
 

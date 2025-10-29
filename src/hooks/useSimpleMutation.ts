@@ -1,48 +1,53 @@
-import instance from '@/lib/axiosInstance'
-import { axiosLikeFetch } from '@/lib/axiosVariants'
 import queryClient from '@/lib/tanstackQueryClient'
-import type { RequestMethod } from '@/types'
 import { useMutation } from '@tanstack/react-query'
 
-interface SimpleMutationOptions {
-  method: RequestMethod
+interface SimpleMutationOptions<TPrevious, TNewOne> {
   queryEndpoint: string
-  mutateEndpoint: string
-  updateCacheForUi: (previous: any, newOne: any) => any
-  handleSuccess: () => void
-  handleError: (error: Error) => void
+  mutationFnWithBody: (body: unknown) => unknown
+  updateCacheForUi: (previous: TPrevious, newOne: TNewOne) => TPrevious
+  handleSuccess?: () => void
+  handleError?: (error: Error) => void
 }
 
-export const useSimpleMutation = <Body, NewOne>(
-  options: SimpleMutationOptions
+export const useSimpleMutation = <TPrevious, TNewOne>(
+  options: SimpleMutationOptions<TPrevious, TNewOne>
 ) => {
   const {
-    method,
     queryEndpoint,
-    mutateEndpoint,
+    mutationFnWithBody,
     updateCacheForUi,
     handleSuccess,
     handleError,
   } = options
   const simpleMutation = useMutation({
-    mutationFn: async ({ body }: { body: unknown }) =>
-      axiosLikeFetch(method, mutateEndpoint, body),
-    onMutate: async ({ newOne }: { newOne: unknown }) => {
+    mutationFn: async ({
+      body,
+      newOne: _newOne,
+    }: {
+      body: unknown
+      newOne?: unknown
+    }) => mutationFnWithBody(body),
+
+    onMutate: async ({ newOne }: { body: unknown; newOne: TNewOne }) => {
       await queryClient.cancelQueries({
         queryKey: [queryEndpoint],
       })
 
-      const previous: unknown = queryClient.getQueryData([queryEndpoint])
+      const previous: TPrevious | undefined = queryClient.getQueryData([
+        queryEndpoint,
+      ])
       const newCache = updateCacheForUi(previous, newOne)
       queryClient.setQueryData([queryEndpoint], newCache)
 
       return { previous }
     },
+
     onSuccess: () => {
       if (handleSuccess) {
         handleSuccess()
       }
     },
+
     onError: async (error, _variables, context) => {
       if (!context) {
         return
@@ -52,6 +57,7 @@ export const useSimpleMutation = <Body, NewOne>(
         handleError(error)
       }
     },
+
     onSettled: () => {
       queryClient.invalidateQueries({
         queryKey: [queryEndpoint],

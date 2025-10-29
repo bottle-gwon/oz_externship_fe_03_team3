@@ -8,18 +8,18 @@ import { createJSONStorage, persist } from 'zustand/middleware'
 const useStudyHubStore = create<StudyHubState>()(
   persist(
     (set, get) => ({
-      example: 0,
-      setExample: (example) => set({ example }), // 간단히 상태를 바꿀 땐 이렇게 하면 됩니다.
-      addDiffOnExample: (diff) => {
+      fruitArray: [],
+      setFruitArray: (fruitArray) => set({ fruitArray }), // 간단히 상태를 바꿀 땐 이렇게 하면 됩니다.
+      addFruitToArray: (fruit) => {
         // 상태를 가져올 땐 get 사용
         const state = get()
-        const prevSomething = state.example
+        const prevArray = state.fruitArray
 
         // ... 사용하고 싶은 로직
-        const something = prevSomething + diff
+        const newArray = [...prevArray, fruit]
 
         // set은 상태를 변경할 때만 사용
-        set({ example: something })
+        set({ fruitArray: newArray })
       }, // 자주 쓰이는 복잡한 로직은 이런 식으로 전역 함수로 만들 수도 있습니다
 
       // common
