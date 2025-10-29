@@ -10,10 +10,39 @@ import RecruitSubHeader from './_RecruitSubHeader'
 import RecruitSearchInput from './_RecruitSearchInput'
 import RecruitTagSelect from './_RecruitTagSelect'
 import RecruitOrderingSelect from './_RecruitOrderingSelect'
+import { useEffect, useState } from 'react'
+import useDebounce from '@/hooks/useDebounce'
+import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
+
+const dummyGetRecruitWithParametersApi = (debounceValue: string) => {
+  const setRecruitArray = useStudyHubStore.getState().setRecruitArray
+
+  const filteredRecruitArray = dummyRecruitArray.filter((recruit) =>
+    recruit.title.includes(debounceValue)
+  )
+
+  setRecruitArray(filteredRecruitArray)
+}
 
 const RecruitContent = () => {
+  const [isSearching, setIsSearching] = useState(false)
   const accessToken = useStudyHubStore((state) => state.accessToken)
+  const recruitArray = useStudyHubStore((state) => state.recruitArray)
+
   const isLoggedIn = Boolean(accessToken)
+
+  const [searchText, setSearchText] = useState('')
+  const [debounceValue, cancel] = useDebounce(searchText, 500)
+
+  useEffect(() => {
+    dummyGetRecruitWithParametersApi(debounceValue)
+
+    if (debounceValue === '') {
+      setIsSearching(false)
+    } else {
+      setIsSearching(true)
+    }
+  }, [debounceValue])
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
@@ -31,7 +60,11 @@ const RecruitContent = () => {
           radius="lg"
           className="justify-center"
         >
-          <RecruitSearchInput />
+          <RecruitSearchInput
+            searchText={searchText}
+            setSearchText={setSearchText}
+            cancelDebounce={cancel}
+          />
 
           <Hstack gap="none" className="gap-9">
             <RecruitTagSelect />
@@ -40,15 +73,17 @@ const RecruitContent = () => {
         </RoundBox>
 
         <Vstack gap="none">
-          {/* 추후에 변경 */}
           <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
             전체 공고({dummyRecruitArray.length})
           </Vstack>
-          <Vstack gap="none" className="w-full">
-            {dummyRecruitArray.map((recruit) => (
-              <RecruitCard key={recruit.id} recruit={recruit} />
-            ))}
-          </Vstack>
+          {isSearching && recruitArray.length === 0 && <NoSearchResult />}
+          {recruitArray.length > 0 && (
+            <Vstack gap="none" className="w-full">
+              {recruitArray.map((recruit) => (
+                <RecruitCard key={recruit.uuid} recruit={recruit} />
+              ))}
+            </Vstack>
+          )}
         </Vstack>
       </Vstack>
 
