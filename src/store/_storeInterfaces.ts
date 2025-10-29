@@ -34,7 +34,7 @@ export interface StudyHubState {
   setIsFocusingSearch: (isFocusingSearch: boolean) => void
 
   modalKey: string | null // 모달을 하나만 띄울 때 사용해주세요. modalKey가 원하는 값과 일치하면 isOn이 되게 하면 됩니다
-  setModalKey: (modalKey: string) => void
+  setModalKey: (modalKey: string | null) => void // 모달을 끌 땐 modalKey를 null로 바꿔주세요
 
   modalKeyArray: string[] // 모달 위에 모달을 띄울 때 사용해주세요
   setModalKeyArray: (modalKeyArray: string[]) => void
@@ -45,6 +45,9 @@ export interface StudyHubState {
 
   recruitArray: Recruit[]
   setRecruitArray: (recruitArray: Recruit[]) => void
+
+  selectedTagArray: string[]
+  setSelectedTagArray: (selectedTagArray: string[]) => void
 
   // lecture
   lectureArray: Lecture[]

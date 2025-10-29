@@ -5,13 +5,11 @@ import TagList from './feat/TagList'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
+import useStudyHubStore from '@/store/store'
 
 interface TagSelectModal {
   isOn: boolean
   onClose: React.Dispatch<React.SetStateAction<boolean>>
-
-  tagArray: string[] // 기존에 선택 태그들
-  setTagArray: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 // Todo 임시 데이터 api 연동하면 지울것!
@@ -30,18 +28,17 @@ const EXAMPLE_DATA = {
 
 // 기존 선택 되어 있는 태그, 태그 수정만 내려 받고
 // 요청은 태그 모달에서 직접함
-const TagSelectModal = ({
-  isOn,
-  onClose,
-  tagArray,
-  setTagArray,
-}: TagSelectModal) => {
+const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   const [searchKeyword, setSearchKeyword] = useState('')
   const [current, setCurrent] = useState(1) // 현재 페이지
   const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
-  const [selectTagArray, setSelectTagArray] = useState(tagArray)
   const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
   const timerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
+  const setSelectedTagArray = useStudyHubStore(
+    (state) => state.setSelectedTagArray
+  )
 
   // 테스트용 로딩
   useEffect(() => {
@@ -55,10 +52,6 @@ const TagSelectModal = ({
       }
     }
   }, [searchKeyword])
-  // 삭제 반영
-  useEffect(() => {
-    setSelectTagArray(tagArray)
-  }, [tagArray])
 
   const handlePageChange = (newPage: number) => {
     setCurrent(newPage)
@@ -66,12 +59,12 @@ const TagSelectModal = ({
 
   const handleClose = () => {
     // 초기화 후 닫기
-    setSelectTagArray(tagArray)
+    // setSelectTagArray(tagArray)
     onClose(false)
   }
 
   const onClickAddTag = () => {
-    setTagArray(selectTagArray)
+    // setTagArray(selectTagArray)
 
     // 닫기
     onClose(false)
@@ -80,21 +73,21 @@ const TagSelectModal = ({
   // 임시 태그 변경 함수
   const onClickTag = (newName: string, isAdd: boolean = false) => {
     if (isAdd) {
-      if (!selectTagArray.includes(newName) && selectTagArray.length < 5) {
-        setSelectTagArray((prev) => [...prev, newName])
+      if (!selectedTagArray.includes(newName) && selectedTagArray.length < 5) {
+        setSelectedTagArray([...selectedTagArray, newName])
       }
     } else {
-      if (selectTagArray.includes(newName)) {
-        setSelectTagArray((prev) => prev.filter((el) => el !== newName))
-      } else if (selectTagArray.length < 5) {
-        setSelectTagArray((prev) => [...prev, newName])
+      if (selectedTagArray.includes(newName)) {
+        setSelectedTagArray(selectedTagArray.filter((tag) => tag !== newName))
+      } else if (selectedTagArray.length < 5) {
+        setSelectedTagArray([...selectedTagArray, newName])
       }
     }
   }
   // 임시 제거 함수
   const onClickDeleteTag = (tagName: string) => {
-    if (selectTagArray.includes(tagName)) {
-      setSelectTagArray((prev) => prev.filter((el) => el !== tagName))
+    if (selectedTagArray.includes(tagName)) {
+      setSelectedTagArray(selectedTagArray.filter((tag) => tag !== tagName))
     }
   }
   //임시 검색 함수
@@ -114,22 +107,19 @@ const TagSelectModal = ({
     setCurrent(1)
   }, [])
 
-  if (!tagArray || !setTagArray) {
-    return
-  }
   return (
     <Modal isOn={isOn} onClose={handleClose} width="sm">
       <Modal.Header>
         <Vstack gap="xs">
           <h2 className="text-lg font-semibold">태그 선택</h2>
-          <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${selectTagArray.length}/5)`}</p>
+          <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${selectedTagArray.length}/5)`}</p>
         </Vstack>
       </Modal.Header>
       <Modal.Body>
         <TagSearch onSearch={onSearchTag} />
-        {selectTagArray.length !== 0 && (
+        {selectedTagArray.length !== 0 && (
           <TagSelection
-            tagArray={selectTagArray}
+            tagArray={selectedTagArray}
             onDeleteTag={onClickDeleteTag}
           />
         )}
@@ -138,14 +128,14 @@ const TagSelectModal = ({
           page={current} // 페이지 네이션 테스트
           onPageChange={handlePageChange}
           onSelectTag={onClickTag}
-          selectArray={selectTagArray}
+          selectArray={selectedTagArray}
           keyword={searchKeyword}
           isLoading={isPending}
         />
       </Modal.Body>
       <Modal.Footer>
         <Hstack className="items-center justify-between">
-          <p className="text-sm text-gray-600">{`${selectTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${selectTagArray.length}개 태그 선택됨`}`}</p>
+          <p className="text-sm text-gray-600">{`${selectedTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${selectedTagArray.length}개 태그 선택됨`}`}</p>
           <Hstack>
             <Button
               color="mono"

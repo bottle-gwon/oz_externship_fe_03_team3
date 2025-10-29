@@ -1,16 +1,14 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import TagSelected from '@/components/recruit/write/tagSelectModal/feat/TagSelected'
+import useStudyHubStore from '@/store/store'
 
-interface RWTagSelectContainedProps {
-  selectedTagArray: string[]
-  setSelectedTagArray: React.Dispatch<React.SetStateAction<string[]>>
-}
+const RWTagSelectContained = () => {
+  const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
+  const setSelectedTagArray = useStudyHubStore(
+    (state) => state.setSelectedTagArray
+  )
 
-const RWTagSelectContained = ({
-  selectedTagArray,
-  setSelectedTagArray,
-}: RWTagSelectContainedProps) => {
   const handleDelteTag = (tagName: string) => {
     const filteredTagArray = selectedTagArray.filter((tag) => tag !== tagName)
     setSelectedTagArray(filteredTagArray)
