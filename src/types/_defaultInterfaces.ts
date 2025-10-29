@@ -35,3 +35,5 @@ export type TextareaProps = React.DetailedHTMLProps<
   React.TextareaHTMLAttributes<HTMLTextAreaElement>,
   HTMLTextAreaElement
 >
+
+export type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'patch'
