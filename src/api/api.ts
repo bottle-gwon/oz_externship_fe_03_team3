@@ -12,7 +12,8 @@ const api = axios.create({
 
 // 요청 인터셉터
 api.interceptors.request.use((config) => {
-  const accessToken = useStudyHubStore((state) => state.accessToken)
+  const state = useStudyHubStore.getState()
+  const accessToken = state.accessToken
 
   if (accessToken) {
     config.headers.Authorization = `Bearer ${accessToken}`
@@ -34,11 +35,12 @@ api.interceptors.response.use(
         const responseData = response.data
 
         if (statusCode !== 200) {
-          throw new Error(`${statusCode}에러 ${responseData?.error}`)
+          throw new Error(`${statusCode}에러 ${responseData?.data.error}`)
         }
 
         // 발급 받은 access토큰 저장
-        const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
+        const state = useStudyHubStore.getState()
+        const setAccessToken = state.setAccessToken
         const newAccessToken = responseData.data.access_token
         setAccessToken(newAccessToken)
 
