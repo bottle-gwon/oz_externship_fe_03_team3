@@ -31,6 +31,7 @@ import RWTagSelect from './rwTagSelect/RWTagSelect'
 import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
 import useStudyHubStore from '@/store/store'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import RWFileDropzone from './_RWFileDropzone'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -186,13 +187,10 @@ const RecruitWritePage = () => {
                 errors={errors as FieldErrors<RecruitWriteSchema>}
               />
 
-              <Labeled isInDanger={Boolean(errors.attachments)}>
-                <Labeled.Header>참고 파일 업로드</Labeled.Header>
-                <FileDropzone
-                  onChange={(fileArray) => setValue('attachments', fileArray)}
-                />
-                <Labeled.Footer>{errors?.attachments?.message}</Labeled.Footer>
-              </Labeled>
+              <RWFileDropzone
+                control={control as Control<RecruitWriteSchema>}
+                errors={errors as FieldErrors<RecruitWriteSchema>}
+              />
             </WriteBox>
 
             <Vstack gap="xl">
