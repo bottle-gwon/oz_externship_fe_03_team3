@@ -70,7 +70,7 @@ export const recruitWriteSchema = z
     study_group_id: z.coerce
       .number('스터디 그룹을 선택해주세요')
       .min(1, '스터디 그룹을 선택해주세요'),
-    estimated_cost: z.nullish(z.coerce.number()),
+    estimated_cost: z.coerce.number().nullish(),
     tags: z
       .array(z.string())
       .max(
@@ -85,7 +85,7 @@ export const recruitWriteSchema = z
         `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
       )
       .nullish(),
-    images: z.nullish(z.array(z.string())),
+    images: z.array(z.string()).nullish(),
   })
   .refine(
     (data) =>

@@ -57,7 +57,6 @@ const RecruitWritePage = () => {
 
   const {
     handleSubmit,
-    setValue,
     register,
     control,
     formState: { errors },
