@@ -14,12 +14,21 @@ import { useEffect, useState } from 'react'
 import useDebounce from '@/hooks/useDebounce'
 import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
 
-const dummyGetRecruitWithParametersApi = (debounceValue: string) => {
+const dummyGetRecruitWithParametersApi = (
+  debounceValue: string,
+  tag: string | null
+) => {
   const setRecruitArray = useStudyHubStore.getState().setRecruitArray
 
-  const filteredRecruitArray = dummyRecruitArray.filter((recruit) =>
-    recruit.title.includes(debounceValue)
-  )
+  const filteredRecruitArray = dummyRecruitArray
+    .filter((recruit) => recruit.title.includes(debounceValue))
+    .filter((recruit) => {
+      if (!tag || tag === '전체 태그') {
+        return true
+      }
+      const nameArray = recruit.tags.map((tempTag) => tempTag.name)
+      return nameArray.includes(tag)
+    })
 
   setRecruitArray(filteredRecruitArray)
 }
@@ -33,16 +42,17 @@ const RecruitContent = () => {
 
   const [searchText, setSearchText] = useState('')
   const [debounceValue, cancel] = useDebounce(searchText, 500)
+  const [selectedTag, setSelectedTag] = useState<string | null>(null)
 
   useEffect(() => {
-    dummyGetRecruitWithParametersApi(debounceValue)
+    dummyGetRecruitWithParametersApi(debounceValue, selectedTag)
 
     if (debounceValue === '') {
       setIsSearching(false)
     } else {
       setIsSearching(true)
     }
-  }, [debounceValue])
+  }, [debounceValue, selectedTag])
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
@@ -67,7 +77,7 @@ const RecruitContent = () => {
           />
 
           <Hstack gap="none" className="gap-9">
-            <RecruitTagSelect />
+            <RecruitTagSelect setSelectedTag={setSelectedTag} />
             <RecruitOrderingSelect />
           </Hstack>
         </RoundBox>

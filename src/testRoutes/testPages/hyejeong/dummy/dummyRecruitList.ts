@@ -50,10 +50,10 @@ export const dummyRecruitArray: Recruit[] = [
     due_date: '2025-12-30T23:59:59Z',
     is_closed: false,
     tags: [
-      { id: 1, name: '블록체인' },
-      { id: 2, name: 'Web3' },
-      { id: 3, name: 'Solidity' },
-      { id: 4, name: '암호화폐' },
+      { id: 5, name: '블록체인' },
+      { id: 6, name: 'Web3' },
+      { id: 7, name: 'Solidity' },
+      { id: 8, name: '암호화폐' },
     ],
     lectures: [{ id: 201, title: '프론트엔드 기초', instructor: '김강사' }],
     study_group: {
@@ -84,10 +84,10 @@ export const dummyRecruitArray: Recruit[] = [
     due_date: '2025-12-30T23:59:59Z',
     is_closed: false,
     tags: [
-      { id: 1, name: 'Spring Boot' },
-      { id: 2, name: 'Java' },
-      { id: 3, name: '백엔드' },
-      { id: 4, name: '기업프로젝트' },
+      { id: 9, name: 'Spring Boot' },
+      { id: 10, name: 'Java' },
+      { id: 11, name: '백엔드' },
+      { id: 12, name: '기업프로젝트' },
     ],
     lectures: [{ id: 201, title: '프론트엔드 기초', instructor: '김강사' }],
     study_group: {
@@ -118,10 +118,10 @@ export const dummyRecruitArray: Recruit[] = [
     due_date: '2025-10-03T23:59:59Z',
     is_closed: false,
     tags: [
-      { id: 1, name: 'DevOps' },
-      { id: 2, name: 'AWS' },
-      { id: 3, name: '클라우드' },
-      { id: 4, name: '인프라' },
+      { id: 13, name: 'DevOps' },
+      { id: 14, name: 'AWS' },
+      { id: 15, name: '클라우드' },
+      { id: 16, name: '인프라' },
     ],
     lectures: [{ id: 201, title: '프론트엔드 기초', instructor: '김강사' }],
     study_group: {
