@@ -9,7 +9,7 @@ import Container from '@/components/commonInGeneral/layout/_Container'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
-import { Plus, Send } from 'lucide-react'
+import { Send } from 'lucide-react'
 import { useState, type ReactNode } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
@@ -27,11 +27,7 @@ import { recruitWriteSchema, type RecruitWriteSchema } from '@/lib/zodSchema'
 import { useNavigate } from 'react-router'
 import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import RWStudyGroupSelect from './_RWStudyGroupSelect'
-import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
-import type { Tag } from '@/types'
-import TagSelection from '@/components/recruit/write/tagSelectModal/feat/TagSelection'
-import useStudyHubStore from '@/store/store'
-import RWTagSelect from './_RWTagSelect'
+import RWTagSelect from './rwTagSelect/RWTagSelect'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -48,8 +44,6 @@ const WriteBox = ({ children }: { children: ReactNode }) => {
 const RecruitWritePage = () => {
   // TODO: 나중에 이미지 업로드와 연동해야
   const [dummyImageCount, _setDummyImageCount] = useState(0)
-  const [dummyTagCount, _setDummyTagCount] = useState(0)
-  const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
 
   const navigate = useNavigate()
 
