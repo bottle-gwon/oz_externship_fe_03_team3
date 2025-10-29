@@ -4,7 +4,10 @@ import { useMutation } from '@tanstack/react-query'
 interface SimpleMutationOptions<TPrevious, TNewOne> {
   queryEndpoint: string
   mutationFnWithBody: (body: unknown) => unknown
-  updateCacheForUi: (previous: TPrevious, newOne: TNewOne) => TPrevious
+  updateCacheForUi: (
+    previous: TPrevious | undefined,
+    newOne: TNewOne
+  ) => TPrevious
   handleSuccess?: () => void
   handleError?: (error: Error) => void
 }
