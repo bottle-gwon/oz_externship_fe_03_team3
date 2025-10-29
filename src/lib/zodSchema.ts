@@ -1,3 +1,4 @@
+import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import * as z from 'zod'
 
 export const helperText = {
@@ -72,17 +73,27 @@ export const recruitWriteSchema = z
     estimated_cost: z.nullish(z.coerce.number()),
     tags: z
       .array(z.string())
-      .max(5, '태그는 5개를 초과할 수 없습니다')
+      .max(
+        RECRUIT_WRITE_CONFIG.MAX_TAG,
+        `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
+      )
       .nullish(),
     attachments: z
       .array(z.file())
-      .max(5, '참고 파일은 5개를 초과할 수 없습니다')
+      .max(
+        RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT,
+        `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
+      )
       .nullish(),
     images: z.nullish(z.array(z.string())),
   })
-  .refine((data) => !data.images || data.images.length <= 5, {
-    message: '공고 내용의 이미지는 5개를 초과할 수 없습니다',
-    path: ['content'],
-  })
+  .refine(
+    (data) =>
+      !data.images || data.images.length <= RECRUIT_WRITE_CONFIG.MAX_IMAGE,
+    {
+      message: `공고 내용의 이미지는 ${RECRUIT_WRITE_CONFIG.MAX_IMAGE}개를 초과할 수 없습니다`,
+      path: ['content'],
+    }
+  )
 
 export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
