@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
 import Spinner from '../commonInGeneral/spinner/Spinner'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
+import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
@@ -43,7 +44,7 @@ const DUMMY_CHATLIST = {
       },
       {
         title: '채팅방 테스트3',
-        study_group_id: 203,
+        study_group_id: 204,
         sender_id: 5,
         sender_nickname: '홍길동',
         content: null,
@@ -52,7 +53,7 @@ const DUMMY_CHATLIST = {
       },
       {
         title: '채팅방 테스트3',
-        study_group_id: 203,
+        study_group_id: 205,
         sender_id: 5,
         sender_nickname: '홍길동',
         content: null,
@@ -61,7 +62,7 @@ const DUMMY_CHATLIST = {
       },
       {
         title: '채팅방 테스트3',
-        study_group_id: 203,
+        study_group_id: 206,
         sender_id: 5,
         sender_nickname: '홍길동',
         content: null,
@@ -81,8 +82,11 @@ const DUMMY_CHATLIST = {
 const ChatList = () => {
   const responseData = DUMMY_CHATLIST
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
+
+  // tanstackQuery에서 받아올 내용 임시로 작성
   const [isPending, setIsPending] = useState(false)
   const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
+  const [hasNextPage, setHasNexPage] = useState(true)
 
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
@@ -92,7 +96,14 @@ const ChatList = () => {
     // 아래 타이머 관련은 추후 삭제하고 api로 연결할 예정입니다. 일단은 예시로 로딩만 볼 수 있게 했습니다.
     if (scrollTimerIdRef.current) {
       clearTimeout(scrollTimerIdRef.current)
+      console.log('클리어', scrollTimerIdRef.current)
     }
+
+    if (!hasNextPage) {
+      return
+    }
+
+    console.log('로딩', scrollTimerIdRef.current)
 
     setIsFetchingNextPage(true)
     scrollTimerIdRef.current = setTimeout(
@@ -100,6 +111,7 @@ const ChatList = () => {
       1500
     )
   })
+
   useEffect(() => {
     return () => {
       if (scrollTimerIdRef.current) {
@@ -137,7 +149,7 @@ const ChatList = () => {
         {/* 테스트로 border 넣었습니다. 추후 제거  */}
         <div ref={LoadingRef} className="h-6 w-full shrink-0 border"></div>
 
-        {isFetchingNextPage && <ChatListSkeleton />}
+        {isFetchingNextPage && <ChatListSkeletonCard />}
       </ChattingLayout.Body>
     </ChattingLayout>
   )
