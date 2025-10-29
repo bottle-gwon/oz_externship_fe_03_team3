@@ -22,6 +22,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { recruitWriteSchema } from '@/lib/zodSchema'
 import { useNavigate } from 'react-router'
 import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
+import RecruitWriteStudyGroupSelect from './_RecruitWriteStudyGroupSelect'
 
 const H2 = ({ children }: { children: string }) => {
   return <h2 className="text-xl font-semibold">{children}</h2>
@@ -39,10 +40,6 @@ const RecruitWritePage = () => {
   // TODO: 나중에 이미지 업로드와 연동해야
   const [dummyImageCount, _setDummyImageCount] = useState(0)
   const [dummyTagCount, _setDummyTagCount] = useState(0)
-  const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
-  const setStudyGroupArray = useStudyHubStore(
-    (state) => state.setStudyGroupArray
-  )
 
   const navigate = useNavigate()
 
@@ -53,15 +50,6 @@ const RecruitWritePage = () => {
     control,
     formState: { errors },
   } = useForm({ resolver: zodResolver(recruitWriteSchema) })
-
-  // TODO: api 연결할 땐 useQuery로 교체해야
-  useEffect(() => {
-    const dummyResponse = dummyGetStudyGroupsResponse
-    const array = dummyResponse.data.study_groups
-    setStudyGroupArray(array)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const onSubmit = (_data: FieldValues) => {
     // ---- 테스트할 땐 여기 주석을 해제해주세요
@@ -88,29 +76,7 @@ const RecruitWritePage = () => {
               <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
             </Labeled>
 
-            <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
-              <Labeled.Header>대상 스터디 그룹</Labeled.Header>
-              <Controller
-                control={control}
-                name="study_group_id"
-                render={({ field: { onChange } }) => (
-                  <Select onOptionSelect={onChange}>
-                    <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
-                    <Select.Content>
-                      {studyGroupArray.map((studyGroup) => (
-                        <Select.Option
-                          key={studyGroup.id}
-                          value={studyGroup.id}
-                        >
-                          {studyGroup.name}
-                        </Select.Option>
-                      ))}
-                    </Select.Content>
-                  </Select>
-                )}
-              />
-              <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
-            </Labeled>
+            <RecruitWriteStudyGroupSelect control={control} errors={errors} />
 
             <GridContainer>
               <Labeled isRequired isInDanger={Boolean(errors.due_date)}>

@@ -1,3 +1,6 @@
+import type { RecruitWriteSchema } from '@/lib/zodSchema'
+import type { FieldErrors, Control } from 'react-hook-form'
+
 export interface Recruit {
   id: number
   uuid: string
@@ -31,3 +34,8 @@ export type RecruitArrangementInText =
 export const recruitConditionInTextArray = ['전체', '모집중', '마감됨'] as const
 export type RecruitConditionInText =
   (typeof recruitConditionInTextArray)[number]
+
+export interface RecruitWriteChildrenProps {
+  errors: FieldErrors<RecruitWriteSchema>
+  control: Control<RecruitWriteSchema>
+}
