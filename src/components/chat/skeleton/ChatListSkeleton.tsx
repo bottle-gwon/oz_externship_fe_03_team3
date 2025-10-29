@@ -4,7 +4,7 @@ import ChatListSkeletonCard from './ChatListSkeletonCard'
 const ChatListSkeleton = () => {
   const sArray = Array.from({ length: 5 }, (_, i) => i + 1)
   return (
-    <Vstack>
+    <Vstack className="items-center">
       {sArray.map((_, i) => (
         <ChatListSkeletonCard key={i} />
       ))}
