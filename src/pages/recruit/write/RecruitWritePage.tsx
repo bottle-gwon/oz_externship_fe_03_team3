@@ -6,11 +6,10 @@ import {
   Vstack,
 } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
-import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Send } from 'lucide-react'
-import { useState, type ReactNode } from 'react'
+import { useState } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import {
@@ -30,6 +29,8 @@ import RWTagSelect from './rwTagSelect/RWTagSelect'
 import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
 import useStudyHubStore from '@/store/store'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
+import RWFileDropzone from './_RWFileDropzone'
+import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 
 const RecruitWritePage = () => {
   // TODO: 나중에 이미지 업로드와 연동해야
@@ -173,13 +174,10 @@ const RecruitWritePage = () => {
                 errors={errors as FieldErrors<RecruitWriteSchema>}
               />
 
-              <Labeled isInDanger={Boolean(errors.attachments)}>
-                <Labeled.Header>참고 파일 업로드</Labeled.Header>
-                <FileDropzone
-                  onChange={(fileArray) => setValue('attachments', fileArray)}
-                />
-                <Labeled.Footer>{errors?.attachments?.message}</Labeled.Footer>
-              </Labeled>
+              <RWFileDropzone
+                errors={errors as FieldErrors<RecruitWriteSchema>}
+                control={control as Control<RecruitWriteSchema>}
+              />
             </TitledRoundBox>
 
             <Vstack gap="xl">
@@ -202,6 +200,7 @@ const RecruitWritePage = () => {
         isOn={modalKey === 'tagSelect'}
         onClose={() => setModalKey(null)}
       />
+
       <ConfirmationModal isOn={isOn} onClose={handleSubmitComplete}>
         <ConfirmationModal.Title>제출이 완료되었습니다</ConfirmationModal.Title>
         <ConfirmationModal.ButtonSection>
