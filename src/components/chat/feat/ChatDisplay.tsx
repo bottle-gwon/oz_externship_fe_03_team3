@@ -2,13 +2,21 @@ import { Vstack } from '@/components/commonInGeneral/layout'
 import type { MessageList } from '@/types/_chatInterfaces'
 import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
+import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 
 interface ChatArray {
   messages: MessageList[]
   isPending: boolean
+  isFetchingNextPage: boolean
+  LoadingRef: React.RefObject<HTMLDivElement | null>
 }
 
-const ChatDisplay = ({ messages, isPending }: ChatArray) => {
+const ChatDisplay = ({
+  messages,
+  isPending,
+  isFetchingNextPage,
+  LoadingRef,
+}: ChatArray) => {
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
 
   return (
@@ -18,6 +26,10 @@ const ChatDisplay = ({ messages, isPending }: ChatArray) => {
       {messages.map((el) => (
         <ChatBox key={el.id + el.created_at} chat={el} />
       ))}
+      <div ref={LoadingRef}></div>
+      {isFetchingNextPage && (
+        <Skeleton widthInPixel={270} heightInPixel={100} className="shrink-0" />
+      )}
     </Vstack>
   )
 }

@@ -3,7 +3,6 @@ import ChatListCard from './feat/ChatListCard'
 import useStudyHubStore from '@/store/store'
 import { useEffect, useRef, useState } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
-import Spinner from '../commonInGeneral/spinner/Spinner'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
 
@@ -86,7 +85,7 @@ const ChatList = () => {
   // tanstackQuery에서 받아올 내용 임시로 작성
   const [isPending, setIsPending] = useState(false)
   const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
-  const [hasNextPage, setHasNexPage] = useState(true)
+  const [hasNextPage, _] = useState(true)
 
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
@@ -96,14 +95,12 @@ const ChatList = () => {
     // 아래 타이머 관련은 추후 삭제하고 api로 연결할 예정입니다. 일단은 예시로 로딩만 볼 수 있게 했습니다.
     if (scrollTimerIdRef.current) {
       clearTimeout(scrollTimerIdRef.current)
-      console.log('클리어', scrollTimerIdRef.current)
     }
 
+    // 다음 페이지 없으면 로딩 안함
     if (!hasNextPage) {
       return
     }
-
-    console.log('로딩', scrollTimerIdRef.current)
 
     setIsFetchingNextPage(true)
     scrollTimerIdRef.current = setTimeout(
@@ -146,8 +143,9 @@ const ChatList = () => {
         {responseData.data.room.map((el) => (
           <ChatListCard key={el.study_group_id} room={el} />
         ))}
-        {/* 테스트로 border 넣었습니다. 추후 제거  */}
-        <div ref={LoadingRef} className="h-6 w-full shrink-0 border"></div>
+
+        {/* 무한 스크롤 훅이 감지하는 위치  */}
+        <div ref={LoadingRef} className="h-0.5 w-full shrink-0"></div>
 
         {isFetchingNextPage && <ChatListSkeletonCard />}
       </ChattingLayout.Body>
