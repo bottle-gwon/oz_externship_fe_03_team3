@@ -11,6 +11,7 @@ import RWStudyGroupInfo from './_RWStudyGroupInfo'
 const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
   const [selectedStudyGroup, setSelectedStudyGroup] =
     useState<StudyGroup | null>(null)
+  const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
 
   // TODO: api 연결할 땐 useQuery로 교체해야
   const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
@@ -41,6 +42,7 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
           name="study_group_id"
           render={({ field: { onChange } }) => (
             <Select
+              defaultChildren={editingRecruit?.study_group_name}
               onOptionSelect={(option) => {
                 handleOptionSelect(option)
                 onChange(option)

@@ -20,6 +20,10 @@ const MarkdownEditor = memo(
       onChange(text)
     }, [text, onChange])
 
+    useEffect(() => {
+      setText(defaultValue)
+    }, [defaultValue])
+
     return (
       <>
         <div className="wmde-markdown-var"></div>

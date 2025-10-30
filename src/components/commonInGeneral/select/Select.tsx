@@ -1,4 +1,4 @@
-import { useRef, useState, type JSX } from 'react'
+import { useEffect, useRef, useState, type JSX } from 'react'
 import { Vstack } from '../layout'
 import type { DivProps } from '@/types'
 import SelectContext from './_SelectContext'
@@ -8,18 +8,30 @@ import SelectOption from './_SelectOption'
 
 interface WithSelectProps {
   onOptionSelect: (option: string | number) => void
+  defaultChildren?: string
 }
 
-const Select = ({ onOptionSelect, ...props }: DivProps & WithSelectProps) => {
+const Select = ({
+  onOptionSelect,
+  defaultChildren,
+  ...props
+}: DivProps & WithSelectProps) => {
   const { className, children, ...rest } = props
 
   const [isOpened, setIsOpened] = useState<boolean>(false)
   const [selectedValue, setSelectedValue] = useState<
     string | number | undefined
-  >(undefined)
+  >(defaultChildren)
   const [selectedChildren, setSelectedChildren] = useState<string | null>(null)
   const [selectedIcon, setSelectedIcon] = useState<JSX.Element | null>(null)
   const triggerRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!defaultChildren) {
+      return
+    }
+    setSelectedChildren(defaultChildren)
+  }, [defaultChildren])
 
   return (
     <SelectContext
