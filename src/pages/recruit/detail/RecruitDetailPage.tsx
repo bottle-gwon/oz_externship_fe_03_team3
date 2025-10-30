@@ -1,7 +1,7 @@
+import dummyRecruitDetailResponse from '@/components/recruit/detail/_dummyRecruitDetailResponse'
 import RecruitDetailContent from '@/components/recruit/detail/RecruitDetailContent'
 import RecruitDetailSkeleton from '@/components/recruit/detail/RecruitDetailSkeleton'
 import { useParams } from 'react-router'
-import dummyRecruitDetailResponse from './_dummyRecruitDetailResponse'
 
 const RecruitDetailPage = () => {
   const params = useParams()

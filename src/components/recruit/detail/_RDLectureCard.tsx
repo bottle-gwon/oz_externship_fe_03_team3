@@ -1,5 +1,5 @@
 import Button from '@/components/commonInGeneral/button/Button'
-import { Vstack } from '@/components/commonInGeneral/layout'
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import type { RecruitDetailLecture } from '@/types'
 import { ChevronRight } from 'lucide-react'
@@ -18,24 +18,24 @@ const RWLectureCard = ({ lecture }: { lecture: RecruitDetailLecture }) => {
         alt={`${lecture.name}__thumbnail`}
       />
 
-      <Vstack className="p-5" gap="none">
-        <Text className="pb-1 text-lg font-semibold">{lecture.name}</Text>
-        <Text className="pb-2 text-sm" color="mono" isMuted>
-          강사{lecture.instructor}
-        </Text>
-        <Text className="text-xl font-bold">
-          {lecture.price.toLocaleString()}원
-        </Text>
+      <Vstack padding="xl" gap="none">
+        <p className="pb-2 text-lg font-semibold">{lecture.name}</p>
+        <p className="text-color-gray pb-3 text-sm">강사{lecture.instructor}</p>
+        <Hstack className="items-center justify-between">
+          <p className="text-primary-600 text-xl font-bold">
+            {lecture.price.toLocaleString()}원
+          </p>
 
-        <Button
-          color="primary"
-          variant="ghost"
-          className="p-0"
-          onClick={handleRedirect}
-        >
-          <ChevronRight />
-          강의 보기
-        </Button>
+          <Button
+            color="primary"
+            variant="ghost"
+            shape="slim"
+            onClick={handleRedirect}
+          >
+            <ChevronRight />
+            강의 보기
+          </Button>
+        </Hstack>
       </Vstack>
     </RoundBox>
   )

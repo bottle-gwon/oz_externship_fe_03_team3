@@ -2,7 +2,7 @@ import type { ButtonProps, ButtonVariant, Color, SmToLg } from '@/types'
 import { Hstack } from '../layout'
 import Spinner from '../spinner/Spinner'
 
-type ButtonShape = 'rectangle' | 'square' | 'circle'
+type ButtonShape = 'rectangle' | 'square' | 'circle' | 'slim'
 
 interface WithButtonProps {
   color?: Color
@@ -99,6 +99,8 @@ const makeShapeResult = (shape: ButtonShape, size: SmToLg): string => {
         sizeMap[size],
         'flex justify-center items-center max-w-10 w-full h-[40px] p-auto rounded-full',
       ].join(' ')
+    case 'slim':
+      return 'w-fit h-fit p-0 rounded-lg'
   }
 }
 
@@ -112,16 +114,11 @@ const Button = ({
 }: ButtonProps & WithButtonProps) => {
   const { className, children, ...rest } = props
   const bgResult = makeBgResult(color, variant)
-  const paddingResult = className?.includes('p-')
-    ? ''
-    : shape !== 'rectangle'
-      ? ''
-      : makePaddigResult(size)
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
   const shapeResult = makeShapeResult(shape, size)
-  const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} ${shapeResult}`
+  const result = `${bgResult} ${outlineResult} ${textResult} ${textColorResult} ${shapeResult}`
 
   return (
     <button

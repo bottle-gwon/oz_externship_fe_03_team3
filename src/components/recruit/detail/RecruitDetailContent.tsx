@@ -87,7 +87,7 @@ const RecruitDetailContent = ({
 
         <TitledRoundBox>
           <TitledRoundBox.Title>스터디 강의 목록</TitledRoundBox.Title>
-          <GridContainer>
+          <GridContainer gap="xl">
             {recruitDetail.lectures.map((lecture) => (
               <RWLectureCard
                 key={`${lecture.name}__${lecture.instructor}`}

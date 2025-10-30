@@ -59,7 +59,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           <Button
             color="primary"
             variant="ghost"
-            className="p-0"
+            shape="slim"
             onClick={handleClick}
           >
             <ChevronDown

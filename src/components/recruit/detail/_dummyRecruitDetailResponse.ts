@@ -92,6 +92,13 @@ This includes:
       link: 'https://example.com/lectures/101',
       price: 50000,
     },
+    {
+      thumbnail_url: 'https://example.com/images/lecture_thumb.png',
+      name: '셸로우 러닝 프로젝트 이론',
+      instructor: '길동형',
+      link: 'https://example.com/lectures/101',
+      price: 100000,
+    },
   ],
   tags: ['AI', 'Python', '딥러닝'],
   due_date: '2025-11-30',
