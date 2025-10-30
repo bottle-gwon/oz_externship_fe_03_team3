@@ -47,6 +47,7 @@ const RecruitCard = ({
   const [manageOpen, setManageOpen] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
+  const [bookmarked, setBookmarked] = useState(false)
 
   const handleEdit = () => {
     navigate(`/recruit/write?edit=${id}`)
@@ -64,6 +65,10 @@ const RecruitCard = ({
 
   const cancelDelete = () => {
     setConfirmOpen(false)
+  }
+
+  const handleBookmark = () => {
+    setBookmarked((on) => !on)
   }
 
   if (isDelete) return null
@@ -110,15 +115,23 @@ const RecruitCard = ({
                 >
                   <Eye className="size-4" /> {views_count}
                 </span>
-                <span
+                <button
+                  type="button"
                   aria-label="북마크"
                   className="bookmarkCount inline-flex items-center gap-1"
+                  onClick={handleBookmark}
                 >
-                  <Bookmark className="size-4" /> {bookmark_count}
-                </span>
+                  <Bookmark
+                    className={`size-4 ${bookmarked ? 'text-amber-400' : 'text-gray-500'}`}
+                    fill={bookmarked ? 'currentColor' : 'none'}
+                    stroke="currentColor"
+                  />
+                  {bookmark_count}
+                </button>
                 {isMine && (
                   <span className="inline-flex items-center gap-3">
                     <button
+                      type="button"
                       aria-label="수정"
                       className="text-gray-500 hover:text-blue-600"
                       onClick={handleEdit}
@@ -126,6 +139,7 @@ const RecruitCard = ({
                       <Pencil className="size-3.5" />
                     </button>
                     <button
+                      type="button"
                       aria-label="삭제"
                       className="text-gray-500 hover:text-red-600"
                       onClick={handleDelete}
