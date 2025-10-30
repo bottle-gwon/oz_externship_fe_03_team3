@@ -1,5 +1,9 @@
 import Button from '@/components/commonInGeneral/button/Button'
-import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
+import {
+  GridContainer,
+  Hstack,
+  Vstack,
+} from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
@@ -8,6 +12,7 @@ import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRo
 import type { RecruitDetail } from '@/types'
 import { Bookmark, Calendar, Eye, Share, UserRound } from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
+import RWLectureCard from './_RDLectureCard'
 
 const RecruitDetailContent = ({
   recruitDetail,
@@ -80,6 +85,14 @@ const RecruitDetailContent = ({
 
         <TitledRoundBox>
           <TitledRoundBox.Title>스터디 강의 목록</TitledRoundBox.Title>
+          <GridContainer>
+            {recruitDetail.lectures.map((lecture) => (
+              <RWLectureCard
+                key={`${lecture.name}__${lecture.instructor}`}
+                lecture={lecture}
+              />
+            ))}
+          </GridContainer>
         </TitledRoundBox>
 
         <TitledRoundBox>
