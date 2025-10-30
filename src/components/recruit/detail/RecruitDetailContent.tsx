@@ -10,10 +10,18 @@ import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
 import Tag from '@/components/commonInProject/tag/Tag'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import type { RecruitDetail } from '@/types'
-import { Bookmark, Calendar, Eye, Share, UserRound } from 'lucide-react'
+import {
+  Bookmark,
+  Calendar,
+  Eye,
+  ScrollText,
+  Share,
+  UserRound,
+} from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
 import RWLectureCard from './_RDLectureCard'
 import MDEditor from '@uiw/react-md-editor'
+import RDAttachmentCard from './_RDAttachmentCard'
 
 const RecruitDetailContent = ({
   recruitDetail,
@@ -64,8 +72,9 @@ const RecruitDetailContent = ({
                 >
                   <Bookmark />
                 </Button>
-                <Button color="blue" size="lg">
-                  공통 컴포넌트로 교체해야
+                <Button color="blue" variant="contained" size="lg">
+                  <ScrollText size={16} />
+                  지원 내역
                 </Button>
               </Hstack>
             </Hstack>
@@ -99,9 +108,28 @@ const RecruitDetailContent = ({
 
         <TitledRoundBox>
           <TitledRoundBox.Title>첨부 파일</TitledRoundBox.Title>
+          {recruitDetail.attachments.map((attachment) => (
+            <RDAttachmentCard key={attachment.id} attachment={attachment} />
+          ))}
         </TitledRoundBox>
 
-        <RoundBox padding="xl"></RoundBox>
+        <RoundBox padding="xl">
+          <Hstack>
+            <Button variant="outlined" size="lg">
+              <Bookmark size={16} />
+              북마크
+            </Button>
+            <Button variant="outlined" size="lg">
+              <Share size={16} />
+              공유하기
+            </Button>
+            <div className="grow" />
+            <Button color="blue" variant="contained" size="lg">
+              <ScrollText size={16} />
+              지원 내역
+            </Button>
+          </Hstack>
+        </RoundBox>
       </Vstack>
     </Container>
   )
