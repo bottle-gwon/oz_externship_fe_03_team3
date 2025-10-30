@@ -39,10 +39,10 @@ const ApplicationModalPage = () => {
   const applicationText = (k: textFieldKey) =>
     errors[k] ? dangerHelperText[k] : helperText[k]
 
-  const onSubmit: SubmitHandler<ApplicationForm> = (data) => {
+  const onSubmit: SubmitHandler<ApplicationForm> = (_data) => {
     setConfirmOn(true)
     //테스트 로그
-    // console.log({ data })
+    // console.log({ _data })
     // debugger
   }
   // 추후 상세페이지 제작 후 api 연결
