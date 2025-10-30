@@ -2,46 +2,46 @@ import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import * as z from 'zod'
 
 export const helperText = {
-  selfIntroduction:
+  self_introduction:
     '본인에 대해 간략하게 소개해주세요. (학습 배경, 관심 분야, 현재 수준 등)',
   motivation: '이 스터디에 지원하게 된 동기를 작성해주세요.',
   objective: '이 스터디를 통해 달성하고 싶은 목표를 작성해주세요.',
-  availableTime:
+  available_time:
     '스터디 참여가 가능한 요일과 시간대를 작성해주세요. (예: 평일 19-21시, 주말 오후)',
-  studyExperience: '스터디 경험이 없으시면 비워두셔도 됩니다.',
+  study_experience: '스터디 경험이 없으시면 비워두셔도 됩니다.',
 } as const
 
 export const dangerHelperText = {
-  selfIntroduction: '자기소개를 작성해주세요. (필수입력)',
+  self_introduction: '자기소개를 작성해주세요. (필수입력)',
   motivation: '지원 동기를 작성해주세요. (필수입력)',
   objective: '스터디 목표를 작성해주세요. (필수입력)',
-  availableTime: '가능한 시간대를 작성해주세요. (필수입력)',
-  studyExperience: '경험을 체크했다면 간단히 작성해주세요.',
+  available_time: '가능한 시간대를 작성해주세요. (필수입력)',
+  study_experience: '경험을 체크했다면 간단히 작성해주세요.',
 } as const
 
 export const applicationSchema = z
   .object({
-    selfIntroduction: z
+    self_introduction: z
       .string()
       .trim()
-      .min(1, dangerHelperText.selfIntroduction)
+      .min(1, dangerHelperText.self_introduction)
       .max(500),
     motivation: z.string().trim().min(1, dangerHelperText.motivation).max(500),
     objective: z.string().trim().min(1, dangerHelperText.objective).max(500),
-    availableTime: z
+    available_time: z
       .string()
       .trim()
-      .min(1, dangerHelperText.availableTime)
+      .min(1, dangerHelperText.available_time)
       .max(500),
-    hasStudyExperience: z.boolean(),
-    studyExperience: z.string().trim().max(500).optional(),
+    has_study_experience: z.boolean(),
+    study_experience: z.string().trim().max(500).optional(),
   })
   .superRefine((vel, ctx) => {
-    if (vel.hasStudyExperience && !vel.studyExperience?.trim().length) {
+    if (vel.has_study_experience && !vel.study_experience?.trim().length) {
       ctx.addIssue({
         code: 'custom',
-        path: ['studyExperience'],
-        message: dangerHelperText.studyExperience,
+        path: ['study_experience'],
+        message: dangerHelperText.study_experience,
       })
     }
   })
@@ -49,12 +49,12 @@ export const applicationSchema = z
 export type ApplicationForm = z.infer<typeof applicationSchema>
 
 export const defaultApplicationValues: ApplicationForm = {
-  selfIntroduction: '',
+  self_introduction: '',
   motivation: '',
   objective: '',
-  availableTime: '',
-  hasStudyExperience: false,
-  studyExperience: '',
+  available_time: '',
+  has_study_experience: false,
+  study_experience: '',
 }
 
 export const recruitWriteSchema = z
@@ -65,7 +65,7 @@ export const recruitWriteSchema = z
       .date('공고 마감 기한을 선택해주세요')
       .min(new Date(), '마감일은 오늘 이후여야 합니다'),
     expected_personnel: z
-      .number('예상 모집 입원을 선택해주세요')
+      .number('예상 모집 인원을 선택해주세요')
       .min(1, '예상 모집 인원을 선택해주세요'),
     study_group_id: z.coerce
       .number('스터디 그룹을 선택해주세요')

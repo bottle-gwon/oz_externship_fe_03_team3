@@ -32,14 +32,19 @@ const ApplicationModalPage = () => {
     mode: 'onSubmit',
   })
 
-  const hasStudyExperience = watch('hasStudyExperience')
+  const hasStudyExperience = watch('has_study_experience')
   const expDisabled = !hasStudyExperience
 
-  type textFieldKey = Exclude<keyof ApplicationForm, 'hasStudyExperience'>
+  type textFieldKey = Exclude<keyof ApplicationForm, 'has_study_experience'>
   const applicationText = (k: textFieldKey) =>
     errors[k] ? dangerHelperText[k] : helperText[k]
 
-  const onSubmit: SubmitHandler<ApplicationForm> = () => setConfirmOn(true)
+  const onSubmit: SubmitHandler<ApplicationForm> = (data) => {
+    setConfirmOn(true)
+    //테스트 로그
+    // console.log({ data })
+    // debugger
+  }
   // 추후 상세페이지 제작 후 api 연결
 
   const closeAllAndReset = () => {
@@ -68,15 +73,15 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>자기소개</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  {...register('selfIntroduction')}
+                  {...register('self_introduction')}
                   disabled={isSubmitting}
                   maxLength={500}
-                  placeholder={applicationText('selfIntroduction')}
-                  isInDanger={!!errors.selfIntroduction}
+                  placeholder={applicationText('self_introduction')}
+                  isInDanger={!!errors.self_introduction}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {(watch('selfIntroduction') ?? '').length}/500
+                  {(watch('self_introduction') ?? '').length}/500
                 </div>
               </section>
 
@@ -120,15 +125,15 @@ const ApplicationModalPage = () => {
                 </Labeled>
                 <Textarea
                   isShort
-                  {...register('availableTime')}
+                  {...register('available_time')}
                   disabled={isSubmitting}
                   maxLength={500}
-                  placeholder={applicationText('availableTime')}
-                  isInDanger={!!errors.availableTime}
+                  placeholder={applicationText('available_time')}
+                  isInDanger={!!errors.available_time}
                   className="w-full"
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {(watch('availableTime') ?? '').length}/500
+                  {(watch('available_time') ?? '').length}/500
                 </div>
               </section>
 
@@ -140,7 +145,7 @@ const ApplicationModalPage = () => {
                   <input
                     type="checkbox"
                     disabled={isSubmitting}
-                    {...register('hasStudyExperience')}
+                    {...register('has_study_experience')}
                   />{' '}
                   스터디 참여 경험이 있습니다.
                 </label>
@@ -151,18 +156,18 @@ const ApplicationModalPage = () => {
                   <Labeled.Header>구체적인 스터디 경험</Labeled.Header>
                 </Labeled>
                 <Textarea
-                  {...register('studyExperience')}
+                  {...register('study_experience')}
                   maxLength={500}
                   disabled={expDisabled || isSubmitting}
-                  placeholder={applicationText('studyExperience')}
-                  isInDanger={!expDisabled && !!errors.studyExperience}
+                  placeholder={applicationText('study_experience')}
+                  isInDanger={!expDisabled && !!errors.study_experience}
                   className={[
                     'w-full',
                     expDisabled ? 'bg-gray-100' : 'bg-white',
                   ].join(' ')}
                 />
                 <div className="text-left text-xs text-gray-500">
-                  {(watch('studyExperience') ?? '').length}/500
+                  {(watch('study_experience') ?? '').length}/500
                 </div>
               </section>
             </div>
