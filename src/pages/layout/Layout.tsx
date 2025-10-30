@@ -31,25 +31,24 @@ const Layout = () => {
       <Header />
       <FlexOneContainer isYScrollable ref={topRef}>
         <Outlet />
-      </FlexOneContainer>
 
-      {/* 플로팅 아이콘 */}
-      <FloatingButtonContainer>
-        {/* 위로가기 아이콘 */}
-        <FloatingButton theme="mono" onClick={onClickTop}>
-          <ArrowUp size={24} strokeWidth={4} />
-        </FloatingButton>
+        {/* 플로팅 아이콘 */}
+        <FloatingButtonContainer>
+          {/* 위로가기 아이콘 */}
+          <FloatingButton theme="mono" onClick={onClickTop}>
+            <ArrowUp size={24} strokeWidth={4} />
+          </FloatingButton>
 
-        {/* 메시지 아이콘 */}
-        <Suspense fallback={<FloatingButtonSkeleton />}>
-          <ChatFloatingButton />
+          {/* 메시지 아이콘 */}
+          <Suspense fallback={<FloatingButtonSkeleton />}>
+            <ChatFloatingButton />
+          </Suspense>
+        </FloatingButtonContainer>
+        {/* 채팅 */}
+        <Suspense fallback={<ChatWidgetSkeleton />}>
+          <ChatWidget />
         </Suspense>
-      </FloatingButtonContainer>
-
-      {/* 채팅 */}
-      <Suspense fallback={<ChatWidgetSkeleton />}>
-        <ChatWidget />
-      </Suspense>
+      </FlexOneContainer>
     </FullScreen>
   )
 }
