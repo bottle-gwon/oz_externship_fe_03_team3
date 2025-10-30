@@ -15,7 +15,7 @@ import {
   Calendar,
   Eye,
   ScrollText,
-  Share,
+  Share2,
   UserRound,
 } from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
@@ -60,7 +60,7 @@ const RecruitDetailContent = ({
 
               <Hstack className="shrink-0">
                 <Button variant="outlined" size="lg" shape="square">
-                  <Share />
+                  <Share2 />
                 </Button>
                 <Button
                   variant={
@@ -120,7 +120,7 @@ const RecruitDetailContent = ({
               북마크
             </Button>
             <Button variant="outlined" size="lg">
-              <Share size={16} />
+              <Share2 size={16} />
               공유하기
             </Button>
             <div className="grow" />
