@@ -20,7 +20,8 @@ const FileDropzone = ({
 
   useEffect(() => {
     const fileArray = Object.values(fileRecord)
-    onChange(fileArray)
+    const realFileArray = fileArray.filter((file) => file.lastModified)
+    onChange(realFileArray)
   }, [fileRecord, onChange])
 
   useEffect(() => {

@@ -97,3 +97,6 @@ export const recruitWriteSchema = z
   )
 
 export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
+
+export const recruitEditSchema = recruitWriteSchema.partial()
+export type RecruitEditSchema = z.infer<typeof recruitEditSchema>

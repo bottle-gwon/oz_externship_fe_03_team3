@@ -3,5 +3,5 @@ export const RECRUIT_WRITE_CONFIG = {
   MAX_IMAGE: 5,
   MAX_IMAGE_FILE_SIZE: '5MB',
   MAX_TAG: 5,
-  MAX_ATTACHMENT: 5,
+  MAX_ATTACHMENT: 3,
 } as const

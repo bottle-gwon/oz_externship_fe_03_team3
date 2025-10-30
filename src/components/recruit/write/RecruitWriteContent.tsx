@@ -1,19 +1,15 @@
 import Button from '@/components/commonInGeneral/button/Button'
-import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import {
   GridContainer,
   Hstack,
   Vstack,
 } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
-import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Send } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
-import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import {
-  Controller,
   useForm,
   type Control,
   type FieldErrors,
@@ -22,9 +18,13 @@ import {
   type UseFormSetValue,
 } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { recruitWriteSchema, type RecruitWriteSchema } from '@/lib/zodSchema'
+import {
+  recruitEditSchema,
+  recruitWriteSchema,
+  type RecruitEditSchema,
+  type RecruitWriteSchema,
+} from '@/lib/zodSchema'
 import { useNavigate } from 'react-router'
-import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import RWStudyGroupSelect from './_RWStudyGroupSelect'
 import RWTagSelect from './rwTagSelect/RWTagSelect'
 import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
@@ -38,10 +38,13 @@ import RWEstimatedCostInput from './_RWEstimatedCost'
 import RWDueDateInput from './_RWDueDateInput'
 import RWExpectedPersonnelSelect from './_RWExpectedPersonnelSelect'
 
-const RecruitWriteContent = () => {
+interface RecruitWriteContetProps {
+  isEditing?: boolean
+}
+
+const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
   // TODO: 마운트 시 스터디 목록 api 호출해야 함
   // TODO: 나중에 이미지 업로드와 연동해야
-  const [dummyImageCount, _setDummyImageCount] = useState(0)
   const [isOn, setIsOn] = useState(false)
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
@@ -60,18 +63,29 @@ const RecruitWriteContent = () => {
     setValue: optionalSetValue,
     control: optionalControl,
     formState: { errors: optionalErrors },
-  } = useForm({ resolver: zodResolver(recruitWriteSchema) })
+  } = useForm({
+    resolver: zodResolver(isEditing ? recruitEditSchema : recruitWriteSchema),
+  })
 
   const errors = optionalErrors as FieldErrors<RecruitWriteSchema>
   const control = optionalControl as Control<RecruitWriteSchema>
   const register = optionalRegister as UseFormRegister<RecruitWriteSchema>
   const setValue = optionalSetValue as UseFormSetValue<RecruitWriteSchema>
 
+  useEffect(() => {
+    if (!editingRecruit) {
+      return
+    }
+
+    setValue('title', editingRecruit.title)
+    setValue('due_date', editingRecruit.due_date)
+  }, [editingRecruit, setValue])
+
   const onSubmit = (_data: FieldValues) => {
     setIsOn(true)
     // ---- 테스트할 땐 여기 주석을 해제해주세요
-    // console.log({ _data })
-    // debugger
+    console.log({ _data })
+    debugger
     // ---- 여기까지
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
@@ -81,6 +95,8 @@ const RecruitWriteContent = () => {
     setIsOn(false)
     navigate(-1)
   }
+
+  console.log({ errors })
 
   return (
     <>
