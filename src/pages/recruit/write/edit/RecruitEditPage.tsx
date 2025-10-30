@@ -1,7 +1,7 @@
+import dummyRecruitDetailResponse from '@/components/recruit/detail/_dummyRecruitDetailResponse'
+import RecruitWriteContent from '@/components/recruit/write/RecruitWriteContent'
 import useStudyHubStore from '@/store/store'
-import RecruitWriteContent from '../RecruitWriteContent'
 import { useEffect } from 'react'
-import dummyRecruitDetailResponse from '../../detail/_dummyRecruitDetailResponse'
 
 const RecruitEditPage = () => {
   // TODO: url 파라미터 -> 내 공고 api -> editingRecruit에 저장

@@ -10,7 +10,7 @@ import queryClient from './lib/tanstackQueryClient'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
 const RecruitEditPage = lazy(
-  () => import('./components/recruit/write/edit/RecruitEditPage')
+  () => import('./pages/recruit/write/edit/RecruitEditPage')
 )
 const RecruitWritePage = lazy(
   () => import('./pages/recruit/write/RecruitWritePage')
