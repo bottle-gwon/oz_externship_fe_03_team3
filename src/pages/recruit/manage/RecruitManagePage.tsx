@@ -19,7 +19,6 @@ import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter
 const RecruitManagementPage = () => {
   const navigate = useNavigate()
   const handleClick = (url: string) => navigate(url)
-  const badgeTest = 12
 
   const handleFilterChange = useCallback((filtered: Recruit[]) => {
     setVisibleRecruits(filtered)
@@ -62,13 +61,6 @@ const RecruitManagementPage = () => {
           ))}
         </Vstack>
       </Vstack>
-
-      <FloatingButtonContainer>
-        {/* 메시지 아이콘 */}
-        <FloatingButton theme="primary" badge={badgeTest}>
-          <MessageCircle size={24} />
-        </FloatingButton>
-      </FloatingButtonContainer>
     </Container>
   )
 }
