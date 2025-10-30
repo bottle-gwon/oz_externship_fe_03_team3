@@ -26,7 +26,7 @@ export interface Recruit {
 export const recruitArrangementInTextArray = [
   '최신순',
   '북마크 많은 순',
-  '조회수 많은 순',
+  '조회수 높은 순',
 ] as const
 export type RecruitArrangementInText =
   (typeof recruitArrangementInTextArray)[number]

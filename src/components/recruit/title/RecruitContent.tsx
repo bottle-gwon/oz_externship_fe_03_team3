@@ -9,14 +9,16 @@ import useStudyHubStore from '@/store/store'
 import RecruitSubHeader from './_RecruitSubHeader'
 import RecruitSearchInput from './_RecruitSearchInput'
 import RecruitTagSelect from './_RecruitTagSelect'
-import RecruitOrderingSelect from './_RecruitOrderingSelect'
 import { useEffect, useState } from 'react'
 import useDebounce from '@/hooks/useDebounce'
 import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
+import RecruitArrangementSelect from './_RecruitArrangementSelect'
+import type { RecruitArrangementInText } from '@/types'
 
 const dummyGetRecruitWithParametersApi = (
   debounceValue: string,
-  tag: string | null
+  tag: string | null,
+  arrangementInText: RecruitArrangementInText
 ) => {
   const setRecruitArray = useStudyHubStore.getState().setRecruitArray
 
@@ -28,6 +30,16 @@ const dummyGetRecruitWithParametersApi = (
       }
       const nameArray = recruit.tags.map((tempTag) => tempTag.name)
       return nameArray.includes(tag)
+    })
+    .sort((a, b) => {
+      switch (arrangementInText) {
+        case '최신순':
+          return 1
+        case '조회수 높은 순':
+          return b.views_count - a.views_count
+        case '북마크 많은 순':
+          return b.bookmark_count - a.bookmark_count
+      }
     })
 
   setRecruitArray(filteredRecruitArray)
@@ -43,16 +55,22 @@ const RecruitContent = () => {
   const [searchText, setSearchText] = useState('')
   const [debounceValue, cancel] = useDebounce(searchText, 500)
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [selectedArrangementInText, setSelectedArrangementInText] =
+    useState<RecruitArrangementInText>('최신순')
 
   useEffect(() => {
-    dummyGetRecruitWithParametersApi(debounceValue, selectedTag)
+    dummyGetRecruitWithParametersApi(
+      debounceValue,
+      selectedTag,
+      selectedArrangementInText
+    )
 
     if (debounceValue === '') {
       setIsSearching(false)
     } else {
       setIsSearching(true)
     }
-  }, [debounceValue, selectedTag])
+  }, [debounceValue, selectedTag, selectedArrangementInText])
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
@@ -78,7 +96,9 @@ const RecruitContent = () => {
 
           <Hstack gap="none" className="gap-9">
             <RecruitTagSelect setSelectedTag={setSelectedTag} />
-            <RecruitOrderingSelect />
+            <RecruitArrangementSelect
+              setSelectedArrangementInText={setSelectedArrangementInText}
+            />
           </Hstack>
         </RoundBox>
 
