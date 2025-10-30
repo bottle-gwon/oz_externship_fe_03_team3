@@ -5,8 +5,72 @@ const dummyRecruitDetailResponse: RecruitDetail = {
   study_group_name: 'AI 스터디 심화반',
   id: 401,
   title: 'AI 스터디 심화반 모집',
-  content:
-    'AI 심화 프로젝트를 함께 진행할 팀원을 모집합니다. 매주 화/목 저녁 7시에 진행...',
+  content: ` # 🤖 AI 심화 프로젝트 팀원 모집
+
+## 📋 프로젝트 개요
+**AI 기반 챗봇 개발** 프로젝트를 함께 진행할 **열정적인 팀원**을 모집합니다!
+
+### 📅 일정 및 진행 방식
+- **정기 모임**: 매주 화/목 저녁 7시 (온라인/오프라인 병행)
+- **기간**: 3개월 (2024.01 ~ 2024.03)
+- **진행 방식**: 애자일 스프린트 방식
+
+### 🎯 주요 목표
+1. **자연어 처리 모델** 구현 및 최적화
+2. **실시간 대화** 기능 개발
+3. **웹 인터페이스** 구축
+4. **배포 및 운영** 경험
+
+### 💻 기술 스택
+#### Backend
+- Python (FastAPI)
+- PyTorch / TensorFlow
+- PostgreSQL
+
+#### Frontend
+- React + TypeScript
+- TailwindCSS
+
+#### Infrastructure
+- Docker
+- AWS (EC2, RDS)
+
+### 🔍 모집 대상
+> **초급자도 환영!** 함께 성장하는 것이 목표입니다.
+
+- [x] Python 기초 지식
+- [x] 머신러닝/딥러닝에 대한 관심
+- [x] 협업 도구 사용 가능 (Git, Slack)
+- [ ] AI/NLP 실무 경험 (우대사항)
+
+### 📞 지원 방법
+**관심 있으신 분은 아래 정보와 함께 연락주세요:**
+
+1. 간단한 자기소개
+2. 프로젝트 참여 동기
+3. 보유 기술 스택
+4. 포트폴리오 링크 (선택)
+
+---
+
+<img src="https://camo.githubusercontent.com/3cae61090608b8cbd681f5825ca5ac76af8d8d3ee12024926d51c5480aef5d6c/68747470733a2f2f796176757a63656c696b65722e6769746875622e696f2f73616d706c652d696d616765732f696d6167652d313032312e6a7067" />
+
+> 💡 **Tip**: 이 프로젝트를 통해 실무 경험을 쌓고 포트폴리오를 만들어보세요!
+
+**함께 멋진 AI 프로젝트를 만들어봅시다! 🚀**
+
+This includes:
+
+• Headers (h1, h2, h3)
+• Bold and italic text
+• Lists (ordered, unordered, checkboxes)
+• Emojis
+• Code blocks
+• Blockquotes
+• Horizontal rule
+• Tables structure
+• Links format
+`,
   content_images: [
     'https://example.com/images/ai_project_1.png',
     'https://example.com/images/ai_project_2.png',

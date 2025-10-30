@@ -8,7 +8,7 @@ const H2 = ({ children }: { children: string }) => {
 
 const TitledRoundBox = ({ children }: { children: ReactNode }) => {
   return (
-    <RoundBox padding="xxl">
+    <RoundBox padding="xxl" data-color-mode="light">
       <Vstack gap="xl">{children}</Vstack>
     </RoundBox>
   )

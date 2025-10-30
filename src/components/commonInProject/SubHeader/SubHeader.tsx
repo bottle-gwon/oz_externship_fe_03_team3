@@ -18,7 +18,7 @@ const SubHeader = ({
   return (
     <Hstack
       gap="lg"
-      className="mb-oz-xxl px-oz-xxl h-[100px] w-full items-center justify-between"
+      className="pb-oz-xxl px-oz-xxl h-[100px] w-full items-center justify-between"
     >
       {isBackButtonVisible && (
         <button

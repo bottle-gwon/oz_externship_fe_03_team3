@@ -13,6 +13,7 @@ import type { RecruitDetail } from '@/types'
 import { Bookmark, Calendar, Eye, Share, UserRound } from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
 import RWLectureCard from './_RDLectureCard'
+import MDEditor from '@uiw/react-md-editor'
 
 const RecruitDetailContent = ({
   recruitDetail,
@@ -81,6 +82,7 @@ const RecruitDetailContent = ({
 
         <TitledRoundBox>
           <TitledRoundBox.Title>공고 내용</TitledRoundBox.Title>
+          <MDEditor.Markdown source={recruitDetail.content} />
         </TitledRoundBox>
 
         <TitledRoundBox>
