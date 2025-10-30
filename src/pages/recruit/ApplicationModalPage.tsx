@@ -41,10 +41,16 @@ const ApplicationModalPage = () => {
     errors[k] ? dangerHelperText[k] : helperText[k]
 
   const onSubmit: SubmitHandler<ApplicationForm> = (_data) => {
-    setConfirmOn(true)
-    //테스트 로그
-    // console.log({ _data })
-    // debugger
+    try {
+      //api연결 시 테스트로그 제거 및 setConfirmOn(true)주석 비활성화
+      // setConfirmOn(true)
+      //테스트 로그
+      // console.log({ _data })
+      // debugger
+      throw new Error('forced-fail')
+    } catch (error) {
+      setFailOn(true)
+    }
   }
   // 추후 상세페이지 제작 후 api 연결
 
