@@ -3,7 +3,10 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import type { Applicant } from '@/types/_applicantInterface'
 import ApplicantCard from '../applicantCard/ApplicantCard'
 import { useState } from 'react'
-import ApplyModal from '../detail/applyModal/ApplyModal'
+import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
+import type { ApplicantDetail } from '@/types'
+import { dummyApplicantDetail } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantDetail'
+import useStudyHubStore from '@/store/store'
 
 interface ManageModal {
   isOn: boolean
@@ -18,16 +21,30 @@ const ManageModal = ({
   recruitContent,
   applicantArray,
 }: ManageModal) => {
-  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
+  const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
     null
-  ) // 선택된 지원자
+  ) // 선택된 지원자 id
+
+  const modalKey = useStudyHubStore((state) => state.modalKey)
+  const setModalKey = useStudyHubStore((state) => state.setModalKey)
+  const [applicantDetail, setApplicantDetail] =
+    useState<ApplicantDetail | null>(null)
 
   const handleClose = () => {
     onClose(false)
   }
 
-  const handleCardClick = (applicant: Applicant) => {
-    setSelectedApplicant(applicant)
+  const handleCardClick = (applicantId: number) => {
+    setSelectedApplicantId(applicantId)
+    setModalKey('manageDetail')
+    // 지원자 상세 정보 api 호출..? / selectedApplicantId 사용
+    setApplicantDetail(dummyApplicantDetail)
+    console.log('클릭됨')
+  }
+
+  const onDetailModalClose = () => {
+    setModalKey(null)
+    setSelectedApplicantId(null)
   }
 
   return (
@@ -46,7 +63,7 @@ const ManageModal = ({
                 <ApplicantCard
                   key={applicant.id}
                   applicant={applicant}
-                  onClick={() => handleCardClick}
+                  onClick={() => handleCardClick(applicant.id)}
                 />
               ))}
             </GridContainer>
@@ -59,7 +76,13 @@ const ManageModal = ({
         </Modal.Body>
       </Modal>
 
-      {selectedApplicant && <ApplyModal />}
+      {modalKey === 'manageDetail' && applicantDetail && (
+        <ManageDetailModal
+          isOn={modalKey === 'manageDetail'}
+          onClose={onDetailModalClose}
+          applicant={applicantDetail}
+        />
+      )}
     </>
   )
 }
