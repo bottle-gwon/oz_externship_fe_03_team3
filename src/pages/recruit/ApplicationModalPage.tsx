@@ -233,7 +233,9 @@ const ApplicationModalPage = () => {
           {`'스터디 제목' 의 제출에 실패하였습니다.`}
         </ConfirmationModal.Title>
         <ConfirmationModal.Content>
-          {`잠시 후 다시 시도해주세요. \n 문제가 지속되면 관리자에게 문의하세요.`}
+          {`잠시 후 다시 시도해주세요.`}
+          <br />
+          {`문제가 지속되면 관리자에게 문의하세요.`}
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
           <Button onClick={closeAllAndReset}>확인</Button>
