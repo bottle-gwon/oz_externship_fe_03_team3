@@ -1,5 +1,5 @@
 import type { RecruitWriteSchema } from '@/lib/zodSchema'
-import type { FieldErrors, Control } from 'react-hook-form'
+import type { FieldErrors, Control, UseFormRegister } from 'react-hook-form'
 
 export interface Recruit {
   id: number
@@ -39,6 +39,7 @@ export type RecruitConditionInText =
 export interface RecruitWriteChildrenProps {
   errors: FieldErrors<RecruitWriteSchema>
   control?: Control<RecruitWriteSchema>
+  register?: UseFormRegister<RecruitWriteSchema>
 }
 
 // ---- recruit detail

@@ -18,6 +18,7 @@ import {
   type Control,
   type FieldErrors,
   type FieldValues,
+  type UseFormRegister,
   type UseFormSetValue,
 } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -31,6 +32,7 @@ import useStudyHubStore from '@/store/store'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import RWFileDropzone from './_RWFileDropzone'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import RWTitleInput from './_RWTitleInput'
 
 const RecruitWriteContent = () => {
   // TODO: 마운트 시 스터디 목록 api 호출해야 함
@@ -82,14 +84,11 @@ const RecruitWriteContent = () => {
 
             <TitledRoundBox>
               <TitledRoundBox.Title>기본 정보</TitledRoundBox.Title>
-              <Labeled isRequired isInDanger={Boolean(errors.title)}>
-                <Labeled.Header>공고 제목</Labeled.Header>
-                <Labeled.Input
-                  {...register('title')}
-                  defaultValue={editingRecruit?.title}
-                />
-                <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
-              </Labeled>
+
+              <RWTitleInput
+                errors={errors as FieldErrors<RecruitWriteSchema>}
+                register={register as UseFormRegister<RecruitWriteSchema>}
+              />
 
               <RWStudyGroupSelect
                 errors={errors as FieldErrors<RecruitWriteSchema>}
