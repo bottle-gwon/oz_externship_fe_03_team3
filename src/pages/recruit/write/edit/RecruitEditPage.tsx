@@ -15,7 +15,7 @@ const RecruitEditPage = () => {
   }, [setEditingRecruit])
   // NOTE: ---- 여기까지
 
-  return <RecruitWriteContent />
+  return <RecruitWriteContent isEditing />
 }
 
 export default RecruitEditPage
