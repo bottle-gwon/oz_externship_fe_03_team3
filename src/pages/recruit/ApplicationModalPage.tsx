@@ -180,7 +180,7 @@ const ApplicationModalPage = () => {
                   size="md"
                   className="text-black"
                   type="button"
-                  onClick={() => setIsOn(false)}
+                  onClick={closeAllAndReset}
                 >
                   취소
                 </Button>
