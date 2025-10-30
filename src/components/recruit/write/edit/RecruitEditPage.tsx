@@ -1,4 +1,3 @@
-import RecruitWritePage from '@/pages/recruit/write/RecruitWritePage'
 import useStudyHubStore from '@/store/store'
 import { useParams } from 'react-router'
 import RecruitWriteContent from '../RecruitWriteContent'
@@ -6,6 +5,7 @@ import { useEffect } from 'react'
 import { mockRecruits } from '@/testRoutes/testPages/nari/_TestMokData'
 
 const RecruitEditPage = () => {
+  // NOTE: 101로 하면 될 겁니다
   const recruitId = Number(useParams().recruitId)
 
   // TODO: useMyRecruitQuery 여기서 호출해야
