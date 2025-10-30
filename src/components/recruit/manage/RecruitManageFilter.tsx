@@ -36,7 +36,7 @@ const filterRecruitsManageApi = (
           return Date.parse(b.created_at) - Date.parse(a.created_at)
         case '북마크 많은 순':
           return (b.bookmark_count ?? 0) - (a.bookmark_count ?? 0)
-        case '조회수 많은 순':
+        case '조회수 높은 순':
           return (b.views_count ?? 0) - (a.views_count ?? 0)
         default:
           return Date.parse(b.created_at) - Date.parse(a.created_at)
