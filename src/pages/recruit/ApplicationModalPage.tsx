@@ -60,6 +60,7 @@ const ApplicationModalPage = () => {
     reset(defaultApplicationValues)
     setConfirmOn(false)
     setIsOn(false)
+    setFailOn(false)
   }
 
   return (
