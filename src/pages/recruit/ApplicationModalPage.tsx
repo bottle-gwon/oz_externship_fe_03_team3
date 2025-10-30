@@ -5,7 +5,6 @@ import { Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
-import ApplicationPoopUp from '../../components/ApplicationPoopUp'
 import {
   applicationSchema,
   dangerHelperText,
@@ -15,6 +14,7 @@ import {
 } from '@/lib/zodSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type SubmitHandler } from 'react-hook-form'
+import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
@@ -50,11 +50,6 @@ const ApplicationModalPage = () => {
 
   return (
     <>
-      {/* 은정님 안녕하세요 하흥주입니다! */}
-      {/* Modal.Body에 overflow만 넣으면 알아서 스크롤이 되도록 수정을 했습니다! */}
-      {/* 다만 이 경우 Header, Body, Footer가 Modal의 자식이 되어야 해서 */}
-      {/* 부득이하게 form을 모달 바깥으로 뺐습니다! */}
-      {/* 이 주석은 삭제하셔도 괜찮습니다! */}
       <form onSubmit={handleSubmit(onSubmit)}>
         <Modal isOn={isOn} onClose={() => setIsOn(false)}>
           <Modal.Header>
@@ -208,7 +203,18 @@ const ApplicationModalPage = () => {
       <Vstack padding="xxl">
         <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
       </Vstack>
-      <ApplicationPoopUp open={confirmOn} onClose={closeAllAndReset} />
+
+      <ConfirmationModal isOn={confirmOn} onClose={closeAllAndReset}>
+        <ConfirmationModal.Title>
+          {`'스터디 제목' 의 제출이 완료되었습니다.`}
+        </ConfirmationModal.Title>
+        <ConfirmationModal.Content>
+          {`지원한 리스트는 '마이페이지>지원내역'에서 확인할 수 있습니다.`}
+        </ConfirmationModal.Content>
+        <ConfirmationModal.ButtonSection>
+          <Button onClick={closeAllAndReset}>확인</Button>
+        </ConfirmationModal.ButtonSection>
+      </ConfirmationModal>
     </>
   )
 }
