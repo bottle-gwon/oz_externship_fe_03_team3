@@ -20,11 +20,22 @@ const RWTagSelect = ({
   errors,
 }: RecruitWriteChildrenProps & WithRWTagSelectProps) => {
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
+  const setSelectedTagArray = useStudyHubStore(
+    (state) => state.setSelectedTagArray
+  )
+  const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
 
   useEffect(() => {
     setValue('tags', selectedTagArray)
   }, [selectedTagArray, setValue])
+
+  useEffect(() => {
+    if (!editingRecruit?.tags) {
+      return
+    }
+    setSelectedTagArray(editingRecruit.tags)
+  }, [editingRecruit, setSelectedTagArray])
 
   return (
     <Labeled isInDanger={Boolean(errors.tags)}>
