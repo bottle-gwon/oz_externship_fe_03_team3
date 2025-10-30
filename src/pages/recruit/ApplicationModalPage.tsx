@@ -231,7 +231,7 @@ const ApplicationModalPage = () => {
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
 
-      <ConfirmationModal isOn={failOn} onClose={closeAllAndReset}>
+      <ConfirmationModal isOn={failOn} onClose={() => setFailOn(false)}>
         <ConfirmationModal.Title>
           {`'스터디 제목' 의 제출에 실패하였습니다.`}
         </ConfirmationModal.Title>
@@ -241,7 +241,7 @@ const ApplicationModalPage = () => {
           {`문제가 지속되면 관리자에게 문의하세요.`}
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={closeAllAndReset}>확인</Button>
+          <Button onClick={() => setFailOn(false)}>확인</Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
     </>
