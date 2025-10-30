@@ -59,6 +59,7 @@ export interface RecruitDetailLecture {
 export interface RecruitDetail {
   // TODO: author api 요청
   author_name: string // author가 없다
+  study_group_name: string // 스터디 그룹이 없다
   id: number
   title: string
   content: string
