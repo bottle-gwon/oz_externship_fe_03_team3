@@ -33,6 +33,10 @@ import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRo
 import RWFileDropzone from './_RWFileDropzone'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import RWTitleInput from './_RWTitleInput'
+import RWMarkdownEditor from './_RWMarkdownEditor'
+import RWEstimatedCostInput from './_RWEstimatedCost'
+import RWDueDateInput from './_RWDueDateInput'
+import RWExpectedPersonnelSelect from './_RWExpectedPersonnelSelect'
 
 const RecruitWriteContent = () => {
   // TODO: 마운트 시 스터디 목록 api 호출해야 함
@@ -52,11 +56,16 @@ const RecruitWriteContent = () => {
 
   const {
     handleSubmit,
-    register,
-    setValue,
-    control,
-    formState: { errors },
+    register: optionalRegister,
+    setValue: optionalSetValue,
+    control: optionalControl,
+    formState: { errors: optionalErrors },
   } = useForm({ resolver: zodResolver(recruitWriteSchema) })
+
+  const errors = optionalErrors as FieldErrors<RecruitWriteSchema>
+  const control = optionalControl as Control<RecruitWriteSchema>
+  const register = optionalRegister as UseFormRegister<RecruitWriteSchema>
+  const setValue = optionalSetValue as UseFormSetValue<RecruitWriteSchema>
 
   const onSubmit = (_data: FieldValues) => {
     setIsOn(true)
@@ -85,115 +94,27 @@ const RecruitWriteContent = () => {
             <TitledRoundBox>
               <TitledRoundBox.Title>기본 정보</TitledRoundBox.Title>
 
-              <RWTitleInput
-                errors={errors as FieldErrors<RecruitWriteSchema>}
-                register={register as UseFormRegister<RecruitWriteSchema>}
-              />
-
-              <RWStudyGroupSelect
-                errors={errors as FieldErrors<RecruitWriteSchema>}
-                control={control as Control<RecruitWriteSchema>}
-              />
+              <RWTitleInput errors={errors} register={register} />
+              <RWStudyGroupSelect errors={errors} control={control} />
 
               <GridContainer>
-                <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
-                  <Labeled.Header>공고 마감 기한</Labeled.Header>
-                  <Labeled.Input
-                    {...register('due_date')}
-                    type="date"
-                    defaultValue={editingRecruit?.due_date.slice(0, 10)}
-                  />
-                  <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
-                </Labeled>
-
-                <Labeled
-                  isRequired
-                  isInDanger={Boolean(errors.expected_personnel)}
-                >
-                  <Labeled.Header>예상 모집 인원</Labeled.Header>
-                  <Controller
-                    control={control}
-                    name="expected_personnel"
-                    render={({ field: { onChange } }) => (
-                      <Select onOptionSelect={onChange}>
-                        <Select.Trigger>
-                          예상 모집 인원을 선택하세요
-                        </Select.Trigger>
-                        <Select.Content>
-                          {Array(RECRUIT_WRITE_CONFIG.MAX_PERSONNEL)
-                            .fill(0)
-                            .map((_, index) => (
-                              <Select.Option
-                                key={index}
-                                value={index + 1}
-                              >{`${index + 1}명`}</Select.Option>
-                            ))}
-                        </Select.Content>
-                      </Select>
-                    )}
-                  />
-                  <Labeled.Footer>
-                    {errors?.expected_personnel?.message}
-                  </Labeled.Footer>
-                </Labeled>
+                <RWDueDateInput errors={errors} register={register} />
+                <RWExpectedPersonnelSelect errors={errors} control={control} />
               </GridContainer>
             </TitledRoundBox>
 
             <TitledRoundBox>
               <TitledRoundBox.Title>공고 내용</TitledRoundBox.Title>
-              <Labeled isRequired isInDanger={Boolean(errors.content)}>
-                <Labeled.Header>스터디 그룹 소개</Labeled.Header>
-                <Hstack className="justify-between text-xs text-gray-500">
-                  <p>마크다운 문법을 사용할 수 있습니다</p>
-                  <p>이미지 {dummyImageCount}/5개</p>
-                </Hstack>
-                <Controller
-                  control={control}
-                  name="content"
-                  render={({ field: { onChange } }) => (
-                    <MarkdownEditor
-                      defaultValue={editingRecruit?.content}
-                      onChange={onChange}
-                    />
-                  )}
-                />
-                <Labeled.Footer>{errors?.content?.message}</Labeled.Footer>
-                <Labeled.Footer>
-                  • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
-                </Labeled.Footer>
-                <Labeled.Footer>
-                  • 이미지 추가: ![설명](이미지URL) - 최대{' '}
-                  {RECRUIT_WRITE_CONFIG.MAX_IMAGE}개, 각{' '}
-                  {RECRUIT_WRITE_CONFIG.MAX_IMAGE_FILE_SIZE} 이하
-                </Labeled.Footer>
-              </Labeled>
+
+              <RWMarkdownEditor errors={errors} control={control} />
             </TitledRoundBox>
 
             <TitledRoundBox>
               <TitledRoundBox.Title>추가 정보</TitledRoundBox.Title>
 
-              <Labeled isInDanger={Boolean(errors.estimated_cost)}>
-                <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
-                <Labeled.Input
-                  {...register('estimated_cost')}
-                  type="number"
-                  placeholder="미입력시 강의 비용 자동 계산"
-                  defaultValue={editingRecruit?.estimated_fee || undefined}
-                />
-                <Labeled.Footer>
-                  {errors?.estimated_cost?.message}
-                </Labeled.Footer>
-              </Labeled>
-
-              <RWTagSelect
-                setValue={setValue as UseFormSetValue<RecruitWriteSchema>}
-                errors={errors as FieldErrors<RecruitWriteSchema>}
-              />
-
-              <RWFileDropzone
-                errors={errors as FieldErrors<RecruitWriteSchema>}
-                control={control as Control<RecruitWriteSchema>}
-              />
+              <RWEstimatedCostInput errors={errors} register={register} />
+              <RWTagSelect setValue={setValue} errors={errors} />
+              <RWFileDropzone errors={errors} control={control} />
             </TitledRoundBox>
 
             <Vstack gap="xl">

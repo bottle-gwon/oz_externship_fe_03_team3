@@ -64,8 +64,8 @@ export interface RecruitDetail {
   id: number
   title: string
   content: string
-  content_images: string[]
-  attachments: RecruitDetailAttachment[]
+  content_images: string[] // 이것도 필요하니 detail 쪽으로 가야겠네...
+  attachments: RecruitDetailAttachment[] // 이게 필요하다
   expected_personnel: number
   expected_fee: number
   lectures: RecruitDetailLecture[]
