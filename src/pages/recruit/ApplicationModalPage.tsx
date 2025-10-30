@@ -49,6 +49,8 @@ const ApplicationModalPage = () => {
       // debugger
       throw new Error('forced-fail')
     } catch (error) {
+      //api 연결 시 void error 제거
+      void error
       setFailOn(true)
     }
   }
