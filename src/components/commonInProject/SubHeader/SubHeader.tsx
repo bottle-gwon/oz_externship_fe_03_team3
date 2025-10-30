@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router'
 
 interface SubHeaderProps {
   isBackButtonVisible?: boolean
-  children: React.ReactNode
+  children?: React.ReactNode
 }
 
 const SubHeader = ({
@@ -18,7 +18,7 @@ const SubHeader = ({
   return (
     <Hstack
       gap="lg"
-      className="pb-oz-xxl px-oz-xxl h-[100px] w-full items-center justify-between"
+      className="mb-oz-xxl px-oz-xxl h-[100px] w-full items-center justify-between"
     >
       {isBackButtonVisible && (
         <button

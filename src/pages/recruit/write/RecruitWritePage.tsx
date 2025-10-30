@@ -29,20 +29,7 @@ import RWStudyGroupSelect from './_RWStudyGroupSelect'
 import RWTagSelect from './rwTagSelect/RWTagSelect'
 import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectModal'
 import useStudyHubStore from '@/store/store'
-import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
-import RWFileDropzone from './_RWFileDropzone'
-
-const H2 = ({ children }: { children: string }) => {
-  return <h2 className="text-xl font-semibold">{children}</h2>
-}
-
-const WriteBox = ({ children }: { children: ReactNode }) => {
-  return (
-    <RoundBox padding="xxl">
-      <Vstack gap="xl">{children}</Vstack>
-    </RoundBox>
-  )
-}
+import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 
 const RecruitWritePage = () => {
   // TODO: 나중에 이미지 업로드와 연동해야
@@ -86,8 +73,8 @@ const RecruitWritePage = () => {
             {/* isPaddedBottom 옵션 넣어달라고 하고 우선 이대로 진행하자 */}
             <TitleSection type="write" />
 
-            <WriteBox>
-              <H2>기본 정보</H2>
+            <TitledRoundBox>
+              <TitledRoundBox.Title>기본 정보</TitledRoundBox.Title>
               <Labeled isRequired isInDanger={Boolean(errors.title)}>
                 <Labeled.Header>공고 제목</Labeled.Header>
                 <Labeled.Input {...register('title')} />
@@ -137,10 +124,10 @@ const RecruitWritePage = () => {
                   </Labeled.Footer>
                 </Labeled>
               </GridContainer>
-            </WriteBox>
+            </TitledRoundBox>
 
-            <WriteBox>
-              <H2>공고 내용</H2>
+            <TitledRoundBox>
+              <TitledRoundBox.Title>공고 내용</TitledRoundBox.Title>
               <Labeled isRequired isInDanger={Boolean(errors.content)}>
                 <Labeled.Header>스터디 그룹 소개</Labeled.Header>
                 <Hstack className="justify-between text-xs text-gray-500">
@@ -164,10 +151,10 @@ const RecruitWritePage = () => {
                   {RECRUIT_WRITE_CONFIG.MAX_IMAGE_FILE_SIZE} 이하
                 </Labeled.Footer>
               </Labeled>
-            </WriteBox>
+            </TitledRoundBox>
 
-            <WriteBox>
-              <H2>추가 정보</H2>
+            <TitledRoundBox>
+              <TitledRoundBox.Title>추가 정보</TitledRoundBox.Title>
 
               <Labeled isInDanger={Boolean(errors.estimated_cost)}>
                 <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
@@ -186,11 +173,14 @@ const RecruitWritePage = () => {
                 errors={errors as FieldErrors<RecruitWriteSchema>}
               />
 
-              <RWFileDropzone
-                control={control as Control<RecruitWriteSchema>}
-                errors={errors as FieldErrors<RecruitWriteSchema>}
-              />
-            </WriteBox>
+              <Labeled isInDanger={Boolean(errors.attachments)}>
+                <Labeled.Header>참고 파일 업로드</Labeled.Header>
+                <FileDropzone
+                  onChange={(fileArray) => setValue('attachments', fileArray)}
+                />
+                <Labeled.Footer>{errors?.attachments?.message}</Labeled.Footer>
+              </Labeled>
+            </TitledRoundBox>
 
             <Vstack gap="xl">
               <Divider />
