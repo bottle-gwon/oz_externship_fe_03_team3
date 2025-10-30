@@ -6,6 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
+import AddTagErrorModal from './guideModal/AddTagErrorModal'
 
 interface TagSelectModal {
   isOn: boolean
@@ -34,6 +35,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
   const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
   const [newSelectTagArray, setNewSelectTagArray] = useState<string[]>([])
+  const [isErrorModalOn, setIsErrorModalOn] = useState(false)
+  const [errorMessage, setErrorMessage] = useState<string>('')
 
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
@@ -74,6 +77,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   }
 
   // 임시 태그 변경 함수
+  // 새로운 태그 추가 부분은 서버로 요청 보내야해서 중복이라고 출력 되는 부분은 임시 로직입니다.
   const onClickTag = (newName: string, isAdd: boolean = false) => {
     if (isAdd) {
       if (
@@ -81,6 +85,10 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         newSelectTagArray.length < 5
       ) {
         setNewSelectTagArray([...newSelectTagArray, newName])
+      } else {
+        // 응답에서 중복 메시지를 받았다고 가정
+        setIsErrorModalOn(true)
+        setErrorMessage(newName)
       }
     } else {
       if (newSelectTagArray.includes(newName)) {
@@ -162,6 +170,12 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
           </Hstack>
         </Hstack>
       </Modal.Footer>
+
+      <AddTagErrorModal
+        isOn={isErrorModalOn}
+        setIsOn={setIsErrorModalOn}
+        tag={errorMessage}
+      />
     </Modal>
   )
 }
