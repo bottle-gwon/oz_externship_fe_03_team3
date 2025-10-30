@@ -31,8 +31,13 @@ import useStudyHubStore from '@/store/store'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import RWFileDropzone from './_RWFileDropzone'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import type { Recruit, RecruitDetail } from '@/types'
 
-const RecruitWriteContent = () => {
+const RecruitWriteContent = ({
+  editingRecruit,
+}: {
+  editingRecruit: Recruit
+}) => {
   // TODO: 나중에 이미지 업로드와 연동해야
   const [dummyImageCount, _setDummyImageCount] = useState(0)
   const modalKey = useStudyHubStore((state) => state.modalKey)
