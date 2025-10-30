@@ -43,7 +43,11 @@ const Modal = ({
         {...rest}
         isCentered
         className={`${className} fixed top-0 left-0 z-3`}
-        onClick={onClose}
+        onClick={(e) => {
+          e.stopPropagation()
+          onClose()
+        }}
+        // onClick={onClose}
       >
         <FullScreen
           style={{ zIndex }}
