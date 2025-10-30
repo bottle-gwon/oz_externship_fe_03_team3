@@ -37,6 +37,7 @@ const ConfirmationModal = ({
       isOn={isOn}
       onClose={onClose}
       className="p-oz-xxl"
+      onClick={(e) => e.stopPropagation()}
     >
       <Vstack className="items-center gap-0">{children}</Vstack>
     </Modal>

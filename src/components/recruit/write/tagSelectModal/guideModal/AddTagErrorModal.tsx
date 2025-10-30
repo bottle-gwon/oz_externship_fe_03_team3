@@ -1,6 +1,5 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
-import { useState } from 'react'
 
 interface AddTagErrorModalInterface {
   isOn: boolean
