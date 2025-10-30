@@ -149,7 +149,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
       </Modal.Body>
       <Modal.Footer>
         <Hstack className="items-center justify-between">
-          <p className="text-sm text-gray-600">{`${selectedTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${selectedTagArray.length}개 태그 선택됨`}`}</p>
+          <p className="text-sm text-gray-600">{`${newSelectTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${newSelectTagArray.length}개 태그 선택됨`}`}</p>
           <Hstack>
             <Button
               color="mono"
