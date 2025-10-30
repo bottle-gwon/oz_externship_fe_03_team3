@@ -122,61 +122,62 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   }, [])
 
   return (
-    <Modal isOn={isOn} onClose={handleClose} width="sm">
-      <Modal.Header>
-        <Vstack gap="xs">
-          <h2 className="text-lg font-semibold">태그 선택</h2>
-          <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${newSelectTagArray.length}/5)`}</p>
-        </Vstack>
-      </Modal.Header>
-      <Modal.Body>
-        <TagSearch onSearch={onSearchTag} />
-        {newSelectTagArray.length !== 0 && (
-          <TagSelection
-            tagArray={newSelectTagArray}
-            onDeleteTag={onClickDeleteTag}
+    <>
+      <Modal isOn={isOn} onClose={handleClose} width="sm">
+        <Modal.Header>
+          <Vstack gap="xs">
+            <h2 className="text-lg font-semibold">태그 선택</h2>
+            <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${newSelectTagArray.length}/5)`}</p>
+          </Vstack>
+        </Modal.Header>
+        <Modal.Body>
+          <TagSearch onSearch={onSearchTag} />
+          {newSelectTagArray.length !== 0 && (
+            <TagSelection
+              tagArray={newSelectTagArray}
+              onDeleteTag={onClickDeleteTag}
+            />
+          )}
+          <TagList
+            responseData={responseData}
+            page={current} // 페이지 네이션 테스트
+            onPageChange={handlePageChange}
+            onSelectTag={onClickTag}
+            selectArray={newSelectTagArray}
+            keyword={searchKeyword}
+            isLoading={isPending}
           />
-        )}
-        <TagList
-          responseData={responseData}
-          page={current} // 페이지 네이션 테스트
-          onPageChange={handlePageChange}
-          onSelectTag={onClickTag}
-          selectArray={newSelectTagArray}
-          keyword={searchKeyword}
-          isLoading={isPending}
-        />
-      </Modal.Body>
-      <Modal.Footer>
-        <Hstack className="items-center justify-between">
-          <p className="text-sm text-gray-600">{`${newSelectTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${newSelectTagArray.length}개 태그 선택됨`}`}</p>
-          <Hstack>
-            <Button
-              color="mono"
-              size="sm"
-              className="border border-gray-300 bg-white px-[18px]"
-              onClick={handleClose} // 모달창 그냥 닫기 === 취소
-            >
-              취소
-            </Button>
-            <Button
-              color="primary"
-              size="sm"
-              className="px-[25px]"
-              onClick={onClickAddTag}
-            >
-              선택 완료
-            </Button>
+        </Modal.Body>
+        <Modal.Footer>
+          <Hstack className="items-center justify-between">
+            <p className="text-sm text-gray-600">{`${newSelectTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${newSelectTagArray.length}개 태그 선택됨`}`}</p>
+            <Hstack>
+              <Button
+                color="mono"
+                size="sm"
+                className="border border-gray-300 bg-white px-[18px]"
+                onClick={handleClose} // 모달창 그냥 닫기 === 취소
+              >
+                취소
+              </Button>
+              <Button
+                color="primary"
+                size="sm"
+                className="px-[25px]"
+                onClick={onClickAddTag}
+              >
+                선택 완료
+              </Button>
+            </Hstack>
           </Hstack>
-        </Hstack>
-      </Modal.Footer>
-
+        </Modal.Footer>
+      </Modal>
       <AddTagErrorModal
         isOn={isErrorModalOn}
         setIsOn={setIsErrorModalOn}
         tag={errorMessage}
       />
-    </Modal>
+    </>
   )
 }
 
