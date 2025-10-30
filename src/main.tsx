@@ -9,6 +9,9 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import queryClient from './lib/tanstackQueryClient'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
+const RecruitEditPage = lazy(
+  () => import('./components/recruit/write/edit/RecruitEditPage')
+)
 const RecruitWritePage = lazy(
   () => import('./pages/recruit/write/RecruitWritePage')
 )
@@ -28,7 +31,7 @@ const routeArray = [
   },
   {
     path: '/recruit/write/:recruitId',
-    element: <RecruitWritePage />,
+    element: <RecruitEditPage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
   {

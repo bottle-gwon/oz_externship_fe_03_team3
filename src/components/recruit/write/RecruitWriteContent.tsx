@@ -36,7 +36,7 @@ import type { Recruit, RecruitDetail } from '@/types'
 const RecruitWriteContent = ({
   editingRecruit,
 }: {
-  editingRecruit: Recruit
+  editingRecruit?: Recruit
 }) => {
   // TODO: 나중에 이미지 업로드와 연동해야
   const [dummyImageCount, _setDummyImageCount] = useState(0)
@@ -83,7 +83,10 @@ const RecruitWriteContent = ({
               <TitledRoundBox.Title>기본 정보</TitledRoundBox.Title>
               <Labeled isRequired isInDanger={Boolean(errors.title)}>
                 <Labeled.Header>공고 제목</Labeled.Header>
-                <Labeled.Input {...register('title')} />
+                <Labeled.Input
+                  {...register('title')}
+                  defaultValue={editingRecruit?.title}
+                />
                 <Labeled.Footer>{errors?.title?.message}</Labeled.Footer>
               </Labeled>
 
@@ -95,7 +98,11 @@ const RecruitWriteContent = ({
               <GridContainer>
                 <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
                   <Labeled.Header>공고 마감 기한</Labeled.Header>
-                  <Labeled.Input {...register('due_date')} type="date" />
+                  <Labeled.Input
+                    {...register('due_date')}
+                    type="date"
+                    defaultValue={editingRecruit?.due_date}
+                  />
                   <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
                 </Labeled>
 
@@ -144,7 +151,10 @@ const RecruitWriteContent = ({
                   control={control}
                   name="content"
                   render={({ field: { onChange } }) => (
-                    <MarkdownEditor onChange={onChange} />
+                    <MarkdownEditor
+                      defaultValue={editingRecruit?.content}
+                      onChange={onChange}
+                    />
                   )}
                 />
                 <Labeled.Footer>{errors?.content?.message}</Labeled.Footer>
