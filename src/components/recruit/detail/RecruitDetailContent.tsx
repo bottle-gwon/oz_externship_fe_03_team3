@@ -29,7 +29,7 @@ const RecruitDetailContent = ({
   recruitDetail: RecruitDetail
 }) => {
   return (
-    <Container width="md">
+    <Container width="md" className="py-oz-xxl">
       <Vstack gap="xxl">
         <SubHeader isBackButtonVisible />
 
