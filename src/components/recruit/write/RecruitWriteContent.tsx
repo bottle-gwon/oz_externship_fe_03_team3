@@ -21,7 +21,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import {
   recruitEditSchema,
   recruitWriteSchema,
-  type RecruitEditSchema,
   type RecruitWriteSchema,
 } from '@/lib/zodSchema'
 import { useNavigate } from 'react-router'
@@ -51,6 +50,7 @@ const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
   const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 
+  console.log({ isEditing })
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -59,6 +59,7 @@ const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
 
   const {
     handleSubmit,
+    watch,
     register: optionalRegister,
     setValue: optionalSetValue,
     control: optionalControl,
@@ -76,9 +77,6 @@ const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
     if (!editingRecruit) {
       return
     }
-
-    setValue('title', editingRecruit.title)
-    setValue('due_date', editingRecruit.due_date)
   }, [editingRecruit, setValue])
 
   const onSubmit = (_data: FieldValues) => {
@@ -95,7 +93,12 @@ const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
     setIsOn(false)
     navigate(-1)
   }
-
+  useEffect(() => {
+    const subscription = watch((value, { name, type }) => {
+      console.log('Form values changed:', value) // Logs all values on any change
+    })
+    return () => subscription.unsubscribe() // Cleanup subscription
+  }, [watch])
   console.log({ errors })
 
   return (
