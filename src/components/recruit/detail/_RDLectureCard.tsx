@@ -3,7 +3,6 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import type { RecruitDetailLecture } from '@/types'
 import { ChevronRight } from 'lucide-react'
-import Text from '@/components/commonInGeneral/text/Text'
 import Img from '@/components/commonInProject/img/Img'
 
 const RWLectureCard = ({ lecture }: { lecture: RecruitDetailLecture }) => {
