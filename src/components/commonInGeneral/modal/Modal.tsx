@@ -42,7 +42,7 @@ const Modal = ({
       <FullScreen
         {...rest}
         isCentered
-        className={`${className} fixed top-0 left-0`}
+        className={`${className} fixed top-0 left-0 z-3`}
         onClick={onClose}
       >
         <FullScreen
