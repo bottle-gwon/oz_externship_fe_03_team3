@@ -57,36 +57,56 @@ export const defaultApplicationValues: ApplicationForm = {
   study_experience: '',
 }
 
+const recruitWriteCommonObject = {
+  expected_personnel: z
+    .number('예상 모집 인원을 선택해주세요')
+    .min(1, '예상 모집 인원을 선택해주세요'),
+  study_group_id: z.coerce
+    .number('스터디 그룹을 선택해주세요')
+    .min(1, '스터디 그룹을 선택해주세요'),
+  estimated_cost: z.coerce.number().nullish(),
+  tags: z
+    .array(z.string())
+    .max(
+      RECRUIT_WRITE_CONFIG.MAX_TAG,
+      `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
+    )
+    .nullish(),
+  attachments: z
+    .array(z.file())
+    .max(
+      RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT,
+      `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
+    )
+    .nullish(),
+  images: z.array(z.string()).nullish(),
+}
+
+const recruitWriteSpecificObejct = {
+  title: z.string().min(1, '제목을 입력하세요'),
+  content: z.string().min(1, '스터디 그룹을 소개해주세요'),
+  due_date: z.coerce
+    .date('공고 마감 기한을 선택해주세요')
+    .min(new Date(), '마감일은 오늘 이후여야 합니다'),
+}
+
+const recruitEditSpecificObject = {
+  title: z
+    .string()
+    .transform((arg) => (arg === '' ? undefined : arg))
+    .nullish(),
+  content: z
+    .string()
+    .transform((arg) => (arg === '' ? undefined : arg))
+    .nullish(),
+  due_date: z.preprocess(
+    (arg) => (arg === '' ? undefined : arg),
+    z.coerce.date().min(new Date(), '마감일은 오늘 이후여야 합니다').nullish()
+  ),
+}
+
 export const recruitWriteSchema = z
-  .object({
-    title: z.string().min(1, '제목을 입력하세요'),
-    content: z.string().min(1, '스터디 그룹을 소개해주세요'),
-    due_date: z.coerce
-      .date('공고 마감 기한을 선택해주세요')
-      .min(new Date(), '마감일은 오늘 이후여야 합니다'),
-    expected_personnel: z
-      .number('예상 모집 인원을 선택해주세요')
-      .min(1, '예상 모집 인원을 선택해주세요'),
-    study_group_id: z.coerce
-      .number('스터디 그룹을 선택해주세요')
-      .min(1, '스터디 그룹을 선택해주세요'),
-    estimated_cost: z.coerce.number().nullish(),
-    tags: z
-      .array(z.string())
-      .max(
-        RECRUIT_WRITE_CONFIG.MAX_TAG,
-        `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
-      )
-      .nullish(),
-    attachments: z
-      .array(z.file())
-      .max(
-        RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT,
-        `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
-      )
-      .nullish(),
-    images: z.array(z.string()).nullish(),
-  })
+  .object({ ...recruitWriteCommonObject, ...recruitWriteSpecificObejct })
   .refine(
     (data) =>
       !data.images || data.images.length <= RECRUIT_WRITE_CONFIG.MAX_IMAGE,
@@ -98,41 +118,10 @@ export const recruitWriteSchema = z
 
 export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
 
-export const recruitEditSchema = z
+const recruitEditBaseSchema = z
   .object({
-    title: z
-      .string()
-      .transform((arg) => (arg === '' ? undefined : arg))
-      .nullish(),
-    content: z.string().min(1, '스터디 그룹을 소개해주세요').nullish(),
-    due_date: z.preprocess(
-      (arg) => (arg === '' ? undefined : arg),
-      z.coerce.date().min(new Date(), '마감일은 오늘 이후여야 합니다').nullish()
-    ),
-    expected_personnel: z
-      .number('예상 모집 인원을 선택해주세요')
-      .min(1, '예상 모집 인원을 선택해주세요')
-      .nullish(),
-    study_group_id: z.coerce
-      .number('스터디 그룹을 선택해주세요')
-      .min(1, '스터디 그룹을 선택해주세요')
-      .nullish(),
-    estimated_cost: z.coerce.number().nullish(),
-    tags: z
-      .array(z.string())
-      .max(
-        RECRUIT_WRITE_CONFIG.MAX_TAG,
-        `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
-      )
-      .nullish(),
-    attachments: z
-      .array(z.file())
-      .max(
-        RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT,
-        `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
-      )
-      .nullish(),
-    images: z.array(z.string()).nullish(),
+    ...recruitWriteCommonObject,
+    ...recruitEditSpecificObject,
   })
   .refine(
     (data) =>
@@ -142,4 +131,5 @@ export const recruitEditSchema = z
       path: ['content'],
     }
   )
+export const recruitEditSchema = recruitEditBaseSchema.partial()
 export type RecruitEditSchema = z.infer<typeof recruitEditSchema>
