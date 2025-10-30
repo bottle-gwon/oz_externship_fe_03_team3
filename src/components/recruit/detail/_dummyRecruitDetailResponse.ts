@@ -80,11 +80,13 @@ This includes:
       id: 51,
       file_name: 'ai_project_guide.pdf',
       url: 'https://example.com/files/ai_project_guide.pdf',
+      size: 100000,
     },
     {
       id: 52,
       file_name: 'arch_logo.jpg',
       url: 'https://media.istockphoto.com/id/2206580869/ko/%EC%82%AC%EC%A7%84/%ED%97%98%EC%A4%80%ED%95%9C-%ED%95%B4%EC%95%88%EC%84%A0%EA%B3%BC-%EB%B0%94%EB%8B%A4-%EC%BD%94%EB%A5%B4%EC%8B%9C%EC%B9%B4%EC%9D%98-%EB%86%92%EC%9D%80-%EC%A0%84%EB%A7%9D.jpg?s=2048x2048&w=is&k=20&c=UQNSU7WinhgHAIlLv2HsqwxCoc2E_aaPN1FJc1xfjYQ=',
+      size: 109000,
     },
   ],
   expected_personnel: 5,
