@@ -21,9 +21,9 @@ const ManageModal = ({
   recruitContent,
   applicantArray,
 }: ManageModal) => {
-  const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
-    null
-  ) // 선택된 지원자 id
+  const [_selectedApplicantId, setSelectedApplicantId] = useState<
+    number | null
+  >(null) // 선택된 지원자 id, api 연결할때 사용
 
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
@@ -38,7 +38,6 @@ const ManageModal = ({
     setSelectedApplicantId(applicantId)
     setModalKey('manageDetail')
     // 지원자 상세 정보 api 호출..?
-    console.log(selectedApplicantId) // 임시
     setApplicantDetail(dummyApplicantDetail)
   }
 
