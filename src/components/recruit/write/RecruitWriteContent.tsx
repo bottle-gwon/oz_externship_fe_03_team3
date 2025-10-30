@@ -9,20 +9,7 @@ import TitleSection from '@/components/titleSection/TitleSection'
 import { Send } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
-import {
-  useForm,
-  type Control,
-  type FieldErrors,
-  type FieldValues,
-  type UseFormRegister,
-  type UseFormSetValue,
-} from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import {
-  recruitEditSchema,
-  recruitWriteSchema,
-  type RecruitWriteSchema,
-} from '@/lib/zodSchema'
+import { type FieldValues } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 import RWStudyGroupSelect from './_RWStudyGroupSelect'
 import RWTagSelect from './rwTagSelect/RWTagSelect'
