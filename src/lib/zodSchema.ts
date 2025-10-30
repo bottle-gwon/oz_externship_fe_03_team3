@@ -98,5 +98,48 @@ export const recruitWriteSchema = z
 
 export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
 
-export const recruitEditSchema = recruitWriteSchema.partial()
+export const recruitEditSchema = z
+  .object({
+    title: z
+      .string()
+      .transform((arg) => (arg === '' ? undefined : arg))
+      .nullish(),
+    content: z.string().min(1, '스터디 그룹을 소개해주세요').nullish(),
+    due_date: z.preprocess(
+      (arg) => (arg === '' ? undefined : arg),
+      z.coerce.date().min(new Date(), '마감일은 오늘 이후여야 합니다').nullish()
+    ),
+    expected_personnel: z
+      .number('예상 모집 인원을 선택해주세요')
+      .min(1, '예상 모집 인원을 선택해주세요')
+      .nullish(),
+    study_group_id: z.coerce
+      .number('스터디 그룹을 선택해주세요')
+      .min(1, '스터디 그룹을 선택해주세요')
+      .nullish(),
+    estimated_cost: z.coerce.number().nullish(),
+    tags: z
+      .array(z.string())
+      .max(
+        RECRUIT_WRITE_CONFIG.MAX_TAG,
+        `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
+      )
+      .nullish(),
+    attachments: z
+      .array(z.file())
+      .max(
+        RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT,
+        `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
+      )
+      .nullish(),
+    images: z.array(z.string()).nullish(),
+  })
+  .refine(
+    (data) =>
+      !data.images || data.images.length <= RECRUIT_WRITE_CONFIG.MAX_IMAGE,
+    {
+      message: `공고 내용의 이미지는 ${RECRUIT_WRITE_CONFIG.MAX_IMAGE}개를 초과할 수 없습니다`,
+      path: ['content'],
+    }
+  )
 export type RecruitEditSchema = z.infer<typeof recruitEditSchema>
