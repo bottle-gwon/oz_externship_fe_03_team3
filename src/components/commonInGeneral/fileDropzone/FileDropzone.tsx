@@ -9,8 +9,10 @@ export type FileRecord = Record<number, File>
 
 const FileDropzone = ({
   onChange,
+  defaultFileRecord,
 }: {
   onChange: (fileArray: File[]) => void
+  defaultFileRecord?: FileRecord
 }) => {
   const [isDragEntered, setIsDragEntered] = useState(false)
   const [fileRecord, setFileRecord] = useState<FileRecord>({})
@@ -20,6 +22,13 @@ const FileDropzone = ({
     const fileArray = Object.values(fileRecord)
     onChange(fileArray)
   }, [fileRecord, onChange])
+
+  useEffect(() => {
+    if (!defaultFileRecord) {
+      return
+    }
+    setFileRecord(defaultFileRecord)
+  }, [defaultFileRecord])
 
   const addFiles = (files: FileList) => {
     let iteration = 0

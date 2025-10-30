@@ -47,6 +47,8 @@ export interface RecruitDetailAttachment {
   id: number
   file_name: string
   url: string
+  // TODO: api 요청해야
+  size: number // <<---- 바이트 단위로 받아야 함
 }
 
 export interface RecruitDetailLecture {
@@ -58,14 +60,15 @@ export interface RecruitDetailLecture {
 }
 
 export interface RecruitDetail {
-  // TODO: author api 요청
+  // NOTE: author api 요청드림
   author_name: string // author가 없다
   study_group_name: string // 스터디 그룹이 없다
   id: number
   title: string
   content: string
-  content_images: string[] // 이것도 필요하니 detail 쪽으로 가야겠네...
-  attachments: RecruitDetailAttachment[] // 이게 필요하다
+  // TODO: 이미지 api 연결하고 이부분 살펴봐야 함
+  content_images: string[] // 이것도 필요하니 detail 쪽으로 가야겠네... 하지만 이미지는 아직 어떻게 하는지 모르겠다
+  attachments: RecruitDetailAttachment[] // 이게 필요하다그러니 detail 매번 요청보내야 함
   expected_personnel: number
   expected_fee: number
   lectures: RecruitDetailLecture[]
