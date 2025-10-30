@@ -48,7 +48,14 @@ const RecruitDetailContent = ({
                 <Button variant="outlined" size="lg" shape="square">
                   <Share />
                 </Button>
-                <Button variant="outlined" size="lg" shape="square">
+                <Button
+                  variant={
+                    recruitDetail.is_bookmarked ? 'contained' : 'outlined'
+                  }
+                  size="lg"
+                  shape="square"
+                  color={recruitDetail.is_bookmarked ? 'blue' : 'mono'}
+                >
                   <Bookmark />
                 </Button>
                 <Button color="blue" size="lg">
