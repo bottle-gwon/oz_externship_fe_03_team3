@@ -9,7 +9,7 @@ import Container from '@/components/commonInGeneral/layout/_Container'
 import Select from '@/components/commonInGeneral/select/Select'
 import TitleSection from '@/components/titleSection/TitleSection'
 import { Send } from 'lucide-react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import {
@@ -31,21 +31,22 @@ import useStudyHubStore from '@/store/store'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import RWFileDropzone from './_RWFileDropzone'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
-import type { Recruit, RecruitDetail } from '@/types'
 
-const RecruitWriteContent = ({
-  editingRecruit,
-}: {
-  editingRecruit?: Recruit
-}) => {
+const RecruitWriteContent = () => {
+  // TODO: 마운트 시 스터디 목록 api 호출해야 함
   // TODO: 나중에 이미지 업로드와 연동해야
   const [dummyImageCount, _setDummyImageCount] = useState(0)
+  const [isOn, setIsOn] = useState(false)
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
-
-  const [isOn, setIsOn] = useState(false)
+  const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
+  const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 
   const navigate = useNavigate()
+
+  useEffect(() => {
+    return () => setEditingRecruit(null)
+  }, [setEditingRecruit])
 
   const {
     handleSubmit,
@@ -101,7 +102,7 @@ const RecruitWriteContent = ({
                   <Labeled.Input
                     {...register('due_date')}
                     type="date"
-                    defaultValue={editingRecruit?.due_date}
+                    defaultValue={editingRecruit?.due_date.slice(0, 10)}
                   />
                   <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
                 </Labeled>
@@ -178,6 +179,7 @@ const RecruitWriteContent = ({
                   {...register('estimated_cost')}
                   type="number"
                   placeholder="미입력시 강의 비용 자동 계산"
+                  defaultValue={editingRecruit?.estimated_fee || undefined}
                 />
                 <Labeled.Footer>
                   {errors?.estimated_cost?.message}
