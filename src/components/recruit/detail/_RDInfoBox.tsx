@@ -13,7 +13,7 @@ const RDInfoBoxContent = ({ children }: { children: string }) => {
 const RDInfoBox = ({ children }: { children: ReactNode }) => {
   return (
     <RoundBox color="mono-dim" padding="lg">
-      <Vstack className="items-center">{children}</Vstack>
+      <Vstack className="items-center gap-0">{children}</Vstack>
     </RoundBox>
   )
 }

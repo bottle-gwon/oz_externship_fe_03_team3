@@ -2,12 +2,14 @@ import type { ButtonProps, ButtonVariant, Color, SmToLg } from '@/types'
 import { Hstack } from '../layout'
 import Spinner from '../spinner/Spinner'
 
+type ButtonShape = 'rectangle' | 'square' | 'circle'
+
 interface WithButtonProps {
   color?: Color
   variant?: ButtonVariant
   status?: 'enabled' | 'pending' | 'disabled'
   size?: SmToLg
-  shape?: 'rectangle' | 'square' | 'circle'
+  shape?: ButtonShape
 }
 
 const makeBgResult = (color: Color, variant: ButtonVariant) => {
@@ -77,11 +79,27 @@ const makeTextColorResult = (color: Color, variant: ButtonVariant) => {
       return 'text-blue-600'
   }
 }
-const shapeMap = {
-  rectangle: 'rounded-lg h-fit w-fit ',
-  square: 'flex justify-center items-center max-w-10 w-full h-[40px] p-auto',
-  circle:
-    'flex justify-center items-center max-w-10 w-full h-[40px] p-auto rounded-full',
+
+const sizeMap: Record<SmToLg, string> = {
+  sm: 'w-[36px] h-[36px]',
+  md: 'w-[40px] h-[40px]',
+  lg: 'w-[48px] h-[48px]',
+}
+const makeShapeResult = (shape: ButtonShape, size: SmToLg): string => {
+  switch (shape) {
+    case 'rectangle':
+      return [makePaddigResult(size), 'rounded-lg h-fit w-fit'].join(' ')
+    case 'square':
+      return [
+        sizeMap[size],
+        'flex justify-center items-center rounded-lg',
+      ].join(' ')
+    case 'circle':
+      return [
+        sizeMap[size],
+        'flex justify-center items-center max-w-10 w-full h-[40px] p-auto rounded-full',
+      ].join(' ')
+  }
 }
 
 const Button = ({
@@ -102,7 +120,7 @@ const Button = ({
   const outlineResult = makeOutlineResult(color, variant)
   const textResult = size === 'lg' ? 'text-base' : 'text-sm'
   const textColorResult = makeTextColorResult(color, variant)
-  const shapeResult = shapeMap[shape]
+  const shapeResult = makeShapeResult(shape, size)
   const result = `${bgResult} ${paddingResult} ${outlineResult} ${textResult} ${textColorResult} ${shapeResult}`
 
   return (

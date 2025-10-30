@@ -20,11 +20,11 @@ const RecruitDetailContent = ({
         <SubHeader isBackButtonVisible />
 
         <RoundBox padding="xxl">
-          <Vstack>
+          <Vstack gap="lg">
             <Hstack>
-              <Vstack className="grow">
-                <h1>{recruitDetail.title}</h1>
-                <Hstack>
+              <Vstack>
+                <h1 className="text-3xl font-bold">{recruitDetail.title}</h1>
+                <Hstack className="flex-wrap">
                   <Hstack>
                     <UserRound />
                     작성자: {recruitDetail.author_name}
@@ -43,13 +43,18 @@ const RecruitDetailContent = ({
                   </Hstack>
                 </Hstack>
               </Vstack>
-              <Button variant="outlined">
-                <Share />
-              </Button>
-              <Button variant="outlined">
-                <Bookmark />
-              </Button>
-              <Button color="blue">공통 컴포넌트로 교체해야</Button>
+
+              <Hstack className="shrink-0">
+                <Button variant="outlined" size="lg" shape="square">
+                  <Share />
+                </Button>
+                <Button variant="outlined" size="lg" shape="square">
+                  <Bookmark />
+                </Button>
+                <Button color="blue" size="lg">
+                  공통 컴포넌트로 교체해야
+                </Button>
+              </Hstack>
             </Hstack>
 
             <Hstack>
