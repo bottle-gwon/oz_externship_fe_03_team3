@@ -40,3 +40,37 @@ export interface RecruitWriteChildrenProps {
   errors: FieldErrors<RecruitWriteSchema>
   control?: Control<RecruitWriteSchema>
 }
+
+// ---- recruit detail
+export interface RecruitDetailAttachment {
+  id: number
+  file_name: string
+  url: string
+}
+
+export interface RecruitDetailLecture {
+  thumbnail_url: string
+  name: string
+  instructor: string
+  link: string
+  price: number
+}
+
+export interface RecruitDetail {
+  // TODO: author api 요청
+  author_name: string // author가 없다
+  id: number
+  title: string
+  content: string
+  content_images: string[]
+  attachments: RecruitDetailAttachment[]
+  expected_personnel: number
+  expected_fee: number
+  lectures: RecruitDetailLecture[]
+  tags: string[]
+  due_date: string
+  created_at: string
+  views: number
+  bookmark_count: number
+  is_bookmarked: boolean
+}

@@ -37,7 +37,7 @@ const routeArray = [
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
   {
-    path: '/recruit/detail/:recruitId',
+    path: '/recruit/:recruitId',
     element: <RecruitDetailPage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
