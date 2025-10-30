@@ -19,6 +19,7 @@ import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationMo
 const ApplicationModalPage = () => {
   const [isOn, setIsOn] = useState(false)
   const [confirmOn, setConfirmOn] = useState(false)
+  const [failOn, setFailOn] = useState(false)
 
   const {
     register,
@@ -215,6 +216,18 @@ const ApplicationModalPage = () => {
         </ConfirmationModal.Title>
         <ConfirmationModal.Content>
           {`지원한 리스트는 '마이페이지>지원내역'에서 확인할 수 있습니다.`}
+        </ConfirmationModal.Content>
+        <ConfirmationModal.ButtonSection>
+          <Button onClick={closeAllAndReset}>확인</Button>
+        </ConfirmationModal.ButtonSection>
+      </ConfirmationModal>
+
+      <ConfirmationModal isOn={failOn} onClose={closeAllAndReset}>
+        <ConfirmationModal.Title>
+          {`'스터디 제목' 의 제출에 실패하였습니다.`}
+        </ConfirmationModal.Title>
+        <ConfirmationModal.Content>
+          {`잠시 후 다시 시도해주세요. \n 문제가 지속되면 관리자에게 문의하세요.`}
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
           <Button onClick={closeAllAndReset}>확인</Button>
