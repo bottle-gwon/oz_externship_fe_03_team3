@@ -37,9 +37,9 @@ const ManageModal = ({
   const handleCardClick = (applicantId: number) => {
     setSelectedApplicantId(applicantId)
     setModalKey('manageDetail')
-    // 지원자 상세 정보 api 호출..? / selectedApplicantId 사용
+    // 지원자 상세 정보 api 호출..?
+    console.log(selectedApplicantId) // 임시
     setApplicantDetail(dummyApplicantDetail)
-    console.log('클릭됨')
   }
 
   const onDetailModalClose = () => {
