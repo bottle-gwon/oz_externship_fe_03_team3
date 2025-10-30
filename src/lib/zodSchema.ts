@@ -132,4 +132,3 @@ const recruitEditBaseSchema = z
     }
   )
 export const recruitEditSchema = recruitEditBaseSchema.partial()
-export type RecruitEditSchema = z.infer<typeof recruitEditSchema>

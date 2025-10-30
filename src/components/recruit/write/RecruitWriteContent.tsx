@@ -36,54 +36,36 @@ import RWMarkdownEditor from './_RWMarkdownEditor'
 import RWEstimatedCostInput from './_RWEstimatedCost'
 import RWDueDateInput from './_RWDueDateInput'
 import RWExpectedPersonnelSelect from './_RWExpectedPersonnelSelect'
+import useRecruitWrite from './_useRecruitWrite'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
 }
 
-const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
+const RecruitWriteContent = ({
+  isEditing = false,
+}: RecruitWriteContetProps) => {
   // TODO: 마운트 시 스터디 목록 api 호출해야 함
   // TODO: 나중에 이미지 업로드와 연동해야
   const [isOn, setIsOn] = useState(false)
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
-  const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 
-  console.log({ isEditing })
   const navigate = useNavigate()
 
   useEffect(() => {
     return () => setEditingRecruit(null)
   }, [setEditingRecruit])
 
-  const {
-    handleSubmit,
-    watch,
-    register: optionalRegister,
-    setValue: optionalSetValue,
-    control: optionalControl,
-    formState: { errors: optionalErrors },
-  } = useForm({
-    resolver: zodResolver(isEditing ? recruitEditSchema : recruitWriteSchema),
-  })
-
-  const errors = optionalErrors as FieldErrors<RecruitWriteSchema>
-  const control = optionalControl as Control<RecruitWriteSchema>
-  const register = optionalRegister as UseFormRegister<RecruitWriteSchema>
-  const setValue = optionalSetValue as UseFormSetValue<RecruitWriteSchema>
-
-  useEffect(() => {
-    if (!editingRecruit) {
-      return
-    }
-  }, [editingRecruit, setValue])
+  const { handleSubmit, register, setValue, control, errors } =
+    useRecruitWrite(isEditing)
 
   const onSubmit = (_data: FieldValues) => {
     setIsOn(true)
     // ---- 테스트할 땐 여기 주석을 해제해주세요
-    console.log({ _data })
-    debugger
+    // console.log({ _data })
+    // debugger
     // ---- 여기까지
     // 아직은 하는 것 없음
     // TODO: api 연결 시 채워넣어야
@@ -93,13 +75,6 @@ const RecruitWriteContent = ({ isEditing }: RecruitWriteContetProps) => {
     setIsOn(false)
     navigate(-1)
   }
-  useEffect(() => {
-    const subscription = watch((value, { name, type }) => {
-      console.log('Form values changed:', value) // Logs all values on any change
-    })
-    return () => subscription.unsubscribe() // Cleanup subscription
-  }, [watch])
-  console.log({ errors })
 
   return (
     <>
