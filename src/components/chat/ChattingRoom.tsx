@@ -110,6 +110,10 @@ const ChattingRoom = () => {
       clearTimeout(scrollTimerRef.current)
     }
 
+    // 로딩중일때 는 무한 스크롤 시작 안함
+    if (isPending) {
+      return
+    }
     // 다음 페이지 없으면 로딩 안함
     if (!hasNextPage) {
       return
