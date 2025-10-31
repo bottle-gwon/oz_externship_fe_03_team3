@@ -7,6 +7,7 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
 import AddTagErrorModal from './guideModal/AddTagErrorModal'
+import { useSearchTag } from '@/hooks/tag/useTag'
 
 interface TagSelectModal {
   isOn: boolean
@@ -37,6 +38,18 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   const [newSelectTagArray, setNewSelectTagArray] = useState<string[]>([])
   const [isErrorModalOn, setIsErrorModalOn] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
+
+  const param = { keyword: searchKeyword, page: current }
+
+  // isFetching은 페이지 네이팅 할때 사용
+  // isPending은 데모용으로 사용중이라 추후 api 나오면 추가
+  // data는 api 연결할때 responseData로 재정의
+  const {
+    // data:responseData , isPending,
+    isError,
+    error,
+    isFetching,
+  } = useSearchTag(param)
 
   const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
@@ -121,6 +134,11 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     setCurrent(1)
   }, [])
 
+  // 임시 에러 처리
+  if (isError) {
+    return <div>{error.message}</div>
+  }
+
   return (
     <>
       <Modal isOn={isOn} onClose={handleClose} width="sm">
@@ -146,6 +164,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
             selectArray={newSelectTagArray}
             keyword={searchKeyword}
             isLoading={isPending}
+            isFetching={isFetching}
           />
         </Modal.Body>
         <Modal.Footer>
