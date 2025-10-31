@@ -33,7 +33,7 @@ interface TagListInterface {
   selectArray: string[]
   keyword: string //검색 키워드
   isLoading: boolean //로딩중
-  isFetching: boolean // 페이지네이팅 로딩
+  // isFetching: boolean // 페이지네이팅 로딩
 }
 
 const TagList = ({
@@ -44,7 +44,7 @@ const TagList = ({
   selectArray,
   keyword,
   isLoading,
-  isFetching,
+  // isFetching,
 }: TagListInterface) => {
   if (!responseData || !page) {
     return
@@ -66,9 +66,9 @@ const TagList = ({
   }
 
   // 페이지 네이팅 할때
-  if (isFetching) {
-    return <div>새롭게 정보 불러오는중ㅎㅎ</div>
-  }
+  // if (isFetching) {
+  //   return <div>새롭게 정보 불러오는중ㅎㅎ</div>
+  // }
 
   return (
     <Vstack
