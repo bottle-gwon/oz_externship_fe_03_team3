@@ -135,11 +135,11 @@ const RecruitCard = ({
                 <button
                   type="button"
                   aria-label="북마크"
-                  className="bookmarkCount inline-flex cursor-pointer items-center gap-1 transition"
+                  className="bookmarkCount inline-flex items-center gap-1"
                   onClick={handleBookmark}
                 >
                   <Bookmark
-                    className={`size-4 ${bookmarked ? 'text-amber-400' : 'text-gray-500'}`}
+                    className={`size-4 cursor-pointer transition hover:text-amber-400 ${bookmarked ? 'text-amber-400' : 'text-gray-500'}`}
                     fill={bookmarked ? 'currentColor' : 'none'}
                     stroke="currentColor"
                   />
