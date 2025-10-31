@@ -65,7 +65,7 @@ const TagList = ({
     return <TagSearchEmpty keyword={keyword} onClickAddTag={onSelectTag} />
   }
 
-  // 페이지 네이팅 할때
+  // 페이지 네이팅 할때만 다르도록 추후 로직 추가 (isFetching은 검색할때도 작동하기 때문)
   // if (isFetching) {
   //   return <div>새롭게 정보 불러오는중ㅎㅎ</div>
   // }
