@@ -41,13 +41,14 @@ const RecruitCard = ({
     views_count,
     bookmark_count,
     lectures,
+    is_bookmarked,
   } = recruit
 
   const navigate = useNavigate()
   const [manageOpen, setManageOpen] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
-  const [bookmarked, setBookmarked] = useState(false)
+  const [bookmarked, setBookmarked] = useState<boolean>(is_bookmarked)
 
   const handleEdit = () => {
     navigate(`/recruit/write?edit=${id}`)
@@ -68,6 +69,9 @@ const RecruitCard = ({
   }
 
   const handleBookmark = () => {
+    // const payload = { action: 'toggle' }
+    // console.log(JSON.stringify(payload, null, 2))
+
     setBookmarked((on) => !on)
   }
 
