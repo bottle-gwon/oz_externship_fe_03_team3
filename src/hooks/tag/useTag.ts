@@ -38,7 +38,7 @@ export const useSearchTag = (params: TagApiSearchParam) => {
 }
 
 // 태그추가
-// 이 부분 수정중인것 같아서 향후 추가
+// 이 부분 백엔드에서 수정중인것 같아서 향후 추가
 export const useAddNewTag = () => {
   const queryClient = useQueryClient()
 
