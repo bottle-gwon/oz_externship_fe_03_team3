@@ -62,7 +62,7 @@ const RecruitDetailContent = ({
                 <Hstack className="flex-wrap">
                   <Hstack>
                     <UserRound />
-                    작성자: {recruitDetail.author_name}
+                    작성자: {recruitDetail.author_nickname}
                   </Hstack>
                   <Hstack>
                     <Calendar />
@@ -142,10 +142,7 @@ const RecruitDetailContent = ({
               공유하기
             </Button>
             <div className="grow" />
-            <Button color="blue" variant="contained" size="lg">
-              <ScrollText size={16} />
-              지원 내역
-            </Button>
+            <RDConditionalButton isMine={false} />
           </Hstack>
         </RoundBox>
       </Vstack>
