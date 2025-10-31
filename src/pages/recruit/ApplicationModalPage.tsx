@@ -62,7 +62,7 @@ const ApplicationModalPage = () => {
   const closeAllAndReset = () => {
     reset(defaultApplicationValues)
     setConfirmOn(false)
-    setIsOn(false)
+    setModalKey(null)
     setFailOn(false)
   }
 
@@ -217,10 +217,6 @@ const ApplicationModalPage = () => {
           </Modal.Footer>
         </Modal>
       </form>
-
-      <Vstack padding="xxl">
-        <Button onClick={() => setIsOn(true)}>누르면 모달 켜짐</Button>
-      </Vstack>
 
       <ConfirmationModal isOn={confirmOn} onClose={closeAllAndReset}>
         <ConfirmationModal.Title>
