@@ -70,7 +70,7 @@ const useStudyHubStore = create<StudyHubState>()(
     {
       name: 'food-storage', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
-      partialize: (state) => ({ fruitArray: state.fruitArray }),
+      partialize: (state) => ({ accessToken: state.accessToken, me: state.me }),
     }
   )
 )
