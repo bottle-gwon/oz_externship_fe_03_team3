@@ -50,8 +50,7 @@ const RecruitCard = ({
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [bookmarked, setBookmarked] = useState<boolean>(is_bookmarked)
 
-  const goDetail = () =>
-    navigate(isMine ? `/recruit/manage/${id}` : `/recruit/${id}`)
+  const goDetail = () => navigate(`/recruit/${id}`)
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
