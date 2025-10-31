@@ -28,7 +28,7 @@ export type RecruitCardProps = {
 const RecruitCard = ({
   recruit,
   isMine = false,
-  cardClassName = 'cursor-pointer hover:bg-gray-50',
+  cardClassName = 'cursor-pointer hover:bg-gray-50 transition',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
   const {
@@ -150,7 +150,7 @@ const RecruitCard = ({
                     <button
                       type="button"
                       aria-label="수정"
-                      className="text-gray-500 hover:text-blue-600"
+                      className="cursor-pointer text-gray-500 transition hover:text-blue-600"
                       onClick={(e) => handleEdit(e)}
                     >
                       <Pencil className="size-3.5" />
@@ -158,7 +158,7 @@ const RecruitCard = ({
                     <button
                       type="button"
                       aria-label="삭제"
-                      className="text-gray-500 hover:text-red-600"
+                      className="cursor-pointer text-gray-500 transition hover:text-red-600"
                       onClick={(e) => handleDelete(e)}
                     >
                       <Trash2 className="size-3.5" />
