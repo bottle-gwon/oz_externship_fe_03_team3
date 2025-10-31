@@ -1,7 +1,6 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import Textarea from '@/components/commonInGeneral/inputFamily/textarea/Textarea'
-import { Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import { Send } from 'lucide-react'
 import { useState } from 'react'
