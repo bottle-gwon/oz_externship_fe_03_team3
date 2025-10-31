@@ -31,14 +31,10 @@ const ConfirmationModal = ({
   modalZIndex,
 }: ConfirmationModalProps) => {
   return (
-    <Modal
-      width="xs"
-      modalZIndex={modalZIndex}
-      isOn={isOn}
-      onClose={onClose}
-      className="p-oz-xxl"
-    >
-      <Vstack className="items-center gap-0">{children}</Vstack>
+    <Modal width="xs" modalZIndex={modalZIndex} isOn={isOn} onClose={onClose}>
+      <Modal.Footer>
+        <Vstack className="items-center gap-0">{children}</Vstack>
+      </Modal.Footer>
     </Modal>
   )
 }
