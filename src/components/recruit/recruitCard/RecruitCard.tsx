@@ -28,7 +28,7 @@ export type RecruitCardProps = {
 const RecruitCard = ({
   recruit,
   isMine = false,
-  cardClassName = '',
+  cardClassName = 'cursor-pointer hover:bg-gray-50',
   imageClassName = 'h-20 w-28',
 }: RecruitCardProps) => {
   const {
