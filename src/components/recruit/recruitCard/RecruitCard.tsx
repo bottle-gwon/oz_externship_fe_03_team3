@@ -51,10 +51,10 @@ const RecruitCard = ({
   const [bookmarked, setBookmarked] = useState<boolean>(is_bookmarked)
 
   const goDetail = () =>
-    navigate(isMine ? `/recruit/:recruitId?${id}` : `/recruit/:recruitId?${id}`)
+    navigate(isMine ? `/recruit/manage/${id}` : `/recruit/${id}`)
 
   const handleEdit = () => {
-    navigate(`/recruit/write/:recruitId?${id}`)
+    navigate(`/recruit/write/${id}`)
   }
 
   const handleDelete = () => {
