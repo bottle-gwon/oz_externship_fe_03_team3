@@ -1,22 +1,9 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack } from '@/components/commonInGeneral/layout'
-import Img from '@/components/commonInProject/img/Img'
 import useStudyHubStore from '@/store/store'
 import { Bell } from 'lucide-react'
-import UserRound from '@/assets/user-round.svg'
 import type { Me } from '@/types'
-
-const ProfileImage = ({ url }: { url: string }) => {
-  return (
-    <div className="h-[32px] w-[32px]">
-      <Img
-        src={url}
-        fallbackImageUrl={UserRound}
-        className="bg-primary-100 p-oz-sm h-full rounded-full"
-      />
-    </div>
-  )
-}
+import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 
 const ProfileButton = ({ me }: { me: Me }) => {
   return (
