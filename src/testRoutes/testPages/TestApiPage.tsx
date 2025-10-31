@@ -53,11 +53,20 @@ const TestApiPage = () => {
             <TitledRoundBox.Title>Lectures</TitledRoundBox.Title>
             <p>서버가 살아있나 확인할 땐 여기를 사용해주세요</p>
             <Button onClick={getLectures}>GET /lectures/</Button>
+            <Button onClick={() => api.get('/lectures/categories')}>
+              GET /lectures/categories
+            </Button>
           </TitledRoundBox>
 
           <TitledRoundBox>
             <TitledRoundBox.Title>Notification</TitledRoundBox.Title>
             <Button onClick={getNotifications}>GET /notifications/</Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
+            <TitledRoundBox.Title>익스프레스 헬스</TitledRoundBox.Title>
+            <Button onClick={() => api.get('/')}>GET /</Button>
+            <Button onClick={() => api.get('/health')}>GET /health</Button>
           </TitledRoundBox>
         </Vstack>
       </RoundBox>
