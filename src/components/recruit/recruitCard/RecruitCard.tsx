@@ -135,7 +135,7 @@ const RecruitCard = ({
                 <button
                   type="button"
                   aria-label="북마크"
-                  className="bookmarkCount inline-flex items-center gap-1"
+                  className="bookmarkCount inline-flex cursor-pointer items-center gap-1 transition"
                   onClick={handleBookmark}
                 >
                   <Bookmark
