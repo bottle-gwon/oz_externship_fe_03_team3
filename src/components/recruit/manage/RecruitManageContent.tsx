@@ -56,6 +56,14 @@ const RecruitManageContent = () => {
           {visibleRecruits.map((recruit) => (
             <RecruitCard isMine key={recruit.id} recruit={recruit} />
           ))}
+          <Button
+            variant="contained"
+            status="enabled"
+            size="lg"
+            className="mb-oz-xxl"
+          >
+            + 더 많은 공고 보기
+          </Button>
         </Vstack>
       </Vstack>
     </Container>
