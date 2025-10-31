@@ -2,10 +2,10 @@ import dummyRecruitDetailResponse from '@/components/recruit/detail/_dummyRecrui
 import RecruitDetailContent from '@/components/recruit/detail/RecruitDetailContent'
 import RecruitDetailSkeleton from '@/components/recruit/detail/RecruitDetailSkeleton'
 import useStudyHubStore from '@/store/store'
-// import { useParams } from 'react-router'
 
 const RecruitDetailPage = () => {
   const me = useStudyHubStore((state) => state.me)
+  // TODO: 실제 api 연결에는 url parameter를 사용해야 합니다
   // const params = useParams()
   // const recuitId = Number(params.recruitId)
 
@@ -15,7 +15,6 @@ const RecruitDetailPage = () => {
   // ---- 여기까지
 
   const isMine = me && me.nickname === recruitDetail.author_nickname
-  debugger
 
   if (dummyIsPending) {
     return <RecruitDetailSkeleton />
