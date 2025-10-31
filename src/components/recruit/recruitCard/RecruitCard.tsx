@@ -53,11 +53,13 @@ const RecruitCard = ({
   const goDetail = () =>
     navigate(isMine ? `/recruit/manage/${id}` : `/recruit/${id}`)
 
-  const handleEdit = () => {
+  const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     navigate(`/recruit/write/${id}`)
   }
 
-  const handleDelete = () => {
+  const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     setConfirmOpen(true)
   }
 
@@ -71,7 +73,8 @@ const RecruitCard = ({
     setConfirmOpen(false)
   }
 
-  const handleBookmark = () => {
+  const handleBookmark = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation()
     // const payload = { action: 'toggle' }
     // console.log(JSON.stringify(payload, null, 2))
 
@@ -82,7 +85,14 @@ const RecruitCard = ({
 
   return (
     <>
-      <RoundBox className={`outBox ${cardClassName}`} onClick={goDetail}>
+      <RoundBox
+        className={`outBox ${cardClassName}`}
+        onClick={goDetail}
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') goDetail()
+        }}
+      >
         <Hstack padding="xs">
           <RoundBox
             isBordered={false}
@@ -141,7 +151,7 @@ const RecruitCard = ({
                       type="button"
                       aria-label="수정"
                       className="text-gray-500 hover:text-blue-600"
-                      onClick={handleEdit}
+                      onClick={(e) => handleEdit(e)}
                     >
                       <Pencil className="size-3.5" />
                     </button>
@@ -149,7 +159,7 @@ const RecruitCard = ({
                       type="button"
                       aria-label="삭제"
                       className="text-gray-500 hover:text-red-600"
-                      onClick={handleDelete}
+                      onClick={(e) => handleDelete(e)}
                     >
                       <Trash2 className="size-3.5" />
                     </button>
@@ -226,7 +236,10 @@ const RecruitCard = ({
                   <Button
                     color="blue"
                     className="gap-2 px-6 py-2 text-xs"
-                    onClick={() => setManageOpen(true)}
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setManageOpen(true)
+                    }}
                   >
                     <FileText className="size-4" />
                     {/* 추후 svg 아이콘으로 추가 */}
