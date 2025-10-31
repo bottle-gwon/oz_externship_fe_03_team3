@@ -5,7 +5,6 @@ import {
   Vstack,
 } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
-import TitleSection from '@/components/titleSection/TitleSection'
 import { Send } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
@@ -24,6 +23,7 @@ import RWEstimatedCostInput from './_RWEstimatedCost'
 import RWDueDateInput from './_RWDueDateInput'
 import RWExpectedPersonnelSelect from './_RWExpectedPersonnelSelect'
 import useRecruitWrite from './_useRecruitWrite'
+import RWSubHeader from './_RWSubHeader'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
@@ -70,7 +70,7 @@ const RecruitWriteContent = ({
           <Vstack gap="xxl">
             {/* 여기 바텀 패딩이 없어야할 거 같은데 */}
             {/* isPaddedBottom 옵션 넣어달라고 하고 우선 이대로 진행하자 */}
-            <TitleSection type="write" />
+            <RWSubHeader isEditing={isEditing} />
 
             <TitledRoundBox>
               <TitledRoundBox.Title>기본 정보</TitledRoundBox.Title>
