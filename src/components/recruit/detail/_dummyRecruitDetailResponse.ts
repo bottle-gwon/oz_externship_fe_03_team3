@@ -1,6 +1,7 @@
 import type { RecruitDetail } from '@/types'
 
 const dummyRecruitDetailResponse: RecruitDetail = {
+  // NOTE: admin 이면 본인 글, 그 외에는 남의 글로 인식됩니다
   author_nickname: 'admin',
   study_name: 'AI 스터디 심화반',
   id: 401,
