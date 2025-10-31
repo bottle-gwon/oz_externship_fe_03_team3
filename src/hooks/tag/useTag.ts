@@ -1,6 +1,6 @@
 import api from '@/api/api'
 import type { TagApiSearchParam } from '@/types'
-import { useMutation, useQuery } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 
 const queryEndpoint = '/recruitments/tags'
 
