@@ -15,6 +15,7 @@ import {
   Calendar,
   Eye,
   ScrollText,
+  Send,
   Share2,
   UserRound,
 } from 'lucide-react'
@@ -23,10 +24,30 @@ import RWLectureCard from './_RDLectureCard'
 import MDEditor from '@uiw/react-md-editor'
 import RDAttachmentCard from './_RDAttachmentCard'
 
+const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
+  if (isMine) {
+    return (
+      <Button color="blue" variant="contained" size="lg">
+        <ScrollText size={16} />
+        지원 내역
+      </Button>
+    )
+  }
+
+  return (
+    <Button color="primary" variant="contained" size="lg">
+      <Send size={16} />
+      지원하기
+    </Button>
+  )
+}
+
 const RecruitDetailContent = ({
   recruitDetail,
+  isMine = false,
 }: {
   recruitDetail: RecruitDetail
+  isMine?: boolean
 }) => {
   return (
     <Container width="md" className="py-oz-xxl">
@@ -72,10 +93,7 @@ const RecruitDetailContent = ({
                 >
                   <Bookmark />
                 </Button>
-                <Button color="blue" variant="contained" size="lg">
-                  <ScrollText size={16} />
-                  지원 내역
-                </Button>
+                <RDConditionalButton isMine={isMine} />
               </Hstack>
             </Hstack>
 

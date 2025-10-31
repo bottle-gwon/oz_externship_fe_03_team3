@@ -61,8 +61,8 @@ export interface RecruitDetailLecture {
 
 export interface RecruitDetail {
   // NOTE: author api 요청드림
-  author_name: string // author가 없다
-  study_group_name: string // 스터디 그룹이 없다
+  author_nickname: string
+  study_name: string
   id: number
   title: string
   content: string

@@ -1,8 +1,8 @@
 import type { RecruitDetail } from '@/types'
 
 const dummyRecruitDetailResponse: RecruitDetail = {
-  author_name: '이세종',
-  study_group_name: 'AI 스터디 심화반',
+  author_nickname: 'admin',
+  study_name: 'AI 스터디 심화반',
   id: 401,
   title: 'AI 스터디 심화반 모집',
   content: ` # 🤖 AI 심화 프로젝트 팀원 모집
