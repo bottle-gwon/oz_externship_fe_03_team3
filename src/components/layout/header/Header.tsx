@@ -9,25 +9,49 @@ import LoggedOutButtonMany from './_LoggedOutButtonMany'
 import { dummyGetMeResponse } from './dummyGetMeResponse'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
+import api from '@/api/api'
+
+// NOTE: 로그인 테스트용 함수 -> 리프레시 로직 아직 없음
+// TODO: 리프레시 로직 적용하고 나면 삭제해야
+const loginForDev = async () => {
+  const responseLogin = await api.post('/auth/login', {
+    email: import.meta.env.VITE_LOGIN_ID,
+    password: import.meta.env.VITE_LOGIN_PASSWORD,
+  })
+  const accessToken = responseLogin.data.data.access
+
+  const responseMe = await api.get('/users/me', {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+  const me = responseMe.data
+
+  const setAccessToken = useStudyHubStore.getState().setAccessToken
+  const setMe = useStudyHubStore.getState().setMe
+
+  setAccessToken(accessToken)
+  setMe(me)
+}
+const logoutForDev = () => {
+  const setAccessToken = useStudyHubStore.getState().setAccessToken
+  setAccessToken(null)
+}
 
 // TODO: 리프레시 토큰 캐시로 받고 로그인 api 연결하면 삭제해야!
 const DebugLoginButton = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
   const setMe = useStudyHubStore((state) => state.setMe)
 
   const handleClick = () => {
     if (accessToken) {
-      setAccessToken(null)
+      logoutForDev()
       setMe(null)
       return
     }
 
-    setAccessToken('this_is_dummy_access_token')
-    setMe(dummyGetMeResponse.data)
+    loginForDev()
   }
 
-  const label = accessToken ? 'DEBUG Logged in' : 'DEBUG Logged out'
+  const label = accessToken ? 'Log Out' : 'Log In'
   return <Button onClick={handleClick}>{label}</Button>
 }
 
