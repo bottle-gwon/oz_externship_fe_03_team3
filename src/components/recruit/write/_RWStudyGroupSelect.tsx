@@ -42,7 +42,7 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
           name="study_group_id"
           render={({ field: { onChange } }) => (
             <Select
-              defaultChildren={editingRecruit?.study_group_name}
+              defaultChildren={editingRecruit?.study_name}
               onOptionSelect={(option) => {
                 handleOptionSelect(option)
                 onChange(option)
