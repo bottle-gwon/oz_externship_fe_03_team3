@@ -23,22 +23,16 @@ import RDInfoRow from './_RDInfoRow'
 import RWLectureCard from './_RDLectureCard'
 import MDEditor from '@uiw/react-md-editor'
 import RDAttachmentCard from './_RDAttachmentCard'
-import { useNavigate } from 'react-router'
 import useStudyHubStore from '@/store/store'
 import ApplicationModalPage from '@/pages/recruit/ApplicationModalPage'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
-  const navigate = useNavigate()
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
 
+  // TODO: ManageModal prop 수정되면 클릭 후 해당 모달 띄우기
   if (isMine) {
     return (
-      <Button
-        color="blue"
-        variant="contained"
-        size="lg"
-        onClick={() => navigate('/recruit/manage')}
-      >
+      <Button color="blue" variant="contained" size="lg">
         <ScrollText size={16} />
         지원 내역
       </Button>
@@ -164,7 +158,10 @@ const RecruitDetailContent = ({
           </RoundBox>
         </Vstack>
       </Container>
+
       <ApplicationModalPage />
+
+      {/* <ManageModal recruitContent={recruitDetail.title} /> */}
     </>
   )
 }

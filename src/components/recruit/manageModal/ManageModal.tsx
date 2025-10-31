@@ -15,6 +15,10 @@ interface ManageModal {
   applicantArray: Applicant[]
 }
 
+// NOTE: 지원 내역 모달을 아래와 같이 수정 부탁드립니다!
+// NOTE: 지원 내역을 열려고 하는 시점에는 해당 공고의 아이디가 몇 번인지만 알고 있는 상황입니다.
+// NOTE: 모달이 켜지면 그 때 api 요청을 보내셔서 지원자 목록을 받아와야 합니다.
+// NOTE: 정리하면 prop으로 recruitId 받음 -> 모달 마운트 -> api 요청 -> 지원자 받아와서 화면 채우기 입니다
 const ManageModal = ({
   isOn,
   onClose,
