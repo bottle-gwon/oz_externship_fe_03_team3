@@ -25,7 +25,7 @@ const RDInfoRow = ({ recruitDetail }: { recruitDetail: RecruitDetail }) => {
       <RDInfoBox>
         <Users size={24} className="text-gray-600" />
         <RDInfoBox.Title>스터디 그룹</RDInfoBox.Title>
-        <RDInfoBox.Content>{recruitDetail.study_group_name}</RDInfoBox.Content>
+        <RDInfoBox.Content>{recruitDetail.study_name}</RDInfoBox.Content>
       </RDInfoBox>
     </div>
   )

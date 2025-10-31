@@ -15,6 +15,7 @@ const RecruitDetailPage = () => {
   // ---- 여기까지
 
   const isMine = me && me.nickname === recruitDetail.author_nickname
+  debugger
 
   if (dummyIsPending) {
     return <RecruitDetailSkeleton />
