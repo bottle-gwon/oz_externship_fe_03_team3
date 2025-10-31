@@ -51,6 +51,7 @@ const TestApiPage = () => {
 
           <TitledRoundBox>
             <TitledRoundBox.Title>Lectures</TitledRoundBox.Title>
+            <p>서버가 살아있나 확인할 땐 여기를 사용해주세요</p>
             <Button onClick={getLectures}>GET /lectures/</Button>
           </TitledRoundBox>
 
