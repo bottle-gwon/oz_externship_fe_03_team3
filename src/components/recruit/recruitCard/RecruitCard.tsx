@@ -50,6 +50,9 @@ const RecruitCard = ({
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [bookmarked, setBookmarked] = useState<boolean>(is_bookmarked)
 
+  const goDetail = () =>
+    navigate(isMine ? `/recruit/manage/${id}` : `/recruit/${id}`)
+
   const handleEdit = () => {
     navigate(`/recruit/write?edit=${id}`)
   }
@@ -79,7 +82,7 @@ const RecruitCard = ({
 
   return (
     <>
-      <RoundBox className={`outBox ${cardClassName}`}>
+      <RoundBox className={`outBox ${cardClassName}`} onClick={goDetail}>
         <Hstack padding="xs">
           <RoundBox
             isBordered={false}
