@@ -15,11 +15,14 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import useStudyHubStore from '@/store/store'
 
 const ApplicationModalPage = () => {
-  const [isOn, setIsOn] = useState(false)
   const [confirmOn, setConfirmOn] = useState(false)
   const [failOn, setFailOn] = useState(false)
+  // NOTE: 외부에서 이 모달을 띄우기 위해 전역 모달 상태를 사용했습니다
+  const modalKey = useStudyHubStore((state) => state.modalKey)
+  const setModalKey = useStudyHubStore((state) => state.setModalKey)
 
   const {
     register,
@@ -66,7 +69,7 @@ const ApplicationModalPage = () => {
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Modal isOn={isOn} onClose={() => setIsOn(false)}>
+        <Modal isOn={modalKey === 'apply'} onClose={() => setModalKey(null)}>
           <Modal.Header>
             <div className="space-y-1">
               <div className="text-lg font-semibold">스터디 지원서 작성</div>
