@@ -1,6 +1,11 @@
 import api from '@/api/api'
 import type { TagApiSearchParam } from '@/types'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import {
+  keepPreviousData,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 const queryEndpoint = '/recruitments/tags'
 
@@ -34,6 +39,7 @@ export const useSearchTag = (params: TagApiSearchParam) => {
   return useQuery({
     queryKey: [queryEndpoint, params],
     queryFn: () => getSearchTag(params),
+    placeholderData: keepPreviousData,
   })
 }
 
