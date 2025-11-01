@@ -27,6 +27,8 @@ const getLectures = () => api.get('/lectures/')
 
 const getNotifications = () => api.get('/notifications/')
 
+const lecture_id = '550e8400-e29b-41d4-a716-446655440000'
+
 const TestApiPage = () => {
   return (
     <Container width="md" isPadded>
@@ -55,6 +57,16 @@ const TestApiPage = () => {
             <Button onClick={getLectures}>GET /lectures/</Button>
             <Button onClick={() => api.get('/lectures/categories')}>
               GET /lectures/categories
+            </Button>
+            <Button
+              onClick={() => api.post('/lectures/bookmarks', { lecture_id })}
+            >
+              POST /lectures/bookmarks
+            </Button>
+            <Button
+              onClick={() => api.delete(`/lectures/bookmarks/${lecture_id}`)}
+            >
+              {'DELETE /lectures/bookmarks/{lecture_id}'}
             </Button>
           </TitledRoundBox>
 
