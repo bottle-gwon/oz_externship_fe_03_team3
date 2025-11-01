@@ -25,8 +25,8 @@ const ManageModal = ({
     number | null
   >(null) // 선택된 지원자 id, api 연결할때 사용
 
-  const modalKey = useStudyHubStore((state) => state.modalKey)
-  const setModalKey = useStudyHubStore((state) => state.setModalKey)
+  const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
+  const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
   const [applicantDetail, setApplicantDetail] =
     useState<ApplicantDetail | null>(null)
 
@@ -36,13 +36,12 @@ const ManageModal = ({
 
   const handleCardClick = (applicantId: number) => {
     setSelectedApplicantId(applicantId)
-    setModalKey('manageDetail')
-    // 지원자 상세 정보 api 호출..?
+    setModalKeyArray([...modalKeyArray, 'manageDetail'])
     setApplicantDetail(dummyApplicantDetail)
   }
 
   const onDetailModalClose = () => {
-    setModalKey(null)
+    setModalKeyArray(['manage'])
     setSelectedApplicantId(null)
   }
 
@@ -55,7 +54,7 @@ const ManageModal = ({
             <p className="text-sm">{`${recruitContent} - 총 ${applicantArray.length}명이 지원했습니다`}</p>
           </Vstack>
         </Modal.Header>
-        <Modal.Body>
+        <Modal.Body className="overflow-auto">
           {applicantArray.length > 0 && (
             <GridContainer gap="lg" className="grid-cols-2">
               {applicantArray.map((applicant) => (
@@ -75,9 +74,9 @@ const ManageModal = ({
         </Modal.Body>
       </Modal>
 
-      {modalKey === 'manageDetail' && applicantDetail && (
+      {modalKeyArray.includes('manageDetail') && applicantDetail && (
         <ManageDetailModal
-          isOn={modalKey === 'manageDetail'}
+          isOn={modalKeyArray.includes('manageDetail')}
           onClose={onDetailModalClose}
           applicant={applicantDetail}
         />
