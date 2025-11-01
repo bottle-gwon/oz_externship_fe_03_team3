@@ -1,21 +1,22 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import ManageDetailModal from '@/components/recruit/manageDetailModal/ManageDetailModal'
-import { useState } from 'react'
 import { dummyApplicantDetail } from './dummy/dummyApplicantDetail'
+import useStudyHubStore from '@/store/store'
 
 const HyejeongManageModal = () => {
-  const [isOn, setIsOn] = useState(false)
+  const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
+  const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
 
   const onOpen = () => {
-    setIsOn(true)
+    setModalKeyArray(['manageDetail'])
   }
 
   return (
     <Vstack>
       <ManageDetailModal
-        onClose={setIsOn}
-        isOn={isOn}
+        onClose={() => setModalKeyArray([])}
+        isOn={modalKeyArray.includes('manageDetail')}
         applicant={dummyApplicantDetail}
       />
       <Button onClick={onOpen}>모달 버튼</Button>
