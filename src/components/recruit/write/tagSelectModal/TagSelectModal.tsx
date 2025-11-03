@@ -7,7 +7,8 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
 import AddTagErrorModal from './guideModal/AddTagErrorModal'
-import { useSearchTag } from '@/hooks/tag/useTag'
+import { useAddNewTag, useSearchTag } from '@/hooks/tag/useTag'
+import { AxiosError } from 'axios'
 
 interface TagSelectModal {
   isOn: boolean
@@ -15,18 +16,18 @@ interface TagSelectModal {
 }
 
 // Todo 임시 데이터 api 연동하면 지울것!
-const EXAMPLE_DATA = {
-  tags: [
-    { id: 1, name: 'Python' },
-    { id: 2, name: 'AI' },
-    { id: 3, name: '딥러닝' },
-    { id: 4, name: '밥' },
-    { id: 5, name: 'C언어' },
-  ],
-  page: 1,
-  page_size: 5,
-  total_count: 50,
-}
+// const EXAMPLE_DATA = {
+//   tags: [
+//     { id: 1, name: 'Python' },
+//     { id: 2, name: 'AI' },
+//     { id: 3, name: '딥러닝' },
+//     { id: 4, name: '밥' },
+//     { id: 5, name: 'C언어' },
+//   ],
+//   page: 1,
+//   page_size: 5,
+//   total_count: 50,
+// }
 
 // 기존 선택 되어 있는 태그, 태그 수정만 내려 받고
 // 요청은 태그 모달에서 직접함
@@ -60,6 +61,11 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     isFetching,
   } = useSearchTag(param)
 
+  const {
+    // isPending: isAddTagPending,
+    mutateAsync: addTag,
+  } = useAddNewTag()
+
   // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
   const setSelectedTagArray = useStudyHubStore(
@@ -76,7 +82,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         page: current,
       }
     }
-  }, [responseData])
+  }, [responseData, searchKeyword, current])
 
   // 테스트용 로딩
   // useEffect(() => {
@@ -109,17 +115,34 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   // 임시 태그 변경 함수
   // 새로운 태그 추가 부분은 서버로 요청 보내야해서 중복이라고 출력 되는 부분은 임시 로직입니다.
-  const onClickTag = (newName: string, isAdd: boolean = false) => {
+  const onClickTag = async (newName: string, isAdd: boolean = false) => {
     if (isAdd) {
-      if (
-        !newSelectTagArray.includes(newName) &&
-        newSelectTagArray.length < 5
-      ) {
-        setNewSelectTagArray([...newSelectTagArray, newName])
-      } else {
-        // 응답에서 중복 메시지를 받았다고 가정
-        setIsErrorModalOn(true)
-        setErrorMessage(newName)
+      // if (
+      //   !newSelectTagArray.includes(newName) &&
+      //   newSelectTagArray.length < 5
+      // ) {
+      //   setNewSelectTagArray([...newSelectTagArray, newName])
+      // } else {
+      //   // 응답에서 중복 메시지를 받았다고 가정
+      //   setIsErrorModalOn(true)
+      //   setErrorMessage(newName)
+      // }
+      try {
+        await addTag(newName)
+        // console.log(response)
+        // 추가된 태그 자동으로 선택
+        if (
+          !newSelectTagArray.includes(newName) &&
+          newSelectTagArray.length < 5
+        ) {
+          setNewSelectTagArray([...newSelectTagArray, newName])
+        }
+      } catch (error) {
+        if (error instanceof AxiosError && error?.status === 409) {
+          // console.error('이미 있는 값')   //임시 에러처리
+        } else {
+          // console.error(String(error))  //임시 알 수 없는 에러
+        }
       }
     } else {
       if (newSelectTagArray.includes(newName)) {
@@ -135,8 +158,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
       setNewSelectTagArray(newSelectTagArray.filter((tag) => tag !== tagName))
     }
   }
-  //임시 검색 함수
-  //임시라서 간단하게만 담겨 있습니다.(실제 검색은 be에서 담당함) 차후에 api 요청으로 변경해야함
+
+  // 검색 함수
   const onSearchTag = useCallback((tagName: string) => {
     setSearchKeyword(tagName)
     // if (tagName === '') {

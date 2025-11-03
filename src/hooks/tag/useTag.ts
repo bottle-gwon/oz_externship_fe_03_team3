@@ -26,7 +26,7 @@ const getSearchTag = async (params: TagApiSearchParam) => {
 // 새로운 태그 추가
 // 아직 확정적이진 않아서 이부분 향후 수정할 예정입니다.
 const postNewTag = async (newTag: string) => {
-  const newTagParam = { name: newTag }
+  const newTagParam = { tags: [newTag] }
   const response = await api.post(queryEndpoint, newTagParam)
 
   return response.data
