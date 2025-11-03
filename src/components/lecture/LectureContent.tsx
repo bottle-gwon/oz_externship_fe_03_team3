@@ -1,4 +1,3 @@
-import { useEffect, useState } from 'react'
 import { GridContainer, Vstack } from '../commonInGeneral/layout'
 import Container from '../commonInGeneral/layout/_Container'
 import RoundBox from '../commonInGeneral/roundBox/RoundBox'
@@ -6,56 +5,53 @@ import LectureCard from './lectureCard/LectureCard'
 import RecommendSection from '../recommendSection/RecommendSection'
 import LectureSearchInput from './_LectureSearchInput'
 import useStudyHubStore from '@/store/store'
-import { dummyLectureArray } from './dummyLectureArray'
 import NoSearchResult from '../commonInProject/noSearchResult/NoSearchResult'
 import LectureCategorySelect from './_LectureCategorySelect'
 import LectureOrderingSelect from './_LectureOrderingSelect'
-import useDebounce from '@/hooks/useDebounce'
-import type { LectureOrderingInText } from '@/types'
 import SubHeader from '../commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
 import useLectures from '@/hooks/lecture/useLectures'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
-const dummyGetLectureWithParametersApi = (
-  debounceValue: string,
-  category: string | null,
-  orderingInText: LectureOrderingInText
-) => {
-  const setLectureArray = useStudyHubStore.getState().setLectureArray
-
-  const filteredLectureArray = dummyLectureArray
-    .filter(
-      (lecture) =>
-        lecture.title.includes(debounceValue) ||
-        lecture.instructor.includes(debounceValue)
-    )
-    .filter((lecture) => {
-      if (!category || category === '전체 카테고리') {
-        return true
-      }
-      const nameArray = lecture.categories.map(
-        (tempCategory) => tempCategory.name
-      )
-      return nameArray.includes(category)
-    })
-    .sort((a, b) => {
-      switch (orderingInText) {
-        case '최신순':
-          return 1
-        case '가격 높은 순':
-          return b.discount_price - a.discount_price
-        case '가격 낮은 순':
-          return a.discount_price - b.discount_price
-        case '평점 높은 순':
-          return b.average_rating - a.average_rating
-        case '평점 낮은 순':
-          return a.average_rating - b.average_rating
-      }
-    })
-
-  setLectureArray(filteredLectureArray)
-}
+// const dummyGetLectureWithParametersApi = (
+//   debounceValue: string,
+//   category: string | null,
+//   orderingInText: LectureOrderingInText
+// ) => {
+//   const setLectureArray = useStudyHubStore.getState().setLectureArray
+//
+//   const filteredLectureArray = dummyLectureArray
+//     .filter(
+//       (lecture) =>
+//         lecture.title.includes(debounceValue) ||
+//         lecture.instructor.includes(debounceValue)
+//     )
+//     .filter((lecture) => {
+//       if (!category || category === '전체 카테고리') {
+//         return true
+//       }
+//       const nameArray = lecture.categories.map(
+//         (tempCategory) => tempCategory.name
+//       )
+//       return nameArray.includes(category)
+//     })
+//     .sort((a, b) => {
+//       switch (orderingInText) {
+//         case '최신순':
+//           return 1
+//         case '가격 높은 순':
+//           return b.discount_price - a.discount_price
+//         case '가격 낮은 순':
+//           return a.discount_price - b.discount_price
+//         case '평점 높은 순':
+//           return b.average_rating - a.average_rating
+//         case '평점 낮은 순':
+//           return a.average_rating - b.average_rating
+//       }
+//     })
+//
+//   setLectureArray(filteredLectureArray)
+// }
 
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
@@ -64,7 +60,7 @@ const LectureContent = () => {
     data,
     isPending,
     error,
-    getNextPage,
+    // getNextPage, // <<-- 무한 스크롤 구현할 때 사용
     searchText,
     setSearchText,
     setSelectedCategory,

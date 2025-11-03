@@ -47,6 +47,7 @@ const useLecturesQuery = () => {
       const response = await api.get(url)
       return response.data as Record<string, Lecture[]>
     },
+    placeholderData: (previousData) => previousData,
   })
 
   const getNextPage = useCallback(() => {
