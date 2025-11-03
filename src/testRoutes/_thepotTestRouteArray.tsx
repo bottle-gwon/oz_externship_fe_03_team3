@@ -24,6 +24,9 @@ const ThePottFileDropzonePage = lazy(
 const ThePottSkeletonPage = lazy(
   () => import('./testPages/thepott/ThePottSkeletonPage')
 )
+const ThePottDropdownPage = lazy(
+  () => import('./testPages/thepott/ThePottDropdownPage')
+)
 
 const thepottTestRouteArray = [
   { path: '/test/thepott', element: <ThepottTestPage /> },
@@ -34,6 +37,7 @@ const thepottTestRouteArray = [
   { path: '/test/thepott/markdown', element: <ThePottMarkdownPage /> },
   { path: '/test/thepott/skeleton', element: <ThePottSkeletonPage /> },
   { path: '/test/thepott/file-dropzone', element: <ThePottFileDropzonePage /> },
+  { path: '/test/thepott/dropdown', element: <ThePottDropdownPage /> },
 ]
 
 export default thepottTestRouteArray
