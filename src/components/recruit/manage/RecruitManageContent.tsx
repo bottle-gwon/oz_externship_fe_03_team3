@@ -13,17 +13,27 @@ import { useCallback, useState } from 'react'
 import type { Recruit } from '@/types'
 import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
 
+const page_size = 10
+
 const RecruitManageContent = () => {
   const navigate = useNavigate()
   const handleClick = (url: string) => navigate(url)
 
-  const handleFilterChange = useCallback((filtered: Recruit[]) => {
-    setVisibleRecruits(filtered)
-  }, [])
-
-  const [visibleRecruits, setVisibleRecruits] = useState<Recruit[]>(() => [
+  const [recruitList, setRecruitList] = useState<Recruit[]>(() => [
     ...mockRecruits,
   ])
+  const [recruitPage, setRecruitPage] = useState(1)
+
+  const [visibleRecruits, setVisibleRecruits] = useState<Recruit[]>(() => [
+    ...mockRecruits.slice(0, page_size),
+  ])
+
+  const hasMore = visibleRecruits.length < recruitList.length
+
+  const handleFilterChange = useCallback((filtered: Recruit[]) => {
+    setRecruitList(filtered)
+    setRecruitPage(1)
+  }, [])
 
   return (
     <Container isPadded className="py-oz-xxl bg-[#F9FAFB]">
@@ -52,18 +62,22 @@ const RecruitManageContent = () => {
         <RecruitManageFilter onChange={handleFilterChange} />
 
         <Vstack gap="none">
-          <h1 className="mb-oz-md">내 공고 목록 ({visibleRecruits.length})</h1>
+          <h1 className="mb-oz-md">내 공고 목록 ({recruitList.length})</h1>
           {visibleRecruits.map((recruit) => (
             <RecruitCard isMine key={recruit.id} recruit={recruit} />
           ))}
-          <Button
-            variant="contained"
-            status="enabled"
-            size="lg"
-            className="mb-oz-xxl mt-oz-lg"
-          >
-            + 더 많은 공고 보기
-          </Button>
+
+          {hasMore && (
+            <Button
+              variant="contained"
+              status="enabled"
+              size="lg"
+              className="mb-oz-xxl mt-oz-lg"
+              onClick={() => null}
+            >
+              + 더 많은 공고 보기
+            </Button>
+          )}
         </Vstack>
       </Vstack>
     </Container>
