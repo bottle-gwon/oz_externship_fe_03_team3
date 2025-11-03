@@ -59,6 +59,23 @@ const TestApiPage = () => {
               GET /lectures/categories
             </Button>
             <Button
+              onClick={() =>
+                api.get(
+                  'http://api.ozcoding.site/api/v1/lectures/?ordering=-created_at&page=2'
+                )
+              }
+            >
+              GET
+              http://api.ozcoding.site/api/v1/lectures/?ordering=-created_at&page=2
+            </Button>
+            <Button
+              onClick={() =>
+                api.get('http://api.ozcoding.site/api/v1/lectures/?page=2')
+              }
+            >
+              GET http://api.ozcoding.site/api/v1/lectures/?page=2
+            </Button>
+            <Button
               onClick={() => api.post('/lectures/bookmarks', { lecture_id })}
             >
               POST /lectures/bookmarks

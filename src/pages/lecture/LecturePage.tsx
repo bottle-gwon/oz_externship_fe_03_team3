@@ -1,11 +1,13 @@
 import LectureContent from '@/components/lecture/LectureContent'
 import LectureSkeleton from '@/components/lecture/LectureSkeleton'
 import useLectures from '@/hooks/lecture/useLectures'
+import useLectureStore from '@/store/lecture/lectureStore'
 
 const LecturePage = () => {
+  const lectureArray = useLectureStore((state) => state.lectureArray)
   const { isPending, error } = useLectures()
 
-  if (isPending) {
+  if (isPending && lectureArray.length === 0) {
     return <LectureSkeleton />
   }
 
