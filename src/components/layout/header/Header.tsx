@@ -111,7 +111,7 @@ const Header = () => {
   }
 
   return (
-    <div className="overflow-x-hidden overflow-y-scroll border border-b-gray-200 bg-white">
+    <div className="border-b border-b-gray-200 bg-white">
       <Container width="lg" className="px-oz-xxl py-oz-sm">
         <Hstack className="items-center gap-0">
           <div className="grow">
