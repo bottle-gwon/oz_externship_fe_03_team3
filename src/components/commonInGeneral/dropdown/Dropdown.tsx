@@ -1,4 +1,11 @@
-import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import {
+  useCallback,
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  type ReactNode,
+} from 'react'
 import { Hstack } from '../layout'
 import DropdownContext from './_DropdownContext'
 import useDropdownContext from './_useDropdownContext'
@@ -90,7 +97,22 @@ const DropdownMenuItem = ({
   )
 }
 
-const DropdownMenu = ({ children }: { children: ReactNode }) => {
+const DropdownMenu = ({
+  children,
+  onChange,
+}: {
+  children: ReactNode
+  onChange: (value: string) => void
+}) => {
+  const { selectedMenuValue } = useDropdownContext()
+
+  useEffect(() => {
+    if (!selectedMenuValue) {
+      return
+    }
+    onChange(selectedMenuValue)
+  }, [selectedMenuValue, onChange])
+
   return (
     <DropdownContent>
       <RoundBox padding="none" className="w-[192px]">
@@ -102,24 +124,14 @@ const DropdownMenu = ({ children }: { children: ReactNode }) => {
 
 interface DropdownProps {
   children: ReactNode
-  onChange: (menuValue: string) => void
 }
 
-const Dropdown = ({ children, onChange }: DropdownProps) => {
+const Dropdown = ({ children }: DropdownProps) => {
   const [isOn, setIsOn] = useState(false)
   const [selectedMenuValue, setSelectedMenuValue] = useState<string | null>(
     null
   )
   const triggerRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    if (!selectedMenuValue) {
-      return
-    }
-
-    onChange(selectedMenuValue)
-    setSelectedMenuValue(null)
-  }, [selectedMenuValue, onChange])
 
   return (
     <DropdownContext.Provider

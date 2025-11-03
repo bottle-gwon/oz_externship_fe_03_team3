@@ -5,10 +5,16 @@ import Container from '@/components/commonInGeneral/layout/_Container'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 const ThePottDropdownPage = () => {
+  const handleChange = (_value: string) => {
+    // NOTE: 테스트할 땐 아래의 주석을 해제해주세요
+    console.log({ _value })
+    debugger
+    // ---- 여기까지
+  }
   return (
     <Container width="md" isPadded>
       <RoundBox>
-        <Dropdown onChange={(_menuValue) => null}>
+        <Dropdown>
           <Dropdown.Trigger>
             <Button>누르면 아래 보임</Button>
           </Dropdown.Trigger>
@@ -28,14 +34,14 @@ const ThePottDropdownPage = () => {
           </Dropdown.Content>
         </Dropdown>
 
-        <Dropdown onChange={() => null}>
+        <Dropdown>
           <Dropdown.Trigger>
             <Button>누르면 메뉴 나옴</Button>
           </Dropdown.Trigger>
-          <Dropdown.Menu>
-            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
-            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
-            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
+          <Dropdown.Menu onChange={handleChange}>
+            <Dropdown.MenuItem value="a">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="b">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="c">asdf</Dropdown.MenuItem>
             <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
             <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
             <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
