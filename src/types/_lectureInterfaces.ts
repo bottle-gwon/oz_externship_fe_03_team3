@@ -48,3 +48,10 @@ export const lectureOrderingInTextArray = [
   '평점 낮은 순',
 ] as const
 export type LectureOrderingInText = (typeof lectureOrderingInTextArray)[number]
+
+export type LecturesResponseData = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Lecture[]
+}

@@ -12,47 +12,6 @@ import SubHeader from '../commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
 import useLectures from '@/hooks/lecture/useLectures'
 
-// TODO: 이건 api 연결하면서 삭제해야 함!
-// const dummyGetLectureWithParametersApi = (
-//   debounceValue: string,
-//   category: string | null,
-//   orderingInText: LectureOrderingInText
-// ) => {
-//   const setLectureArray = useStudyHubStore.getState().setLectureArray
-//
-//   const filteredLectureArray = dummyLectureArray
-//     .filter(
-//       (lecture) =>
-//         lecture.title.includes(debounceValue) ||
-//         lecture.instructor.includes(debounceValue)
-//     )
-//     .filter((lecture) => {
-//       if (!category || category === '전체 카테고리') {
-//         return true
-//       }
-//       const nameArray = lecture.categories.map(
-//         (tempCategory) => tempCategory.name
-//       )
-//       return nameArray.includes(category)
-//     })
-//     .sort((a, b) => {
-//       switch (orderingInText) {
-//         case '최신순':
-//           return 1
-//         case '가격 높은 순':
-//           return b.discount_price - a.discount_price
-//         case '가격 낮은 순':
-//           return a.discount_price - b.discount_price
-//         case '평점 높은 순':
-//           return b.average_rating - a.average_rating
-//         case '평점 낮은 순':
-//           return a.average_rating - b.average_rating
-//       }
-//     })
-//
-//   setLectureArray(filteredLectureArray)
-// }
-
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)

@@ -1,4 +1,8 @@
-import type { Lecture, LectureOrderingInText } from '@/types'
+import type {
+  Lecture,
+  LectureOrderingInText,
+  LecturesResponseData,
+} from '@/types'
 import { textToLectureOrdering } from '@/utils/simpleMaps'
 import { useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
@@ -11,7 +15,6 @@ const queryEndpoint = '/lectures'
 
 const useLecturesQuery = () => {
   const [isSearching, setIsSearching] = useState(false)
-  const [page, setPage] = useState(0)
   const [searchText, setSearchText] = useState('')
   const [debounceValue, cancel] = useDebounce(searchText, 500)
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
@@ -21,9 +24,10 @@ const useLecturesQuery = () => {
   const appendLectureArray = useStudyHubStore(
     (state) => state.appendLectureArray
   )
+  const [nextUrlInKey, setNextUrlInKey] = useState<string | null>(null)
+  const [nextUrlInReady, setNextUrlInReady] = useState<string | null>(null)
 
   const params = {
-    page,
     page_size: undefined,
     search: debounceValue,
     category: selectedCategory,
@@ -32,21 +36,17 @@ const useLecturesQuery = () => {
   const url = makeUrlFromParams(queryEndpoint, params)
 
   const { data, isPending, error } = useQuery({
-    queryKey: [queryEndpoint, params],
+    queryKey: [queryEndpoint, params, nextUrlInKey],
     queryFn: async () => {
       const response = await api.get(url)
-      return response.data as Record<string, Lecture[]>
+      return response.data as LecturesResponseData
     },
     placeholderData: (previousData) => previousData, // 이 부분이 없으면 새로 fetch -> 기존 것 없어짐 -> 화면 맨 위로 -> 다시 그리게 됩니다
   })
 
-  const getNextPage = useCallback(() => {
-    setPage((prev) => prev + 1)
-  }, [])
-
   useEffect(() => {
-    setPage(0)
     setLectureArray([])
+    setPage(1)
 
     if (debounceValue === '') {
       setIsSearching(false)
@@ -60,18 +60,24 @@ const useLecturesQuery = () => {
       return
     }
     appendLectureArray(data.results ?? [])
+    setNextUrlInReady(data.next)
   }, [data, appendLectureArray])
+
+  const requestNextPage = useCallback(
+    () => setNextUrlInKey(nextUrlInReady),
+    [nextUrlInReady]
+  )
 
   return {
     isPending,
     error,
-    getNextPage,
     searchText,
     setSearchText,
     setSelectedCategory,
     setSelectedOrderingInText,
     isSearching,
     cancel,
+    requestNextPage,
   }
 }
 
