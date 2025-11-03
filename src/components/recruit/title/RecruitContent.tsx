@@ -11,7 +11,6 @@ import RecruitSearchInput from './_RecruitSearchInput'
 import RecruitTagSelect from './_RecruitTagSelect'
 import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
 import RecruitArrangementSelect from './_RecruitArrangementSelect'
-import type { RecruitArrangementInText } from '@/types'
 import useRecruits from '@/hooks/recruit/title/useRecruits'
 
 const RecruitContent = () => {
