@@ -126,7 +126,7 @@ const ManageDetailConfirmationModal = ({
   }
 
   const handleModalContentClick = (e: React.MouseEvent) => {
-    e.stopPropagation()
+    // e.stopPropagation()
   }
 
   return (
