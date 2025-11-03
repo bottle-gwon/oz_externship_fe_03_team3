@@ -162,6 +162,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   // 검색 함수
   const onSearchTag = useCallback((tagName: string) => {
     setSearchKeyword(tagName)
+    setCurrent(1)
     // if (tagName === '') {
     //   setResponseData(EXAMPLE_DATA)
     // }
