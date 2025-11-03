@@ -8,10 +8,11 @@ import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHe
 import Button from '@/components/commonInGeneral/button/Button'
 import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubHeaderButtonSection'
 import { useNavigate } from 'react-router'
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import { useCallback, useMemo, useState } from 'react'
 
 import type { Recruit } from '@/types'
 import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
+import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 
 const page_size = 10
 
@@ -24,6 +25,7 @@ const RecruitManageContent = () => {
     ...mockRecruits,
   ])
   const [recruitPage, setRecruitPage] = useState(1)
+
   const visibleRecruits = useMemo(
     () => recruitList.slice(0, recruitPage * page_size),
     [recruitList, recruitPage]
@@ -31,7 +33,6 @@ const RecruitManageContent = () => {
   const hasMore = visibleRecruits.length < recruitList.length
 
   const [isLoading, setIsLoading] = useState(false)
-  const loaderRef = useRef<HTMLDivElement | null>(null)
 
   const handleFilterChange = useCallback((filtered: Recruit[]) => {
     setRecruitList(filtered)
@@ -39,24 +40,15 @@ const RecruitManageContent = () => {
     setIsLoading(false)
   }, [])
 
-  useEffect(() => {
-    const target = loaderRef.current
-    if (!target) return
-
-    const io = new IntersectionObserver((entries) => {
-      const entry = entries[0]
-      if (!entry.isIntersecting) return
-      if (!hasMore) return
-      if (isLoading) return
-
-      setIsLoading(true)
-      setRecruitPage((prev) => prev + 1)
-      setTimeout(() => setIsLoading(false), 0)
-    })
-
-    io.observe(target)
-    return () => io.disconnect()
+  const loadingMore = useCallback(() => {
+    if (!hasMore) return
+    if (isLoading) return
+    setIsLoading(true)
+    setRecruitPage((prev) => prev + 1)
+    setTimeout(() => setIsLoading(false), 0)
   }, [hasMore, isLoading])
+
+  const loaderRef = useOneWayInfinityScroll(loadingMore)
 
   return (
     <Container isPadded className="py-oz-xxl bg-[#F9FAFB]">
