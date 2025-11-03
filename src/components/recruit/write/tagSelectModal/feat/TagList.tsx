@@ -56,7 +56,10 @@ const TagList = ({
   //Todo 현재는 페이지 네이션을 해도 스켈레톤이 출력되지만 이후api 연동할때 분기 처리 할것
   if (isLoading || isSearching) {
     return (
-      <Vstack gap="none" className="items-center justify-center">
+      <Vstack
+        gap="xl"
+        className="-mx-6 -mb-6 h-[426px] w-[672px] items-center justify-center"
+      >
         <TagSkeleton />
         <TagPaginationSkeleton />
       </Vstack>
@@ -67,11 +70,6 @@ const TagList = ({
   if (responseData.total_count === 0) {
     return <TagSearchEmpty keyword={keyword} onClickAddTag={onSelectTag} />
   }
-
-  // 페이지 네이팅 할때만 다르도록 추후 로직 추가 (isFetching은 검색할때도 작동하기 때문)
-  // if (isFetching) {
-  //   return <div>새롭게 정보 불러오는중ㅎㅎ</div>
-  // }
 
   return (
     <Vstack
