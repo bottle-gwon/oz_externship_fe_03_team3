@@ -3,7 +3,7 @@ import type { chatMessageListRequest } from '@/types/_chat'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
-const chatRoomEndpoint = '/study-grops' //뭐임? 왜 갑자기 스터디 그룹?
+const chatRoomEndpoint = '/study-grops'
 
 // 채팅방 리스트 가져오기
 const getChatRoomList = async (page: number) => {
