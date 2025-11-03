@@ -32,7 +32,7 @@ const useLecturesQuery = () => {
       const response = await api.get(url)
       return response.data as Record<string, Lecture[]>
     },
-    placeholderData: (previousData) => previousData,
+    placeholderData: (previousData) => previousData, // 이 부분이 없으면 새로 fetch -> 기존 것 없어짐 -> 화면 맨 위로 -> 다시 그리게 됩니다
   })
 
   const getNextPage = useCallback(() => {
