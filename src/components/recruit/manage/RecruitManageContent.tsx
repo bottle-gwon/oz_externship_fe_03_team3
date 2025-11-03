@@ -8,7 +8,7 @@ import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHe
 import Button from '@/components/commonInGeneral/button/Button'
 import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubHeaderButtonSection'
 import { useNavigate } from 'react-router'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 
 import type { Recruit } from '@/types'
 import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
@@ -19,21 +19,44 @@ const RecruitManageContent = () => {
   const navigate = useNavigate()
   const handleClick = (url: string) => navigate(url)
 
+  // 현재 더미데이터 기준으로 진행. 추후 api 기준으로 변경
   const [recruitList, setRecruitList] = useState<Recruit[]>(() => [
     ...mockRecruits,
   ])
   const [recruitPage, setRecruitPage] = useState(1)
-
-  const [visibleRecruits, setVisibleRecruits] = useState<Recruit[]>(() => [
-    ...mockRecruits.slice(0, page_size),
-  ])
-
+  const visibleRecruits = useMemo(
+    () => recruitList.slice(0, recruitPage * page_size),
+    [recruitList, recruitPage]
+  )
   const hasMore = visibleRecruits.length < recruitList.length
+
+  const [isLoading, setIsLoading] = useState(false)
+  const loaderRef = useRef<HTMLDivElement | null>(null)
 
   const handleFilterChange = useCallback((filtered: Recruit[]) => {
     setRecruitList(filtered)
     setRecruitPage(1)
+    setIsLoading(false)
   }, [])
+
+  useEffect(() => {
+    const target = loaderRef.current
+    if (!target) return
+
+    const io = new IntersectionObserver((entries) => {
+      const entry = entries[0]
+      if (!entry.isIntersecting) return
+      if (!hasMore) return
+      if (isLoading) return
+
+      setIsLoading(true)
+      setRecruitPage((prev) => prev + 1)
+      setTimeout(() => setIsLoading(false), 0)
+    })
+
+    io.observe(target)
+    return () => io.disconnect()
+  }, [hasMore, isLoading])
 
   return (
     <Container isPadded className="py-oz-xxl bg-[#F9FAFB]">
@@ -68,15 +91,7 @@ const RecruitManageContent = () => {
           ))}
 
           {hasMore && (
-            <Button
-              variant="contained"
-              status="enabled"
-              size="lg"
-              className="mb-oz-xxl mt-oz-lg"
-              onClick={() => null}
-            >
-              + 더 많은 공고 보기
-            </Button>
+            <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
           )}
         </Vstack>
       </Vstack>
