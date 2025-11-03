@@ -13,15 +13,21 @@ import api from '@/api/api'
 // NOTE: 로그인 테스트용 함수 -> 리프레시 로직 아직 없음
 // TODO: 리프레시 로직 적용하고 나면 삭제해야
 const loginForDev = async () => {
-  const responseLogin = await api.post('/auth/login', {
-    email: import.meta.env.VITE_LOGIN_ID,
-    password: import.meta.env.VITE_LOGIN_PASSWORD,
-  })
+  const responseLogin = await api.post(
+    `${import.meta.env.VITE_ORIGINAL_BASE_URL_FOR_DEV}/auth/login`,
+    {
+      email: import.meta.env.VITE_LOGIN_ID,
+      password: import.meta.env.VITE_LOGIN_PASSWORD,
+    }
+  )
   const accessToken = responseLogin.data.data.access
 
-  const responseMe = await api.get('/users/me', {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
+  const responseMe = await api.get(
+    `${import.meta.env.VITE_ORIGINAL_BASE_URL_FOR_DEV}/users/me`,
+    {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }
+  )
   const me = responseMe.data
 
   const setAccessToken = useStudyHubStore.getState().setAccessToken

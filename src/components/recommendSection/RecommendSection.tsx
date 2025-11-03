@@ -5,7 +5,7 @@ import RecommendUser from './RecommendUser'
 interface RecommendSectionProps<T extends RecommendPageType> {
   type: RecommendPageType
   isLoggedIn: boolean
-  recommendedArray: Recommended<T>[]
+  recommendedArray?: Recommended<T>[]
 }
 
 const RecommendSection = <T extends RecommendPageType>({
@@ -13,7 +13,7 @@ const RecommendSection = <T extends RecommendPageType>({
   isLoggedIn,
   recommendedArray,
 }: RecommendSectionProps<T>) => {
-  if (isLoggedIn) {
+  if (isLoggedIn && recommendedArray) {
     return <RecommendUser type={type} recommendedArray={recommendedArray} />
   }
 

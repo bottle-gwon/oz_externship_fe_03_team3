@@ -77,7 +77,7 @@ const LectureContent = () => {
     return <p>불러오는 데에 실패했다는 화면을 널어야 합니다</p>
   }
 
-  if (!data || !data.recommended_lectures || !data.results) {
+  if (!data || !data.results) {
     return <p>이게 보여도 되나??</p>
   }
 
