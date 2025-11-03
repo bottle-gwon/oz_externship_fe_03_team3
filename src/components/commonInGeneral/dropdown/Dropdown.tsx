@@ -17,6 +17,7 @@ const DropdownContent = ({ children }: { children: ReactNode }) => {
 
   const style = {
     top: triggerRef.current.offsetHeight + 4,
+    right: 0,
   }
 
   if (!isOn) {
@@ -49,7 +50,7 @@ const Dropdown = ({ children }: { children: ReactNode }) => {
 
   return (
     <DropdownContext.Provider value={{ isOn, setIsOn, triggerRef }}>
-      <div className="relative">{children}</div>
+      <div className="relative w-fit">{children}</div>
     </DropdownContext.Provider>
   )
 }

@@ -13,16 +13,18 @@ const ThePottDropdownPage = () => {
             <Button>누르면 아래 보임</Button>
           </Dropdown.Trigger>
           <Dropdown.Content>
-            <Vstack>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-              <p>asdfasdfasdfasd</p>
-            </Vstack>
+            <RoundBox>
+              <Vstack>
+                <p>asdfasdfkajsdhfjklasdhfjkladfhasjkflasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+                <p>asdfasdfasdfasd</p>
+              </Vstack>
+            </RoundBox>
           </Dropdown.Content>
         </Dropdown>
       </RoundBox>
