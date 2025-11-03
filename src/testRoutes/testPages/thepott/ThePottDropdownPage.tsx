@@ -8,7 +8,7 @@ const ThePottDropdownPage = () => {
   return (
     <Container width="md" isPadded>
       <RoundBox>
-        <Dropdown>
+        <Dropdown onChange={(_menuValue) => null}>
           <Dropdown.Trigger>
             <Button>누르면 아래 보임</Button>
           </Dropdown.Trigger>
@@ -28,16 +28,17 @@ const ThePottDropdownPage = () => {
           </Dropdown.Content>
         </Dropdown>
 
-        <Dropdown>
+        <Dropdown onChange={() => null}>
           <Dropdown.Trigger>
             <Button>누르면 메뉴 나옴</Button>
           </Dropdown.Trigger>
           <Dropdown.Menu>
-            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
-            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
-            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
-            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
-            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem value="asdf">asdf</Dropdown.MenuItem>
           </Dropdown.Menu>
         </Dropdown>
       </RoundBox>

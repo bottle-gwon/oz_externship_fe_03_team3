@@ -1,8 +1,71 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react'
-import { Hstack, Vstack } from '../layout'
+import { useCallback, useEffect, useRef, useState, type ReactNode } from 'react'
+import { Hstack } from '../layout'
 import DropdownContext from './_DropdownContext'
 import useDropdownContext from './_useDropdownContext'
 import RoundBox from '../roundBox/RoundBox'
+
+const DropdonwTrigger = ({ children }: { children: ReactNode }) => {
+  const { setIsOn, triggerRef } = useDropdownContext()
+  const handleClick = () => {
+    setIsOn((prev) => !prev)
+  }
+  return (
+    <div ref={triggerRef} onClick={handleClick}>
+      {children}
+    </div>
+  )
+}
+
+const DropdownContent = ({ children }: { children: ReactNode }) => {
+  const { triggerRef, isOn, setIsOn } = useDropdownContext()
+  const contentRef = useRef<HTMLDivElement>(null)
+
+  const handleClick = useCallback(
+    (event: MouseEvent) => {
+      if (!contentRef.current) {
+        return
+      }
+
+      if (
+        contentRef.current.contains(event.target as Node) ||
+        triggerRef.current?.contains(event.target as Node)
+      ) {
+        return
+      }
+
+      setIsOn(false)
+    },
+    [setIsOn, triggerRef]
+  )
+
+  useEffect(() => {
+    if (!isOn) {
+      return
+    }
+
+    window.addEventListener('click', handleClick)
+    return () => window.removeEventListener('click', handleClick)
+  }, [isOn, handleClick])
+
+  if (!isOn) {
+    return null
+  }
+
+  if (!triggerRef.current) {
+    return null
+  }
+
+  const style = {
+    top: triggerRef.current.offsetHeight + 4,
+    right: 0,
+  }
+
+  return (
+    <div ref={contentRef} style={style} className="absolute z-10">
+      {children}
+    </div>
+  )
+}
 
 const DropdownMenuItem = ({
   children,
@@ -28,59 +91,12 @@ const DropdownMenuItem = ({
 }
 
 const DropdownMenu = ({ children }: { children: ReactNode }) => {
-  const { triggerRef, isOn } = useDropdownContext()
-  if (!triggerRef.current) {
-    return null
-  }
-
-  const style = {
-    top: triggerRef.current.offsetHeight + 4,
-    right: 0,
-  }
-
-  if (!isOn) {
-    return null
-  }
-
   return (
-    <RoundBox padding="none" style={style} className="absolute w-[192]">
-      {children}
-    </RoundBox>
-  )
-}
-
-const DropdownContent = ({ children }: { children: ReactNode }) => {
-  const { triggerRef, isOn } = useDropdownContext()
-  if (!triggerRef.current) {
-    return null
-  }
-
-  const style = {
-    top: triggerRef.current.offsetHeight + 4,
-    right: 0,
-  }
-
-  if (!isOn) {
-    return null
-  }
-
-  return (
-    <div style={style} className="absolute">
-      {children}
-    </div>
-  )
-}
-
-const DropdonwTrigger = ({ children }: { children: ReactNode }) => {
-  const { setIsOn, triggerRef } = useDropdownContext()
-  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    event.stopPropagation()
-    setIsOn((prev) => !prev)
-  }
-  return (
-    <div ref={triggerRef} onClick={handleClick}>
-      {children}
-    </div>
+    <DropdownContent>
+      <RoundBox padding="none" className="w-[192px]">
+        {children}
+      </RoundBox>
+    </DropdownContent>
   )
 }
 
