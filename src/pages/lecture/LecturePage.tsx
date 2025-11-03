@@ -1,30 +1,15 @@
-import { dummyLectureArray } from '@/components/lecture/dummyLectureArray'
 import LectureContent from '@/components/lecture/LectureContent'
 import LectureSkeleton from '@/components/lecture/LectureSkeleton'
-import useStudyHubStore from '@/store/store'
-import { sleep } from '@/utils/sleep'
-import { useEffect } from 'react'
-
-// TODO: api 연결하면서 삭제!
-const dummyGetLectureApi = async () => {
-  await sleep(1000)
-  const state = useStudyHubStore.getState()
-  const setLectureArray = state.setLectureArray
-  setLectureArray(dummyLectureArray)
-}
+import useLectures from '@/hooks/lecture/useLectures'
 
 const LecturePage = () => {
-  // TODO: api 연결하면 tanstack 이용해서 isPending 사용
-  const isPending = false
-
-  // TODO: api 연결하면 useQuery로 교체해야 함
-  useEffect(() => {
-    dummyGetLectureApi()
-  }, [])
+  const { isPending, error, data } = useLectures()
 
   if (isPending) {
     return <LectureSkeleton />
   }
+
+  if (error || !data) return <p>뭔가 오류가 일어났어요 여기를 채워야 해요</p>
 
   return <LectureContent />
 }

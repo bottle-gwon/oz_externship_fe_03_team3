@@ -55,11 +55,9 @@ import useLectures from '@/hooks/lecture/useLectures'
 
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
+  const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
   const {
-    data,
-    isPending,
-    error,
     // getNextPage, // <<-- 무한 스크롤 구현할 때 사용
     searchText,
     setSearchText,
@@ -68,18 +66,6 @@ const LectureContent = () => {
     isSearching,
     cancel,
   } = useLectures()
-
-  if (isPending) {
-    return <p>스켈레톤을 넣어야 합니다</p>
-  }
-
-  if (!isPending && error) {
-    return <p>불러오는 데에 실패했다는 화면을 널어야 합니다</p>
-  }
-
-  if (!data || !data.results) {
-    return <p>이게 보여도 되나??</p>
-  }
 
   return (
     <Container className="py-oz-xxl">
@@ -97,7 +83,7 @@ const LectureContent = () => {
       <RecommendSection
         type="lecture"
         isLoggedIn={Boolean(accessToken)}
-        recommendedArray={data.recommended_lectures}
+        recommendedArray={lectureArray}
       />
 
       <Vstack className="px-oz-xxl gap-oz-xxl">
@@ -117,10 +103,10 @@ const LectureContent = () => {
           </GridContainer>
         </RoundBox>
 
-        {isSearching && data.results.length === 0 && <NoSearchResult />}
-        {data.results.length > 0 && (
+        {isSearching && lectureArray.length === 0 && <NoSearchResult />}
+        {lectureArray.length > 0 && (
           <GridContainer className="gap-oz-xl">
-            {data.results.map((lecture) => (
+            {lectureArray.map((lecture) => (
               <LectureCard key={lecture.uuid} lecture={lecture} />
             ))}
           </GridContainer>
