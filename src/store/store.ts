@@ -53,16 +53,6 @@ const useStudyHubStore = create<StudyHubState>()(
       setEditingRecruit: (editingRecruit) => set({ editingRecruit }),
 
       // lecture
-      lectureArray: [],
-      setLectureArray: (lectureArray) => set({ lectureArray }),
-      appendLectureArray: (lectureArray) => {
-        const prev = get().lectureArray
-        const newLectureArray = [...prev, ...lectureArray]
-        set({ lectureArray: newLectureArray })
-      },
-      recommendedLectureArray: [],
-      setRecommendedLectureArray: (recommendedLectureArray) =>
-        set({ recommendedLectureArray }),
 
       // chat
       chatState: { status: 'off' },

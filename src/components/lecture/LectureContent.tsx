@@ -10,8 +10,8 @@ import LectureCategorySelect from './_LectureCategorySelect'
 import LectureOrderingSelect from './_LectureOrderingSelect'
 import SubHeader from '../commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
-import useLectures from '@/hooks/lecture/useLectures'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
+import useLectureStore from '@/store/lecture/lectureStore'
 
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
@@ -20,17 +20,10 @@ const LectureContent = () => {
     (state) => state.recommendedLectureArray
   )
 
-  const {
-    requestNextPage,
-    searchText,
-    setSearchText,
-    setSelectedCategory,
-    setSelectedOrderingInText,
-    isSearching,
-    cancel,
-  } = useLectures()
+  const isSearching = useLectureStore((state) => state.isSearching)
 
-  const targetRef = useOneWayInfinityScroll(requestNextPage)
+  // TODO: request next page 로 이것 바꿔야
+  const targetRef = useOneWayInfinityScroll(() => null)
 
   return (
     <Container className="py-oz-xxl">
@@ -54,17 +47,11 @@ const LectureContent = () => {
       <Vstack className="px-oz-xxl gap-oz-xxl">
         <RoundBox>
           <GridContainer className="gap-oz-lg">
-            <LectureSearchInput
-              searchText={searchText}
-              setSearchText={setSearchText}
-              cancelDebounce={cancel}
-            />
+            <LectureSearchInput />
 
-            <LectureCategorySelect setSelectedCategory={setSelectedCategory} />
+            <LectureCategorySelect />
 
-            <LectureOrderingSelect
-              setSelectedOrderingInText={setSelectedOrderingInText}
-            />
+            <LectureOrderingSelect />
           </GridContainer>
         </RoundBox>
 

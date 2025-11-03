@@ -1,6 +1,7 @@
 import { Folder } from 'lucide-react'
 import Select from '../commonInGeneral/select/Select'
 import { dummyLectureArray } from './dummyLectureArray'
+import useLectureStore from '@/store/lecture/lectureStore'
 
 const calcCategoryArray = () => {
   const categoryRecords = dummyLectureArray.reduce((outerAcc, lecture) => {
@@ -20,15 +21,12 @@ const calcCategoryArray = () => {
   return categoryArray
 }
 
-interface LectureCategorySelectProps {
-  setSelectedCategory: React.Dispatch<React.SetStateAction<string | null>>
-}
-
-const LectureCategorySelect = ({
-  setSelectedCategory,
-}: LectureCategorySelectProps) => {
+const LectureCategorySelect = () => {
+  const setSelectedCategory = useLectureStore(
+    (state) => state.setSelectedCategory
+  )
   const categoryArray = calcCategoryArray()
-  // TODO: push 전에 처음부터 array로 로직 짜기
+  // TODO: API 연결하면 calc... 와 교체하기
 
   const handleOptionSelect = (option: string | number) => {
     if (typeof option !== 'string') {

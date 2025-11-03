@@ -2,18 +2,23 @@ import { Search } from 'lucide-react'
 import Input from '../commonInGeneral/inputFamily/input/Input'
 import { useRef } from 'react'
 import useNoSearchResult from '@/hooks/useNoSearchResult'
+import useLectureStore from '@/store/lecture/lectureStore'
+import useDebounce from '@/hooks/useDebounce'
 
-interface LectureSearchInputProps {
-  searchText: string
-  setSearchText: React.Dispatch<React.SetStateAction<string>>
-  cancelDebounce: () => void
-}
+// interface LectureSearchInputProps {
+//   searchText: string
+//   setSearchText: React.Dispatch<React.SetStateAction<string>>
+//   cancelDebounce: () => void
+// }
 
-const LectureSearchInput = ({
-  searchText,
-  setSearchText,
-  cancelDebounce,
-}: LectureSearchInputProps) => {
+const LectureSearchInput = () => {
+  const searchText = useLectureStore((state) => state.searchText)
+  const setSearchText = useLectureStore((state) => state.setSearchText)
+  const setDebounceValue = useLectureStore((state) => state.setDebounceValue)
+
+  const [debounceValue, cancelDebounce] = useDebounce(searchText, 500)
+  setDebounceValue(debounceValue)
+
   const inputRef = useRef<HTMLInputElement>(null)
   useNoSearchResult(inputRef, setSearchText, cancelDebounce)
 

@@ -1,31 +1,27 @@
-import type {
-  Lecture,
-  LectureOrderingInText,
-  LecturesResponseData,
-} from '@/types'
+import type { LecturesResponseData } from '@/types'
 import { textToLectureOrdering } from '@/utils/simpleMaps'
 import { useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import api from '@/api/api'
-import useDebounce from '../useDebounce'
 import { makeUrlFromParams } from '@/utils/urls'
-import useStudyHubStore from '@/store/store'
+import useLectureStore from '@/store/lecture/lectureStore'
 
 const queryEndpoint = '/lectures'
 
 const useLecturesQuery = () => {
-  const [isSearching, setIsSearching] = useState(false)
-  const [searchText, setSearchText] = useState('')
-  const [debounceValue, cancel] = useDebounce(searchText, 500)
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedOrderingInText, setSelectedOrderingInText] =
-    useState<LectureOrderingInText>('최신순')
-  const setLectureArray = useStudyHubStore((state) => state.setLectureArray)
-  const appendLectureArray = useStudyHubStore(
-    (state) => state.appendLectureArray
-  )
   const [nextUrlInKey, setNextUrlInKey] = useState<string | null>(null)
   const [nextUrlInReady, setNextUrlInReady] = useState<string | null>(null)
+
+  const debounceValue = useLectureStore((state) => state.debounceValue)
+  const selectedCategory = useLectureStore((state) => state.selectedCategory)
+  const selectedOrderingInText = useLectureStore(
+    (state) => state.selectedOrderingInText
+  )
+  const resetLectureArray = useLectureStore((state) => state.resetLectureArray)
+  const appendLectureArray = useLectureStore(
+    (state) => state.appendLectureArray
+  )
+  const setIsSearching = useLectureStore((state) => state.setIsSearching)
 
   const params = {
     page_size: undefined,
@@ -41,11 +37,11 @@ const useLecturesQuery = () => {
       const response = await api.get(nextUrlInKey ?? url)
       return response.data as LecturesResponseData
     },
-    placeholderData: (previousData) => previousData, // 이 부분이 없으면 새로 fetch -> 기존 것 없어짐 -> 화면 맨 위로 -> 다시 그리게 됩니다
+    // placeholderData: (previousData) => previousData, // 이 부분이 없으면 새로 fetch -> 기존 것 없어짐 -> 화면 맨 위로 -> 다시 그리게 됩니다
   })
 
   useEffect(() => {
-    setLectureArray([])
+    resetLectureArray()
     setNextUrlInReady(null)
 
     if (debounceValue === '') {
@@ -53,31 +49,26 @@ const useLecturesQuery = () => {
     } else {
       setIsSearching(true)
     }
-  }, [debounceValue, selectedCategory, selectedOrderingInText, setLectureArray])
+  }, [debounceValue, setIsSearching, resetLectureArray])
 
   useEffect(() => {
     if (!data) {
       return
     }
+    debugger
     appendLectureArray(data.results ?? [])
     setNextUrlInReady(data.next)
   }, [data, appendLectureArray])
 
-  const requestNextPage = useCallback(
-    () => setNextUrlInKey(nextUrlInReady),
-    [nextUrlInReady]
-  )
+  // TODO: 스토어에 넘겨야
+  // const requestNextPage = useCallback(
+  //   () => setNextUrlInKey(nextUrlInReady),
+  //   [nextUrlInReady]
+  // )
 
   return {
     isPending,
     error,
-    searchText,
-    setSearchText,
-    setSelectedCategory,
-    setSelectedOrderingInText,
-    isSearching,
-    cancel,
-    requestNextPage,
   }
 }
 

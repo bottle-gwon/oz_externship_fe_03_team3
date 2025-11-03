@@ -3,7 +3,9 @@ import { useEffect } from 'react'
 
 const useNoSearchResult = (
   inputRef: React.RefObject<HTMLInputElement | null>,
-  setSearchText: React.Dispatch<React.SetStateAction<string>>,
+  setSearchText:
+    | React.Dispatch<React.SetStateAction<string>>
+    | ((searchText: string) => void),
   cancelDebounce?: () => void
 ) => {
   const isClearingSearch = useStudyHubStore((state) => state.isClearingSearch)

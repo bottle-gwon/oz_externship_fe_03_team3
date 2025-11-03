@@ -53,11 +53,6 @@ export interface StudyHubState {
   setEditingRecruit: (editingRecruit: RecruitDetail | null) => void
 
   // lecture
-  lectureArray: Lecture[]
-  setLectureArray: (lectureArray: Lecture[]) => void
-  appendLectureArray: (lectureArray: Lecture[]) => void
-  recommendedLectureArray: Lecture[]
-  setRecommendedLectureArray: (recommendedLectureArray: Lecture[]) => void
 
   // chat
   chatState: ChatUIState

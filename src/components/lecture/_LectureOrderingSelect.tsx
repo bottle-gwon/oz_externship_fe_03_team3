@@ -1,16 +1,13 @@
 import Select from '../commonInGeneral/select/Select'
 import { lectureOrderingInTextArray, type LectureOrderingInText } from '@/types'
 import SortIcon from '@/assets/sort.svg'
+import useLectureStore from '@/store/lecture/lectureStore'
 
-interface LectureOrderingSelectProps {
-  setSelectedOrderingInText: React.Dispatch<
-    React.SetStateAction<LectureOrderingInText>
-  >
-}
+const LectureOrderingSelect = () => {
+  const setSelectedOrderingInText = useLectureStore(
+    (state) => state.setSelectedOrdingInText
+  )
 
-const LectureOrderingSelect = ({
-  setSelectedOrderingInText,
-}: LectureOrderingSelectProps) => {
   return (
     <Select
       onOptionSelect={(option) =>
