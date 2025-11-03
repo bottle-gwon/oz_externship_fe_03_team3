@@ -56,6 +56,9 @@ import useLectures from '@/hooks/lecture/useLectures'
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const lectureArray = useStudyHubStore((state) => state.lectureArray)
+  const recommendedLectureArray = useStudyHubStore(
+    (state) => state.recommendedLectureArray
+  )
 
   const {
     // getNextPage, // <<-- 무한 스크롤 구현할 때 사용
@@ -83,7 +86,7 @@ const LectureContent = () => {
       <RecommendSection
         type="lecture"
         isLoggedIn={Boolean(accessToken)}
-        recommendedArray={lectureArray}
+        recommendedArray={recommendedLectureArray}
       />
 
       <Vstack className="px-oz-xxl gap-oz-xxl">

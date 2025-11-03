@@ -55,6 +55,9 @@ export interface StudyHubState {
   // lecture
   lectureArray: Lecture[]
   setLectureArray: (lectureArray: Lecture[]) => void
+  appendLectureArray: (lectureArray: Lecture[]) => void
+  recommendedLectureArray: Lecture[]
+  setRecommendedLectureArray: (recommendedLectureArray: Lecture[]) => void
 
   // chat
   chatState: ChatUIState

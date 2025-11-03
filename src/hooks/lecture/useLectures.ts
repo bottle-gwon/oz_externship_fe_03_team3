@@ -5,6 +5,7 @@ import { useCallback, useEffect, useState } from 'react'
 import api from '@/api/api'
 import useDebounce from '../useDebounce'
 import { makeUrlFromParams } from '@/utils/urls'
+import useStudyHubStore from '@/store/store'
 
 const queryEndpoint = '/lectures'
 
@@ -16,6 +17,10 @@ const useLecturesQuery = () => {
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [selectedOrderingInText, setSelectedOrderingInText] =
     useState<LectureOrderingInText>('최신순')
+  const setLectureArray = useStudyHubStore((state) => state.setLectureArray)
+  const appendLectureArray = useStudyHubStore(
+    (state) => state.appendLectureArray
+  )
 
   const params = {
     page,
@@ -41,16 +46,23 @@ const useLecturesQuery = () => {
 
   useEffect(() => {
     setPage(0)
+    setLectureArray([])
 
     if (debounceValue === '') {
       setIsSearching(false)
     } else {
       setIsSearching(true)
     }
-  }, [debounceValue, selectedCategory, selectedOrderingInText])
+  }, [debounceValue, selectedCategory, selectedOrderingInText, setLectureArray])
+
+  useEffect(() => {
+    if (!data) {
+      return
+    }
+    appendLectureArray(data.results ?? [])
+  }, [data, appendLectureArray])
 
   return {
-    data,
     isPending,
     error,
     getNextPage,
