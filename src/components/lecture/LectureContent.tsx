@@ -65,7 +65,7 @@ const LectureContent = () => {
             </GridContainer>
 
             {/* 검색 결과 있을 때만 무한 스크롤 되게 */}
-            <div ref={targetRef} />
+            <div ref={targetRef} className="h-[100px] w-full bg-amber-300" />
           </>
         )}
         {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
