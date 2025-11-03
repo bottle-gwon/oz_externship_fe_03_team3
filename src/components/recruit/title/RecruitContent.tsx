@@ -14,36 +14,6 @@ import RecruitArrangementSelect from './_RecruitArrangementSelect'
 import type { RecruitArrangementInText } from '@/types'
 import useRecruits from '@/hooks/recruit/title/useRecruits'
 
-const dummyGetRecruitWithParametersApi = (
-  debounceValue: string,
-  tag: string | null,
-  arrangementInText: RecruitArrangementInText
-) => {
-  const setRecruitArray = useStudyHubStore.getState().setRecruitArray
-
-  const filteredRecruitArray = dummyRecruitArray
-    .filter((recruit) => recruit.title.includes(debounceValue))
-    .filter((recruit) => {
-      if (!tag || tag === '전체 태그') {
-        return true
-      }
-      const nameArray = recruit.tags.map((tempTag) => tempTag.name)
-      return nameArray.includes(tag)
-    })
-    .sort((a, b) => {
-      switch (arrangementInText) {
-        case '최신순':
-          return 1
-        case '조회수 높은 순':
-          return b.views_count - a.views_count
-        case '북마크 많은 순':
-          return b.bookmark_count - a.bookmark_count
-      }
-    })
-
-  setRecruitArray(filteredRecruitArray)
-}
-
 const RecruitContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const isLoggedIn = Boolean(accessToken)
