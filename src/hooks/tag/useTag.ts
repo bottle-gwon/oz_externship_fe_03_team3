@@ -40,6 +40,7 @@ export const useSearchTag = (params: TagApiSearchParam) => {
     queryKey: [queryEndpoint, params],
     queryFn: () => getSearchTag(params),
     placeholderData: keepPreviousData,
+    staleTime: 0, // 테스트용 안하면 로딩 안보임
   })
 }
 

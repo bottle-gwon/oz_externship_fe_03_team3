@@ -7,7 +7,7 @@ import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
 import AddTagErrorModal from './guideModal/AddTagErrorModal'
-// import { useSearchTag } from '@/hooks/tag/useTag'
+import { useSearchTag } from '@/hooks/tag/useTag'
 
 interface TagSelectModal {
   isOn: boolean
@@ -33,26 +33,34 @@ const EXAMPLE_DATA = {
 const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   const [searchKeyword, setSearchKeyword] = useState('')
   const [current, setCurrent] = useState(1) // 현재 페이지
-  const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
-  const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
+  // const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
+  // const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
   const [newSelectTagArray, setNewSelectTagArray] = useState<string[]>([])
   const [isErrorModalOn, setIsErrorModalOn] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
 
+  // 검색 로딩, 페이지네이팅 로딩을 구분 하기 위해 생성
+  // 어떤 값이 달라지는지 비교해서 로딩 구분
+  const lastFetchParams = useRef({
+    keyword: '',
+    page: 1,
+  })
+
   // 아래 주석은 api 연결시 사용 합니다.
-  // const param = { keyword: searchKeyword, page: current }
+  const param = { keyword: searchKeyword, page: current }
 
   // isFetching은 페이지 네이팅 할때 사용
   // isPending은 데모용으로 사용중이라 추후 api 나오면 추가
   // data는 api 연결할때 responseData로 재정의
-  // const {
-  //   // data:responseData , isPending,
-  //   isError,
-  //   error,
-  //   isFetching,
-  // } = useSearchTag(param)
+  const {
+    data: responseData,
+    isPending,
+    isError,
+    error,
+    isFetching,
+  } = useSearchTag(param)
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
+  // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
   const setSelectedTagArray = useStudyHubStore(
     (state) => state.setSelectedTagArray
@@ -61,18 +69,27 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     setNewSelectTagArray(selectedTagArray)
   }, [selectedTagArray])
 
-  // 테스트용 로딩
   useEffect(() => {
-    //타이머 함수 검색 될때 마다, 5초씩 체크
-    setIsPending(true)
-    timerRef.current = setTimeout(() => setIsPending(false), 1500)
-
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
+    if (responseData) {
+      lastFetchParams.current = {
+        keyword: searchKeyword,
+        page: current,
       }
     }
-  }, [searchKeyword])
+  }, [responseData])
+
+  // 테스트용 로딩
+  // useEffect(() => {
+  //   //타이머 함수 검색 될때 마다, 5초씩 체크
+  //   setIsPending(true)
+  //   timerRef.current = setTimeout(() => setIsPending(false), 1500)
+
+  //   return () => {
+  //     if (timerRef.current) {
+  //       clearTimeout(timerRef.current)
+  //     }
+  //   }
+  // }, [searchKeyword])
 
   const handlePageChange = (newPage: number) => {
     setCurrent(newPage)
@@ -122,32 +139,42 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   //임시라서 간단하게만 담겨 있습니다.(실제 검색은 be에서 담당함) 차후에 api 요청으로 변경해야함
   const onSearchTag = useCallback((tagName: string) => {
     setSearchKeyword(tagName)
-    if (tagName === '') {
-      setResponseData(EXAMPLE_DATA)
-    }
-    const filtered = EXAMPLE_DATA.tags.filter((el) => el.name.includes(tagName))
-    setResponseData((prev) => ({
-      ...prev,
-      tags: filtered,
-      page: 1,
-      total_count: filtered.length,
-    }))
-    setCurrent(1)
+    // if (tagName === '') {
+    //   setResponseData(EXAMPLE_DATA)
+    // }
+    // const filtered = EXAMPLE_DATA.tags.filter((el) => el.name.includes(tagName))
+    // setResponseData((prev) => ({
+    //   ...prev,
+    //   tags: filtered,
+    //   page: 1,
+    //   total_count: filtered.length,
+    // }))
+    // setCurrent(1)
   }, [])
 
-  // // 임시 에러 처리
-  // useEffect(() => {
-  //   // 에러 발생
-  //   if (isError && !isErrorModalOn) {
-  //     setIsErrorModalOn(true)
-  //     // 지금 가이드 모달을 사용중이라 제대로 뜨지 않을겁니다.
-  //     setErrorMessage(
-  //       '불러오는중에 에러가 발생' + error?.message || '알 수 없는 에러'
-  //     )
-  //   }
+  // 임시 에러 처리
+  useEffect(() => {
+    // 에러 발생
+    if (isError && !isErrorModalOn) {
+      setIsErrorModalOn(true)
+      // 지금 가이드 모달을 사용중이라 제대로 뜨지 않을겁니다.
+      setErrorMessage(
+        '불러오는중에 에러가 발생' + error?.message || '알 수 없는 에러'
+      )
+    }
 
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [isError, error])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isError, error])
+
+  // 검색 로딩
+  const isSearchLoading =
+    isFetching && searchKeyword !== lastFetchParams.current.keyword
+
+  // 페이지 네이팅 로딩
+  const isPaginatingLoading =
+    isFetching &&
+    current !== lastFetchParams.current.page &&
+    searchKeyword === lastFetchParams.current.keyword
 
   return (
     <>
@@ -174,7 +201,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
             selectArray={newSelectTagArray}
             keyword={searchKeyword}
             isLoading={isPending}
-            // isFetching={isFetching}
+            isPaginating={isPaginatingLoading}
+            isSearching={isSearchLoading}
           />
         </Modal.Body>
         <Modal.Footer>
