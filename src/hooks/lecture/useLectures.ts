@@ -16,16 +16,6 @@ const useLecturesQuery = () => {
   const [selectedOrderingInText, setSelectedOrderingInText] =
     useState<LectureOrderingInText>('최신순')
 
-  useEffect(() => {
-    setPage(0)
-
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-  }, [debounceValue, selectedCategory, selectedOrderingInText])
-
   const params = {
     page,
     page_size: undefined,
@@ -42,7 +32,7 @@ const useLecturesQuery = () => {
   const url = `${queryEndpoint}/?${searchParams.toString()}`
 
   const { data, isPending, error } = useQuery({
-    queryKey: [queryEndpoint, { ...params }],
+    queryKey: [queryEndpoint, params],
     queryFn: async () => {
       const response = await api.get(url)
       return response.data as Record<string, Lecture[]>
@@ -53,6 +43,16 @@ const useLecturesQuery = () => {
   const getNextPage = useCallback(() => {
     setPage((prev) => prev + 1)
   }, [])
+
+  useEffect(() => {
+    setPage(0)
+
+    if (debounceValue === '') {
+      setIsSearching(false)
+    } else {
+      setIsSearching(true)
+    }
+  }, [debounceValue, selectedCategory, selectedOrderingInText])
 
   return {
     data,
