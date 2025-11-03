@@ -1,7 +1,7 @@
 import type { LecturesResponseData } from '@/types'
 import { textToLectureOrdering } from '@/utils/simpleMaps'
 import { useQuery } from '@tanstack/react-query'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import api from '@/api/api'
 import { makeUrlFromParams } from '@/utils/urls'
 import useLectureStore from '@/store/lecture/lectureStore'
