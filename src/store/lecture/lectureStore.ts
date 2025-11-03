@@ -25,6 +25,9 @@ const useLectureStore = create<LectureStoreState>()((set, get) => ({
     set({ selectedOrderingInText }),
   debounceValue: '',
   setDebounceValue: (debounceValue) => set({ debounceValue }),
+
+  requestNextPage: () => {},
+  setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
 }))
 
 export default useLectureStore

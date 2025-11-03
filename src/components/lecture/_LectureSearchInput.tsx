@@ -1,15 +1,9 @@
 import { Search } from 'lucide-react'
 import Input from '../commonInGeneral/inputFamily/input/Input'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import useNoSearchResult from '@/hooks/useNoSearchResult'
 import useLectureStore from '@/store/lecture/lectureStore'
 import useDebounce from '@/hooks/useDebounce'
-
-// interface LectureSearchInputProps {
-//   searchText: string
-//   setSearchText: React.Dispatch<React.SetStateAction<string>>
-//   cancelDebounce: () => void
-// }
 
 const LectureSearchInput = () => {
   const searchText = useLectureStore((state) => state.searchText)
@@ -17,10 +11,12 @@ const LectureSearchInput = () => {
   const setDebounceValue = useLectureStore((state) => state.setDebounceValue)
 
   const [debounceValue, cancelDebounce] = useDebounce(searchText, 500)
-  setDebounceValue(debounceValue)
-
   const inputRef = useRef<HTMLInputElement>(null)
   useNoSearchResult(inputRef, setSearchText, cancelDebounce)
+
+  useEffect(() => {
+    setDebounceValue(debounceValue)
+  }, [debounceValue, setDebounceValue])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {

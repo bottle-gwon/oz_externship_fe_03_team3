@@ -22,6 +22,9 @@ const useLecturesQuery = () => {
     (state) => state.appendLectureArray
   )
   const setIsSearching = useLectureStore((state) => state.setIsSearching)
+  const setRequestNextPage = useLectureStore(
+    (state) => state.setRequestNextPage
+  )
 
   const params = {
     page_size: undefined,
@@ -37,7 +40,6 @@ const useLecturesQuery = () => {
       const response = await api.get(nextUrlInKey ?? url)
       return response.data as LecturesResponseData
     },
-    // placeholderData: (previousData) => previousData, // 이 부분이 없으면 새로 fetch -> 기존 것 없어짐 -> 화면 맨 위로 -> 다시 그리게 됩니다
   })
 
   useEffect(() => {
@@ -55,16 +57,14 @@ const useLecturesQuery = () => {
     if (!data) {
       return
     }
-    debugger
     appendLectureArray(data.results ?? [])
     setNextUrlInReady(data.next)
   }, [data, appendLectureArray])
 
-  // TODO: 스토어에 넘겨야
-  // const requestNextPage = useCallback(
-  //   () => setNextUrlInKey(nextUrlInReady),
-  //   [nextUrlInReady]
-  // )
+  useEffect(() => {
+    const requestNextPage = () => setNextUrlInKey(nextUrlInReady)
+    setRequestNextPage(requestNextPage)
+  }, [nextUrlInReady, setRequestNextPage])
 
   return {
     isPending,

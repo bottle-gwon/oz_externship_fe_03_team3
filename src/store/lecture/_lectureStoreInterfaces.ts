@@ -19,4 +19,7 @@ export interface LectureStoreState {
   ) => void
   debounceValue: string
   setDebounceValue: (debounceValue: string) => void
+
+  requestNextPage: () => void
+  setRequestNextPage: (requestNextPage: () => void) => void
 }

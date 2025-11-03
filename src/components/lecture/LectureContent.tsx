@@ -15,15 +15,15 @@ import useLectureStore from '@/store/lecture/lectureStore'
 
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const lectureArray = useStudyHubStore((state) => state.lectureArray)
-  const recommendedLectureArray = useStudyHubStore(
+  const lectureArray = useLectureStore((state) => state.lectureArray)
+  const recommendedLectureArray = useLectureStore(
     (state) => state.recommendedLectureArray
   )
-
   const isSearching = useLectureStore((state) => state.isSearching)
+  const requestNextPage = useLectureStore((state) => state.requestNextPage)
 
   // TODO: request next page 로 이것 바꿔야
-  const targetRef = useOneWayInfinityScroll(() => null)
+  const targetRef = useOneWayInfinityScroll(requestNextPage)
 
   return (
     <Container className="py-oz-xxl">
