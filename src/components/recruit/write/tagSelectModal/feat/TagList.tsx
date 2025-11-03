@@ -34,6 +34,8 @@ interface TagListInterface {
   keyword: string //검색 키워드
   isLoading: boolean //로딩중
   // isFetching: boolean // 페이지네이팅 로딩
+  isPaginating: boolean
+  isSearching: boolean
 }
 
 const TagList = ({
@@ -44,14 +46,15 @@ const TagList = ({
   selectArray,
   keyword,
   isLoading,
-  // isFetching,
+  isPaginating,
+  isSearching,
 }: TagListInterface) => {
   if (!responseData || !page) {
     return
   }
 
   //Todo 현재는 페이지 네이션을 해도 스켈레톤이 출력되지만 이후api 연동할때 분기 처리 할것
-  if (isLoading) {
+  if (isLoading || isSearching) {
     return (
       <Vstack gap="none" className="items-center justify-center">
         <TagSkeleton />
@@ -75,20 +78,23 @@ const TagList = ({
       gap="xl"
       className="-mx-6 -mb-6 h-[426px] w-[672px] items-center justify-center"
     >
-      <Vstack gap="sm" className="h-[314px] items-center justify-start">
-        <Hstack className="w-full items-start justify-start self-start">
-          <p className="text-sm font-medium">{`사용가능한 태그 (${responseData.total_count}개)`}</p>
-        </Hstack>
-        {responseData.tags?.map((el) => (
-          <TagCard
-            key={el.id + el.name}
-            name={el.name}
-            isChecked={selectArray.includes(el.name)}
-            onClickTag={onSelectTag}
-          />
-        ))}
-      </Vstack>
-      {/* <TagCard name="초보자 환영" isChecked /> */}
+      {isPaginating && <TagSkeleton />}
+
+      {!isPaginating && (
+        <Vstack gap="sm" className="h-[314px] items-center justify-start">
+          <Hstack className="w-full items-start justify-start self-start">
+            <p className="text-sm font-medium">{`사용가능한 태그 (${responseData.total_count}개)`}</p>
+          </Hstack>
+          {responseData.tags?.map((el) => (
+            <TagCard
+              key={el.id + el.name}
+              name={el.name}
+              isChecked={selectArray.includes(el.name)}
+              onClickTag={onSelectTag}
+            />
+          ))}
+        </Vstack>
+      )}
 
       <TagPagination
         currentPage={page}
