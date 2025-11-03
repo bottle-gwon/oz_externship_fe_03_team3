@@ -7,15 +7,23 @@ import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
 
 const ProfileButton = ({ me }: { me: Me }) => {
+  const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
+  const setMe = useStudyHubStore((state) => state.setMe)
+
   const handleChange = (value: string) => {
     switch (value) {
       case 'mypage':
-        console.log('---- mypage')
+        window.location.href = import.meta.env.VITE_MYPAGE_PAGE_URL
         return
       case 'logout':
-        console.log('---- logout')
+        setMe(null)
+        setAccessToken(null)
+        return
+      default:
+        throw new Error('---- 잘못된 드롭다운 값이 선택되었습니다')
     }
   }
+
   return (
     <Dropdown>
       <Dropdown.Trigger>
@@ -31,6 +39,7 @@ const ProfileButton = ({ me }: { me: Me }) => {
           </Hstack>
         </Button>
       </Dropdown.Trigger>
+
       <Dropdown.Menu onChange={handleChange}>
         <Dropdown.MenuItem value="mypage">마이페이지</Dropdown.MenuItem>
         <Dropdown.MenuItem value="logout">로그아웃</Dropdown.MenuItem>
