@@ -61,7 +61,7 @@ const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
 
   const {
-    lectureArray,
+    data,
     isPending,
     error,
     getNextPage,
@@ -81,6 +81,10 @@ const LectureContent = () => {
     return <p>불러오는 데에 실패했다는 화면을 널어야 합니다</p>
   }
 
+  if (!data || !data.recommended_lectures || !data.results) {
+    return <p>이게 보여도 되나??</p>
+  }
+
   return (
     <Container className="py-oz-xxl">
       <div className="px-oz-xxl">
@@ -97,7 +101,7 @@ const LectureContent = () => {
       <RecommendSection
         type="lecture"
         isLoggedIn={Boolean(accessToken)}
-        recommendedArray={dummyLectureArray.slice(0, 3)}
+        recommendedArray={data.recommended_lectures}
       />
 
       <Vstack className="px-oz-xxl gap-oz-xxl">
@@ -117,12 +121,10 @@ const LectureContent = () => {
           </GridContainer>
         </RoundBox>
 
-        {isSearching && lectureArray && lectureArray.length === 0 && (
-          <NoSearchResult />
-        )}
-        {lectureArray && lectureArray.length > 0 && (
+        {isSearching && data.results.length === 0 && <NoSearchResult />}
+        {data.results.length > 0 && (
           <GridContainer className="gap-oz-xl">
-            {lectureArray.map((lecture) => (
+            {data.results.map((lecture) => (
               <LectureCard key={lecture.uuid} lecture={lecture} />
             ))}
           </GridContainer>

@@ -17,6 +17,8 @@ const useLecturesQuery = () => {
     useState<LectureOrderingInText>('최신순')
 
   useEffect(() => {
+    setPage(0)
+
     if (debounceValue === '') {
       setIsSearching(false)
     } else {
@@ -37,18 +39,13 @@ const useLecturesQuery = () => {
       .map((entry) => [entry[0], String(entry[1])])
   )
   const searchParams = new URLSearchParams(filteredParams)
-
   const url = `${queryEndpoint}/?${searchParams.toString()}`
 
-  const {
-    data: lectureArray,
-    isPending,
-    error,
-  } = useQuery({
-    queryKey: [queryEndpoint, params],
+  const { data, isPending, error } = useQuery({
+    queryKey: [queryEndpoint, { ...params }],
     queryFn: async () => {
       const response = await api.get(url)
-      return response.data.results as Lecture[]
+      return response.data as Record<string, Lecture[]>
     },
   })
 
@@ -57,7 +54,7 @@ const useLecturesQuery = () => {
   }, [])
 
   return {
-    lectureArray,
+    data,
     isPending,
     error,
     getNextPage,
