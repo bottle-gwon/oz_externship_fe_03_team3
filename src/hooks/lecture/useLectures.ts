@@ -20,7 +20,7 @@ const useLecturesQuery = () => {
   const params = {
     page,
     page_size: undefined,
-    search: searchText,
+    search: debounceValue,
     category: selectedCategory,
     ordering: textToLectureOrdering[selectedOrderingInText],
   }
