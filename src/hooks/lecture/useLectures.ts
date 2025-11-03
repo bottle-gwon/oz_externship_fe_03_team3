@@ -69,7 +69,6 @@ const useLecturesQuery = () => {
     // NOTE: lecture store에 nextUrlInKey 바꿀 수 있는 함수 저장
     // NOTE: 해당 함수 호출 -> nextUrlInKey 바뀜 -> queryKey 바뀜 -> 새로 쿼리 요
     const requestNextPage = () => {
-      debugger
       setNextUrlInKey(nextUrl)
     }
     setRequestNextPage(requestNextPage)
