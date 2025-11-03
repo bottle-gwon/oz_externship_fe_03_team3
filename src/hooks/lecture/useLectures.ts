@@ -58,7 +58,12 @@ const useLecturesQuery = () => {
       return
     }
     appendLectureArray(data.results ?? [])
-    setNextUrlInReady(data.next)
+
+    // NOTE: data.next가 https가 아닌 http를 줘서 엔드포인트만 골라냅니다
+    const nextUrl = data.next
+      ? data.next.slice(data.next?.indexOf('/lecture'))
+      : null
+    setNextUrlInReady(nextUrl)
   }, [data, appendLectureArray])
 
   useEffect(() => {

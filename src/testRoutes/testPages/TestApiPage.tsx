@@ -55,25 +55,22 @@ const TestApiPage = () => {
             <TitledRoundBox.Title>Lectures</TitledRoundBox.Title>
             <p>서버가 살아있나 확인할 땐 여기를 사용해주세요</p>
             <Button onClick={getLectures}>GET /lectures/</Button>
+            <Button onClick={() => api.get('/lectures/?page=1')}>
+              GET /lectures/?page=1
+            </Button>
+            <Button onClick={() => api.get('/lectures/?page=2')}>
+              GET /lectures/?page=2
+            </Button>
+            <Button
+              onClick={() => api.get('/lectures/?ordering=-created_at&page=2')}
+            >
+              GET /lectures/?ordering=-created_at&page=2
+            </Button>
+            <Button onClick={() => api.get('/lectures/?page=2')}>
+              GET http://api.ozcoding.site/api/v1/lectures/?page=2
+            </Button>
             <Button onClick={() => api.get('/lectures/categories')}>
               GET /lectures/categories
-            </Button>
-            <Button
-              onClick={() =>
-                api.get(
-                  'http://api.ozcoding.site/api/v1/lectures/?ordering=-created_at&page=2'
-                )
-              }
-            >
-              GET
-              http://api.ozcoding.site/api/v1/lectures/?ordering=-created_at&page=2
-            </Button>
-            <Button
-              onClick={() =>
-                api.get('http://api.ozcoding.site/api/v1/lectures/?page=2')
-              }
-            >
-              GET http://api.ozcoding.site/api/v1/lectures/?page=2
             </Button>
             <Button
               onClick={() => api.post('/lectures/bookmarks', { lecture_id })}
