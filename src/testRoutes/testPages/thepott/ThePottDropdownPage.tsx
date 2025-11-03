@@ -7,8 +7,8 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 const ThePottDropdownPage = () => {
   const handleChange = (_value: string) => {
     // NOTE: 테스트할 땐 아래의 주석을 해제해주세요
-    console.log({ _value })
-    debugger
+    // console.log({ _value })
+    // debugger
     // ---- 여기까지
   }
   return (
