@@ -9,11 +9,10 @@ import useStudyHubStore from '@/store/store'
 import RecruitSubHeader from './_RecruitSubHeader'
 import RecruitSearchInput from './_RecruitSearchInput'
 import RecruitTagSelect from './_RecruitTagSelect'
-import { useEffect, useState } from 'react'
-import useDebounce from '@/hooks/useDebounce'
 import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
 import RecruitArrangementSelect from './_RecruitArrangementSelect'
 import type { RecruitArrangementInText } from '@/types'
+import useRecruits from '@/hooks/recruit/title/useRecruits'
 
 const dummyGetRecruitWithParametersApi = (
   debounceValue: string,
@@ -46,31 +45,32 @@ const dummyGetRecruitWithParametersApi = (
 }
 
 const RecruitContent = () => {
-  const [isSearching, setIsSearching] = useState(false)
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const recruitArray = useStudyHubStore((state) => state.recruitArray)
-
   const isLoggedIn = Boolean(accessToken)
 
-  const [searchText, setSearchText] = useState('')
-  const [debounceValue, cancel] = useDebounce(searchText, 500)
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [selectedArrangementInText, setSelectedArrangementInText] =
-    useState<RecruitArrangementInText>('최신순')
+  const {
+    data,
+    isPending,
+    error,
+    searchText,
+    setSearchText,
+    setSelectedTag,
+    setSelectedOrderingInText,
+    isSearching,
+    cancel,
+  } = useRecruits()
 
-  useEffect(() => {
-    dummyGetRecruitWithParametersApi(
-      debounceValue,
-      selectedTag,
-      selectedArrangementInText
-    )
+  if (isPending) {
+    // 스켈레톤 컴포넌트 추가
+  }
 
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-  }, [debounceValue, selectedTag, selectedArrangementInText])
+  if (error) {
+    // 에러 메시지 or 에러 화면 컴포넌트 추가
+  }
+
+  if (!data || !data.results) {
+    return <div>Empty State 컴포넌트</div>
+  }
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
@@ -97,20 +97,20 @@ const RecruitContent = () => {
           <Hstack gap="none" className="gap-9">
             <RecruitTagSelect setSelectedTag={setSelectedTag} />
             <RecruitArrangementSelect
-              setSelectedArrangementInText={setSelectedArrangementInText}
+              setSelectedArrangementInText={setSelectedOrderingInText}
             />
           </Hstack>
         </RoundBox>
 
         <Vstack gap="none">
           <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
-            전체 공고({recruitArray.length})
+            전체 공고({data.total_count})
           </Vstack>
-          {isSearching && recruitArray.length === 0 && <NoSearchResult />}
-          {recruitArray.length > 0 && (
+          {isSearching && data.results.length === 0 && <NoSearchResult />}
+          {data.results.length > 0 && (
             <Vstack gap="none" className="items-center gap-12">
               <Vstack gap="none" className="w-full">
-                {recruitArray.map((recruit) => (
+                {data.results.map((recruit) => (
                   <RecruitCard key={recruit.uuid} recruit={recruit} />
                 ))}
               </Vstack>

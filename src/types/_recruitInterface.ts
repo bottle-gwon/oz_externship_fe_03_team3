@@ -23,11 +23,21 @@ export interface Recruit {
   updated_at: string
 }
 
+export interface RecruitmentListResponse {
+  results: Recruit[]
+  page: number
+  page_size: number
+  total_count: number
+}
+
+export type RecruitOrdering = 'created_at' | 'bookmarks' | 'views'
+
 export const recruitArrangementInTextArray = [
   '최신순',
   '북마크 많은 순',
   '조회수 높은 순',
 ] as const
+
 export type RecruitArrangementInText =
   (typeof recruitArrangementInTextArray)[number]
 

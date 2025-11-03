@@ -2,6 +2,8 @@ import type {
   LectureOrdering,
   LectureOrderingInText,
   LectureReviewRating,
+  RecruitArrangementInText,
+  RecruitOrdering,
 } from '@/types'
 
 export const ratingToNumber: Record<LectureReviewRating, number> = {
@@ -21,4 +23,13 @@ export const textToLectureOrdering: Record<
   '가격 낮은 순': 'price',
   '평점 높은 순': '-rating',
   '평점 낮은 순': 'rating',
+}
+
+export const textToRecruitOrdering: Record<
+  RecruitArrangementInText,
+  RecruitOrdering
+> = {
+  최신순: 'created_at',
+  '북마크 많은 순': 'bookmarks',
+  '조회수 높은 순': 'views',
 }
