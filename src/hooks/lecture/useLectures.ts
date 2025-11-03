@@ -38,7 +38,7 @@ const useLecturesQuery = () => {
   const { data, isPending, error } = useQuery({
     queryKey: [queryEndpoint, params, nextUrlInKey],
     queryFn: async () => {
-      const response = await api.get(url)
+      const response = await api.get(nextUrlInKey ?? url)
       return response.data as LecturesResponseData
     },
     placeholderData: (previousData) => previousData, // 이 부분이 없으면 새로 fetch -> 기존 것 없어짐 -> 화면 맨 위로 -> 다시 그리게 됩니다
@@ -46,7 +46,7 @@ const useLecturesQuery = () => {
 
   useEffect(() => {
     setLectureArray([])
-    setPage(1)
+    setNextUrlInReady(null)
 
     if (debounceValue === '') {
       setIsSearching(false)

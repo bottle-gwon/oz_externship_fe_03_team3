@@ -11,6 +11,7 @@ import LectureOrderingSelect from './_LectureOrderingSelect'
 import SubHeader from '../commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
 import useLectures from '@/hooks/lecture/useLectures'
+import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
@@ -20,7 +21,7 @@ const LectureContent = () => {
   )
 
   const {
-    // getNextPage, // <<-- 무한 스크롤 구현할 때 사용
+    requestNextPage,
     searchText,
     setSearchText,
     setSelectedCategory,
@@ -28,6 +29,8 @@ const LectureContent = () => {
     isSearching,
     cancel,
   } = useLectures()
+
+  const targetRef = useOneWayInfinityScroll(requestNextPage)
 
   return (
     <Container className="py-oz-xxl">
@@ -67,11 +70,16 @@ const LectureContent = () => {
 
         {isSearching && lectureArray.length === 0 && <NoSearchResult />}
         {lectureArray.length > 0 && (
-          <GridContainer className="gap-oz-xl">
-            {lectureArray.map((lecture) => (
-              <LectureCard key={lecture.uuid} lecture={lecture} />
-            ))}
-          </GridContainer>
+          <>
+            <GridContainer className="gap-oz-xl">
+              {lectureArray.map((lecture) => (
+                <LectureCard key={lecture.uuid} lecture={lecture} />
+              ))}
+            </GridContainer>
+
+            {/* 검색 결과 있을 때만 무한 스크롤 되게 */}
+            <div ref={targetRef} />
+          </>
         )}
         {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
       </Vstack>
