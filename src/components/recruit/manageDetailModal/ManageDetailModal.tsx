@@ -39,10 +39,6 @@ const ManageDetailModal = ({
     setModalKeyArray([...modalKeyArray, 'confirmReject'])
   }
 
-  const onConfirmModalClose = () => {
-    setModalKeyArray(['manage', 'manageDetail'])
-  }
-
   return (
     <>
       <Modal isOn={isOn} onClose={handleClose} width="sm">
@@ -120,16 +116,7 @@ const ManageDetailModal = ({
         </Modal.Footer>
       </Modal>
 
-      <ManageDetailConfirmationModal
-        nickname={applicant.nickname}
-        onClose={onConfirmModalClose}
-        isOn={
-          modalKeyArray.includes('confirmApprove') ||
-          modalKeyArray.includes('confirmReject') ||
-          modalKeyArray.includes('resultApprove') ||
-          modalKeyArray.includes('resultReject')
-        }
-      />
+      <ManageDetailConfirmationModal nickname={applicant.nickname} />
     </>
   )
 }

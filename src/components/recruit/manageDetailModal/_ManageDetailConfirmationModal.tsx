@@ -1,13 +1,10 @@
 import Button from '@/components/commonInGeneral/button/Button'
-import { Vstack } from '@/components/commonInGeneral/layout'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import useStudyHubStore from '@/store/store'
 import type { Color } from '@/types'
 
 interface ManageDetailConfirmationModalProps {
   nickname: string
-  onClose: () => void
-  isOn: boolean
 }
 
 interface ButtonConfig {
@@ -23,8 +20,6 @@ interface ConfirmationConfig {
 
 const ManageDetailConfirmationModal = ({
   nickname,
-  isOn,
-  onClose,
 }: ManageDetailConfirmationModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
@@ -52,7 +47,7 @@ const ManageDetailConfirmationModal = ({
   }
 
   const handleClose = () => {
-    onClose()
+    setModalKeyArray(['manage', 'manageDetail'])
   }
 
   const confirmationConfig: Record<string, ConfirmationConfig> = {
@@ -108,44 +103,29 @@ const ManageDetailConfirmationModal = ({
     },
   }
 
-  const currentModalKey = modalKeyArray.find((key) =>
-    [
-      'confirmApprove',
-      'confirmReject',
-      'resultApprove',
-      'resultReject',
-    ].includes(key)
-  )
+  const currentModalKey = modalKeyArray[modalKeyArray.length - 1]
 
-  const currentConfig = currentModalKey
-    ? confirmationConfig[currentModalKey]
-    : null
+  const currentConfig = confirmationConfig[currentModalKey]
 
   if (!currentConfig) {
     return null
   }
 
-  const handleModalContentClick = (e: React.MouseEvent) => {
-    // e.stopPropagation()
-  }
-
   return (
-    <ConfirmationModal isOn={isOn} onClose={onClose}>
-      <Vstack gap="none" onClick={handleModalContentClick}>
-        <ConfirmationModal.Title>{currentConfig.title}</ConfirmationModal.Title>
-        <ConfirmationModal.ButtonSection>
-          {currentConfig.buttons.map((button, index) => (
-            <Button
-              key={index}
-              variant="contained"
-              color={button.color}
-              onClick={button.onClick}
-            >
-              {button.text}
-            </Button>
-          ))}
-        </ConfirmationModal.ButtonSection>
-      </Vstack>
+    <ConfirmationModal isOn={!!currentConfig} onClose={handleClose}>
+      <ConfirmationModal.Title>{currentConfig.title}</ConfirmationModal.Title>
+      <ConfirmationModal.ButtonSection>
+        {currentConfig.buttons.map((button, index) => (
+          <Button
+            key={index}
+            variant="contained"
+            color={button.color}
+            onClick={button.onClick}
+          >
+            {button.text}
+          </Button>
+        ))}
+      </ConfirmationModal.ButtonSection>
     </ConfirmationModal>
   )
 }
