@@ -14,6 +14,7 @@ import useDebounce from '@/hooks/useDebounce'
 import type { LectureOrderingInText } from '@/types'
 import SubHeader from '../commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
+import useLectures from '@/hooks/lecture/useLectures'
 
 // TODO: 이건 api 연결하면서 삭제해야 함!
 const dummyGetLectureWithParametersApi = (
@@ -57,29 +58,28 @@ const dummyGetLectureWithParametersApi = (
 }
 
 const LectureContent = () => {
-  const [isSearching, setIsSearching] = useState(false)
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const lectureArray = useStudyHubStore((state) => state.lectureArray)
 
-  const [searchText, setSearchText] = useState('')
-  const [debounceValue, cancel] = useDebounce(searchText, 500)
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
-  const [selectedOrderingInText, setSelectedOrderingInText] =
-    useState<LectureOrderingInText>('최신순')
+  const {
+    lectureArray,
+    isPending,
+    error,
+    getNextPage,
+    searchText,
+    setSearchText,
+    setSelectedCategory,
+    setSelectedOrderingInText,
+    isSearching,
+    cancel,
+  } = useLectures()
 
-  useEffect(() => {
-    dummyGetLectureWithParametersApi(
-      debounceValue,
-      selectedCategory,
-      selectedOrderingInText
-    )
+  if (isPending) {
+    return <p>스켈레톤을 넣어야 합니다</p>
+  }
 
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-  }, [debounceValue, selectedCategory, selectedOrderingInText])
+  if (!isPending && error) {
+    return <p>불러오는 데에 실패했다는 화면을 널어야 합니다</p>
+  }
 
   return (
     <Container className="py-oz-xxl">
@@ -117,8 +117,10 @@ const LectureContent = () => {
           </GridContainer>
         </RoundBox>
 
-        {isSearching && lectureArray.length === 0 && <NoSearchResult />}
-        {lectureArray.length > 0 && (
+        {isSearching && lectureArray && lectureArray.length === 0 && (
+          <NoSearchResult />
+        )}
+        {lectureArray && lectureArray.length > 0 && (
           <GridContainer className="gap-oz-xl">
             {lectureArray.map((lecture) => (
               <LectureCard key={lecture.uuid} lecture={lecture} />
