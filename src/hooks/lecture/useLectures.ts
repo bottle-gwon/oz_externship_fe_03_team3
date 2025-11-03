@@ -17,15 +17,13 @@ const useLecturesQuery = () => {
   const selectedOrderingInText = useLectureStore(
     (state) => state.selectedOrderingInText
   )
-  const resetLectureArray = useLectureStore((state) => state.resetLectureArray)
+  const setLectureArray = useLectureStore((state) => state.setLectureArray)
   const appendLectureArray = useLectureStore(
     (state) => state.appendLectureArray
   )
-  const setIsSearching = useLectureStore((state) => state.setIsSearching)
   const setRequestNextPage = useLectureStore(
     (state) => state.setRequestNextPage
   )
-
   const params = {
     page_size: 12,
     search: debounceValue,
@@ -35,7 +33,12 @@ const useLecturesQuery = () => {
   const url = makeUrlFromParams(queryEndpoint, params)
 
   const { data, isPending, error } = useQuery({
-    queryKey: [queryEndpoint, params, nextUrlInKey],
+    queryKey: [
+      queryEndpoint,
+      // NOTE: parmas 바로 넣으면 안 되는 이유.... 뭐지? 이렇게 하면 되긴 하나?
+      { debounceValue, selectedCategory, selectedOrderingInText },
+      nextUrlInKey,
+    ],
     queryFn: async () => {
       const response = await api.get(nextUrlInKey ?? url)
       return response.data as LecturesResponseData
@@ -43,33 +46,32 @@ const useLecturesQuery = () => {
   })
 
   useEffect(() => {
-    resetLectureArray()
+    // NOTE: 새로 검색할 것이니 다음 url 삭제
     setNextUrlInReady(null)
-
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-  }, [debounceValue, setIsSearching, resetLectureArray])
+  }, [debounceValue, selectedCategory, selectedOrderingInText])
 
   useEffect(() => {
     if (!data) {
       return
     }
-    appendLectureArray(data.results ?? [])
+
+    if (data.previous) {
+      appendLectureArray(data.results)
+    } else {
+      setLectureArray(data.results)
+    }
 
     // NOTE: data.next가 https가 아닌 http를 줘서 엔드포인트만 골라냅니다
     const nextUrl = data.next
       ? data.next.slice(data.next?.indexOf('/lecture'))
       : null
-    setNextUrlInReady(nextUrl)
-  }, [data, appendLectureArray])
 
-  useEffect(() => {
-    const requestNextPage = () => setNextUrlInKey(nextUrlInReady)
+    // NOTE: lecture store에 nextUrlInKey 바꿀 수 있는 함수 저장
+    // NOTE: 해당 함수 호출 -> nextUrlInKey 바뀜 -> queryKey 바뀜 -> 새로 쿼리 요
+    const requestNextPage = () => setNextUrlInKey(nextUrl)
     setRequestNextPage(requestNextPage)
-  }, [nextUrlInReady, setRequestNextPage])
+    setNextUrlInReady(nextUrl)
+  }, [data, appendLectureArray, setLectureArray, setRequestNextPage])
 
   return {
     isPending,

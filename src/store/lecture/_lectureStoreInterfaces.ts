@@ -2,7 +2,7 @@ import type { Lecture, LectureOrderingInText } from '@/types'
 
 export interface LectureStoreState {
   lectureArray: Lecture[]
-  resetLectureArray: () => void
+  setLectureArray: (lectureArray: Lecture[]) => void
   appendLectureArray: (lectureArray: Lecture[]) => void
   recommendedLectureArray: Lecture[]
   setRecommendedLectureArray: (recommendedLectureArray: Lecture[]) => void

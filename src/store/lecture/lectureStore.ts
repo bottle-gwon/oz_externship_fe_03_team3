@@ -3,7 +3,7 @@ import type { LectureStoreState } from './_lectureStoreInterfaces'
 
 const useLectureStore = create<LectureStoreState>()((set, get) => ({
   lectureArray: [],
-  resetLectureArray: () => set({ lectureArray: [] }),
+  setLectureArray: (lectureArray) => set({ lectureArray }),
   appendLectureArray: (lectureArray) => {
     const prev = get().lectureArray
     const newLectureArray = [...prev, ...lectureArray]

@@ -9,6 +9,7 @@ const LectureSearchInput = () => {
   const searchText = useLectureStore((state) => state.searchText)
   const setSearchText = useLectureStore((state) => state.setSearchText)
   const setDebounceValue = useLectureStore((state) => state.setDebounceValue)
+  const setIsSearching = useLectureStore((state) => state.setIsSearching)
 
   const [debounceValue, cancelDebounce] = useDebounce(searchText, 500)
   const inputRef = useRef<HTMLInputElement>(null)
@@ -16,7 +17,14 @@ const LectureSearchInput = () => {
 
   useEffect(() => {
     setDebounceValue(debounceValue)
-  }, [debounceValue, setDebounceValue])
+
+    // 검색 관련된 로직은 최대한 각 검색란 컴포넌트에서 작성했습니다
+    if (debounceValue === '') {
+      setIsSearching(false)
+    } else {
+      setIsSearching(true)
+    }
+  }, [debounceValue, setDebounceValue, setIsSearching])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
