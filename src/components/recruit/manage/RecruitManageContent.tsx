@@ -52,7 +52,7 @@ const RecruitManageContent = () => {
         <RecruitManageFilter onChange={handleFilterChange} />
 
         <Vstack gap="none">
-          <h1>내 공고 목록 ({visibleRecruits.length})</h1>
+          <h1 className="mb-oz-md">내 공고 목록 ({visibleRecruits.length})</h1>
           {visibleRecruits.map((recruit) => (
             <RecruitCard isMine key={recruit.id} recruit={recruit} />
           ))}
@@ -60,7 +60,7 @@ const RecruitManageContent = () => {
             variant="contained"
             status="enabled"
             size="lg"
-            className="mb-oz-xxl"
+            className="mb-oz-xxl mt-oz-lg"
           >
             + 더 많은 공고 보기
           </Button>
