@@ -27,6 +27,19 @@ const ThePottDropdownPage = () => {
             </RoundBox>
           </Dropdown.Content>
         </Dropdown>
+
+        <Dropdown>
+          <Dropdown.Trigger>
+            <Button>누르면 메뉴 나옴</Button>
+          </Dropdown.Trigger>
+          <Dropdown.Menu>
+            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
+            <Dropdown.MenuItem>asdf</Dropdown.MenuItem>
+          </Dropdown.Menu>
+        </Dropdown>
       </RoundBox>
     </Container>
   )
