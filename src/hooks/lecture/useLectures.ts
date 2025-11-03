@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query'
 import { useCallback, useEffect, useState } from 'react'
 import api from '@/api/api'
 import useDebounce from '../useDebounce'
+import { makeUrlFromParams } from '@/utils/urls'
 
 const queryEndpoint = '/lectures'
 
@@ -23,13 +24,7 @@ const useLecturesQuery = () => {
     category: selectedCategory,
     ordering: textToLectureOrdering[selectedOrderingInText],
   }
-  const filteredParams = Object.fromEntries(
-    Object.entries(params)
-      .filter((entry) => entry[1])
-      .map((entry) => [entry[0], String(entry[1])])
-  )
-  const searchParams = new URLSearchParams(filteredParams)
-  const url = `${queryEndpoint}/?${searchParams.toString()}`
+  const url = makeUrlFromParams(queryEndpoint, params)
 
   const { data, isPending, error } = useQuery({
     queryKey: [queryEndpoint, params],
