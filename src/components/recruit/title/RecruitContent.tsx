@@ -22,7 +22,6 @@ const RecruitContent = () => {
   )
   const isSearching = useRecruitStore((state) => state.isSearching)
   const { data } = useRecruits()
-  console.log(data)
   // const requestNextPage = useRecruitStore((state) => state.requestNextPage)
 
   return (

@@ -66,7 +66,7 @@ const useRecruitsQuery = () => {
     }
 
     setRequestNextPage(requestNextPage)
-  }, [data, appendRecruitArray, setRecruitArray, setRequestNextPage])
+  }, [page, data, appendRecruitArray, setRecruitArray, setRequestNextPage])
 
   return {
     data,
