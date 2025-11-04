@@ -1,6 +1,6 @@
 import api from '@/api/api'
-import useDebounce from '@/hooks/useDebounce'
-import type { RecruitArrangementInText, RecruitmentListResponse } from '@/types'
+import useRecruitStore from '@/store/recruit/recruitStore'
+import type { RecruitsResponseData } from '@/types'
 import { textToRecruitOrdering } from '@/utils/simpleMaps'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
@@ -8,56 +8,70 @@ import { useEffect, useState } from 'react'
 const recruitsQueryEndpoint = '/recruitments'
 
 const useRecruitsQuery = () => {
-  const [isSearching, setIsSearching] = useState(false)
   const [page, setPage] = useState(1)
-  const [searchText, setSearchText] = useState('')
-  const [debounceValue, cancel] = useDebounce(searchText, 500)
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [selectedOrderingInText, setSelectedOrderingInText] =
-    useState<RecruitArrangementInText>('최신순')
-
-  const params = {
-    page,
-    page_size: 10,
-    keyword: searchText,
-    tag: selectedTag,
-    study_group_id: undefined,
-    status: undefined,
-    ordering: textToRecruitOrdering[selectedOrderingInText],
-  }
+  const debounceValue = useRecruitStore((state) => state.debounceValue)
+  const selectedTag = useRecruitStore((state) => state.selectedTag)
+  const selectedArrangementInText = useRecruitStore(
+    (state) => state.selectedArrangementInText
+  )
+  const setRecruitArray = useRecruitStore((state) => state.setRecruitArray)
+  const appendRecruitArray = useRecruitStore(
+    (state) => state.appendRecruitArray
+  )
+  const setRequestNextPage = useRecruitStore(
+    (state) => state.setRequestNextPage
+  )
+  const [params, setParams] = useState<object | null>(null)
 
   const { data, isPending, error } = useQuery({
-    queryKey: [recruitsQueryEndpoint, params],
+    queryKey: [recruitsQueryEndpoint, params, page],
     queryFn: async () => {
-      const response = await api.get<RecruitmentListResponse>(
+      const response = await api.get<RecruitsResponseData>(
         recruitsQueryEndpoint,
         { params }
       )
-      return response.data
+      return response.data as RecruitsResponseData
     },
     placeholderData: keepPreviousData,
   })
 
   useEffect(() => {
     setPage(1)
+    setParams({
+      page_size: 10,
+      keyword: debounceValue,
+      tag: selectedTag,
+      ordering: textToRecruitOrdering[selectedArrangementInText],
+    })
+  }, [debounceValue, selectedTag, selectedArrangementInText])
 
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
+  useEffect(() => {
+    if (!data) {
+      return
     }
-  }, [debounceValue, selectedTag, selectedOrderingInText])
+
+    if (data.page > 1) {
+      appendRecruitArray(data.results)
+    } else {
+      setRecruitArray(data.results)
+    }
+
+    // 전체 페이지 수 계산
+    const totalPages = Math.ceil(data.total_count / data.page_size)
+
+    const requestNextPage = () => {
+      if (page < totalPages) {
+        setPage((prev) => prev + 1)
+      }
+    }
+
+    setRequestNextPage(requestNextPage)
+  }, [data, appendRecruitArray, setRecruitArray, setRequestNextPage])
 
   return {
     data,
     isPending,
     error,
-    searchText,
-    setSearchText,
-    setSelectedTag,
-    setSelectedOrderingInText,
-    isSearching,
-    cancel,
   }
 }
 

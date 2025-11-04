@@ -1,5 +1,6 @@
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Select from '@/components/commonInGeneral/select/Select'
+import useRecruitStore from '@/store/recruit/recruitStore'
 import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 
 const calcTagArray = () => {
@@ -19,13 +20,9 @@ const calcTagArray = () => {
   const tagArray = Object.values(tagRecords).sort() as string[]
   return tagArray
 }
-
-interface RecruitTagSelectProps {
-  setSelectedTag: React.Dispatch<React.SetStateAction<string | null>>
-}
-
-const RecruitTagSelect = ({ setSelectedTag }: RecruitTagSelectProps) => {
+const RecruitTagSelect = () => {
   const tagArray = calcTagArray()
+  const setSelectedTag = useRecruitStore((state) => state.setSelectedTag)
 
   const handleOptionSelect = (option: string | number) => {
     if (typeof option !== 'string') {

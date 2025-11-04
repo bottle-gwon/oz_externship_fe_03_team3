@@ -43,9 +43,6 @@ const useStudyHubStore = create<StudyHubState>()(
       studyGroupArray: [],
       setStudyGroupArray: (studyGroupArray) => set({ studyGroupArray }),
 
-      recruitArray: [],
-      setRecruitArray: (recruitArray) => set({ recruitArray }),
-
       selectedTagArray: [],
       setSelectedTagArray: (selectedTagArray) => set({ selectedTagArray }),
 
