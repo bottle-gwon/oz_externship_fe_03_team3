@@ -2,7 +2,7 @@ import type { ButtonProps, ButtonVariant, Color, SmToLg } from '@/types'
 import { Hstack } from '../layout'
 import Spinner from '../spinner/Spinner'
 
-type ButtonShape = 'rectangle' | 'square' | 'circle' | 'slim'
+type ButtonShape = 'rectangle' | 'square' | 'circle' | 'slim' | 'spread'
 
 interface WithButtonProps {
   color?: Color
@@ -101,6 +101,8 @@ const makeShapeResult = (shape: ButtonShape, size: SmToLg): string => {
       ].join(' ')
     case 'slim':
       return 'w-fit h-fit p-0 rounded-lg'
+    case 'spread':
+      return 'flex justify-center items-center'
   }
 }
 
