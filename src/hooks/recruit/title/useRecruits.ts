@@ -42,7 +42,7 @@ const useRecruitsQuery = () => {
     if (page < totalPagesRef.current) {
       setPage((prev) => prev + 1)
     }
-  }, [])
+  }, [page])
 
   useEffect(() => {
     setPage(1)
