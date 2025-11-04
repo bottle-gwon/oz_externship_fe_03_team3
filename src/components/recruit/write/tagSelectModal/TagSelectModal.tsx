@@ -146,6 +146,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
       //   setErrorMessage(newName)
       // }
       try {
+        setIsNewTagModalOn(true)
         const response = await addTag(newName)
 
         //성공시
@@ -164,9 +165,6 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         } else {
           setNewTagModalResponse({ detail: `알 수 없는 에러 ${e}` })
         }
-      } finally {
-        // 결과 모달 출력
-        setIsNewTagModalOn(true)
       }
 
       // 태그 클릭 추가/제거
@@ -284,6 +282,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         isOn={isNewTagModalOn}
         setIsOn={setIsNewTagModalOn}
         response={newTagModalResponse}
+        isPending={isAddTagPending}
       />
       <ErrorModal
         isOn={isErrorModalOn}
