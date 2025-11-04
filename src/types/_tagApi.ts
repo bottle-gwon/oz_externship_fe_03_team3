@@ -31,3 +31,8 @@ export interface TagApiSuccess {
   added_tags: string[]
   message: string
 }
+
+// 태그 요청 실패
+export interface TagApiFail {
+  detail: string
+}
