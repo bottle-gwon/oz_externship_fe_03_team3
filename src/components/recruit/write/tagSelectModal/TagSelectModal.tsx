@@ -9,6 +9,7 @@ import useStudyHubStore from '@/store/store'
 import { useAddNewTag, useSearchTag } from '@/hooks/tag/useTag'
 import { AxiosError } from 'axios'
 import type { TagApiFail, TagApiSuccess } from '@/types'
+import NewTagSpin from './loading/NewTagSpin'
 
 const TagSelectErrorModal = lazy(
   () =>
@@ -83,10 +84,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     isFetching,
   } = useSearchTag(param)
 
-  const {
-    // isPending: isAddTagPending,
-    mutateAsync: addTag,
-  } = useAddNewTag()
+  const { isPending: isAddTagPending, mutateAsync: addTag } = useAddNewTag()
 
   // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
@@ -296,6 +294,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         title={errorTitle}
         detail={errorMessage}
       />
+      {isAddTagPending && <NewTagSpin />}
     </>
   )
 }
