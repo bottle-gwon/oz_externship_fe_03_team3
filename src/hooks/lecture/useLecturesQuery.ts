@@ -43,7 +43,7 @@ const useLecturesQuery = () => {
     if (!data) {
       return
     }
-
+    debugger
     const lectureArray = data.pages.reduce((acc: Lecture[], page) => {
       return [...acc, ...page.results]
     }, [])
