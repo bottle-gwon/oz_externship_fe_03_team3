@@ -5,6 +5,7 @@ import { Bell } from 'lucide-react'
 import type { Me } from '@/types'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
+import Notification from './notification/Notification'
 
 const ProfileButton = ({ me }: { me: Me }) => {
   const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
@@ -48,6 +49,21 @@ const ProfileButton = ({ me }: { me: Me }) => {
   )
 }
 
+const NotificationButton = () => {
+  return (
+    <Dropdown>
+      <Dropdown.Trigger>
+        <Button variant="ghost" size="lg">
+          <Bell />
+        </Button>
+      </Dropdown.Trigger>
+      <Dropdown.Content>
+        <Notification />
+      </Dropdown.Content>
+    </Dropdown>
+  )
+}
+
 const LoggedInButtonMany = () => {
   const me = useStudyHubStore((state) => state.me)
   if (!me) {
@@ -56,9 +72,7 @@ const LoggedInButtonMany = () => {
 
   return (
     <>
-      <Button variant="ghost" size="lg">
-        <Bell />
-      </Button>
+      <NotificationButton />
       <ProfileButton me={me} />
     </>
   )
