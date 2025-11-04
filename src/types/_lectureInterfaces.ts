@@ -16,7 +16,9 @@ export interface Lecture {
   discount_price: number
   platform: 'inflearn' | 'udemy'
   average_rating: number
+  duration: number
   url_link: string
+  is_bookmarked: boolean
 }
 
 export type LectureReviewRating =

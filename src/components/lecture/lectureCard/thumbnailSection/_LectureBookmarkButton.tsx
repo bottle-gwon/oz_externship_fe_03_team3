@@ -7,23 +7,32 @@ const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
   const { postBookmarkMutation, deleteBookmarkMutation } = useLecturesMutation()
 
   const handleClick = () => {
-    const newOne = {}
+    const newOne: Lecture = {
+      ...lecture,
+      is_bookmarked: !lecture.is_bookmarked,
+    }
+
     if (lecture.is_bookmarked) {
-      deleteBookmarkMutation.mutate()
+      deleteBookmarkMutation.mutate({ data: lecture, newOne })
       return
     }
 
-    postBookmarkMutation.mutate()
+    postBookmarkMutation.mutate({ data: lecture, newOne })
   }
 
-  const color = isDummyBookmarked ? 'var(--color-blue-500)' : undefined
-  const fill = isDummyBookmarked ? 'var(--color-blue-500)' : 'transparent'
-
-  const result = !isDummyBookmarked ? 'opacity-90' : ''
-
   return (
-    <Button shape="circle" onClick={handleClick} className={`${result}`}>
-      <Bookmark color={color} fill={fill} />
+    <Button
+      shape="circle"
+      onClick={handleClick}
+      className={lecture.is_bookmarked ? 'opacity-90' : ''}
+    >
+      <Bookmark
+        color={lecture.is_bookmarked ? 'var(--color-primary-400)' : undefined}
+        fill={
+          lecture.is_bookmarked ? 'var(--color-primary-400)' : 'transparent'
+        }
+        className="transition"
+      />
     </Button>
   )
 }
