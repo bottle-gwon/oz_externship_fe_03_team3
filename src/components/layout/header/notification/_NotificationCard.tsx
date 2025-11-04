@@ -31,8 +31,10 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
   return (
     <Hstack
       className={[
-        notification.is_read ? '' : 'bg-primary-50',
-        'p-oz-lg items-center border-b border-b-gray-100 last:border-b-0',
+        notification.is_read
+          ? 'hover:bg-gray-50 active:bg-gray-100'
+          : 'bg-primary-50 hover:bg-primary-100 active:bg-primary-200',
+        'p-oz-lg items-center border-b border-b-gray-100 transition last:border-b-0',
       ].join(' ')}
     >
       <NotificationIcon type={notification.type} />
