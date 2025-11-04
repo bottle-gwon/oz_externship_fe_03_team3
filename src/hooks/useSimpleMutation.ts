@@ -1,34 +1,34 @@
 import queryClient from '@/lib/tanstackQueryClient'
 import { useMutation } from '@tanstack/react-query'
 
-interface SimpleMutationOptions<TPrevious, TNewOne> {
+interface SimpleMutationOptions<TPrevious, TNewOne, TData> {
   queryEndpoint: string
-  mutationFnWithBody: (body: unknown) => unknown
+  mutationFnWithData: (data: TData) => void
   updateCacheForUi: (previous: TPrevious, newOne: TNewOne) => TPrevious
   handleSuccess?: () => void
   handleError?: (error: Error) => void
 }
 
-export const useSimpleMutation = <TPrevious, TNewOne>(
-  options: SimpleMutationOptions<TPrevious, TNewOne>
+export const useSimpleMutation = <TPrevious, TNewOne, TData>(
+  options: SimpleMutationOptions<TPrevious, TNewOne, TData>
 ) => {
   const {
     queryEndpoint,
-    mutationFnWithBody,
+    mutationFnWithData,
     updateCacheForUi,
     handleSuccess,
     handleError,
   } = options
   const simpleMutation = useMutation({
     mutationFn: async ({
-      body,
+      data,
       newOne: _newOne,
     }: {
-      body: unknown
-      newOne?: unknown
-    }) => mutationFnWithBody(body),
+      data: TData
+      newOne?: TNewOne
+    }) => mutationFnWithData(data),
 
-    onMutate: async ({ newOne }: { body: unknown; newOne: TNewOne }) => {
+    onMutate: async ({ newOne }: { data: TData; newOne: TNewOne }) => {
       await queryClient.cancelQueries({
         queryKey: [queryEndpoint],
       })

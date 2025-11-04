@@ -51,7 +51,7 @@ const useFruitMutation = () => {
   // NOTE: 캐시된 fruitArray의 type과 새로 추가할 fruit의 타입을 적습니다
   const fruitPost = useSimpleMutation<string[], string>({
     queryEndpoint,
-    mutationFnWithBody: (body) => api.post('/fruit', body),
+    mutationFnWithData: (body) => api.post('/fruit', body),
     updateCacheForUi: (previous: string[], newOne: string) => [
       ...previous,
       newOne,
@@ -68,7 +68,7 @@ const useFruitMutation = () => {
   // NOTE: 요청마다 커스텀 후크를 만듭니다
   const fruitPut = useSimpleMutation<string[], string>({
     queryEndpoint,
-    mutationFnWithBody: (body) => api.post('/fruit/5', body),
+    mutationFnWithData: (body) => api.post('/fruit/5', body),
     updateCacheForUi: (previous: string[], newOne: string) =>
       previous.map((fruit, index) => (index === 5 ? newOne : fruit)),
   })

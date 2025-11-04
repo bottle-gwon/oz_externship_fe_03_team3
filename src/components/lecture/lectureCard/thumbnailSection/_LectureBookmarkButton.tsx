@@ -1,13 +1,19 @@
 import { Bookmark } from 'lucide-react'
 import type { Lecture } from '@/types'
-import { useState } from 'react'
 import Button from '@/components/commonInGeneral/button/Button'
+import useLecturesMutation from '@/hooks/lecture/useLecturesMutation'
 
 const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
-  const [isDummyBookmarked, setIsDummyBookmarked] = useState(!lecture)
+  const { postBookmarkMutation, deleteBookmarkMutation } = useLecturesMutation()
+
   const handleClick = () => {
-    // TODO: Lcture 받아와서 버튼 눌리면 api 요청 보내야 함
-    setIsDummyBookmarked(!isDummyBookmarked)
+    const newOne = {}
+    if (lecture.is_bookmarked) {
+      deleteBookmarkMutation.mutate()
+      return
+    }
+
+    postBookmarkMutation.mutate()
   }
 
   const color = isDummyBookmarked ? 'var(--color-blue-500)' : undefined

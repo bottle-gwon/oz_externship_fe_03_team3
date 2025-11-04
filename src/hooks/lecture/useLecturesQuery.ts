@@ -86,10 +86,4 @@ const useLecturesQuery = () => {
   }
 }
 
-const useLectures = () => {
-  const lecturesQueryReturns = useLecturesQuery()
-
-  return { ...lecturesQueryReturns }
-}
-
-export default useLectures
+export default useLecturesQuery

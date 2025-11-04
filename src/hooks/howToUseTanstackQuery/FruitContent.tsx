@@ -10,7 +10,7 @@ const FruitContent = () => {
     <Vstack>
       <Button
         onClick={() =>
-          fruitPost.mutate({ body: { fruit_name: 'banana' }, newOne: 'banana' })
+          fruitPost.mutate({ data: { fruit_name: 'banana' }, newOne: 'banana' })
         }
       >
         POST banana
@@ -18,7 +18,7 @@ const FruitContent = () => {
 
       <Button
         onClick={() =>
-          fruitPut.mutate({ body: { fruit_name: 'apple' }, newOne: 'apple' })
+          fruitPut.mutate({ data: { fruit_name: 'apple' }, newOne: 'apple' })
         }
       >
         PUT 5th to apple
