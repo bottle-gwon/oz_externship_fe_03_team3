@@ -8,6 +8,17 @@ import useLectureStore from '@/store/lecture/lectureStore'
 
 const queryEndpoint = '/lectures'
 
+// queryFn을 외부에 분리한 함수입니다
+const getLecturesByPage = async (
+  paramsWithoutPage: object,
+  pageParam: number
+) => {
+  const params = { ...paramsWithoutPage, page: pageParam }
+  const url = makeUrlFromParams(queryEndpoint, params)
+  const response = await api.get(url)
+  return response.data as LecturesResponseData
+}
+
 const useLecturesQuery = () => {
   const debounceValue = useLectureStore((state) => state.debounceValue)
   const selectedCategory = useLectureStore((state) => state.selectedCategory)
@@ -19,6 +30,7 @@ const useLecturesQuery = () => {
     (state) => state.setRequestNextPage
   )
 
+  // 페이지별 요청을 useInfiniteQuery가 모두 담당하기 때문에 params를 상태로 관리할 필요가 없어졌습니다
   const paramsWithoutPage = {
     page_size: 12,
     search: debounceValue,
@@ -28,22 +40,24 @@ const useLecturesQuery = () => {
 
   const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
     queryKey: [queryEndpoint],
-    queryFn: async ({ pageParam }) => {
-      const params = { ...paramsWithoutPage, page: pageParam }
-      const url = makeUrlFromParams(queryEndpoint, params)
-      const response = await api.get(url) // NOTE: 실제 쿼리는 in ready를 사용함
-      return response.data as LecturesResponseData
-    },
+    queryFn: async ({ pageParam }) =>
+      getLecturesByPage(paramsWithoutPage, pageParam),
     initialPageParam: 1,
+    // page는 pageParam으로 받은 응답입니다.
+    // 지금 상황에선 const lagePage = {previous, next, results, ...} 입니다
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.next ? lastPageParam + 1 : null,
   })
 
   useEffect(() => {
+    // data의 초깃값은 undefined입니다. 이는 무시합니다
     if (!data) {
       return
     }
-    debugger
+
+    // NOTE: 캐시로 받는 데이터는 페이지별로 구분된 이중 배열로 들어가 있습니다.
+    // NOTE: 그리고 이는 data.pages에 저장되어 있습니다
+    // NOTE: data.pages = [ [{...}, {...}], [{...}, {...}], [{...}, {...}] ]
     const lectureArray = data.pages.reduce((acc: Lecture[], page) => {
       return [...acc, ...page.results]
     }, [])

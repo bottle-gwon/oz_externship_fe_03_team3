@@ -5,7 +5,7 @@ import Button from '@/components/commonInGeneral/button/Button'
 const FruitContent = () => {
   const { fruitPost, fruitPut } = useFruit()
 
-  //NOTE: mutate을 할 땐 {body, newOne}을 .mutate의 전달인자로 넣습니다
+  //NOTE: mutate을 할 땐 {data, newOne}을 .mutate의 전달인자로 넣습니다
   return (
     <Vstack>
       <Button

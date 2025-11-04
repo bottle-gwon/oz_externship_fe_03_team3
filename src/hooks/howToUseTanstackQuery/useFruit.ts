@@ -48,10 +48,11 @@ const useFruitQuery = () => {
 }
 
 const useFruitMutation = () => {
-  // NOTE: 캐시된 fruitArray의 type과 새로 추가할 fruit의 타입을 적습니다
-  const fruitPost = useSimpleMutation<string[], string>({
+  const fruitPost = useSimpleMutation({
     queryEndpoint,
-    mutationFnWithData: (body) => api.post('/fruit', body),
+    mutationFnWithData: (data) => api.post('/fruit', data),
+    // NOTE: previous는 이전에 저장된 캐시이며, 이는 이전 useQuery 응답으로 받은 data와 같습니다
+    // NOTE: newOne은 업데이트해야 하는 lecture, recruit, recruitDetail 등의 객체입니다
     updateCacheForUi: (previous: string[], newOne: string) => [
       ...previous,
       newOne,
@@ -66,9 +67,9 @@ const useFruitMutation = () => {
   })
 
   // NOTE: 요청마다 커스텀 후크를 만듭니다
-  const fruitPut = useSimpleMutation<string[], string>({
+  const fruitPut = useSimpleMutation({
     queryEndpoint,
-    mutationFnWithData: (body) => api.post('/fruit/5', body),
+    mutationFnWithData: (data) => api.post('/fruit/5', data),
     updateCacheForUi: (previous: string[], newOne: string) =>
       previous.map((fruit, index) => (index === 5 ? newOne : fruit)),
   })
@@ -76,6 +77,13 @@ const useFruitMutation = () => {
   return { fruitPost, fruitPut }
 }
 
+// NOTE: useFruitQuery와 useFruitMutation을 각각의 파일로 만들고 각각 따로 호출할 수도 있습니다
+// NOTE: useMuataion을 사용해 캐시를 조작할 땐 해당 캐시를 받아올 수 있는 useFruitQuery가 해당 화면에 호출되어 있어야 합니다
+//
+// NOTE: LecturePage       ---- useLecturesQuery 호출 <----|
+// NOTE: |- LectureContent ---- useLecturesMutation 호출---| 캐시 조작 요청
+//
+// NOTE: 이런 상황이라면 둘을 별개 파일로 나눠도 괜찮습니다
 const useFruit = () => {
   const useFruitQueryReturns = useFruitQuery()
   const useFruitMutationReturns = useFruitMutation()
