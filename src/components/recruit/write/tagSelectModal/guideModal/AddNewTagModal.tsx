@@ -19,7 +19,7 @@ const AddNewTagModal = ({
 
   const Content =
     'message' in response
-      ? `${response.added_tags[0]}태그가 성공적으로 추가 되었습니다.`
+      ? `'${response.added_tags[0]}' 태그가 성공적으로 추가 되었습니다.`
       : response?.detail || '알 수 없는 에러 발생'
 
   return (

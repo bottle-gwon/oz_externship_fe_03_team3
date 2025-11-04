@@ -2,13 +2,26 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import TagSearch from './feat/TagSearch'
 import TagSelection from './feat/TagSelection'
 import TagList from './feat/TagList'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, useCallback, useEffect, useRef, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
-import AddTagErrorModal from './guideModal/AddTagErrorModal'
 import { useAddNewTag, useSearchTag } from '@/hooks/tag/useTag'
 import { AxiosError } from 'axios'
+import type { TagApiFail, TagApiSuccess } from '@/types'
+
+const TagSelectErrorModal = lazy(
+  () =>
+    import(
+      '@/components/recruit/write/tagSelectModal/guideModal/TagSelectErrorModal'
+    )
+)
+const AddNewTagModal = lazy(
+  () =>
+    import(
+      '@/components/recruit/write/tagSelectModal/guideModal/AddNewTagModal'
+    )
+)
 
 interface TagSelectModal {
   isOn: boolean
@@ -37,8 +50,17 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   // const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
   // const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
   const [newSelectTagArray, setNewSelectTagArray] = useState<string[]>([])
+
+  // 태그 추가 에러 모달
   const [isErrorModalOn, setIsErrorModalOn] = useState(false)
   const [errorMessage, setErrorMessage] = useState<string>('')
+  const [errorTitle, setErrorTitle] = useState<string>('')
+
+  // 태그 추가 결과 모달
+  const [isNewTagModalOn, setIsNewTagModalOn] = useState(false)
+  const [newTagModalResponse, setNewTagModalResponse] = useState<
+    TagApiSuccess | TagApiFail
+  >({ detail: '' })
 
   // 검색 로딩, 페이지네이팅 로딩을 구분 하기 위해 생성
   // 어떤 값이 달라지는지 비교해서 로딩 구분
@@ -116,6 +138,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   // 임시 태그 변경 함수
   // 새로운 태그 추가 부분은 서버로 요청 보내야해서 중복이라고 출력 되는 부분은 임시 로직입니다.
   const onClickTag = async (newName: string, isAdd: boolean = false) => {
+    // 신규 태그 추가
     if (isAdd) {
       // if (
       //   !newSelectTagArray.includes(newName) &&
@@ -128,8 +151,11 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
       //   setErrorMessage(newName)
       // }
       try {
-        await addTag(newName)
-        // console.log(response)
+        const response = await addTag(newName)
+
+        //성공시
+        setNewTagModalResponse(response)
+
         // 추가된 태그 자동으로 선택
         if (
           !newSelectTagArray.includes(newName) &&
@@ -137,13 +163,18 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         ) {
           setNewSelectTagArray([...newSelectTagArray, newName])
         }
-      } catch (error) {
-        if (error instanceof AxiosError && error?.status === 409) {
-          // console.error('이미 있는 값')   //임시 에러처리
+      } catch (e) {
+        if (e instanceof AxiosError && e?.status === 409) {
+          setNewTagModalResponse(e?.response?.data)
         } else {
-          // console.error(String(error))  //임시 알 수 없는 에러
+          setNewTagModalResponse({ detail: `알 수 없는 에러 ${e}` })
         }
+      } finally {
+        // 결과 모달 출력
+        setIsNewTagModalOn(true)
       }
+
+      // 태그 클릭 추가/제거
     } else {
       if (newSelectTagArray.includes(newName)) {
         setNewSelectTagArray(newSelectTagArray.filter((tag) => tag !== newName))
@@ -176,12 +207,13 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     // setCurrent(1)
   }, [])
 
-  // 임시 에러 처리
+  // 태그 검색, 페이지네이팅, 데이터 불러오기 오류
   useEffect(() => {
     // 에러 발생
     if (isError && !isErrorModalOn) {
       setIsErrorModalOn(true)
-      // 지금 가이드 모달을 사용중이라 제대로 뜨지 않을겁니다.
+
+      setErrorTitle(error?.name || '알 수 없는 에러')
       setErrorMessage(
         '불러오는중에 에러가 발생' + error?.message || '알 수 없는 에러'
       )
@@ -253,10 +285,16 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
           </Hstack>
         </Modal.Footer>
       </Modal>
-      <AddTagErrorModal
+      <AddNewTagModal
+        isOn={isNewTagModalOn}
+        setIsOn={setIsNewTagModalOn}
+        response={newTagModalResponse}
+      />
+      <TagSelectErrorModal
         isOn={isErrorModalOn}
         setIsOn={setIsErrorModalOn}
-        tag={errorMessage}
+        title={errorTitle}
+        detail={errorMessage}
       />
     </>
   )
