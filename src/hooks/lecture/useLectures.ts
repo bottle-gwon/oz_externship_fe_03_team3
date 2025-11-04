@@ -27,6 +27,8 @@ const useLecturesQuery = () => {
   const [params, setParams] = useState<object | null>(null)
   const url = makeUrlFromParams(queryEndpoint, params ?? {})
 
+  // const isEnabled = Boolean(params) && ()
+
   const { data, isPending, error } = useQuery({
     queryKey: [
       queryEndpoint,
@@ -66,9 +68,8 @@ const useLecturesQuery = () => {
     }
 
     // NOTE: data.next가 https가 아닌 http를 줘서 엔드포인트만 골라냅니다
-    const nextUrl = data.next
-      ? data.next.slice(data.next?.indexOf('/lecture'))
-      : null
+    const index = data.next?.indexOf('/lectures')
+    const nextUrl = data.next && index !== -1 ? data.next.slice(index) : null
 
     // NOTE: lecture store에 nextUrlInKey 바꿀 수 있는 함수 저장
     // NOTE: 해당 함수 호출 -> nextUrlInKey 바뀜 -> queryKey 바뀜 -> 새로 쿼리 요
