@@ -24,30 +24,34 @@ const useLecturesQuery = () => {
   const setRequestNextPage = useLectureStore(
     (state) => state.setRequestNextPage
   )
-  const params = {
-    page_size: 12,
-    search: debounceValue,
-    category: selectedCategory,
-    ordering: textToLectureOrdering[selectedOrderingInText],
-  }
-  const url = makeUrlFromParams(queryEndpoint, params)
+  const [params, setParams] = useState<object | null>(null)
+  const url = makeUrlFromParams(queryEndpoint, params ?? {})
 
   const { data, isPending, error } = useQuery({
     queryKey: [
       queryEndpoint,
       // NOTE: parmas 바로 넣으면 안 되는 이유.... 뭐지? 이렇게 하면 되긴 하나?
-      { debounceValue, selectedCategory, selectedOrderingInText },
-      nextUrlInKey,
+      // NOTE: 상태로 넣어야 effect function 내부의 순서 따를 수 있다
+      params,
+      nextUrlInKey, // NOTE: key는 쿼리 트리거에만 사용됨
     ],
     queryFn: async () => {
-      const response = await api.get(nextUrlInKey ?? url)
+      const response = await api.get(nextUrlInReady ?? url) // NOTE: 실제 쿼리는 in ready를 사용함
       return response.data as LecturesResponseData
     },
+    enabled: Boolean(params),
   })
 
   useEffect(() => {
     // NOTE: 새로 검색할 것이니 다음 url 삭제
     setNextUrlInReady(null)
+
+    setParams({
+      page_size: 12,
+      search: debounceValue,
+      category: selectedCategory,
+      ordering: textToLectureOrdering[selectedOrderingInText],
+    })
   }, [debounceValue, selectedCategory, selectedOrderingInText])
 
   useEffect(() => {
