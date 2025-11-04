@@ -1,31 +1,12 @@
 import { Folder } from 'lucide-react'
 import Select from '../commonInGeneral/select/Select'
-import { dummyLectureArray } from './dummyLectureArray'
 import useLectureStore from '@/store/lecture/lectureStore'
-
-const calcCategoryArray = () => {
-  const categoryRecords = dummyLectureArray.reduce((outerAcc, lecture) => {
-    const dict = lecture.categories.reduce(
-      (innerAcc: Record<number, string>, category) => {
-        innerAcc[category.id] = category.name
-        return innerAcc
-      },
-      {}
-    )
-
-    const newOuterAcc = { ...outerAcc, ...dict }
-    return newOuterAcc
-  }, {})
-
-  const categoryArray = Object.values(categoryRecords).sort() as string[]
-  return categoryArray
-}
 
 const LectureCategorySelect = () => {
   const setSelectedCategory = useLectureStore(
     (state) => state.setSelectedCategory
   )
-  const categoryArray = calcCategoryArray()
+  const categoryArray: string[] = []
   // TODO: API 연결하면 calc... 와 교체하기
 
   const handleOptionSelect = (option: string | number) => {

@@ -6,6 +6,7 @@ export interface LectureCategory {
 }
 
 export interface Lecture {
+  id: number
   uuid: string
   title: string
   instructor: string
@@ -14,7 +15,7 @@ export interface Lecture {
   difficulty: Difficulty
   original_price: number
   discount_price: number
-  platform: 'inflearn' | 'udemy'
+  platform: 'INFLEARN' | 'UDEMY'
   average_rating: number
   duration: number
   url_link: string
