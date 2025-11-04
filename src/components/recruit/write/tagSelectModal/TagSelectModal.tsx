@@ -11,11 +11,8 @@ import { AxiosError } from 'axios'
 import type { TagApiFail, TagApiSuccess } from '@/types'
 import NewTagSpin from './loading/NewTagSpin'
 
-const TagSelectErrorModal = lazy(
-  () =>
-    import(
-      '@/components/recruit/write/tagSelectModal/guideModal/TagSelectErrorModal'
-    )
+const ErrorModal = lazy(
+  () => import('@/components/commonInGeneral/modal/errorModal/ErrorModal')
 )
 const AddNewTagModal = lazy(
   () =>
@@ -288,7 +285,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         setIsOn={setIsNewTagModalOn}
         response={newTagModalResponse}
       />
-      <TagSelectErrorModal
+      <ErrorModal
         isOn={isErrorModalOn}
         setIsOn={setIsErrorModalOn}
         title={errorTitle}

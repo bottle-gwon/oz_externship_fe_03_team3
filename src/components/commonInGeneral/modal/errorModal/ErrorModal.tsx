@@ -1,19 +1,22 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import checkHavingKorean from '@/utils/koreanCheck'
 
-interface TagSelectErrorModalInterface {
+interface ErrorModalInterface {
   isOn: boolean
   setIsOn: React.Dispatch<React.SetStateAction<boolean>>
   title: string
   detail: string
 }
 
-const TagSelectErrorModal = ({
-  isOn,
-  setIsOn,
-  title,
-  detail,
-}: TagSelectErrorModalInterface) => {
+const ErrorModal = ({ isOn, setIsOn, title, detail }: ErrorModalInterface) => {
+  const errorTitle = checkHavingKorean(title)
+    ? title
+    : `정의 되지 않은 에러 / ${title}`
+  const errorDetail = checkHavingKorean(title)
+    ? detail
+    : `정의 되지 않은 에러 / ${detail}`
+
   return (
     <ConfirmationModal
       isOn={isOn}
@@ -22,12 +25,13 @@ const TagSelectErrorModal = ({
       }}
     >
       <ConfirmationModal.Title>
-        <h4>{title || '알 수 없는 에러'}</h4>
+        <h4>{errorTitle}</h4>
       </ConfirmationModal.Title>
 
       <ConfirmationModal.Content>
-        <p>{detail || '알 수 없는 에러'}</p>
+        <p>{errorDetail}</p>
       </ConfirmationModal.Content>
+
       <ConfirmationModal.ButtonSection>
         <Button onClick={() => setIsOn(false)}>확인</Button>
       </ConfirmationModal.ButtonSection>
@@ -35,4 +39,4 @@ const TagSelectErrorModal = ({
   )
 }
 
-export default TagSelectErrorModal
+export default ErrorModal
