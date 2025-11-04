@@ -3,7 +3,7 @@ import useRecruitStore from '@/store/recruit/recruitStore'
 import type { RecruitsResponseData } from '@/types'
 import { textToRecruitOrdering } from '@/utils/simpleMaps'
 import { keepPreviousData, useQuery } from '@tanstack/react-query'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 
 const recruitsQueryEndpoint = '/recruitments'
 
@@ -23,17 +23,26 @@ const useRecruitsQuery = () => {
   )
   const [params, setParams] = useState<object | null>(null)
 
+  const totalPagesRef = useRef(1)
+
   const { data, isPending, error } = useQuery({
     queryKey: [recruitsQueryEndpoint, params, page],
     queryFn: async () => {
       const response = await api.get<RecruitsResponseData>(
         recruitsQueryEndpoint,
-        { params }
+        { params: { ...params, page } }
       )
       return response.data as RecruitsResponseData
     },
     placeholderData: keepPreviousData,
+    enabled: Boolean(params),
   })
+
+  const requestNextPage = useCallback(() => {
+    if (page < totalPagesRef.current) {
+      setPage((prev) => prev + 1)
+    }
+  }, [])
 
   useEffect(() => {
     setPage(1)
@@ -45,28 +54,25 @@ const useRecruitsQuery = () => {
     })
   }, [debounceValue, selectedTag, selectedArrangementInText])
 
+  // 데이터가 변결될 때 recruitArray 업데이트
   useEffect(() => {
     if (!data) {
       return
     }
+
+    // 전체 페이지 수 계산
+    totalPagesRef.current = Math.ceil(data.total_count / data.page_size)
 
     if (data.page > 1) {
       appendRecruitArray(data.results)
     } else {
       setRecruitArray(data.results)
     }
+  }, [data, appendRecruitArray, setRecruitArray])
 
-    // 전체 페이지 수 계산
-    const totalPages = Math.ceil(data.total_count / data.page_size)
-
-    const requestNextPage = () => {
-      if (page < totalPages) {
-        setPage((prev) => prev + 1)
-      }
-    }
-
+  useEffect(() => {
     setRequestNextPage(requestNextPage)
-  }, [page, data, appendRecruitArray, setRecruitArray, setRequestNextPage])
+  }, [requestNextPage, setRequestNextPage])
 
   return {
     data,

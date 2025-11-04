@@ -22,7 +22,11 @@ const RecruitContent = () => {
   )
   const isSearching = useRecruitStore((state) => state.isSearching)
   const { data } = useRecruits()
-  // const requestNextPage = useRecruitStore((state) => state.requestNextPage)
+  const requestNextPage = useRecruitStore((state) => state.requestNextPage)
+
+  const handleLoadeMore = () => {
+    requestNextPage()
+  }
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
@@ -66,6 +70,7 @@ const RecruitContent = () => {
                 status="enabled"
                 size="lg"
                 className="mb-oz-xxl"
+                onClick={handleLoadeMore}
               >
                 + 더 많은 공고 보기
               </Button>
