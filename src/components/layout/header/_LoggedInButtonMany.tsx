@@ -5,7 +5,7 @@ import { Bell } from 'lucide-react'
 import type { Me } from '@/types'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
-import Notification from './notification/Notification'
+import NotificationBox from './notification/Notification'
 
 const ProfileButton = ({ me }: { me: Me }) => {
   const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
@@ -58,7 +58,7 @@ const NotificationButton = () => {
         </Button>
       </Dropdown.Trigger>
       <Dropdown.Content>
-        <Notification />
+        <NotificationBox />
       </Dropdown.Content>
     </Dropdown>
   )
