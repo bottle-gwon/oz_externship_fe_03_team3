@@ -1,8 +1,7 @@
-import api from '@/api/api'
 import RecruitDetailContent from '@/components/recruit/detail/RecruitDetailContent'
 import RecruitDetailSkeleton from '@/components/recruit/detail/RecruitDetailSkeleton'
+import useRecruitDetailQuery from '@/hooks/recruitDetail/useRecruitDetailQuery'
 import useStudyHubStore from '@/store/store'
-import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router'
 
 const RecruitDetailPage = () => {
@@ -10,11 +9,7 @@ const RecruitDetailPage = () => {
   const params = useParams()
   const recruitId = Number(params.recruitId)
 
-  const endpoint = `/recruitments/${recruitId}/`
-  const { data, isPending, error } = useQuery({
-    queryKey: [endpoint],
-    queryFn: async () => (await api.get(endpoint)).data,
-  })
+  const { data, isPending, error } = useRecruitDetailQuery(recruitId)
 
   if (isPending) {
     return <RecruitDetailSkeleton />

@@ -100,7 +100,7 @@ const RecruitDetailContent = ({
                     }
                     size="lg"
                     shape="square"
-                    color={recruitDetail.is_bookmarked ? 'blue' : 'mono'}
+                    color={recruitDetail.is_bookmarked ? 'primary' : 'mono'}
                   >
                     <Bookmark />
                   </Button>
