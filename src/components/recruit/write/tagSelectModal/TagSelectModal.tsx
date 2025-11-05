@@ -59,12 +59,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   >({ detail: '' })
 
   const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
-  const addCurrentTagArray = useStudyHubStore(
-    (state) => state.addCurrentTagArray
-  )
-  const deleteCurrentTagArray = useStudyHubStore(
-    (state) => state.deleteCurrentTagArray
-  )
+
   const setCurrentTagArray = useStudyHubStore(
     (state) => state.setCurrentTagArray
   )
@@ -143,36 +138,9 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     onClose(false)
   }
 
-  // 임시 태그 변경 함수
-  // 새로운 태그 추가 부분은 서버로 요청 보내야해서 중복이라고 출력 되는 부분은 임시 로직입니다.
-  const onClickTag = async (newName: string, isAdd: boolean = false) => {
-    // 신규 태그 추가
-    if (isAdd) {
-      // if (
-      //   !newSelectTagArray.includes(newName) &&
-      //   newSelectTagArray.length < 5
-      // ) {
-      //   setNewSelectTagArray([...newSelectTagArray, newName])
-      // } else {
-      //   // 응답에서 중복 메시지를 받았다고 가정
-      //   setIsErrorModalOn(true)
-      //   setErrorMessage(newName)
-      // }
-
-      addTag(newName)
-
-      // 태그 클릭 추가/제거
-    } else {
-      if (currentTagArray.includes(newName)) {
-        deleteCurrentTagArray(newName)
-      } else if (currentTagArray.length < 5) {
-        addCurrentTagArray(newName)
-      }
-    }
-  }
-  // 임시 제거 함수
-  const onClickDeleteTag = (tagName: string) => {
-    deleteCurrentTagArray(tagName)
+  // 태그 추가
+  const onAddTag = (newName: string) => {
+    addTag(newName)
   }
 
   // 검색 함수
@@ -240,14 +208,12 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         </Modal.Header>
         <Modal.Body>
           <TagSearch onSearch={onSearchTag} />
-          {currentTagArray.length !== 0 && (
-            <TagSelection onDeleteTag={onClickDeleteTag} />
-          )}
+          {currentTagArray.length !== 0 && <TagSelection />}
           <TagList
             responseData={responseData}
             page={current} // 페이지 네이션 테스트
             onPageChange={handlePageChange}
-            onSelectTag={onClickTag}
+            onAddTag={onAddTag}
             keyword={searchKeyword}
             isLoading={isPending}
             isPaginating={isPaginatingLoading}

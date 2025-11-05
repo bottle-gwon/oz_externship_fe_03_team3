@@ -1,13 +1,28 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
+import useStudyHubStore from '@/store/store'
 import { Check } from 'lucide-react'
 
 interface TagCard {
   name: string
   isChecked: boolean
-  onClickTag: (newname: string) => void
 }
 
-const TagCard = ({ name, isChecked, onClickTag }: TagCard) => {
+const TagCard = ({ name, isChecked }: TagCard) => {
+  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const deleteCurrentTagArray = useStudyHubStore(
+    (state) => state.deleteCurrentTagArray
+  )
+  const addCurrentTagArray = useStudyHubStore(
+    (state) => state.addCurrentTagArray
+  )
+
+  const onClickTag = (tagName: string) => {
+    if (currentTagArray.includes(tagName)) {
+      deleteCurrentTagArray(tagName)
+    } else if (currentTagArray.length < 5) {
+      addCurrentTagArray(tagName)
+    }
+  }
   return (
     <div
       className={`h-[50px] w-[624px] cursor-pointer rounded-sm border border-gray-200 ${isChecked && 'border-[#eab308] bg-[#fefce8]'}`}
