@@ -8,6 +8,8 @@ const LecturePage = () => {
   const { isPending, error } = useLecturesQuery()
 
   if (isPending && lectureArray.length === 0) {
+    // NOTE: 채팅창 스켈레톤 버그를 확인할 땐 아래 주석을 해제해주세요
+    // debugger
     return <LectureSkeleton />
   }
 

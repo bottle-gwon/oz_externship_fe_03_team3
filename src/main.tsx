@@ -7,6 +7,7 @@ import NotFoundPage from './pages/errors/NotFoundPage'
 import Layout from './pages/layout/Layout'
 import { QueryClientProvider } from '@tanstack/react-query'
 import queryClient from './lib/tanstackQueryClient'
+// NOTE: 스켈레톤은 lazy로 임포트하지 말고 평범하게 임포트 해주세요
 import LectureSkeleton from './components/lecture/LectureSkeleton'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
@@ -53,6 +54,7 @@ const routeArray = [
   {
     path: '/lecture',
     element: <LecturePage />,
+    // NOTE: 스켈레톤은 lazy로 임포트하지 말고 평범하게 임포트 해주세요
     fallback: <LectureSkeleton />,
   },
 ]
