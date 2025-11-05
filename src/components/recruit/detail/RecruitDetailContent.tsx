@@ -25,6 +25,8 @@ import MDEditor from '@uiw/react-md-editor'
 import RDAttachmentCard from './_RDAttachmentCard'
 import useStudyHubStore from '@/store/store'
 import ApplicationModalPage from '@/pages/recruit/ApplicationModalPage'
+import RDTitle from './_RDTitle'
+import RDBookmarkButton from './_RDBookmarkButton'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
@@ -68,42 +70,13 @@ const RecruitDetailContent = ({
           <RoundBox padding="xxl">
             <Vstack gap="lg">
               <Hstack>
-                <Vstack>
-                  <h1 className="text-3xl font-bold">{recruitDetail.title}</h1>
-                  <Hstack className="flex-wrap">
-                    <Hstack>
-                      <UserRound />
-                      작성자: {recruitDetail.author_nickname}
-                    </Hstack>
-                    <Hstack>
-                      <Calendar />
-                      등록일: {recruitDetail.created_at}
-                    </Hstack>
-                    <Hstack>
-                      <Eye />
-                      조회: {recruitDetail.views}
-                    </Hstack>
-                    <Hstack>
-                      <Bookmark />
-                      북마크: {recruitDetail.bookmark_count}
-                    </Hstack>
-                  </Hstack>
-                </Vstack>
+                <RDTitle recruitDetail={recruitDetail} />
 
                 <Hstack className="shrink-0">
                   <Button variant="outlined" size="lg" shape="square">
                     <Share2 />
                   </Button>
-                  <Button
-                    variant={
-                      recruitDetail.is_bookmarked ? 'contained' : 'outlined'
-                    }
-                    size="lg"
-                    shape="square"
-                    color={recruitDetail.is_bookmarked ? 'primary' : 'mono'}
-                  >
-                    <Bookmark />
-                  </Button>
+                  <RDBookmarkButton recruitDetail={recruitDetail} />
                   <RDConditionalButton isMine={isMine} />
                 </Hstack>
               </Hstack>
@@ -144,10 +117,7 @@ const RecruitDetailContent = ({
 
           <RoundBox padding="xl">
             <Hstack>
-              <Button variant="outlined" size="lg">
-                <Bookmark size={16} />
-                북마크
-              </Button>
+              <RDBookmarkButton recruitDetail={recruitDetail} isWide />
               <Button variant="outlined" size="lg">
                 <Share2 size={16} />
                 공유하기
