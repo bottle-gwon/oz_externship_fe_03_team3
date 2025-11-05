@@ -3,47 +3,55 @@ import type { Lecture } from '@/types'
 import Button from '@/components/commonInGeneral/button/Button'
 import useLecturesMutation from '@/hooks/lecture/useLecturesMutation'
 import useDebounceToggle from '@/hooks/useDebounceToggle'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
+import { Vstack } from '@/components/commonInGeneral/layout'
 
 const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
-  const [isBookmarked, setIsBookmarked] = useState(lecture.is_bookmarked)
-
-  const debouncedIsBookmarked = useDebounceToggle(isBookmarked)
+  const { debouncedBoolValue, realTimeBoolValue, toggleBoolValue } =
+    useDebounceToggle(lecture.is_bookmarked)
   const { postBookmarkMutation, deleteBookmarkMutation } = useLecturesMutation()
 
   useEffect(() => {
+    // NOTE: 아주 중요합니다
+    if (lecture.is_bookmarked === debouncedBoolValue) {
+      return
+    }
+
     const newOne: Lecture = {
       ...lecture,
       is_bookmarked: !lecture.is_bookmarked,
     }
 
-    if (debouncedIsBookmarked) {
-      deleteBookmarkMutation.mutate({ data: lecture, newOne })
+    if (debouncedBoolValue) {
+      postBookmarkMutation.mutate({ data: lecture, newOne })
       return
     }
 
-    postBookmarkMutation.mutate({ data: lecture, newOne })
-  }, [debouncedIsBookmarked])
-  useEffect(() => {
-    setIsBookmarked(lecture.is_bookmarked)
-  }, [lecture.is_bookmarked])
+    deleteBookmarkMutation.mutate({ data: lecture, newOne })
 
-  const handleClick = () => setIsBookmarked((prev) => !prev)
+    // NOTE: lecture 포함하면 무한 렌더링 발생
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedBoolValue])
 
   return (
-    <Button
-      shape="circle"
-      onClick={handleClick}
-      className={lecture.is_bookmarked ? 'opacity-90' : ''}
-    >
-      <Bookmark
-        color={lecture.is_bookmarked ? 'var(--color-primary-400)' : undefined}
-        fill={
-          lecture.is_bookmarked ? 'var(--color-primary-400)' : 'transparent'
-        }
-        className="transition"
-      />
-    </Button>
+    <>
+      <Button
+        shape="circle"
+        onClick={toggleBoolValue}
+        className={realTimeBoolValue ? 'opacity-90' : ''}
+      >
+        <Bookmark
+          color={realTimeBoolValue ? 'var(--color-primary-400)' : undefined}
+          fill={realTimeBoolValue ? 'var(--color-primary-400)' : 'transparent'}
+          className="transition"
+        />
+      </Button>
+      <Vstack>
+        <p>debounced: {JSON.stringify(debouncedBoolValue)}</p>
+        <p>real time: {JSON.stringify(realTimeBoolValue)}</p>
+        <p>initial: {JSON.stringify(lecture.is_bookmarked)}</p>
+      </Vstack>
+    </>
   )
 }
 
