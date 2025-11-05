@@ -90,6 +90,16 @@ const TestApiPage = () => {
           </TitledRoundBox>
 
           <TitledRoundBox>
+            <TitledRoundBox.Title>Recruitments</TitledRoundBox.Title>
+            <Button onClick={() => api.get('/recruitments/')}>
+              GET /recruitments/
+            </Button>
+            <Button onClick={() => api.get('/recruitments/1/')}>
+              GET /recruitments/1/
+            </Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
             <TitledRoundBox.Title>익스프레스 헬스</TitledRoundBox.Title>
             <Button onClick={() => api.get('/')}>GET /</Button>
             <Button onClick={() => api.get('/health')}>GET /health</Button>
