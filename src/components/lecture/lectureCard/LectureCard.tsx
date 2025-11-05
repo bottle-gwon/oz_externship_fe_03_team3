@@ -39,7 +39,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
           {lecture.instructor}
         </Text>
         <Text className="pb-3" color="mono" isMuted>
-          누락된 것: 1. 강의 설명 2. 리뷰 개수 3. 북마크 여부
+          누락된 것: 1. 강의 설명--코치님께 문의해야
         </Text>
         <ReviewSummary
           average_rating={lecture.average_rating}
