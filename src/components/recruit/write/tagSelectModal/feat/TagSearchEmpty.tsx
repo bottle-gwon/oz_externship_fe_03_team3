@@ -2,6 +2,7 @@ import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import TagIcon from '@/assets/tag.svg'
+import useStudyHubStore from '@/store/store'
 
 interface TagEmpty {
   keyword: string
@@ -9,6 +10,9 @@ interface TagEmpty {
 }
 
 const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
+  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const status = currentTagArray.includes(keyword) ? 'disabled' : 'enabled'
+
   return (
     <Vstack
       gap="lg"
@@ -31,8 +35,9 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
             </p>
           </Vstack>
           <Button
+            status={status}
             onClick={() => onClickAddTag(keyword, true)}
-            className="bg-primary-500 hover:bg-primary-600 active:bg-primary-700 cursor-pointer text-white hover:text-white active:text-white"
+            className="bg-primary-500 hover:bg-primary-600 active:bg-primary-700 disabled:bg-primary-500 !disabled:opacity-50 cursor-pointer text-white hover:text-white active:text-white disabled:text-white"
           >
             <span>새로 등록하기</span>
           </Button>
