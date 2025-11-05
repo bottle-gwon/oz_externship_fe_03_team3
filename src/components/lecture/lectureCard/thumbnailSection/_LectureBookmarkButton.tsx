@@ -34,24 +34,17 @@ const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
   }, [debouncedBoolValue])
 
   return (
-    <>
-      <Button
-        shape="circle"
-        onClick={toggleBoolValue}
-        className={realTimeBoolValue ? 'opacity-90' : ''}
-      >
-        <Bookmark
-          color={realTimeBoolValue ? 'var(--color-primary-400)' : undefined}
-          fill={realTimeBoolValue ? 'var(--color-primary-400)' : 'transparent'}
-          className="transition"
-        />
-      </Button>
-      <Vstack>
-        <p>debounced: {JSON.stringify(debouncedBoolValue)}</p>
-        <p>real time: {JSON.stringify(realTimeBoolValue)}</p>
-        <p>initial: {JSON.stringify(lecture.is_bookmarked)}</p>
-      </Vstack>
-    </>
+    <Button
+      shape="circle"
+      onClick={toggleBoolValue}
+      className={realTimeBoolValue ? 'opacity-90' : ''}
+    >
+      <Bookmark
+        color={realTimeBoolValue ? 'var(--color-primary-400)' : undefined}
+        fill={realTimeBoolValue ? 'var(--color-primary-400)' : 'transparent'}
+        className="transition"
+      />
+    </Button>
   )
 }
 
