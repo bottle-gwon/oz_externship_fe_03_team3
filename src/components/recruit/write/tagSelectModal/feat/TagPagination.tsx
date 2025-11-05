@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight } from 'lucide-react'
 import type { TagPaginationInterface } from './TagList'
 import { useMemo } from 'react'
 import { Hstack } from '@/components/commonInGeneral/layout'
+import Button from '@/components/commonInGeneral/button/Button'
 
 const TagPagination = ({
   currentPage, // 현재 페이지
@@ -42,36 +43,48 @@ const TagPagination = ({
     )
   }, [totalPage, currentPage, maxPage])
 
+  const leftCursorStatus = currentPage === 1 ? 'disabled' : 'enabled'
+  const rightCusorStatus = currentPage === totalPage ? 'disabled' : 'enabled'
+
   return (
     <Hstack gap="sm" className="items-center justify-center">
       {/* 이전 버튼 */}
-      <button
-        className="size-10 cursor-pointer rounded-md border border-gray-300 px-2.5 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
-        disabled={currentPage === 1}
+      <Button
+        color="primary"
+        shape="square"
+        size="md"
+        status={leftCursorStatus}
         onClick={() => onPageChange(currentPage - 1)}
+        className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:cursor-not-allowed disabled:bg-white disabled:!text-black"
       >
         <ChevronLeft className="size-4" />
-      </button>
+      </Button>
 
       {/* 페이지 번호 출력 부분 */}
       {pageNumbers.map((number) => (
-        <button
+        <Button
           key={number}
-          className={`size-10 cursor-pointer rounded-md border border-gray-300 px-2.5 py-0 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white ${currentPage === number ? 'bg-[#eab308] text-white' : 'bg-white'} `}
+          color="primary"
+          shape="square"
+          size="md"
           onClick={() => onPageChange(number)}
+          className={`bg-white !text-black hover:!text-white active:!text-white disabled:cursor-not-allowed disabled:bg-white disabled:!text-black ${currentPage === number ? '!bg-primary-500 !text-white' : 'border border-gray-300 bg-white'}`}
         >
-          <span className="size-4">{number}</span>
-        </button>
+          <span className="size-6 text-base">{number}</span>
+        </Button>
       ))}
 
       {/* 다음 버튼 */}
-      <button
-        className="size-10 cursor-pointer rounded-md border border-gray-300 px-3 py-2 hover:bg-[#ca8a04] hover:text-white active:bg-[#a16207] active:text-white disabled:cursor-not-allowed disabled:border-gray-200 disabled:bg-white disabled:text-[rgb(128,128,128)]"
-        disabled={currentPage === totalPage}
+      <Button
+        color="primary"
+        shape="square"
+        size="md"
+        status={rightCusorStatus}
         onClick={() => onPageChange(currentPage + 1)}
+        className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:cursor-not-allowed disabled:bg-white disabled:!text-black"
       >
         <ChevronRight className="size-4" />
-      </button>
+      </Button>
     </Hstack>
   )
 }
