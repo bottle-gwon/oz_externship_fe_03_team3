@@ -6,6 +6,12 @@ import {
   useQuery,
   useQueryClient,
 } from '@tanstack/react-query'
+import type { AxiosError } from 'axios'
+
+interface addTagParam {
+  onOptimisticSelect: (newTagName: string) => void
+  onOptimisticRollBack: (newTagName: string) => void
+}
 
 const queryEndpoint = '/recruitments/tags'
 
@@ -46,17 +52,26 @@ export const useSearchTag = (params: TagApiSearchParam) => {
 
 // 태그추가
 // 이 부분 백엔드에서 수정중인것 같아서 향후 추가
-export const useAddNewTag = () => {
+export const useAddNewTag = (funcOption: addTagParam) => {
   const queryClient = useQueryClient()
 
   return useMutation({
     mutationFn: postNewTag,
+
+    onMutate: (newTag: string) => {
+      funcOption.onOptimisticSelect(newTag)
+    },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryEndpoint] })
     },
-    onError: () => {
-      //에러 처리
-      // console.error(e)
+    onError: (error: AxiosError, newTag) => {
+      // 롤백
+      if (!(error.response?.status === 409)) {
+        funcOption.onOptimisticRollBack(newTag)
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: [queryEndpoint] })
     },
   })
 }
