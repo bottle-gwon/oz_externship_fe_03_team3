@@ -1,3 +1,4 @@
+import UsersThreeIcon from '@/assets/UsersThreeIcon'
 import { Vstack } from '../../../components/commonInGeneral/layout'
 import Container from '../../../components/commonInGeneral/layout/_Container'
 import Button from '@/components/commonInGeneral/button/Button'
@@ -17,6 +18,10 @@ const ThepottTestPage = () => {
           <p>bool value: {JSON.stringify(realTimeBoolValue)}</p>
           <p>debounced bool value: {JSON.stringify(debouncedBoolValue)}</p>
           <Button onClick={toggleBoolValue}>토글</Button>
+        </TitledRoundBox>
+        <TitledRoundBox>
+          <TitledRoundBox.Title>아이콘 테스트</TitledRoundBox.Title>
+          <UsersThreeIcon className="size-10 text-red-400" />
         </TitledRoundBox>
       </Vstack>
     </Container>

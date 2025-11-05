@@ -37,3 +37,5 @@ export type TextareaProps = React.DetailedHTMLProps<
 >
 
 export type RequestMethod = 'get' | 'post' | 'put' | 'delete' | 'patch'
+
+export type SvgProps = React.SVGProps<SVGSVGElement>
