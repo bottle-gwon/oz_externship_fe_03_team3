@@ -18,13 +18,13 @@ const typeToBg: Record<NotificationType, string> = {
 const NotificationIcon = ({ type }: { type: NotificationType }) => {
   return (
     <div
-      className={`${typeToBg[type]} h-8 w-8 rounded-full bg-amber-500`}
+      className={`${typeToBg[type]} h-8 max-w-8 min-w-8 rounded-full bg-amber-500`}
     ></div>
   )
 }
 
 const NotificationUnreadDot = () => {
-  return <div className="bg-primary-500 h-2 w-2 rounded-full" />
+  return <div className="bg-primary-500 h-2 w-2 min-w-2 rounded-full" />
 }
 
 const NotificationCard = ({ notification }: { notification: Notification }) => {
