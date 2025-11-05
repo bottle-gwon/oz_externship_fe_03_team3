@@ -5,6 +5,9 @@ import useStudyHubStore from '@/store/store'
 
 const TagSelection = () => {
   const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const deleteCurrentTagArray = useStudyHubStore(
+    (state) => state.deleteCurrentTagArray
+  )
   if (!currentTagArray || !Array.isArray(currentTagArray)) {
     return
   }
@@ -18,7 +21,11 @@ const TagSelection = () => {
       <Container>
         <Hstack>
           {currentTagArray.map((el, i) => (
-            <TagSelected key={el + i} tag={el} />
+            <TagSelected
+              key={el + i}
+              tag={el}
+              onDeleteTag={deleteCurrentTagArray}
+            />
           ))}
         </Hstack>
       </Container>
