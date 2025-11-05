@@ -9,7 +9,6 @@ import useStudyHubStore from '@/store/store'
 import { useAddNewTag, useSearchTag } from '@/hooks/tag/useTag'
 import { AxiosError } from 'axios'
 import type { TagApiFail, TagApiSuccess } from '@/types'
-import NewTagSpin from './loading/NewTagSpin'
 
 const ErrorModal = lazy(
   () => import('@/components/commonInGeneral/modal/errorModal/ErrorModal')
@@ -70,6 +69,17 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   // 아래 주석은 api 연결시 사용 합니다.
   const param = { keyword: searchKeyword, page: current }
 
+  // 낙관적 업데이트 관련 함수
+  const onOptimisticSelect = (newTag: string) => {
+    if (!newSelectTagArray.includes(newTag) && newSelectTagArray.length < 5) {
+      setNewSelectTagArray([...newSelectTagArray, newTag])
+    }
+  }
+
+  const onOptimisticRollBack = (newTag: string) => {
+    setNewSelectTagArray(newSelectTagArray.filter((tag) => tag !== newTag))
+  }
+
   // isFetching은 페이지 네이팅 할때 사용
   // isPending은 데모용으로 사용중이라 추후 api 나오면 추가
   // data는 api 연결할때 responseData로 재정의
@@ -81,7 +91,14 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     isFetching,
   } = useSearchTag(param)
 
-  const { isPending: isAddTagPending, mutateAsync: addTag } = useAddNewTag()
+  const {
+    mutate: addTag,
+    isError: isAddError,
+    error: addError,
+  } = useAddNewTag({
+    onOptimisticSelect: onOptimisticSelect,
+    onOptimisticRollBack: onOptimisticRollBack,
+  })
 
   // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
@@ -145,27 +162,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
       //   setIsErrorModalOn(true)
       //   setErrorMessage(newName)
       // }
-      try {
-        setIsNewTagModalOn(true)
-        const response = await addTag(newName)
 
-        //성공시
-        setNewTagModalResponse(response)
-
-        // 추가된 태그 자동으로 선택
-        if (
-          !newSelectTagArray.includes(newName) &&
-          newSelectTagArray.length < 5
-        ) {
-          setNewSelectTagArray([...newSelectTagArray, newName])
-        }
-      } catch (e) {
-        if (e instanceof AxiosError && e?.status === 409) {
-          setNewTagModalResponse(e?.response?.data)
-        } else {
-          setNewTagModalResponse({ detail: `알 수 없는 에러 ${e}` })
-        }
-      }
+      addTag(newName)
 
       // 태그 클릭 추가/제거
     } else {
@@ -214,6 +212,20 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, error])
+
+  // 태그 추가 에러 처리
+  useEffect(() => {
+    if (isAddError && !isNewTagModalOn) {
+      setIsNewTagModalOn(true)
+
+      if (!(addError instanceof AxiosError && addError?.status === 409)) {
+        setIsNewTagModalOn(true)
+        setNewTagModalResponse({ detail: `알 수 없는 에러 ${addError}` })
+      }
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isAddError, addError])
 
   // 검색 로딩
   const isSearchLoading =
@@ -282,7 +294,6 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         isOn={isNewTagModalOn}
         setIsOn={setIsNewTagModalOn}
         response={newTagModalResponse}
-        isPending={isAddTagPending}
       />
       <ErrorModal
         isOn={isErrorModalOn}
@@ -290,7 +301,6 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         title={errorTitle}
         detail={errorMessage}
       />
-      {isAddTagPending && <NewTagSpin />}
     </>
   )
 }

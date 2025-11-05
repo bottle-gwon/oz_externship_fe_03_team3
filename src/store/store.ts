@@ -49,6 +49,9 @@ const useStudyHubStore = create<StudyHubState>()(
       selectedTagArray: [],
       setSelectedTagArray: (selectedTagArray) => set({ selectedTagArray }),
 
+      previousTagArray: [],
+      setPreviousTagArray: (previousTagArray) => set({ previousTagArray }),
+
       editingRecruit: null,
       setEditingRecruit: (editingRecruit) => set({ editingRecruit }),
 
