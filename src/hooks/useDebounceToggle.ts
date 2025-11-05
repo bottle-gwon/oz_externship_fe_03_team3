@@ -9,7 +9,7 @@ const useDebounceToggle = (boolValue: boolean, delay: number = 500) => {
     return () => clearTimeout(timeout)
   }, [boolValue, delay])
 
-  return { debouncedBoolValue }
+  return debouncedBoolValue
 }
 
 export default useDebounceToggle
