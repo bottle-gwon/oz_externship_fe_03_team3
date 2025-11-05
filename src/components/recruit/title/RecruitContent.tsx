@@ -11,7 +11,7 @@ import RecruitTagSelect from './_RecruitTagSelect'
 import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
 import RecruitArrangementSelect from './_RecruitOrderingSelect'
 import useRecruitStore from '@/store/recruit/recruitStore'
-import useRecruits from '@/hooks/recruit/title/useRecruits'
+import useRecruits from '@/hooks/recruit/title/useRecruitsQuery'
 
 const RecruitContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
@@ -21,12 +21,8 @@ const RecruitContent = () => {
     (state) => state.recommendedRecruitArray
   )
   const isSearching = useRecruitStore((state) => state.isSearching)
-  const { data } = useRecruits()
+  const { hasNextPage, totalCount } = useRecruits()
   const requestNextPage = useRecruitStore((state) => state.requestNextPage)
-
-  const handleLoadeMore = () => {
-    requestNextPage()
-  }
 
   return (
     <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
@@ -55,7 +51,7 @@ const RecruitContent = () => {
 
         <Vstack gap="none">
           <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
-            전체 공고({data?.total_count ?? 0})
+            전체 공고({totalCount})
           </Vstack>
           {isSearching && recruitArray.length === 0 && <NoSearchResult />}
           {recruitArray.length > 0 && (
@@ -65,15 +61,17 @@ const RecruitContent = () => {
                   <RecruitCard key={recruit.uuid} recruit={recruit} />
                 ))}
               </Vstack>
-              <Button
-                variant="contained"
-                status="enabled"
-                size="lg"
-                className="mb-oz-xxl"
-                onClick={handleLoadeMore}
-              >
-                + 더 많은 공고 보기
-              </Button>
+              {hasNextPage && (
+                <Button
+                  variant="contained"
+                  status="enabled"
+                  size="lg"
+                  className="mb-oz-xxl"
+                  onClick={requestNextPage}
+                >
+                  + 더 많은 공고 보기
+                </Button>
+              )}
             </Vstack>
           )}
         </Vstack>
