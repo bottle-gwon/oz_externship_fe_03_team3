@@ -45,7 +45,7 @@ const LectureContent = () => {
       />
 
       <Vstack className="px-oz-xxl gap-oz-xxl">
-        <RoundBox>
+        <RoundBox padding="xl">
           <GridContainer className="gap-oz-lg">
             <LectureSearchInput />
 
