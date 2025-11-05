@@ -30,7 +30,7 @@ interface TagListInterface {
   responseData: TagApiResponse
   page: number
   onPageChange: pageChange
-  onSelectTag: tagSelect
+  onAddTag: tagSelect
   keyword: string //검색 키워드
   isLoading: boolean //로딩중
   // isFetching: boolean // 페이지네이팅 로딩
@@ -42,7 +42,7 @@ const TagList = ({
   responseData,
   page,
   onPageChange,
-  onSelectTag,
+  onAddTag,
   keyword,
   isLoading,
   isPaginating,
@@ -69,7 +69,7 @@ const TagList = ({
 
   // 검색 결과 없음 새로운 태그 추가
   if (responseData.total_count === 0) {
-    return <TagSearchEmpty keyword={keyword} onClickAddTag={onSelectTag} />
+    return <TagSearchEmpty keyword={keyword} onClickAddTag={onAddTag} />
   }
 
   return (
@@ -89,7 +89,6 @@ const TagList = ({
               key={el.id + el.name}
               name={el.name}
               isChecked={currentTagArray.includes(el.name)}
-              onClickTag={onSelectTag}
             />
           ))}
         </Vstack>

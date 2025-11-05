@@ -6,7 +6,7 @@ import useStudyHubStore from '@/store/store'
 
 interface TagEmpty {
   keyword: string
-  onClickAddTag: (newTag: string, isAdd: boolean) => void
+  onClickAddTag: (newTag: string) => void
 }
 
 const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
@@ -36,7 +36,7 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
           </Vstack>
           <Button
             status={status}
-            onClick={() => onClickAddTag(keyword, true)}
+            onClick={() => onClickAddTag(keyword)}
             color="primary"
           >
             새로 등록하기

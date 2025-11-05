@@ -1,13 +1,17 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import useStudyHubStore from '@/store/store'
 import { X } from 'lucide-react'
 
 interface TagSelection {
   tag: string
-  onDeleteTag: (tagName: string) => void
 }
 
-const TagSelected = ({ tag, onDeleteTag }: TagSelection) => {
+const TagSelected = ({ tag }: TagSelection) => {
+  const deleteCurrentTagArray = useStudyHubStore(
+    (state) => state.deleteCurrentTagArray
+  )
+
   return (
     <RoundBox
       color="primary"
@@ -18,7 +22,10 @@ const TagSelected = ({ tag, onDeleteTag }: TagSelection) => {
     >
       <Hstack gap="sm" className="h-full w-full items-center justify-center">
         <span>{tag}</span>
-        <button onClick={() => onDeleteTag(tag)} className="cursor-pointer">
+        <button
+          onClick={() => deleteCurrentTagArray(tag)}
+          className="cursor-pointer"
+        >
           <X className="size-4" />
         </button>
       </Hstack>
