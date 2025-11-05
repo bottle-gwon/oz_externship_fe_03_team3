@@ -30,7 +30,6 @@ const RecruitContent = () => {
       <RecommendSection
         type="recruit"
         isLoggedIn={isLoggedIn}
-        // recommendedArray={dummyRecruitArray.slice(0, 3)}
         recommendedArray={recommendedRecruitArray}
       />
       <Vstack gap="xxl" className="px-oz-xxl w-full">

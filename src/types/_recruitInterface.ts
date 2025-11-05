@@ -23,6 +23,10 @@ export interface Recruit {
   updated_at: string
 }
 
+export interface RecruitWithAuth extends Recruit {
+  is_bookmarked: boolean
+}
+
 export interface RecruitmentQueryParams {
   keyword?: string
   tag?: string
@@ -31,6 +35,14 @@ export interface RecruitmentQueryParams {
   ordering?: 'created_at' | 'views' | 'bookmarks'
   page?: number
   page_size?: number
+}
+
+export interface RecruitmentsListResponseWithAuth extends RecruitsResponseData {
+  recommendations: RecruitWithAuth[]
+  results: RecruitWithAuth[]
+  page: number
+  page_size: number
+  total_count: number
 }
 
 export interface RecruitsResponseData {
