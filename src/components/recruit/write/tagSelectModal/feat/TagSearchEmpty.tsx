@@ -37,9 +37,9 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
           <Button
             status={status}
             onClick={() => onClickAddTag(keyword, true)}
-            className="bg-primary-500 hover:bg-primary-600 active:bg-primary-700 disabled:bg-primary-500 !disabled:opacity-50 cursor-pointer text-white hover:text-white active:text-white disabled:text-white"
+            color="primary"
           >
-            <span>새로 등록하기</span>
+            새로 등록하기
           </Button>
         </Hstack>
       </RoundBox>
