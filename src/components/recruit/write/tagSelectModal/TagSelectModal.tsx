@@ -60,6 +60,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
 
+  const setTagSearch = useStudyHubStore((state) => state.setTagSearch)
+
   const setCurrentTagArray = useStudyHubStore(
     (state) => state.setCurrentTagArray
   )
@@ -129,11 +131,13 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   const handleClose = () => {
     // 초기화 후 닫기
     setCurrentTagArray(selectedTagArray)
+    setTagSearch('')
     onClose(false)
   }
 
   const onClickAddTag = () => {
     setSelectedTagArray(currentTagArray)
+    setTagSearch('')
     // 닫기
     onClose(false)
   }
@@ -141,6 +145,9 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   // 태그 추가
   const onAddTag = (newName: string) => {
     addTag(newName)
+    setSearchKeyword('')
+    setTagSearch('')
+    setCurrent(1)
   }
 
   // 검색 함수

@@ -1,16 +1,19 @@
 import Input from '@/components/commonInGeneral/inputFamily/input/Input'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import useDebounce from '@/hooks/useDebounce'
+import useStudyHubStore from '@/store/store'
 import { Search } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 
 interface search {
   onSearch: (tagName: string) => void
 }
 
 const TagSearch = ({ onSearch }: search) => {
-  const [searchText, setSearchText] = useState('')
-  const [devounceValue, cancel] = useDebounce(searchText, 500)
+  const tagSearch = useStudyHubStore((state) => state.tagSearch)
+  const setTagSearch = useStudyHubStore((state) => state.setTagSearch)
+
+  const [devounceValue, cancel] = useDebounce(tagSearch, 500)
 
   useEffect(() => {
     onSearch(devounceValue)
@@ -20,12 +23,12 @@ const TagSearch = ({ onSearch }: search) => {
     if (e.key === 'Enter') {
       cancel() //디바운스 취소 후 검색
 
-      onSearch(searchText)
+      onSearch(tagSearch)
     }
   }
 
   const handleKeywordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value.trim())
+    setTagSearch(e.target.value.trim())
   }
 
   return (
@@ -34,6 +37,7 @@ const TagSearch = ({ onSearch }: search) => {
         icon={<Search className="size-4 text-gray-400" />}
         className="h-[50px] w-[624px]"
         placeholder="태그명으로 검색..."
+        value={tagSearch}
         onKeyDown={handleKeydownEnter}
         onChange={handleKeywordChange}
       />

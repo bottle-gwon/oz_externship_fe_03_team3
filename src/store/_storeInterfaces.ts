@@ -53,6 +53,8 @@ export interface StudyHubState {
   setCurrentTagArray: (currentTagArray: string[]) => void
   addCurrentTagArray: (tag: string) => void
   deleteCurrentTagArray: (tag: string) => void
+  tagSearch: string
+  setTagSearch: (tagSearch: string) => void
 
   editingRecruit: RecruitDetail | null
   setEditingRecruit: (editingRecruit: RecruitDetail | null) => void
