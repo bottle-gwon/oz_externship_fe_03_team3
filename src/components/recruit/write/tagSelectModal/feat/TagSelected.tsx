@@ -1,6 +1,5 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-import useStudyHubStore from '@/store/store'
 import { X } from 'lucide-react'
 
 interface TagSelection {
