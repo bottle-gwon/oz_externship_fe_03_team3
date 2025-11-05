@@ -49,8 +49,24 @@ const useStudyHubStore = create<StudyHubState>()(
       selectedTagArray: [],
       setSelectedTagArray: (selectedTagArray) => set({ selectedTagArray }),
 
-      previousTagArray: [],
-      setPreviousTagArray: (previousTagArray) => set({ previousTagArray }),
+      currentTagArray: [],
+      setCurrentTagArray: (currentTagArray) => set({ currentTagArray }),
+      deleteCurrentTagArray: (tag: string) => {
+        const state = get()
+        const prevArray = state.currentTagArray
+
+        if (prevArray.includes(tag)) {
+          set({ currentTagArray: prevArray.filter((prev) => prev !== tag) })
+        }
+      },
+      addCurrentTagArray: (tag: string) => {
+        const state = get()
+        const prevArray = state.currentTagArray
+
+        if (prevArray.length < 5 && !prevArray.includes(tag)) {
+          set({ currentTagArray: [...prevArray, tag] })
+        }
+      },
 
       editingRecruit: null,
       setEditingRecruit: (editingRecruit) => set({ editingRecruit }),

@@ -46,7 +46,6 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   const [current, setCurrent] = useState(1) // 현재 페이지
   // const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
   // const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
-  const [newSelectTagArray, setNewSelectTagArray] = useState<string[]>([])
 
   // 태그 추가 에러 모달
   const [isErrorModalOn, setIsErrorModalOn] = useState(false)
@@ -59,6 +58,17 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     TagApiSuccess | TagApiFail
   >({ detail: '' })
 
+  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const addCurrentTagArray = useStudyHubStore(
+    (state) => state.addCurrentTagArray
+  )
+  const deleteCurrentTagArray = useStudyHubStore(
+    (state) => state.deleteCurrentTagArray
+  )
+  const setCurrentTagArray = useStudyHubStore(
+    (state) => state.setCurrentTagArray
+  )
+
   // 검색 로딩, 페이지네이팅 로딩을 구분 하기 위해 생성
   // 어떤 값이 달라지는지 비교해서 로딩 구분
   const lastFetchParams = useRef({
@@ -68,17 +78,6 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   // 아래 주석은 api 연결시 사용 합니다.
   const param = { keyword: searchKeyword, page: current }
-
-  // 낙관적 업데이트 관련 함수
-  const onOptimisticSelect = (newTag: string) => {
-    if (!newSelectTagArray.includes(newTag) && newSelectTagArray.length < 5) {
-      setNewSelectTagArray([...newSelectTagArray, newTag])
-    }
-  }
-
-  const onOptimisticRollBack = (newTag: string) => {
-    setNewSelectTagArray(newSelectTagArray.filter((tag) => tag !== newTag))
-  }
 
   // isFetching은 페이지 네이팅 할때 사용
   // isPending은 데모용으로 사용중이라 추후 api 나오면 추가
@@ -95,10 +94,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     mutate: addTag,
     isError: isAddError,
     error: addError,
-  } = useAddNewTag({
-    onOptimisticSelect: onOptimisticSelect,
-    onOptimisticRollBack: onOptimisticRollBack,
-  })
+  } = useAddNewTag()
 
   // const timerRef = useRef<NodeJS.Timeout | null>(null)
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
@@ -106,8 +102,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     (state) => state.setSelectedTagArray
   )
   useEffect(() => {
-    setNewSelectTagArray(selectedTagArray)
-  }, [selectedTagArray])
+    setCurrentTagArray(selectedTagArray)
+  }, [selectedTagArray, setCurrentTagArray])
 
   useEffect(() => {
     if (responseData) {
@@ -137,12 +133,12 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   const handleClose = () => {
     // 초기화 후 닫기
-    setNewSelectTagArray(selectedTagArray)
+    setCurrentTagArray(selectedTagArray)
     onClose(false)
   }
 
   const onClickAddTag = () => {
-    setSelectedTagArray(newSelectTagArray)
+    setSelectedTagArray(currentTagArray)
     // 닫기
     onClose(false)
   }
@@ -167,18 +163,16 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
       // 태그 클릭 추가/제거
     } else {
-      if (newSelectTagArray.includes(newName)) {
-        setNewSelectTagArray(newSelectTagArray.filter((tag) => tag !== newName))
-      } else if (newSelectTagArray.length < 5) {
-        setNewSelectTagArray([...newSelectTagArray, newName])
+      if (currentTagArray.includes(newName)) {
+        deleteCurrentTagArray(newName)
+      } else if (currentTagArray.length < 5) {
+        addCurrentTagArray(newName)
       }
     }
   }
   // 임시 제거 함수
   const onClickDeleteTag = (tagName: string) => {
-    if (newSelectTagArray.includes(tagName)) {
-      setNewSelectTagArray(newSelectTagArray.filter((tag) => tag !== tagName))
-    }
+    deleteCurrentTagArray(tagName)
   }
 
   // 검색 함수
@@ -216,8 +210,6 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   // 태그 추가 에러 처리
   useEffect(() => {
     if (isAddError && !isNewTagModalOn) {
-      setIsNewTagModalOn(true)
-
       if (!(addError instanceof AxiosError && addError?.status === 409)) {
         setIsNewTagModalOn(true)
         setNewTagModalResponse({ detail: `알 수 없는 에러 ${addError}` })
@@ -243,23 +235,19 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         <Modal.Header>
           <Vstack gap="xs">
             <h2 className="text-lg font-semibold">태그 선택</h2>
-            <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${newSelectTagArray.length}/5)`}</p>
+            <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${currentTagArray.length}/5)`}</p>
           </Vstack>
         </Modal.Header>
         <Modal.Body>
           <TagSearch onSearch={onSearchTag} />
-          {newSelectTagArray.length !== 0 && (
-            <TagSelection
-              tagArray={newSelectTagArray}
-              onDeleteTag={onClickDeleteTag}
-            />
+          {currentTagArray.length !== 0 && (
+            <TagSelection onDeleteTag={onClickDeleteTag} />
           )}
           <TagList
             responseData={responseData}
             page={current} // 페이지 네이션 테스트
             onPageChange={handlePageChange}
             onSelectTag={onClickTag}
-            selectArray={newSelectTagArray}
             keyword={searchKeyword}
             isLoading={isPending}
             isPaginating={isPaginatingLoading}
@@ -268,7 +256,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         </Modal.Body>
         <Modal.Footer>
           <Hstack className="items-center justify-between">
-            <p className="text-sm text-gray-600">{`${newSelectTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${newSelectTagArray.length}개 태그 선택됨`}`}</p>
+            <p className="text-sm text-gray-600">{`${currentTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${currentTagArray.length}개 태그 선택됨`}`}</p>
             <Hstack>
               <Button
                 color="mono"
