@@ -4,7 +4,6 @@ import Button from '@/components/commonInGeneral/button/Button'
 import useLecturesMutation from '@/hooks/lecture/useLecturesMutation'
 import useDebounceToggle from '@/hooks/useDebounceToggle'
 import { useEffect } from 'react'
-import { Vstack } from '@/components/commonInGeneral/layout'
 
 const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
   const { debouncedBoolValue, realTimeBoolValue, toggleBoolValue } =
