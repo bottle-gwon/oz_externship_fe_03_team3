@@ -8,6 +8,7 @@ import { useState } from 'react'
 const ThepottTestPage = () => {
   const [boolValue, setBoolValue] = useState(false)
   const { debouncedBoolValue } = useDebounceToggle(boolValue)
+
   return (
     <Container width="md" isPadded>
       <Vstack gap="xxl">

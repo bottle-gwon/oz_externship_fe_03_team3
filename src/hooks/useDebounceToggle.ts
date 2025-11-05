@@ -1,12 +1,13 @@
 import { useEffect, useState } from 'react'
 
-const useDebounceToggle = (boolValue: boolean) => {
+// NOTE: delay를 설정하지 않으면 500ms로 지정됩니다
+const useDebounceToggle = (boolValue: boolean, delay: number = 500) => {
   const [debouncedBoolValue, setDebouncedBoolValue] = useState(false)
 
   useEffect(() => {
-    const timeout = setTimeout(() => setDebouncedBoolValue(!boolValue), 500)
+    const timeout = setTimeout(() => setDebouncedBoolValue(!boolValue), delay)
     return () => clearTimeout(timeout)
-  }, [boolValue])
+  }, [boolValue, delay])
 
   return { debouncedBoolValue }
 }
