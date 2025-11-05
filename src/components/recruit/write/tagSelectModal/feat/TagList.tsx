@@ -5,6 +5,7 @@ import type { TagApiResponse } from '@/types'
 import TagSearchEmpty from './TagSearchEmpty'
 import TagSkeleton from '../skeleton/TagSkeleton'
 import TagPaginationSkeleton from '../skeleton/TagPaginationSkeleton'
+import useStudyHubStore from '@/store/store'
 
 // 페이지 네이션 타입
 type pageChange = (newPage: number) => void
@@ -30,7 +31,6 @@ interface TagListInterface {
   page: number
   onPageChange: pageChange
   onSelectTag: tagSelect
-  selectArray: string[]
   keyword: string //검색 키워드
   isLoading: boolean //로딩중
   // isFetching: boolean // 페이지네이팅 로딩
@@ -43,12 +43,13 @@ const TagList = ({
   page,
   onPageChange,
   onSelectTag,
-  selectArray,
   keyword,
   isLoading,
   isPaginating,
   isSearching,
 }: TagListInterface) => {
+  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+
   if (!responseData || !page) {
     return
   }
@@ -87,7 +88,7 @@ const TagList = ({
             <TagCard
               key={el.id + el.name}
               name={el.name}
-              isChecked={selectArray.includes(el.name)}
+              isChecked={currentTagArray.includes(el.name)}
               onClickTag={onSelectTag}
             />
           ))}
