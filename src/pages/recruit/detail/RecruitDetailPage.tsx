@@ -1,31 +1,33 @@
-import dummyRecruitDetailResponse from '@/components/recruit/detail/_dummyRecruitDetailResponse'
+import api from '@/api/api'
 import RecruitDetailContent from '@/components/recruit/detail/RecruitDetailContent'
 import RecruitDetailSkeleton from '@/components/recruit/detail/RecruitDetailSkeleton'
 import useStudyHubStore from '@/store/store'
+import { useQuery } from '@tanstack/react-query'
+import { useParams } from 'react-router'
 
 const RecruitDetailPage = () => {
   const me = useStudyHubStore((state) => state.me)
-  // TODO: 실제 api 연결에는 url parameter를 사용해야 합니다
-  // const params = useParams()
-  // const recuitId = Number(params.recruitId)
+  const params = useParams()
+  const recruitId = Number(params.recruitId)
 
-  // TODO: api 연결하면 api로 받아오고 이걸 삭제해야 함
-  const recruitDetail = dummyRecruitDetailResponse
-  const dummyIsPending = false
-  // ---- 여기까지
+  const endpoint = `/recruitments/${recruitId}/`
+  const { data, isPending, error } = useQuery({
+    queryKey: [endpoint],
+    queryFn: async () => (await api.get(endpoint)).data,
+  })
 
-  const isMine = me && me.nickname === recruitDetail.author_nickname
-
-  if (dummyIsPending) {
+  if (isPending) {
     return <RecruitDetailSkeleton />
   }
 
-  return (
-    <RecruitDetailContent
-      recruitDetail={recruitDetail}
-      isMine={isMine ?? false}
-    />
-  )
+  if (error) {
+    return (
+      <p>오류가 나면 이게 보입니다. 여기를 대체할 컴포넌트를 만들어야 합니다</p>
+    )
+  }
+
+  const isMine = me && me.nickname === data.author
+  return <RecruitDetailContent recruitDetail={data} isMine={isMine ?? false} />
 }
 
 export default RecruitDetailPage
