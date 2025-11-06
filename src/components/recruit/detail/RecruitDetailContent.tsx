@@ -10,15 +10,7 @@ import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
 import Tag from '@/components/commonInProject/tag/Tag'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import type { RecruitDetail } from '@/types'
-import {
-  Bookmark,
-  Calendar,
-  Eye,
-  ScrollText,
-  Send,
-  Share2,
-  UserRound,
-} from 'lucide-react'
+import { ScrollText, Send, Share2 } from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
 import RWLectureCard from './_RDLectureCard'
 import MDEditor from '@uiw/react-md-editor'
