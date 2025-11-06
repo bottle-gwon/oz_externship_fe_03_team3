@@ -1,13 +1,11 @@
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import TagSelected from './TagSelected'
 import Container from '@/components/commonInGeneral/layout/_Container'
-import useStudyHubStore from '@/store/store'
+import useTagStore from '@/store/tag/tagStore'
 
 const TagSelection = () => {
-  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
-  const deleteCurrentTagArray = useStudyHubStore(
-    (state) => state.deleteCurrentTagArray
-  )
+  const currentTagArray = useTagStore((state) => state.currentTagArray)
+
   if (!currentTagArray || !Array.isArray(currentTagArray)) {
     return
   }
@@ -21,11 +19,7 @@ const TagSelection = () => {
       <Container>
         <Hstack>
           {currentTagArray.map((el, i) => (
-            <TagSelected
-              key={el + i}
-              tag={el}
-              onDeleteTag={deleteCurrentTagArray}
-            />
+            <TagSelected key={el + i} tag={el} />
           ))}
         </Hstack>
       </Container>

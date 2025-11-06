@@ -1,7 +1,7 @@
 import Input from '@/components/commonInGeneral/inputFamily/input/Input'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import useDebounce from '@/hooks/useDebounce'
-import useStudyHubStore from '@/store/store'
+import useTagStore from '@/store/tag/tagStore'
 import { Search } from 'lucide-react'
 import { useEffect } from 'react'
 
@@ -10,8 +10,8 @@ interface search {
 }
 
 const TagSearch = ({ onSearch }: search) => {
-  const tagSearch = useStudyHubStore((state) => state.tagSearch)
-  const setTagSearch = useStudyHubStore((state) => state.setTagSearch)
+  const tagSearch = useTagStore((state) => state.tagSearch)
+  const setTagSearch = useTagStore((state) => state.setTagSearch)
 
   const [devounceValue, cancel] = useDebounce(tagSearch, 500)
 

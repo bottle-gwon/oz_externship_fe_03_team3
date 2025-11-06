@@ -1,5 +1,5 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
-import useStudyHubStore from '@/store/store'
+import useTagStore from '@/store/tag/tagStore'
 import { Check } from 'lucide-react'
 
 interface TagCard {
@@ -8,13 +8,11 @@ interface TagCard {
 }
 
 const TagCard = ({ name, isChecked }: TagCard) => {
-  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
-  const deleteCurrentTagArray = useStudyHubStore(
+  const currentTagArray = useTagStore((state) => state.currentTagArray)
+  const deleteCurrentTagArray = useTagStore(
     (state) => state.deleteCurrentTagArray
   )
-  const addCurrentTagArray = useStudyHubStore(
-    (state) => state.addCurrentTagArray
-  )
+  const addCurrentTagArray = useTagStore((state) => state.addCurrentTagArray)
 
   const onClickTag = (tagName: string) => {
     if (currentTagArray.includes(tagName)) {

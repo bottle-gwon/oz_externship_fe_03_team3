@@ -9,6 +9,7 @@ import useStudyHubStore from '@/store/store'
 import { useAddNewTag, useSearchTag } from '@/hooks/tag/useTag'
 import { AxiosError } from 'axios'
 import type { TagApiFail, TagApiSuccess } from '@/types'
+import useTagStore from '@/store/tag/tagStore'
 
 const ErrorModal = lazy(
   () => import('@/components/commonInGeneral/modal/errorModal/ErrorModal')
@@ -58,13 +59,11 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     TagApiSuccess | TagApiFail
   >({ detail: '' })
 
-  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const currentTagArray = useTagStore((state) => state.currentTagArray)
 
-  const setTagSearch = useStudyHubStore((state) => state.setTagSearch)
+  const setTagSearch = useTagStore((state) => state.setTagSearch)
 
-  const setCurrentTagArray = useStudyHubStore(
-    (state) => state.setCurrentTagArray
-  )
+  const setCurrentTagArray = useTagStore((state) => state.setCurrentTagArray)
 
   // 검색 로딩, 페이지네이팅 로딩을 구분 하기 위해 생성
   // 어떤 값이 달라지는지 비교해서 로딩 구분

@@ -49,13 +49,6 @@ export interface StudyHubState {
   selectedTagArray: string[]
   setSelectedTagArray: (selectedTagArray: string[]) => void
 
-  currentTagArray: string[]
-  setCurrentTagArray: (currentTagArray: string[]) => void
-  addCurrentTagArray: (tag: string) => void
-  deleteCurrentTagArray: (tag: string) => void
-  tagSearch: string
-  setTagSearch: (tagSearch: string) => void
-
   editingRecruit: RecruitDetail | null
   setEditingRecruit: (editingRecruit: RecruitDetail | null) => void
 
