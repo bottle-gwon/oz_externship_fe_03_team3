@@ -2,7 +2,7 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import TagSearch from './feat/TagSearch'
 import TagSelection from './feat/TagSelection'
 import TagList from './feat/TagList'
-import { lazy, useCallback, useEffect, useRef, useState } from 'react'
+import { lazy, useEffect, useMemo, useRef, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
@@ -43,8 +43,6 @@ interface TagSelectModal {
 // 기존 선택 되어 있는 태그, 태그 수정만 내려 받고
 // 요청은 태그 모달에서 직접함
 const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
-  const [searchKeyword, setSearchKeyword] = useState('')
-  const [current, setCurrent] = useState(1) // 현재 페이지
   // const [responseData, setResponseData] = useState(EXAMPLE_DATA) // Todo api 요청 받을때 useEffect 또는 tanstackQuery를 사용해서 입력 받을것
   // const [isPending, setIsPending] = useState(false) //tanstackQuery의 isPending
 
@@ -59,11 +57,24 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     TagApiSuccess | TagApiFail
   >({ detail: '' })
 
+  const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
+  const setSelectedTagArray = useStudyHubStore(
+    (state) => state.setSelectedTagArray
+  )
+
   const currentTagArray = useTagStore((state) => state.currentTagArray)
-
-  const setTagSearch = useTagStore((state) => state.setTagSearch)
-
   const setCurrentTagArray = useTagStore((state) => state.setCurrentTagArray)
+
+  // 검색 스토어
+  const setTagSearchInput = useTagStore((state) => state.setTagSearchInput)
+  const tagSearchKeyword = useTagStore((state) => state.tagSearchKeyword)
+
+  const page = useTagStore((state) => state.page)
+  const setTotalPage = useTagStore((state) => state.setTotalPage)
+
+  // 신규태그 뮤테이트 저장
+  const setAddTagMutation = useTagStore((state) => state.setAddTagMutation)
+  const setTagListLoading = useTagStore((state) => state.setTagListLoading)
 
   // 검색 로딩, 페이지네이팅 로딩을 구분 하기 위해 생성
   // 어떤 값이 달라지는지 비교해서 로딩 구분
@@ -73,7 +84,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   })
 
   // 아래 주석은 api 연결시 사용 합니다.
-  const param = { keyword: searchKeyword, page: current }
+  const param = { keyword: tagSearchKeyword, page: page }
 
   // isFetching은 페이지 네이팅 할때 사용
   // isPending은 데모용으로 사용중이라 추후 api 나오면 추가
@@ -93,22 +104,39 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   } = useAddNewTag()
 
   // const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
-  const setSelectedTagArray = useStudyHubStore(
-    (state) => state.setSelectedTagArray
-  )
+
+  // 뮤테이트 함수 저장
+  useEffect(() => {
+    if (addTag) {
+      setAddTagMutation(addTag)
+    }
+
+    return () => {
+      setAddTagMutation(undefined)
+    }
+  }, [setAddTagMutation, addTag])
+
   useEffect(() => {
     setCurrentTagArray(selectedTagArray)
+    return () => {
+      setCurrentTagArray([])
+    }
   }, [selectedTagArray, setCurrentTagArray])
 
   useEffect(() => {
     if (responseData) {
       lastFetchParams.current = {
-        keyword: searchKeyword,
-        page: current,
+        keyword: tagSearchKeyword,
+        page: page,
       }
     }
-  }, [responseData, searchKeyword, current])
+  }, [responseData, tagSearchKeyword, page])
+
+  useEffect(() => {
+    if (responseData) {
+      setTotalPage(Math.ceil(responseData.total_count / 5))
+    }
+  }, [responseData, setTotalPage])
 
   // 테스트용 로딩
   // useEffect(() => {
@@ -123,48 +151,19 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
   //   }
   // }, [searchKeyword])
 
-  const handlePageChange = (newPage: number) => {
-    setCurrent(newPage)
-  }
-
   const handleClose = () => {
     // 초기화 후 닫기
     setCurrentTagArray(selectedTagArray)
-    setTagSearch('')
+    setTagSearchInput('')
     onClose(false)
   }
 
   const onClickAddTag = () => {
     setSelectedTagArray(currentTagArray)
-    setTagSearch('')
+    setTagSearchInput('')
     // 닫기
     onClose(false)
   }
-
-  // 태그 추가
-  const onAddTag = (newName: string) => {
-    addTag(newName)
-    setSearchKeyword('')
-    setTagSearch('')
-    setCurrent(1)
-  }
-
-  // 검색 함수
-  const onSearchTag = useCallback((tagName: string) => {
-    setSearchKeyword(tagName)
-    setCurrent(1)
-    // if (tagName === '') {
-    //   setResponseData(EXAMPLE_DATA)
-    // }
-    // const filtered = EXAMPLE_DATA.tags.filter((el) => el.name.includes(tagName))
-    // setResponseData((prev) => ({
-    //   ...prev,
-    //   tags: filtered,
-    //   page: 1,
-    //   total_count: filtered.length,
-    // }))
-    // setCurrent(1)
-  }, [])
 
   // 태그 검색, 페이지네이팅, 데이터 불러오기 오류
   useEffect(() => {
@@ -195,13 +194,25 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   // 검색 로딩
   const isSearchLoading =
-    isFetching && searchKeyword !== lastFetchParams.current.keyword
+    isFetching && tagSearchKeyword !== lastFetchParams.current.keyword
 
   // 페이지 네이팅 로딩
   const isPaginatingLoading =
     isFetching &&
-    current !== lastFetchParams.current.page &&
-    searchKeyword === lastFetchParams.current.keyword
+    page !== lastFetchParams.current.page &&
+    tagSearchKeyword === lastFetchParams.current.keyword
+
+  useEffect(() => {
+    if (isPending) {
+      setTagListLoading('pending')
+    } else if (isSearchLoading) {
+      setTagListLoading('searching')
+    } else if (isPaginatingLoading) {
+      setTagListLoading('paginating')
+    } else {
+      setTagListLoading('false')
+    }
+  }, [isPending, setTagListLoading, isSearchLoading, isPaginatingLoading])
 
   return (
     <>
@@ -213,18 +224,9 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
           </Vstack>
         </Modal.Header>
         <Modal.Body>
-          <TagSearch onSearch={onSearchTag} />
+          <TagSearch />
           {currentTagArray.length !== 0 && <TagSelection />}
-          <TagList
-            responseData={responseData}
-            page={current} // 페이지 네이션 테스트
-            onPageChange={handlePageChange}
-            onAddTag={onAddTag}
-            keyword={searchKeyword}
-            isLoading={isPending}
-            isPaginating={isPaginatingLoading}
-            isSearching={isSearchLoading}
-          />
+          <TagList responseData={responseData} />
         </Modal.Body>
         <Modal.Footer>
           <Hstack className="items-center justify-between">

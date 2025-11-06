@@ -4,14 +4,26 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import TagIcon from '@/assets/tag.svg'
 import useTagStore from '@/store/tag/tagStore'
 
-interface TagEmpty {
-  keyword: string
-  onClickAddTag: (newTag: string) => void
-}
-
-const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
+const TagSearchEmpty = () => {
+  const tagSearchKeyword = useTagStore((state) => state.tagSearchKeyword)
   const currentTagArray = useTagStore((state) => state.currentTagArray)
-  const status = currentTagArray.includes(keyword) ? 'disabled' : 'enabled'
+  const addTagMutate = useTagStore((state) => state.addTagMutate)
+  const setTagSearchInput = useTagStore((state) => state.setTagSearchInput)
+  const setTagSearchKeyword = useTagStore((state) => state.setTagSearchKeyword)
+  const setPage = useTagStore((state) => state.setPage)
+
+  const onClickAddTag = (newTag: string) => {
+    if (addTagMutate) {
+      addTagMutate(newTag)
+      setTagSearchInput('')
+      setTagSearchKeyword('')
+      setPage(1)
+    }
+  }
+
+  const status = currentTagArray.includes(tagSearchKeyword)
+    ? 'disabled'
+    : 'enabled'
 
   return (
     <Vstack
@@ -29,14 +41,14 @@ const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
           className="h-full w-full items-center justify-between"
         >
           <Vstack gap="none" className="h-[36px] justify-center">
-            <p className="text-primary-800 text-sm font-medium">{`'${keyword}' 태그를 새로 만드시겠습니까?`}</p>
+            <p className="text-primary-800 text-sm font-medium">{`'${tagSearchKeyword}' 태그를 새로 만드시겠습니까?`}</p>
             <p className="text-primary-600 text-xs">
               검색 결과에 원하는 태그가 없는 경우 새로 등록 할 수 있습니다.
             </p>
           </Vstack>
           <Button
             status={status}
-            onClick={() => onClickAddTag(keyword)}
+            onClick={() => onClickAddTag(tagSearchKeyword)}
             color="primary"
           >
             새로 등록하기
