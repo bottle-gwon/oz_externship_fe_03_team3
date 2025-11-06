@@ -2,7 +2,7 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import TagSearch from './feat/TagSearch'
 import TagSelection from './feat/TagSelection'
 import TagList from './feat/TagList'
-import { lazy, useEffect, useMemo, useRef, useState } from 'react'
+import { lazy, useEffect, useRef, useState } from 'react'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
@@ -223,11 +223,13 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
             <p className="text-sm text-gray-600">{`공고에 추가할 태그를 선택하세요 (${currentTagArray.length}/5)`}</p>
           </Vstack>
         </Modal.Header>
+
         <Modal.Body>
           <TagSearch />
           {currentTagArray.length !== 0 && <TagSelection />}
           <TagList responseData={responseData} />
         </Modal.Body>
+
         <Modal.Footer>
           <Hstack className="items-center justify-between">
             <p className="text-sm text-gray-600">{`${currentTagArray.length === 0 ? '선택된 태그가 없습니다.' : `${currentTagArray.length}개 태그 선택됨`}`}</p>
@@ -252,11 +254,13 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
           </Hstack>
         </Modal.Footer>
       </Modal>
+
       <AddNewTagModal
         isOn={isNewTagModalOn}
         setIsOn={setIsNewTagModalOn}
         response={newTagModalResponse}
       />
+
       <ErrorModal
         isOn={isErrorModalOn}
         setIsOn={setIsErrorModalOn}
