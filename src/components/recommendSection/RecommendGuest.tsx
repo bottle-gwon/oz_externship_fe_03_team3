@@ -26,7 +26,7 @@ const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
   const content = emptyStateContent[type]
 
   return (
-    <Container width="lg" className="px-oz-xxl mb-12">
+    <Container width="lg" className="px-oz-xxl">
       <RoundBox
         color="primary"
         padding="xxl"

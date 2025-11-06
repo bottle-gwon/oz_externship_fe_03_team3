@@ -24,7 +24,7 @@ const RecommendUser = <T extends RecommendPageType>({
     type === 'recruit' ? ` 님을 위한 맟춤 스터디 공고` : ` 님을 위한 추천 강의`
 
   return (
-    <Container width="lg" className="my-6">
+    <Container width="lg">
       <RoundBox
         color="primary"
         isBordered

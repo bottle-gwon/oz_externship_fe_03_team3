@@ -27,45 +27,47 @@ const LectureContent = () => {
 
   return (
     <Container className="py-oz-xxl">
-      <div className="px-oz-xxl">
-        <SubHeader isBackButtonVisible={false} isPadded={false}>
-          <SubHeaderTitleSection>
-            <SubHeader.Title>IT 강의 목록</SubHeader.Title>
-            <SubHeader.Subtitle>
-              전문 강사들의 고품질 IT 강의를 만나보세요
-            </SubHeader.Subtitle>
-          </SubHeaderTitleSection>
-        </SubHeader>
-      </div>
+      <Vstack gap="xxl">
+        <div className="px-oz-xxl">
+          <SubHeader isBackButtonVisible={false} isPadded={false}>
+            <SubHeaderTitleSection>
+              <SubHeader.Title>IT 강의 목록</SubHeader.Title>
+              <SubHeader.Subtitle>
+                전문 강사들의 고품질 IT 강의를 만나보세요
+              </SubHeader.Subtitle>
+            </SubHeaderTitleSection>
+          </SubHeader>
+        </div>
 
-      <RecommendSection
-        type="lecture"
-        isLoggedIn={Boolean(accessToken)}
-        recommendedArray={recommendedLectureArray}
-      />
+        <RecommendSection
+          type="lecture"
+          isLoggedIn={Boolean(accessToken)}
+          recommendedArray={recommendedLectureArray}
+        />
 
-      <Vstack className="px-oz-xxl gap-oz-xxl">
-        <RoundBox padding="xl">
-          <GridContainer className="gap-oz-lg">
-            <LectureSearchInput />
+        <Vstack className="px-oz-xxl gap-oz-xxl">
+          <RoundBox padding="xl">
+            <GridContainer className="gap-oz-lg">
+              <LectureSearchInput />
 
-            <LectureCategorySelect />
+              <LectureCategorySelect />
 
-            <LectureOrderingSelect />
-          </GridContainer>
-        </RoundBox>
+              <LectureOrderingSelect />
+            </GridContainer>
+          </RoundBox>
 
-        {isSearching && lectureArray.length === 0 && <NoSearchResult />}
-        {lectureArray.length > 0 && (
-          <GridContainer className="gap-oz-xl">
-            {lectureArray.map((lecture) => (
-              <LectureCard key={lecture.uuid} lecture={lecture} />
-            ))}
-          </GridContainer>
-        )}
+          {isSearching && lectureArray.length === 0 && <NoSearchResult />}
+          {lectureArray.length > 0 && (
+            <GridContainer className="gap-oz-xl">
+              {lectureArray.map((lecture) => (
+                <LectureCard key={lecture.uuid} lecture={lecture} />
+              ))}
+            </GridContainer>
+          )}
 
-        <div ref={targetRef} />
-        {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
+          <div ref={targetRef} />
+          {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
+        </Vstack>
       </Vstack>
     </Container>
   )
