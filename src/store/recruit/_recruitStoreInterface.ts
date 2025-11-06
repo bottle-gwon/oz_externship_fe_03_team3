@@ -3,7 +3,6 @@ import type { Recruit, RecruitArrangementInText } from '@/types'
 export interface RecruitStoreState {
   recruitArray: Recruit[]
   setRecruitArray: (recruitArray: Recruit[]) => void
-  appendRecruitArray: (recruitArray: Recruit[]) => void
   recommendedRecruitArray: Recruit[]
   setRecommendedRecruitArray: (recommendedRecruitArray: Recruit[]) => void
 

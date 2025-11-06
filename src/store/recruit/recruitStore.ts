@@ -4,11 +4,6 @@ import type { RecruitStoreState } from './_recruitStoreInterface'
 const useRecruitStore = create<RecruitStoreState>()((set, get) => ({
   recruitArray: [],
   setRecruitArray: (recruitArray) => set({ recruitArray }),
-  appendRecruitArray: (recruitArray) => {
-    const prev = get().recruitArray
-    const newRecruitArray = [...prev, ...recruitArray]
-    set({ recruitArray: newRecruitArray })
-  },
   recommendedRecruitArray: [],
   setRecommendedRecruitArray: (recommendedRecruitArray) =>
     set({ recommendedRecruitArray }),

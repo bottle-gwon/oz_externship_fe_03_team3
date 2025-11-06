@@ -1,38 +1,36 @@
 import { GridContainer, Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
-import type { Applicant } from '@/types/_applicantInterface'
 import ApplicantCard from '../applicantCard/ApplicantCard'
 import { useState } from 'react'
 import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
-import type { ApplicantDetail } from '@/types'
-import { dummyApplicantDetail } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantDetail'
 import useStudyHubStore from '@/store/store'
+import useApplicantStore from '@/store/recruit/manageModal/applicantStore'
+import useApplicantsQuery from '@/hooks/manageModal/useApplicantsQuery'
+import type { Recruit } from '@/types'
+import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 
 interface ManageModal {
   isOn: boolean
   onClose: React.Dispatch<React.SetStateAction<boolean>>
-  recruitContent: string
-  applicantArray: Applicant[]
+  recruit: Recruit
 }
 
-// NOTE: 지원 내역 모달을 아래와 같이 수정 부탁드립니다!
-// NOTE: 지원 내역을 열려고 하는 시점에는 해당 공고의 아이디가 몇 번인지만 알고 있는 상황입니다.
-// NOTE: 모달이 켜지면 그 때 api 요청을 보내셔서 지원자 목록을 받아와야 합니다.
-// NOTE: 정리하면 prop으로 recruitId 받음 -> 모달 마운트 -> api 요청 -> 지원자 받아와서 화면 채우기 입니다
-const ManageModal = ({
-  isOn,
-  onClose,
-  recruitContent,
-  applicantArray,
-}: ManageModal) => {
-  const [_selectedApplicantId, setSelectedApplicantId] = useState<
-    number | null
-  >(null) // 선택된 지원자 id, api 연결할때 사용
+const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
+  // 임시 공고 지정
+  recruit = dummyRecruitArray[0]
+
+  const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
+    null
+  )
+
+  const { isPending, count } = useApplicantsQuery(recruit.id)
+  const applicantArray = useApplicantStore((state) => state.applicantArray)
 
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const [applicantDetail, setApplicantDetail] =
-    useState<ApplicantDetail | null>(null)
+
+  if (isPending) {
+  }
 
   const handleClose = () => {
     onClose(false)
@@ -41,7 +39,6 @@ const ManageModal = ({
   const handleCardClick = (applicantId: number) => {
     setSelectedApplicantId(applicantId)
     setModalKeyArray([...modalKeyArray, 'manageDetail'])
-    setApplicantDetail(dummyApplicantDetail)
   }
 
   const onDetailModalClose = () => {
@@ -55,7 +52,7 @@ const ManageModal = ({
         <Modal.Header>
           <Vstack gap="xs">
             <h2 className="text-lg font-semibold">지원현황관리</h2>
-            <p className="text-sm">{`${recruitContent} - 총 ${applicantArray.length}명이 지원했습니다`}</p>
+            <p className="text-sm">{`${recruit.title} - 총 ${count}명이 지원했습니다`}</p>
           </Vstack>
         </Modal.Header>
         <Modal.Body className="overflow-auto">
@@ -78,11 +75,11 @@ const ManageModal = ({
         </Modal.Body>
       </Modal>
 
-      {modalKeyArray.includes('manageDetail') && applicantDetail && (
+      {modalKeyArray.includes('manageDetail') && selectedApplicantId && (
         <ManageDetailModal
           isOn={modalKeyArray.includes('manageDetail')}
           onClose={onDetailModalClose}
-          applicant={applicantDetail}
+          applicantId={selectedApplicantId}
         />
       )}
     </>

@@ -12,3 +12,17 @@ export interface Applicant {
   status: ApplicantStatus
   created_at: string
 }
+
+export interface ApplicantResponseData {
+  count: number
+  next: string | null
+  previous: string | null
+  results: Applicant[]
+}
+
+export interface ApplicantsQueryParams {
+  page?: number
+  limit?: number
+  status?: string
+  order?: string
+}

@@ -3,25 +3,27 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Tag from '@/components/commonInProject/tag/Tag'
-import { experienceStyles, statusStyles, type ApplicantDetail } from '@/types'
+import { experienceStyles, statusStyles } from '@/types'
 import ApplicantDetailCard from './_ApplicantDetailCard'
 import ManageDetailModalButtons from './_ManageDetailModalButtons'
 import ManageDetailConfirmationModal from './_ManageDetailConfirmationModal'
 import useStudyHubStore from '@/store/store'
+import { dummyApplicantDetail } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantDetail'
 
 interface ManageDetailModalProps {
   isOn: boolean
   onClose: () => void
-  applicant: ApplicantDetail
+  applicantId: number | null
 }
 
 const ManageDetailModal = ({
   isOn,
   onClose,
-  applicant,
+  applicantId,
 }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
+  const applicant = dummyApplicantDetail
   const statusStyle = statusStyles[applicant.status]
   const experienceStyle =
     experienceStyles[String(applicant.has_study_experience) as 'true' | 'false']
