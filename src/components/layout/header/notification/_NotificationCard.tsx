@@ -1,6 +1,6 @@
 import CalendarWithDotIcon from '@/assets/CalendarWithDotIcon'
 import UsersThreeIcon from '@/assets/UsersThreeIcon'
-import { Hstack } from '@/components/commonInGeneral/layout'
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import type {
   Notification,
   NotificationType,
@@ -16,6 +16,7 @@ import {
 import NoteWithPen from '@/assets/note-with-pen.svg'
 import CalendarWithLine from '@/assets/calendar-with-line.svg'
 import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
+import { convertToMonthDay } from '@/utils/dates'
 
 const typeToBg: Record<NotificationType, string> = {
   APPLICATION_CREATED: 'bg-[#DBEAFE]',
@@ -82,7 +83,12 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
       onClick={handleClick}
     >
       <NotificationIcon type={notification.type} />
-      <p className="grow">{notification.content}</p>
+      <Vstack gap="xs">
+        <p className="grow">{notification.content}</p>
+        <p className="text-gray-500">
+          {convertToMonthDay(notification.created_at)}
+        </p>
+      </Vstack>
       {!notification.is_read && <NotificationUnreadDot />}
     </Hstack>
   )
