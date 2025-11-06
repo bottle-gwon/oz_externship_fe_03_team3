@@ -57,4 +57,5 @@ export type LecturesResponseData = {
   next: string | null
   previous: string | null
   results: Lecture[]
+  recommended_lectures: Lecture[]
 }

@@ -29,6 +29,9 @@ const useLecturesQuery = () => {
   const setRequestNextPage = useLectureStore(
     (state) => state.setRequestNextPage
   )
+  const setRecommendedLectureArray = useLectureStore(
+    (state) => state.setRecommendedLectureArray
+  )
 
   // 페이지별 요청을 useInfiniteQuery가 모두 담당하기 때문에 params를 상태로 관리할 필요가 없어졌습니다
   const paramsWithoutPage = {
@@ -62,7 +65,13 @@ const useLecturesQuery = () => {
       return [...acc, ...page.results]
     }, [])
     setLectureArray(lectureArray)
-  }, [data, setLectureArray])
+
+    const recommendedLectureArray = data.pages[0].recommended_lectures
+    if (!recommendedLectureArray) {
+      return
+    }
+    setRecommendedLectureArray(recommendedLectureArray)
+  }, [data, setLectureArray, setRecommendedLectureArray])
 
   useEffect(() => {
     setRequestNextPage(fetchNextPage)
