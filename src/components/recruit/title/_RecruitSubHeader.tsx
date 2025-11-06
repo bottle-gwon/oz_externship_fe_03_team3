@@ -15,7 +15,7 @@ const RecruitSubHeader = ({ isLoggedIn }: RecruitSubHeaderProps) => {
   const handleClick = (url: string) => navigate(url)
 
   return (
-    <SubHeader isBackButtonVisible={false}>
+    <SubHeader isBackButtonVisible={false} isXPadded>
       <SubHeaderTitleSection>
         <SubHeader.Title>스터디 구인 공고</SubHeader.Title>
         <SubHeader.Subtitle>

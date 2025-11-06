@@ -35,7 +35,7 @@ const RecruitManageContent = () => {
   return (
     <Container isPadded>
       <Vstack gap="xxl">
-        <SubHeader isBackButtonVisible isPadded={false}>
+        <SubHeader isBackButtonVisible>
           <SubHeaderTitleSection>
             <SubHeader.Title>공고 관리</SubHeader.Title>
             <SubHeader.Subtitle>
