@@ -90,10 +90,4 @@ const useRecruitsQuery = () => {
   }
 }
 
-const useRecruits = () => {
-  const recruitsQueryReturns = useRecruitsQuery()
-
-  return { ...recruitsQueryReturns }
-}
-
-export default useRecruits
+export default useRecruitsQuery

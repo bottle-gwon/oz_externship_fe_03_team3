@@ -11,7 +11,7 @@ import RecruitTagSelect from './_RecruitTagSelect'
 import NoSearchResult from '@/components/commonInProject/noSearchResult/NoSearchResult'
 import RecruitArrangementSelect from './_RecruitOrderingSelect'
 import useRecruitStore from '@/store/recruit/recruitStore'
-import useRecruits from '@/hooks/recruit/title/useRecruitsQuery'
+import useRecruitsQuery from '@/hooks/recruit/title/useRecruitsQuery'
 
 const RecruitContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
@@ -21,7 +21,7 @@ const RecruitContent = () => {
     (state) => state.recommendedRecruitArray
   )
   const isSearching = useRecruitStore((state) => state.isSearching)
-  const { hasNextPage, totalCount } = useRecruits()
+  const { hasNextPage, totalCount } = useRecruitsQuery()
   const requestNextPage = useRecruitStore((state) => state.requestNextPage)
 
   return (
