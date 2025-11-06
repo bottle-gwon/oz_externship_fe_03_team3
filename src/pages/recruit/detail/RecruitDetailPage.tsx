@@ -21,7 +21,7 @@ const RecruitDetailPage = () => {
     )
   }
 
-  const isMine = me && me.nickname === data.author
+  const isMine = me && me.nickname === data.author_nickname
   return <RecruitDetailContent recruitDetail={data} isMine={isMine ?? false} />
 }
 
