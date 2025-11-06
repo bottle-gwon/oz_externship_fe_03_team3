@@ -3,14 +3,15 @@ import type { TagPaginationInterface } from './TagList'
 import { useMemo } from 'react'
 import { Hstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
+import useTagStore from '@/store/tag/tagStore'
 
 const TagPagination = ({
-  currentPage, // 현재 페이지
-  totalPage, // 총 몇 페이지 있는지
-  onPageChange, // 페이지 전환 함수
   maxPage = 9, // 출력할 번호 개수
 }: TagPaginationInterface) => {
   // 총 페이지 수 만큼 출력,
+  const page = useTagStore((state) => state.page)
+  const setPage = useTagStore((state) => state.setPage)
+  const totalPage = useTagStore((state) => state.totalPage)
 
   const pageNumbers = useMemo(() => {
     // 최대 페이지(9) 보다 작으면 전부 출력
@@ -22,8 +23,8 @@ const TagPagination = ({
 
     // 화면상 시작 페이지 ~ 화면상 마지막 페이지
 
-    let startPage = currentPage - halfPage
-    let endPage = currentPage + halfPage
+    let startPage = page - halfPage
+    let endPage = page + halfPage
 
     // 시작 페이지, 마지막 페이지에서 1에서 totalPage를 벗어나지 못하도록 함
 
@@ -41,10 +42,10 @@ const TagPagination = ({
       { length: endPage - startPage + 1 },
       (_, i) => startPage + i
     )
-  }, [totalPage, currentPage, maxPage])
+  }, [totalPage, page, maxPage])
 
-  const leftCursorStatus = currentPage === 1 ? 'disabled' : 'enabled'
-  const rightCusorStatus = currentPage === totalPage ? 'disabled' : 'enabled'
+  const leftCursorStatus = page === 1 ? 'disabled' : 'enabled'
+  const rightCusorStatus = page === totalPage ? 'disabled' : 'enabled'
 
   return (
     <Hstack gap="sm" className="items-center justify-center">
@@ -54,7 +55,7 @@ const TagPagination = ({
         shape="square"
         size="md"
         status={leftCursorStatus}
-        onClick={() => onPageChange(currentPage - 1)}
+        onClick={() => setPage(page - 1)}
         className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:!cursor-not-allowed disabled:bg-white disabled:!text-black"
       >
         <ChevronLeft className="size-4" />
@@ -64,11 +65,11 @@ const TagPagination = ({
       {pageNumbers.map((number) => (
         <Button
           key={number}
-          color={currentPage === number ? 'primary' : 'mono'}
-          variant={currentPage === number ? 'contained' : 'outlined'}
+          color={page === number ? 'primary' : 'mono'}
+          variant={page === number ? 'contained' : 'outlined'}
           shape="square"
           size="md"
-          onClick={() => onPageChange(number)}
+          onClick={() => setPage(number)}
         >
           <span className="text-base">{number}</span>
         </Button>
@@ -80,7 +81,7 @@ const TagPagination = ({
         shape="square"
         size="md"
         status={rightCusorStatus}
-        onClick={() => onPageChange(currentPage + 1)}
+        onClick={() => setPage(page + 1)}
         className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:!cursor-not-allowed disabled:bg-white disabled:!text-black"
       >
         <ChevronRight className="size-4" />

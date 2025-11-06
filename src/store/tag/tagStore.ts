@@ -20,8 +20,26 @@ const useTagStore = create<TagStoreState>()((set, get) => ({
       set({ currentTagArray: [...prevArray, tag] })
     }
   },
-  tagSearch: '',
-  setTagSearch: (tagSearch) => set({ tagSearch }),
+
+  // 검색
+  tagSearchInput: '',
+  setTagSearchInput: (tagSearchInput) => set({ tagSearchInput }),
+  tagSearchKeyword: '',
+  setTagSearchKeyword: (tagSearchKeyword) => set({ tagSearchKeyword }),
+
+  //신규 태그 추가
+  addTagMutate: undefined,
+  setAddTagMutation: (addTagMutate) => set({ addTagMutate }),
+
+  //페이지
+  page: 1,
+  setPage: (page) => set({ page }),
+  totalPage: 1,
+  setTotalPage: (totalPage) => set({ totalPage }),
+
+  //태그 모달 로딩
+  tagListLoading: 'false',
+  setTagListLoading: (tagListLoading) => set({ tagListLoading }),
 }))
 
 export default useTagStore

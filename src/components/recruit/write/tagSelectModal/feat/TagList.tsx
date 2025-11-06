@@ -8,13 +8,8 @@ import TagPaginationSkeleton from '../skeleton/TagPaginationSkeleton'
 import useTagStore from '@/store/tag/tagStore'
 
 // 페이지 네이션 타입
-type pageChange = (newPage: number) => void
-type tagSelect = (select: string) => void
 
 export interface TagPaginationInterface {
-  currentPage: number
-  totalPage: number
-  onPageChange: pageChange // 페이지 전환 함수 정의
   maxPage?: number
 }
 
@@ -28,35 +23,17 @@ export interface TagPaginationInterface {
 // api 적용시 사용
 interface TagListInterface {
   responseData: TagApiResponse
-
-  //Todo 프롭스 드릴링 제거
-  page: number
-  onPageChange: pageChange
-  onAddTag: tagSelect
-  keyword: string //검색 키워드
-  isLoading: boolean //로딩중
-  isPaginating: boolean
-  isSearching: boolean
 }
 
-const TagList = ({
-  responseData,
-  page,
-  onPageChange,
-  onAddTag,
-  keyword,
-  isLoading,
-  isPaginating,
-  isSearching,
-}: TagListInterface) => {
+const TagList = ({ responseData }: TagListInterface) => {
   const currentTagArray = useTagStore((state) => state.currentTagArray)
+  const tagListLoading = useTagStore((state) => state.tagListLoading)
 
-  if (!responseData || !page) {
+  if (!responseData) {
     return
   }
-
   //Todo 현재는 페이지 네이션을 해도 스켈레톤이 출력되지만 이후api 연동할때 분기 처리 할것
-  if (isLoading || isSearching) {
+  if (tagListLoading === 'pending' || tagListLoading === 'searching') {
     return (
       <Vstack
         gap="xl"
@@ -70,7 +47,7 @@ const TagList = ({
 
   // 검색 결과 없음 새로운 태그 추가
   if (responseData.total_count === 0) {
-    return <TagSearchEmpty keyword={keyword} onClickAddTag={onAddTag} />
+    return <TagSearchEmpty />
   }
 
   return (
@@ -78,9 +55,9 @@ const TagList = ({
       gap="xl"
       className="-mx-6 -mb-6 h-[426px] w-[672px] items-center justify-center"
     >
-      {isPaginating && <TagSkeleton />}
+      {tagListLoading === 'paginating' && <TagSkeleton />}
 
-      {!isPaginating && (
+      {!(tagListLoading === 'paginating') && (
         <Vstack gap="sm" className="h-[314px] items-center justify-start">
           <Hstack className="w-full items-start justify-start self-start">
             <p className="text-sm font-medium">{`사용가능한 태그 (${responseData.total_count}개)`}</p>
@@ -95,13 +72,7 @@ const TagList = ({
         </Vstack>
       )}
 
-      <TagPagination
-        currentPage={page}
-        totalPage={Math.ceil(responseData.total_count / 5)}
-        // currentPage={page} //페이지 네이션 테스트
-        // totalPage={15}
-        onPageChange={onPageChange}
-      />
+      <TagPagination />
     </Vstack>
   )
 }
