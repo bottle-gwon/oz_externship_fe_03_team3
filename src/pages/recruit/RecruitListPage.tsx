@@ -1,12 +1,12 @@
 import RecruitContent from '@/components/recruit/title/RecruitContent'
 import useRecruitsQuery from '@/hooks/recruit/title/useRecruitsQuery'
-import RecruitListSkeletone from '../../components/recruit/title/RecruitListSkeletone'
+import RecruitSkeletone from '../../components/recruit/title/RecruitSkeletone'
 
 const RecruitListPage = () => {
   const { isPending } = useRecruitsQuery()
 
   if (isPending) {
-    return <RecruitListSkeletone />
+    return <RecruitSkeletone />
   }
   return <RecruitContent />
 }

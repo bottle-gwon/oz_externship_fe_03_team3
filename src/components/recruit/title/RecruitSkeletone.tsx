@@ -2,7 +2,7 @@ import { Container, Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import useStudyHubStore from '@/store/store'
 
-const RecruitListSkeletone = () => {
+const RecruitSkeletone = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const isLoggedIn = Boolean(accessToken)
   return (
@@ -47,4 +47,4 @@ const RecruitListSkeletone = () => {
   )
 }
 
-export default RecruitListSkeletone
+export default RecruitSkeletone
