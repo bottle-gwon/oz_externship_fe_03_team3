@@ -15,6 +15,7 @@ import {
 } from 'lucide-react'
 import NoteWithPen from '@/assets/note-with-pen.svg'
 import CalendarWithLine from '@/assets/calendar-with-line.svg'
+import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
 
 const typeToBg: Record<NotificationType, string> = {
   APPLICATION_CREATED: 'bg-[#DBEAFE]',
@@ -58,6 +59,18 @@ const NotificationUnreadDot = () => {
 }
 
 const NotificationCard = ({ notification }: { notification: Notification }) => {
+  const { patchSingleMutation } = useNotificationMutation()
+  const handleClick = () => {
+    if (notification.is_read) {
+      return
+    }
+
+    const newOne: Notification = { ...notification, is_read: true }
+    patchSingleMutation.mutate({ data: notification, newOne })
+
+    window.location.href = notification.back_url_link
+  }
+
   return (
     <Hstack
       className={[
@@ -66,6 +79,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
           : 'bg-primary-50 hover:bg-primary-100 active:bg-primary-200',
         'p-oz-lg items-center border-b border-b-gray-100 transition last:border-b-0',
       ].join(' ')}
+      onClick={handleClick}
     >
       <NotificationIcon type={notification.type} />
       <p className="grow">{notification.content}</p>

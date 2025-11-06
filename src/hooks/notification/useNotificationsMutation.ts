@@ -34,19 +34,19 @@ const updateAllNotificationCache = (
 
 const useNotificationMutation = () => {
   const queryEndpoint = '/notifications'
-  const readSingleMutation = useSimpleMutation({
+  const patchSingleMutation = useSimpleMutation({
     queryEndpoint,
     mutationFnWithData: (data: Notification) =>
       api.patch(`${queryEndpoint}/${data.id}/read`),
     updateCacheForUi: updateOneNotificationCache,
   })
 
-  const readAllMutation = useSimpleMutation({
+  const patchAllMutation = useSimpleMutation({
     queryEndpoint,
     mutationFnWithData: () => api.patch(`${queryEndpoint}/read-all`),
     updateCacheForUi: updateAllNotificationCache,
   })
 
-  return { readSingleMutation, readAllMutation }
+  return { patchSingleMutation, patchAllMutation }
 }
 export default useNotificationMutation
