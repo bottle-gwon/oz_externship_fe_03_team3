@@ -2,7 +2,7 @@ import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import TagIcon from '@/assets/tag.svg'
-import useStudyHubStore from '@/store/store'
+import useTagStore from '@/store/tag/tagStore'
 
 interface TagEmpty {
   keyword: string
@@ -10,7 +10,7 @@ interface TagEmpty {
 }
 
 const TagSearchEmpty = ({ keyword, onClickAddTag }: TagEmpty) => {
-  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const currentTagArray = useTagStore((state) => state.currentTagArray)
   const status = currentTagArray.includes(keyword) ? 'disabled' : 'enabled'
 
   return (

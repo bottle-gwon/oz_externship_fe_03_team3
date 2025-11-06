@@ -5,7 +5,7 @@ import type { TagApiResponse } from '@/types'
 import TagSearchEmpty from './TagSearchEmpty'
 import TagSkeleton from '../skeleton/TagSkeleton'
 import TagPaginationSkeleton from '../skeleton/TagPaginationSkeleton'
-import useStudyHubStore from '@/store/store'
+import useTagStore from '@/store/tag/tagStore'
 
 // 페이지 네이션 타입
 type pageChange = (newPage: number) => void
@@ -28,12 +28,13 @@ export interface TagPaginationInterface {
 // api 적용시 사용
 interface TagListInterface {
   responseData: TagApiResponse
+
+  //Todo 프롭스 드릴링 제거
   page: number
   onPageChange: pageChange
   onAddTag: tagSelect
   keyword: string //검색 키워드
   isLoading: boolean //로딩중
-  // isFetching: boolean // 페이지네이팅 로딩
   isPaginating: boolean
   isSearching: boolean
 }
@@ -48,7 +49,7 @@ const TagList = ({
   isPaginating,
   isSearching,
 }: TagListInterface) => {
-  const currentTagArray = useStudyHubStore((state) => state.currentTagArray)
+  const currentTagArray = useTagStore((state) => state.currentTagArray)
 
   if (!responseData || !page) {
     return

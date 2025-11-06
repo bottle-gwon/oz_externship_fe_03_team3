@@ -1,5 +1,5 @@
 import api from '@/api/api'
-import useStudyHubStore from '@/store/store'
+import useTagStore from '@/store/tag/tagStore'
 import type { TagApiSearchParam } from '@/types'
 import {
   keepPreviousData,
@@ -50,10 +50,8 @@ export const useSearchTag = (params: TagApiSearchParam) => {
 // 이 부분 백엔드에서 수정중인것 같아서 향후 추가
 export const useAddNewTag = () => {
   const queryClient = useQueryClient()
-  const addCurrentTagArray = useStudyHubStore(
-    (state) => state.addCurrentTagArray
-  )
-  const deleteCurrentTagArray = useStudyHubStore(
+  const addCurrentTagArray = useTagStore((state) => state.addCurrentTagArray)
+  const deleteCurrentTagArray = useTagStore(
     (state) => state.deleteCurrentTagArray
   )
 
