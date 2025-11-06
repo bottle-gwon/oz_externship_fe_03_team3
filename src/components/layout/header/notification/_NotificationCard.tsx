@@ -28,7 +28,7 @@ const typeToBg: Record<NotificationType, string> = {
   SYSTEM: 'bg-gray-100',
   CUSTOM: 'bg-gray-100',
 }
-const typeToIcon = {
+const TypeToIcon = {
   APPLICATION_CREATED: <UserPlus size={14} color="#2563EB" />,
   APPLICATION_STATUS_APPROVAL: <Check size={14} color="#16A34A" />,
   APPLICATION_STATUS_REJECTION: <X size={14} color="#DC2626" />,
@@ -48,7 +48,7 @@ const NotificationIcon = ({ type }: { type: NotificationType }) => {
     <div
       className={`${typeToBg[type]} flex h-8 max-w-8 min-w-8 items-center justify-center rounded-full`}
     >
-      {typeToIcon[type]}
+      {TypeToIcon[type]}
     </div>
   )
 }
