@@ -33,27 +33,27 @@ const RecruitManageContent = () => {
   })
 
   return (
-    <Container isPadded className="py-oz-xxl bg-[#F9FAFB]">
-      <SubHeader isBackButtonVisible>
-        <SubHeaderTitleSection>
-          <SubHeader.Title>공고 관리</SubHeader.Title>
-          <SubHeader.Subtitle>
-            내가 등록한 스터디 구인공고를 관리하세요
-          </SubHeader.Subtitle>
-        </SubHeaderTitleSection>
-        <SubHeaderButtonSection>
-          <Button
-            color="primary"
-            variant="contained"
-            size="lg"
-            onClick={() => handleClick('/recruit/write')}
-          >
-            + 새 공고 작성하기
-          </Button>
-        </SubHeaderButtonSection>
-      </SubHeader>
+    <Container isPadded>
+      <Vstack gap="xxl">
+        <SubHeader isBackButtonVisible isPadded={false}>
+          <SubHeaderTitleSection>
+            <SubHeader.Title>공고 관리</SubHeader.Title>
+            <SubHeader.Subtitle>
+              내가 등록한 스터디 구인공고를 관리하세요
+            </SubHeader.Subtitle>
+          </SubHeaderTitleSection>
+          <SubHeaderButtonSection>
+            <Button
+              color="primary"
+              variant="contained"
+              size="lg"
+              onClick={() => handleClick('/recruit/write')}
+            >
+              + 새 공고 작성하기
+            </Button>
+          </SubHeaderButtonSection>
+        </SubHeader>
 
-      <Vstack gap="xl">
         <RecruitSummaryCard myRecruitArray={mockRecruits} />
 
         <RecruitManageFilter onChange={handleFilterChange} />
