@@ -1,7 +1,6 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import ManageDetailModal from '@/components/recruit/manageDetailModal/ManageDetailModal'
-import { dummyApplicantDetail } from './dummy/dummyApplicantDetail'
 import useStudyHubStore from '@/store/store'
 
 const HyejeongManageModal = () => {
@@ -17,7 +16,7 @@ const HyejeongManageModal = () => {
       <ManageDetailModal
         onClose={() => setModalKeyArray([])}
         isOn={modalKeyArray.includes('manageDetail')}
-        applicant={dummyApplicantDetail}
+        applicantId={101} // 임의 Id
       />
       <Button onClick={onOpen}>모달 버튼</Button>
     </Vstack>

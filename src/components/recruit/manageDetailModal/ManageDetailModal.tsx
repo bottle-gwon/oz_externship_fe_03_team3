@@ -13,17 +13,12 @@ import { dummyApplicantDetail } from '@/testRoutes/testPages/hyejeong/dummy/dumm
 interface ManageDetailModalProps {
   isOn: boolean
   onClose: () => void
-  applicantId: number | null
+  applicantId: number | null // api 연결할때 사용
 }
 
-const ManageDetailModal = ({
-  isOn,
-  onClose,
-  applicantId,
-}: ManageDetailModalProps) => {
+const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const _applicantId = applicantId
   const applicant = dummyApplicantDetail
   const statusStyle = statusStyles[applicant.status]
   const experienceStyle =
