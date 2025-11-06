@@ -28,7 +28,7 @@ const LectureContent = () => {
   return (
     <Container className="py-oz-xxl">
       <div className="px-oz-xxl">
-        <SubHeader isBackButtonVisible={false}>
+        <SubHeader isBackButtonVisible={false} isPadded={false}>
           <SubHeaderTitleSection>
             <SubHeader.Title>IT 강의 목록</SubHeader.Title>
             <SubHeader.Subtitle>

@@ -4,7 +4,7 @@ import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 const LectureSkeleton = () => {
   return (
     <Container className="py-oz-xxl h-full overflow-hidden" isPadded>
-      <Vstack className="gap-oz-sm mb-oz-xxl ml-oz-xxl">
+      <Vstack className="gap-oz-sm mb-oz-xxl">
         <Skeleton heightInPixel={36} widthInPixel={145} />
         <Skeleton heightInPixel={24} widthInPixel={269} />
       </Vstack>

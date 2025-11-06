@@ -3,6 +3,6 @@ interface SubtitleProps {
 }
 
 const SubHeaderSubtitle = ({ children }: SubtitleProps) => {
-  return <p className="pt-oz-xs text-gray-600">{children}</p>
+  return <p className="text-gray-600">{children}</p>
 }
 export default SubHeaderSubtitle

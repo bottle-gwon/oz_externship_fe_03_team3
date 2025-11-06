@@ -7,18 +7,20 @@ import { useNavigate } from 'react-router'
 interface SubHeaderProps {
   isBackButtonVisible?: boolean
   children?: React.ReactNode
+  isPadded?: boolean
 }
 
 const SubHeader = ({
   isBackButtonVisible = false,
   children,
+  isPadded = true,
 }: SubHeaderProps) => {
   const navigate = useNavigate()
   const handleBack = () => navigate(-1)
   return (
     <Hstack
       gap="lg"
-      className="pb-oz-xxl px-oz-xxl h-[100px] w-full items-center justify-between"
+      className={`${isPadded ? 'pb-oz-xxl px-oz-xxl' : ''} w-full items-center justify-between`}
     >
       {isBackButtonVisible && (
         <button

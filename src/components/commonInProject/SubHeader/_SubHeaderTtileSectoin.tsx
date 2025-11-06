@@ -5,11 +5,7 @@ interface TitleSectionProps {
 }
 
 const SubHeaderTitleSection = ({ children }: TitleSectionProps) => {
-  return (
-    <Vstack gap="none" className="grow">
-      {children}
-    </Vstack>
-  )
+  return <Vstack className="grow">{children}</Vstack>
 }
 
 export default SubHeaderTitleSection
