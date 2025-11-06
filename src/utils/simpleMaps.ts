@@ -3,7 +3,9 @@ import type {
   LectureOrderingInText,
   LectureReviewRating,
   RecruitArrangementInText,
+  RecruitConditionInText,
   RecruitOrdering,
+  RecruitStatus,
 } from '@/types'
 
 export const ratingToNumber: Record<LectureReviewRating, number> = {
@@ -32,4 +34,13 @@ export const textToRecruitOrdering: Record<
   최신순: 'created_at',
   '북마크 많은 순': 'bookmarks',
   '조회수 높은 순': 'views',
+}
+
+export const textToRecruitManageState: Record<
+  RecruitConditionInText,
+  RecruitStatus
+> = {
+  전체: '',
+  모집중: 'open',
+  마감됨: 'closed',
 }

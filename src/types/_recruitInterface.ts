@@ -44,13 +44,17 @@ export interface RecruitsResponseData {
 // ---- recruit manage
 export interface RecruitsManageResponse {
   count: number
-  status: 'open' | 'closed'
+  status: '' | 'open' | 'closed'
   ordering: 'created_at' | 'bookmarks' | 'views'
   page: number
   page_size: number
   results: Recruit[]
   user_nickname: string
 }
+
+export type RecruitOrdering = 'created_at' | 'bookmarks' | 'views'
+
+export type RecruitStatus = '' | 'open' | 'closed'
 
 export const recruitArrangementInTextArray = [
   '최신순',
