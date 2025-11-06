@@ -55,7 +55,7 @@ const TagPagination = ({
         size="md"
         status={leftCursorStatus}
         onClick={() => onPageChange(currentPage - 1)}
-        className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:cursor-not-allowed disabled:bg-white disabled:!text-black"
+        className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:!cursor-not-allowed disabled:bg-white disabled:!text-black"
       >
         <ChevronLeft className="size-4" />
       </Button>
@@ -64,13 +64,13 @@ const TagPagination = ({
       {pageNumbers.map((number) => (
         <Button
           key={number}
-          color="primary"
+          color={currentPage === number ? 'primary' : 'mono'}
+          variant={currentPage === number ? 'contained' : 'outlined'}
           shape="square"
           size="md"
           onClick={() => onPageChange(number)}
-          className={`bg-white !text-black hover:!text-white active:!text-white disabled:cursor-not-allowed disabled:bg-white disabled:!text-black ${currentPage === number ? '!bg-primary-500 !text-white' : 'border border-gray-300 bg-white'}`}
         >
-          <span className="size-6 text-base">{number}</span>
+          <span className="text-base">{number}</span>
         </Button>
       ))}
 
@@ -81,7 +81,7 @@ const TagPagination = ({
         size="md"
         status={rightCusorStatus}
         onClick={() => onPageChange(currentPage + 1)}
-        className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:cursor-not-allowed disabled:bg-white disabled:!text-black"
+        className="border border-gray-300 bg-white !px-2.5 !text-black hover:!text-white active:!text-white disabled:!cursor-not-allowed disabled:bg-white disabled:!text-black"
       >
         <ChevronRight className="size-4" />
       </Button>
