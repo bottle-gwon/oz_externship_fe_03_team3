@@ -3,10 +3,10 @@ import FlexOneContainer from '../../components/commonInGeneral/layout/_FlexOneCo
 import FullScreen from '../../components/commonInGeneral/layout/_FullScreen'
 import Header from '../../components/layout/header/Header'
 import FloatingButtonContainer from '@/components/layout/floatingButton/FloatingButtonContainer'
-import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
-import { ArrowUp } from 'lucide-react'
 import { lazy, Suspense, useRef } from 'react'
 import FloatingButtonSkeleton from '@/components/chat/skeleton/FloatingButtonSkeleton'
+import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
+import { ArrowUp } from 'lucide-react'
 
 const ChatWidget = lazy(() => import('@/components/chat/ChatWidget'))
 const ChatFloatingButton = lazy(
@@ -33,16 +33,17 @@ const Layout = () => {
 
         {/* 플로팅 아이콘 */}
         <FloatingButtonContainer>
-          {/* 위로가기 아이콘 */}
-          <FloatingButton theme="mono" onClick={onClickTop}>
-            <ArrowUp size={24} strokeWidth={4} />
-          </FloatingButton>
-
-          {/* 메시지 아이콘 */}
           <Suspense fallback={<FloatingButtonSkeleton />}>
+            {/* 위로가기 아이콘 */}
+            <FloatingButton theme="mono" onClick={onClickTop}>
+              <ArrowUp size={24} strokeWidth={4} />
+            </FloatingButton>
+
+            {/* 메시지 아이콘 */}
             <ChatFloatingButton />
           </Suspense>
         </FloatingButtonContainer>
+
         {/* 채팅 */}
         <Suspense fallback={null}>
           <ChatWidget />
