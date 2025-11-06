@@ -9,10 +9,6 @@ import useTagStore from '@/store/tag/tagStore'
 
 // 페이지 네이션 타입
 
-export interface TagPaginationInterface {
-  maxPage?: number
-}
-
 // 이후 API 연결할때 테스트
 // interface TagLoading {
 //   isPending: boolean      //isPending

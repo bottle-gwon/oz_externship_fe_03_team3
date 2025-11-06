@@ -1,9 +1,12 @@
 import { ChevronLeft, ChevronRight } from 'lucide-react'
-import type { TagPaginationInterface } from './TagList'
 import { useMemo } from 'react'
 import { Hstack } from '@/components/commonInGeneral/layout'
 import Button from '@/components/commonInGeneral/button/Button'
 import useTagStore from '@/store/tag/tagStore'
+
+interface TagPaginationInterface {
+  maxPage?: number
+}
 
 const TagPagination = ({
   maxPage = 9, // 출력할 번호 개수
