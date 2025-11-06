@@ -29,7 +29,7 @@ const RecruitCard = ({
   recruit,
   isMine = false,
   cardClassName = 'cursor-pointer hover:bg-gray-50 transition',
-  imageClassName = 'h-20 w-28',
+  imageClassName = 'h-27 w-35',
 }: RecruitCardProps) => {
   const {
     id,
@@ -108,7 +108,7 @@ const RecruitCard = ({
             />
           </RoundBox>
 
-          <Vstack gap="xs" padding="none" className="flex-1">
+          <Vstack gap="xs" padding="none" className="flex-1 overflow-hidden">
             <Hstack
               gap="none"
               padding="none"
@@ -116,14 +116,14 @@ const RecruitCard = ({
             >
               <h1
                 aria-label="제목"
-                className="truncate text-base font-bold text-gray-900"
+                className="line-clamp-2 flex-1 text-lg font-bold break-words text-gray-900 md:text-xl"
               >
                 {title}
               </h1>
               <Hstack
                 gap="sm"
                 padding="xs"
-                className="shrink-0 items-center text-[11px] leading-none text-gray-500"
+                className="shrink-0 items-center text-sm leading-none text-gray-500"
               >
                 <span
                   aria-label="조회수"
@@ -149,7 +149,7 @@ const RecruitCard = ({
                     <button
                       type="button"
                       aria-label="수정"
-                      className="cursor-pointer text-gray-500 transition hover:text-blue-600"
+                      className="cursor-pointer text-gray-600 transition hover:text-blue-600"
                       onClick={(e) => handleEdit(e)}
                     >
                       <Pencil className="size-3.5" />
@@ -157,7 +157,7 @@ const RecruitCard = ({
                     <button
                       type="button"
                       aria-label="삭제"
-                      className="cursor-pointer text-gray-500 transition hover:text-red-600"
+                      className="cursor-pointer text-gray-600 transition hover:text-red-600"
                       onClick={(e) => handleDelete(e)}
                     >
                       <Trash2 className="size-3.5" />
@@ -170,10 +170,10 @@ const RecruitCard = ({
             <Vstack
               gap="lg"
               padding="xs"
-              className="mt-2 text-xs text-gray-500"
+              className="text-md mt-3 text-gray-600"
             >
               <Hstack
-                gap="xs"
+                gap="sm"
                 padding="none"
                 aria-label="모집인원수"
                 className="items-center"
@@ -184,7 +184,7 @@ const RecruitCard = ({
               </Hstack>
 
               <Hstack
-                gap="xs"
+                gap="sm"
                 padding="none"
                 aria-label="마감일"
                 className="items-center"
@@ -196,8 +196,8 @@ const RecruitCard = ({
               </Hstack>
             </Vstack>
 
-            <Vstack gap="xs" padding="none" className="mt-2 text-gray-500">
-              <Hstack gap="sm" padding="xs" className="text-xs">
+            <Vstack gap="xs" padding="none" className="mt-2 text-gray-600">
+              <Hstack gap="sm" padding="xs" className="text-md">
                 강의 목록 :
               </Hstack>
               <ul className="list-inside list-disc pl-2">
@@ -205,7 +205,7 @@ const RecruitCard = ({
                   <li
                     key={lectures.id}
                     aria-label="강의목록"
-                    className="text-xs"
+                    className="text-md"
                   >
                     {lectures.title}-{lectures.instructor}
                   </li>
@@ -216,7 +216,7 @@ const RecruitCard = ({
             <Hstack
               gap="xs"
               padding="xs"
-              className="items-center justify-between"
+              className="mt-3 items-center justify-between"
             >
               <Hstack
                 gap="sm"
@@ -225,7 +225,12 @@ const RecruitCard = ({
                 className="flex-wrap"
               >
                 {tags.map((tag) => (
-                  <Tag key={tag.id} color="primary" isVivid={false}>
+                  <Tag
+                    key={tag.id}
+                    color="primary"
+                    isVivid={false}
+                    className="!text-sm"
+                  >
                     {tag.name}
                   </Tag>
                 ))}
@@ -234,7 +239,7 @@ const RecruitCard = ({
                 <Hstack gap="none" padding="none" className="self-center">
                   <Button
                     color="blue"
-                    className="gap-2 px-6 py-2 text-xs"
+                    className="gap-2 px-6 py-2 text-sm"
                     onClick={(e) => {
                       e.stopPropagation()
                       setManageOpen(true)
