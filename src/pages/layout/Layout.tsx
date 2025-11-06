@@ -7,7 +7,6 @@ import FloatingButton from '@/components/layout/floatingButton/FloatingButton'
 import { ArrowUp } from 'lucide-react'
 import { lazy, Suspense, useRef } from 'react'
 import FloatingButtonSkeleton from '@/components/chat/skeleton/FloatingButtonSkeleton'
-import ChatWidgetSkeleton from '@/components/chat/skeleton/ChatWidgetSkeleton'
 
 const ChatWidget = lazy(() => import('@/components/chat/ChatWidget'))
 const ChatFloatingButton = lazy(
@@ -45,7 +44,7 @@ const Layout = () => {
           </Suspense>
         </FloatingButtonContainer>
         {/* 채팅 */}
-        <Suspense fallback={<ChatWidgetSkeleton />}>
+        <Suspense fallback={null}>
           <ChatWidget />
         </Suspense>
       </FlexOneContainer>
