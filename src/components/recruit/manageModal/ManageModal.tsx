@@ -30,6 +30,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
 
   if (isPending) {
+    return
   }
 
   const handleClose = () => {

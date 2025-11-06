@@ -23,6 +23,7 @@ const ManageDetailModal = ({
 }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
+  const _applicantId = applicantId
   const applicant = dummyApplicantDetail
   const statusStyle = statusStyles[applicant.status]
   const experienceStyle =
