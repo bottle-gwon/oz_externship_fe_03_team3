@@ -5,12 +5,10 @@ import { X } from 'lucide-react'
 
 interface TagSelection {
   tag: string
+  onDeleteTag: (tag: string) => void
 }
 
-const TagSelected = ({ tag }: TagSelection) => {
-  const deleteCurrentTagArray = useTagStore(
-    (state) => state.deleteCurrentTagArray
-  )
+const TagSelected = ({ tag, onDeleteTag }: TagSelection) => {
   return (
     <RoundBox
       color="primary"
@@ -21,10 +19,7 @@ const TagSelected = ({ tag }: TagSelection) => {
     >
       <Hstack gap="sm" className="h-full w-full items-center justify-center">
         <span>{tag}</span>
-        <button
-          onClick={() => deleteCurrentTagArray(tag)}
-          className="cursor-pointer"
-        >
+        <button onClick={() => onDeleteTag(tag)} className="cursor-pointer">
           <X className="size-4" />
         </button>
       </Hstack>
