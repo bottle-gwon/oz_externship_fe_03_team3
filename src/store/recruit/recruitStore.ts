@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { RecruitStoreState } from './_recruitStoreInterface'
 
-const useRecruitStore = create<RecruitStoreState>()((set, get) => ({
+const useRecruitStore = create<RecruitStoreState>()((set) => ({
   recruitArray: [],
   setRecruitArray: (recruitArray) => set({ recruitArray }),
   recommendedRecruitArray: [],

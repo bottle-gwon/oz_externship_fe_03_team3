@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 import type { ApplicantStoreState } from './_applicantStoreInterface'
 
-const useApplicantStore = create<ApplicantStoreState>()((set, get) => ({
+const useApplicantStore = create<ApplicantStoreState>()((set) => ({
   applicantArray: [],
   setApplicantArray: (applicantArray) => set({ applicantArray }),
 
