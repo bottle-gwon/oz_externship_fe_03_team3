@@ -7,11 +7,8 @@ const RecruitSkeletone = () => {
   const isLoggedIn = Boolean(accessToken)
   return (
     <Container className="py-oz-xxl h-full overflow-hidden" isPadded>
-      <Vstack gap="none">
-        <Hstack
-          gap="none"
-          className={`items-center justify-between ${isLoggedIn ? 'mb-14' : 'mb-oz-xxl'}`}
-        >
+      <Vstack gap="xxl">
+        <Hstack gap="none" className="items-center justify-between">
           <Vstack gap="sm">
             <Skeleton heightInPixel={36} widthInPixel={196} />
             <Skeleton heightInPixel={24} widthInPixel={384} />
@@ -31,15 +28,18 @@ const RecruitSkeletone = () => {
           )}
         </Hstack>
 
-        {isLoggedIn && <Skeleton heightInPixel={492} className="mb-6" />}
+        {isLoggedIn && <Skeleton heightInPixel={341} />}
 
-        {!isLoggedIn && <Skeleton heightInPixel={522} className="mb-12" />}
+        {!isLoggedIn && <Skeleton heightInPixel={522} />}
 
-        <Skeleton heightInPixel={191} className="mb-oz-xxl" />
-
-        <Skeleton heightInPixel={28} widthInPixel={120} className="mb-oz-xl" />
+        <Skeleton heightInPixel={191} />
 
         <Vstack gap="none">
+          <Skeleton
+            heightInPixel={28}
+            widthInPixel={120}
+            className="mb-oz-xl"
+          />
           <Skeleton heightInPixel={2860} />
         </Vstack>
       </Vstack>

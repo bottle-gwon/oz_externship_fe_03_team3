@@ -20,7 +20,7 @@ const SubHeader = ({
   return (
     <Hstack
       gap="lg"
-      className={`${isPadded ? 'pb-oz-xxl px-oz-xxl' : ''} w-full items-center justify-between`}
+      className={`${isPadded ? 'px-oz-xxl' : ''} w-full items-center justify-between`}
     >
       {isBackButtonVisible && (
         <button

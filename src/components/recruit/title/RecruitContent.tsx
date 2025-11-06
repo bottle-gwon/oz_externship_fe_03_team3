@@ -25,20 +25,22 @@ const RecruitContent = () => {
   const requestNextPage = useRecruitStore((state) => state.requestNextPage)
 
   return (
-    <Container className="py-oz-xxl flex flex-col items-center bg-gray-50">
-      <RecruitSubHeader isLoggedIn={isLoggedIn} />
-      <RecommendSection
-        type="recruit"
-        isLoggedIn={isLoggedIn}
-        recommendedArray={recommendedRecruitArray}
-      />
-      <Vstack gap="xxl" className="px-oz-xxl w-full">
+    <Container className="py-oz-xxl">
+      <Vstack gap="xxl">
+        <RecruitSubHeader isLoggedIn={isLoggedIn} />
+
+        <RecommendSection
+          type="recruit"
+          isLoggedIn={isLoggedIn}
+          recommendedArray={recommendedRecruitArray}
+        />
+
         <RoundBox
           isShadowed={false}
           color="mono-bright"
           padding="xl"
           radius="lg"
-          className="justify-center"
+          className="mx-oz-xxl justify-center"
         >
           <RecruitSearchInput />
 
@@ -48,7 +50,7 @@ const RecruitContent = () => {
           </Hstack>
         </RoundBox>
 
-        <Vstack gap="none">
+        <Vstack className="mx-oz-xxl gap-0">
           <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
             전체 공고({totalCount})
           </Vstack>

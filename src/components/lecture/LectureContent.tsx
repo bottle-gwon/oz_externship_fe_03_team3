@@ -28,16 +28,14 @@ const LectureContent = () => {
   return (
     <Container className="py-oz-xxl">
       <Vstack gap="xxl">
-        <div className="px-oz-xxl">
-          <SubHeader isBackButtonVisible={false} isPadded={false}>
-            <SubHeaderTitleSection>
-              <SubHeader.Title>IT 강의 목록</SubHeader.Title>
-              <SubHeader.Subtitle>
-                전문 강사들의 고품질 IT 강의를 만나보세요
-              </SubHeader.Subtitle>
-            </SubHeaderTitleSection>
-          </SubHeader>
-        </div>
+        <SubHeader isBackButtonVisible={false}>
+          <SubHeaderTitleSection>
+            <SubHeader.Title>IT 강의 목록</SubHeader.Title>
+            <SubHeader.Subtitle>
+              전문 강사들의 고품질 IT 강의를 만나보세요
+            </SubHeader.Subtitle>
+          </SubHeaderTitleSection>
+        </SubHeader>
 
         <RecommendSection
           type="lecture"
