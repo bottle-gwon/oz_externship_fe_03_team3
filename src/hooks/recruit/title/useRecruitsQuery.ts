@@ -1,11 +1,7 @@
 import api from '@/api/api'
 import useRecruitStore from '@/store/recruit/recruitStore'
 import useStudyHubStore from '@/store/store'
-import type {
-  Recruit,
-  RecruitmentsListResponseWithAuth,
-  RecruitsResponseData,
-} from '@/types'
+import type { Recruit, RecruitsResponseData } from '@/types'
 import { textToRecruitOrdering } from '@/utils/simpleMaps'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
@@ -40,19 +36,12 @@ const useRecruitsQuery = () => {
   )
 
   const { data, isPending, error, fetchNextPage, hasNextPage } =
-    useInfiniteQuery<RecruitsResponseData | RecruitmentsListResponseWithAuth>({
+    useInfiniteQuery({
       queryKey: [recruitsQueryEndpoint, params, isLoggedIn],
       queryFn: async ({ pageParam = 1 }) => {
         const response = await api.get(recruitsQueryEndpoint, {
           params: { ...params, page: pageParam },
-          ...(isLoggedIn && {
-            headers: { Authorization: `Bearer ${accessToken}` },
-          }),
         })
-        // 로그인 상태에 따라 다른 타입으로 반환
-        if (isLoggedIn) {
-          return response.data as RecruitmentsListResponseWithAuth
-        }
         return response.data as RecruitsResponseData
       },
       initialPageParam: 1,
@@ -74,17 +63,15 @@ const useRecruitsQuery = () => {
     setRecruitArray(recruitArray)
   }, [data, setRecruitArray])
 
-  // 추천 공고 업데이트 (로그인 시에만)
+  // 추천 공고 업데이트
   useEffect(() => {
     if (!data || !isLoggedIn) {
       setRecommendedRecruitArray([])
       return
     }
 
-    const firstPage = data.pages[0]
-
-    if ('recommendations' in firstPage) {
-      setRecommendedRecruitArray(firstPage.recommendations)
+    if (data.pages[0].recommendations) {
+      setRecommendedRecruitArray(data.pages[0].recommendations)
     }
   }, [data, isLoggedIn, setRecommendedRecruitArray])
 
