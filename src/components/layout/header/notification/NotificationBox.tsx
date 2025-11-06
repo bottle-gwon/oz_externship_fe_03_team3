@@ -5,9 +5,12 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import NotificationCard from './_NotificationCard'
 import NotificationTabRow from './_NotificationTabRow'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
+import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
 
 const NotificationBox = () => {
   const { notificationArray } = useNotificationsQuery()
+  const { patchAllMutation } = useNotificationMutation()
+
   return (
     <RoundBox
       padding="none"
@@ -16,7 +19,14 @@ const NotificationBox = () => {
       <Vstack className="h-[475px] w-[384px] gap-0 overflow-hidden">
         <Hstack className="p-oz-lg items-center justify-between border-b border-b-gray-200">
           <h2 className="text-lg font-semibold">알림</h2>
-          <Button color="primary" variant="ghost" shape="slim">
+          <Button
+            color="primary"
+            variant="ghost"
+            shape="slim"
+            onClick={() =>
+              patchAllMutation.mutate({ data: undefined, newOne: undefined })
+            }
+          >
             모두 읽음
           </Button>
         </Hstack>
