@@ -17,6 +17,7 @@ import { useState } from 'react'
 import ManageModal from '../manageModal/ManageModal'
 import { dummyApplicantArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantList'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -259,8 +260,7 @@ const RecruitCard = ({
       <ManageModal
         isOn={manageOpen}
         onClose={setManageOpen}
-        recruitContent={title}
-        applicantArray={dummyApplicantArray}
+        recruit={dummyRecruitArray[0]} // Todo: 현재는 더미 데이터 사용 중, 추후 클릭된 공고 데이터 전달
       />
 
       <ConfirmationModal isOn={confirmOpen} onClose={cancelDelete}>
