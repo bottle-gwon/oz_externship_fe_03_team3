@@ -8,47 +8,29 @@ import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHe
 import Button from '@/components/commonInGeneral/button/Button'
 import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubHeaderButtonSection'
 import { useNavigate } from 'react-router'
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback } from 'react'
 
 import type { Recruit } from '@/types'
 import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
-
-const page_size = 10
+import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
+import useRecruitManage from '@/hooks/recruit/useRecruitsManageQuery'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
   const handleClick = (url: string) => navigate(url)
 
-  // 현재 더미데이터 기준으로 진행. 추후 api 기준으로 변경
-  const [recruitList, setRecruitList] = useState<Recruit[]>(() => [
-    ...mockRecruits,
-  ])
-  const [recruitPage, setRecruitPage] = useState(1)
-
-  const visibleRecruits = useMemo(
-    () => recruitList.slice(0, recruitPage * page_size),
-    [recruitList, recruitPage]
+  const recruitManageArray = useRecruitManageStore(
+    (state) => state.recruitManageArray
   )
-  const hasMore = visibleRecruits.length < recruitList.length
-
-  const [isLoading, setIsLoading] = useState(false)
-
-  const handleFilterChange = useCallback((filtered: Recruit[]) => {
-    setRecruitList(filtered)
-    setRecruitPage(1)
-    setIsLoading(false)
-  }, [])
-
-  const loadingMore = useCallback(() => {
-    if (!hasMore) return
-    if (isLoading) return
-    setIsLoading(true)
-    setRecruitPage((prev) => prev + 1)
-    setTimeout(() => setIsLoading(false), 0)
-  }, [hasMore, isLoading])
-
-  const loaderRef = useOneWayInfinityScroll(loadingMore)
+  const requestNextPage = useRecruitManageStore(
+    (state) => state.requestNextPage
+  )
+  const { hasNextPage, totalCount } = useRecruitManage()
+  const handleFilterChange = useCallback((_filtered: Recruit[]) => {}, [])
+  const loaderRef = useOneWayInfinityScroll(() => {
+    if (hasNextPage) requestNextPage()
+  })
 
   return (
     <Container isPadded className="py-oz-xxl bg-[#F9FAFB]">
@@ -77,14 +59,12 @@ const RecruitManageContent = () => {
         <RecruitManageFilter onChange={handleFilterChange} />
 
         <Vstack gap="none">
-          <h1 className="mb-oz-md">내 공고 목록 ({recruitList.length})</h1>
-          {visibleRecruits.map((recruit) => (
+          <h1 className="mb-oz-md">내 공고 목록 ({totalCount})</h1>
+          {recruitManageArray.map((recruit) => (
             <RecruitCard isMine key={recruit.id} recruit={recruit} />
           ))}
 
-          {hasMore && (
-            <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
-          )}
+          <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
       </Vstack>
     </Container>
