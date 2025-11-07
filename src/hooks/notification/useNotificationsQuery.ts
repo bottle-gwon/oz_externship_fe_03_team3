@@ -5,6 +5,7 @@ import type {
   NotificationsResponseData,
   NotificationTab,
 } from '@/types'
+import { sleep } from '@/utils/sleep'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
@@ -15,16 +16,26 @@ const tabToIsRead: Record<NotificationTab, boolean | null> = {
 }
 
 const useNotificationsQuery = () => {
-  const [notificationArray, setNotificationArray] = useState<Notification[]>([])
   const selectedTab = useNotificationStore((state) => state.selectedTab)
+  const setNotificationArray = useNotificationStore(
+    (state) => state.setNotificationArray
+  )
+  const setRequestNextPage = useNotificationStore(
+    (state) => state.setRequestNextPage
+  )
 
   const endpoint = '/notifications'
   const params = { is_read: tabToIsRead[selectedTab] }
 
-  const { data } = useInfiniteQuery({
+  const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
     queryKey: [endpoint, selectedTab],
-    queryFn: async () =>
-      (await api.get(endpoint, { params })).data as NotificationsResponseData,
+    // queryFn: async () =>
+    //   (await api.get(endpoint, { params })).data as NotificationsResponseData,
+    queryFn: async () => {
+      await sleep(1000)
+      return (await api.get(endpoint, { params }))
+        .data as NotificationsResponseData
+    },
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.next ? lastPageParam + 1 : null,
@@ -43,9 +54,13 @@ const useNotificationsQuery = () => {
       return [...acc, ...page.results]
     }, [])
     setNotificationArray(reducedArray)
-  }, [data])
+  }, [data, setNotificationArray])
 
-  return { notificationArray }
+  useEffect(() => {
+    setRequestNextPage(fetchNextPage)
+  }, [fetchNextPage, setRequestNextPage])
+
+  return { isPending, error }
 }
 
 export default useNotificationsQuery
