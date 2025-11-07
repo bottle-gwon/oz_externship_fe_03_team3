@@ -10,6 +10,7 @@ import queryClient from './lib/tanstackQueryClient'
 // NOTE: 스켈레톤은 lazy로 임포트하지 말고 평범하게 임포트 해주세요
 import LectureSkeleton from './components/lecture/LectureSkeleton'
 import RecruitSkeletone from './components/recruit/title/RecruitSkeletone'
+import RecruitDetailSkeleton from './components/recruit/detail/RecruitDetailSkeleton'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
 const RecruitEditPage = lazy(
@@ -50,7 +51,7 @@ const routeArray = [
   {
     path: '/recruit/:recruitId',
     element: <RecruitDetailPage />,
-    fallback: <p>나중에 스켈레톤 넣을 자리</p>,
+    fallback: <RecruitDetailSkeleton />,
   },
   {
     path: '/lecture',

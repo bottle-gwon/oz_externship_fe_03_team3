@@ -17,6 +17,7 @@ const RecruitDetailPage = () => {
 
   if (error || !data) {
     return (
+      // TODO: 여기 적당한 것으로 교체해야 함
       <p>오류가 나면 이게 보입니다. 여기를 대체할 컴포넌트를 만들어야 합니다</p>
     )
   }
