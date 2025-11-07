@@ -17,6 +17,15 @@ const NotificationBox = () => {
   const { isPending, error } = useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
 
+  if (isPending) {
+    return <Skeleton heightInPixel={475} widthInPixel={384} />
+  }
+
+  if (error) {
+    // TODO: 채워 넣기
+    return <p>에러가 발생했을 때 보입니다. 추후 수정해야 합니다</p>
+  }
+
   return (
     <RoundBox
       padding="none"
@@ -40,10 +49,6 @@ const NotificationBox = () => {
         <NotificationTabRow />
 
         <FlexOneContainer isYScrollable className="border-b border-b-gray-200">
-          {isPending && notificationArray.length === 0 && <Skeleton />}
-          {error && notificationArray.length === 0 && (
-            <p>에러가 발생했습니다. 여기를 채워야 해요</p>
-          )}
           {notificationArray.map((notification) => (
             <NotificationCard
               key={notification.id}
