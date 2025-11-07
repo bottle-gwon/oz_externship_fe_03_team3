@@ -7,7 +7,7 @@ import type { DivProps, FileRecord } from '@/types'
 
 interface FileDropLayerProps {
   onFileArrayChange: (fileArray: File[]) => void
-  onDragEnterChange: (isDragEnter: boolean) => void
+  onDragEnterChange: (isDragEntered: boolean) => void
   defaultFileRecord?: FileRecord
 }
 
@@ -25,7 +25,7 @@ const FileDropLayer = ({
     const fileArray = Object.values(fileRecord)
     const realFileArray = fileArray.filter((file) => file.lastModified)
     onFileArrayChange(realFileArray)
-  }, [fileRecord, onFileArrayChange])
+  }, [fileRecord])
 
   useEffect(() => {
     if (!defaultFileRecord) {
