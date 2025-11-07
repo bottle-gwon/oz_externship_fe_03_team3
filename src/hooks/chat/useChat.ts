@@ -1,5 +1,9 @@
 import api from '@/api/api'
-import type { chatMessageListRequest } from '@/types/_chat'
+import {
+  type ChatRoomApiResponse,
+  type ChatRoomPageResponse,
+  type chatMessageListRequest,
+} from '@/types/_chat'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
@@ -8,6 +12,7 @@ const chatRoomEndpoint = '/study-grops'
 // 채팅방 리스트 가져오기
 const getChatRoomList = async (page: number) => {
   const response = await api.get(`${chatQueryEndpoint}/chatrooms?page=${page}`)
+
   return response.data
 }
 
@@ -36,17 +41,28 @@ export const useChatRoomList = () => {
   //   queryFn: () => getChatRoomList(page),
   //   placeholderData: keepPreviousData,
   // })
-  return useInfiniteQuery({
+  return useInfiniteQuery<
+    ChatRoomApiResponse,
+    Error,
+    ChatRoomPageResponse,
+    [string],
+    number
+  >({
     queryKey: [chatQueryEndpoint],
     queryFn: ({ pageParam }) => getChatRoomList(pageParam),
     getNextPageParam: (lastPage) => {
-      const current = lastPage.pagination.page
-      const totalPage = Math.ceil(
-        lastPage.pagination.total_count / lastPage.pagination.page_size
-      )
+      if (lastPage.data) {
+        const current = lastPage.data.pagination.page
+        const totalPage = Math.ceil(
+          lastPage.data?.pagination.total_count /
+            lastPage.data?.pagination.page_size
+        )
 
-      if (current < totalPage) {
-        return current + 1
+        if (current < totalPage) {
+          return current + 1
+        } else {
+          return null
+        }
       } else {
         return null
       }
