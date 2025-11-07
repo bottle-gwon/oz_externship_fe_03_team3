@@ -167,7 +167,7 @@ const ChatList = () => {
       </ChattingLayout.Header>
 
       <ChattingLayout.Body
-        className={`h-[309px] border-transparent p-[0px] ${overflow}`}
+        className={`h-[309px] w-full border-transparent p-[0px] ${overflow}`}
       >
         {/* 테스트를 위해 스켈레톤을 카드보다 위로 올려 놨습니다. */}
         {isPending && <ChatListSkeleton />}
