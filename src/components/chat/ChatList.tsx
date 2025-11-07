@@ -95,8 +95,15 @@ const ChatList = () => {
   const chatRoomArray = useStudyHubStore((state) => state.chatRoomArray)
   const setChatRoomArray = useStudyHubStore((state) => state.setChatRoomArray)
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
-    useChatRoomList()
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    isError,
+    error,
+  } = useChatRoomList()
 
   const LoadingRef = useOneWayInfinityScroll(() => {
     // 스크롤이 타겟에 들어왔을때 (훅에서는 100% 보일때로 설정해둠)
@@ -146,6 +153,11 @@ const ChatList = () => {
   //     }
   //   }
   // }, [])
+
+  // 임시 에러 처리
+  if (isError) {
+    return <>{error} 임시</>
+  }
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
   return (
     <ChattingLayout>
