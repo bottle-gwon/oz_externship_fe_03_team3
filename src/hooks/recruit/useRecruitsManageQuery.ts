@@ -8,7 +8,7 @@ import {
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
 
-const recruitsManageQueryEndpoint = '/recruitments/my'
+const recruitsManageQueryEndpoint = '/recruitments/:recruitment_id'
 
 const useRecruitsManageQuery = () => {
   const selectedStatusInText = useRecruitManageStore(
@@ -43,10 +43,8 @@ const useRecruitsManageQuery = () => {
         return response.data as RecruitsManageResponse
       },
       initialPageParam: 1,
-      getNextPageParam: (lastPage) => {
-        const totalPages = Math.ceil(lastPage.count.total / lastPage.page_size)
-        return lastPage.page < totalPages ? lastPage.page + 1 : null
-      },
+      getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+        lastPage.next ? lastPageParam + 1 : null,
     })
   useEffect(() => {
     if (!data) return

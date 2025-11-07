@@ -44,6 +44,8 @@ export interface RecruitsResponseData {
 // ---- recruit manage
 export interface RecruitsManageResponse {
   count: { total: number; open: number; closed: number }
+  previous?: string | null
+  next?: string | null
   results: Recruit[]
   status?: '' | 'open' | 'closed'
   ordering?: 'created_at' | 'bookmarks' | 'views'
