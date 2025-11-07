@@ -19,6 +19,9 @@ import useStudyHubStore from '@/store/store'
 import ApplicationModalPage from '@/pages/recruit/ApplicationModalPage'
 import RDTitle from './_RDTitle'
 import RDBookmarkButton from './_RDBookmarkButton'
+import RDShareButton from './_RDShareButton'
+import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
+import RDConfirmClipboardModal from './_RDConfirmClipboardModal'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
@@ -65,9 +68,7 @@ const RecruitDetailContent = ({
                 <RDTitle recruitDetail={recruitDetail} />
 
                 <Hstack className="shrink-0">
-                  <Button variant="outlined" size="lg" shape="square">
-                    <Share2 />
-                  </Button>
+                  <RDShareButton />
                   <RDBookmarkButton recruitDetail={recruitDetail} />
                   <RDConditionalButton isMine={isMine} />
                 </Hstack>
@@ -110,10 +111,7 @@ const RecruitDetailContent = ({
           <RoundBox padding="xl">
             <Hstack>
               <RDBookmarkButton recruitDetail={recruitDetail} isWide />
-              <Button variant="outlined" size="lg">
-                <Share2 size={16} />
-                공유하기
-              </Button>
+              <RDShareButton isWide />
               <div className="grow" />
               <RDConditionalButton isMine={isMine} />
             </Hstack>
@@ -124,6 +122,7 @@ const RecruitDetailContent = ({
       <ApplicationModalPage />
 
       {/* <ManageModal recruitContent={recruitDetail.title} /> */}
+      <RDConfirmClipboardModal />
     </>
   )
 }
