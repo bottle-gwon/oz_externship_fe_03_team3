@@ -6,6 +6,9 @@ import { useLocation } from 'react-router'
 const writeToClipboard = async (text: string) => {
   const setModalKey = useStudyHubStore.getState().setModalKey
   try {
+    // NOTE: 실패 모달을 보려면 아래 주석을 해제해주세요
+    // throw new Error("테스트 에러입니다")
+    // ---- 여기까지
     await navigator.clipboard.writeText(text)
     setModalKey('clipboardSuccess')
   } catch {
