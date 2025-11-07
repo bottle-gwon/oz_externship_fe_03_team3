@@ -18,12 +18,12 @@ import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRo
 import RWFileDropzone from './_RWFileDropzone'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import RWTitleInput from './_RWTitleInput'
-import RWMarkdownEditor from './_RWMarkdownEditor'
 import RWEstimatedCostInput from './_RWEstimatedCost'
 import RWDueDateInput from './_RWDueDateInput'
 import RWExpectedPersonnelSelect from './_RWExpectedPersonnelSelect'
 import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
+import RWMarkdownEditor from './rwMarkdownEditor/RWMarkdownEditor'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
