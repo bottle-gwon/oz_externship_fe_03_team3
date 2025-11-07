@@ -28,3 +28,6 @@ export interface NotificationsResponseData {
   previous: string | null
   results: Notification[]
 }
+
+export const notificationTabArray = ['all', 'unread', 'read']
+export type NotificationTab = (typeof notificationTabArray)[number]

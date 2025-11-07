@@ -1,18 +1,30 @@
 import api from '@/api/api'
+import useNotificationStore from '@/store/notification/notificationStore'
 import type {
   Notification,
   NotificationsResponseData,
-} from '@/types/_notificationInterfaces'
+  NotificationTab,
+} from '@/types'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
+const tabToIsRead: Record<NotificationTab, boolean | null> = {
+  all: null,
+  read: true,
+  unread: false,
+}
+
 const useNotificationsQuery = () => {
   const [notificationArray, setNotificationArray] = useState<Notification[]>([])
+  const selectedTab = useNotificationStore((state) => state.selectedTab)
+
   const endpoint = '/notifications'
+  const params = { is_read: tabToIsRead[selectedTab] }
+
   const { data } = useInfiniteQuery({
-    queryKey: [endpoint],
+    queryKey: [endpoint, selectedTab],
     queryFn: async () =>
-      (await api.get(endpoint)).data as NotificationsResponseData,
+      (await api.get(endpoint, { params })).data as NotificationsResponseData,
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.next ? lastPageParam + 1 : null,

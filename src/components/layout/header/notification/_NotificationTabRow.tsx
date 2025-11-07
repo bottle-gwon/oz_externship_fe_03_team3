@@ -1,6 +1,6 @@
 import Button from '@/components/commonInGeneral/button/Button'
-
-type NotificationTab = 'all' | 'unread' | 'read'
+import useNotificationStore from '@/store/notification/notificationStore'
+import { notificationTabArray, type NotificationTab } from '@/types'
 
 const tabToLabel: Record<NotificationTab, string> = {
   all: '전체 보기',
@@ -20,6 +20,8 @@ const NotificationTab = ({
   tab: NotificationTab
   isSelected?: boolean
 }) => {
+  const setSelectedTab = useNotificationStore((state) => state.setSelectedTab)
+
   return (
     <div className="relative">
       <Button
@@ -29,6 +31,7 @@ const NotificationTab = ({
         className={[isSelected ? '' : 'text-gray-500', 'py-oz-md w-full'].join(
           ' '
         )}
+        onClick={() => setSelectedTab(tab)}
       >
         {tabToLabel[tab]}
       </Button>
@@ -38,11 +41,18 @@ const NotificationTab = ({
 }
 
 const NotificationTabRow = () => {
+  const selectedTab = useNotificationStore((state) => state.selectedTab)
+  const isSelectedArray = notificationTabArray.map((tab) => tab === selectedTab)
+
   return (
     <div className="grid grid-cols-3 border-b border-b-gray-200">
-      <NotificationTab tab="all" isSelected />
-      <NotificationTab tab="unread" />
-      <NotificationTab tab="read" />
+      {notificationTabArray.map((notification, index) => (
+        <NotificationTab
+          key={notification}
+          tab={notification}
+          isSelected={isSelectedArray[index]}
+        />
+      ))}
     </div>
   )
 }

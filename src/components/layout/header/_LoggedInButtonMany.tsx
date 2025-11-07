@@ -5,7 +5,8 @@ import { Bell } from 'lucide-react'
 import type { Me } from '@/types'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
-import NotificationBox from './notification/NotificationBox'
+import { lazy, Suspense } from 'react'
+const NotificationBox = lazy(() => import('./notification/NotificationBox'))
 
 const ProfileButton = ({ me }: { me: Me }) => {
   const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
@@ -58,7 +59,9 @@ const NotificationButton = () => {
         </Button>
       </Dropdown.Trigger>
       <Dropdown.Content>
-        <NotificationBox />
+        <Suspense fallback={null}>
+          <NotificationBox />
+        </Suspense>
       </Dropdown.Content>
     </Dropdown>
   )
