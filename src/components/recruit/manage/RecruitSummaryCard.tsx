@@ -1,19 +1,14 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
-import type { Recruit } from '@/types'
+import type { RecruitsManageResponse } from '@/types'
 
 import { Clock3, FileText, Megaphone } from 'lucide-react'
 import SummaryCard from './SummaryCard'
 
-export type SummaryProps = { myRecruitArray: Recruit[] }
+type CountSummary = RecruitsManageResponse['count']
+export type SummaryProps = { count: CountSummary }
 
-const RecruitSummaryCard = ({ myRecruitArray }: SummaryProps) => {
-  const totalCount = myRecruitArray.length
-  const openCount = myRecruitArray.filter(
-    (item) => item.is_closed === false
-  ).length
-  const closedCount = myRecruitArray.filter(
-    (item) => item.is_closed === true
-  ).length
+const RecruitSummaryCard = ({ count }: SummaryProps) => {
+  const { total: totalCount, open: openCount, closed: closedCount } = count
   return (
     <Hstack gap="lg" className="items-start">
       <SummaryCard

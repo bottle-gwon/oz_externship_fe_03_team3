@@ -26,7 +26,7 @@ const RecruitManageContent = () => {
   const requestNextPage = useRecruitManageStore(
     (state) => state.requestNextPage
   )
-  const { hasNextPage, totalCount } = useRecruitManage()
+  const { hasNextPage, count } = useRecruitManage()
   const handleFilterChange = useCallback((_filtered: Recruit[]) => {}, [])
   const loaderRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(loaderRef, () => {
@@ -55,12 +55,12 @@ const RecruitManageContent = () => {
           </SubHeaderButtonSection>
         </SubHeader>
 
-        <RecruitSummaryCard myRecruitArray={recruitManageArray} />
+        <RecruitSummaryCard count={count} />
 
         <RecruitManageFilter onChange={handleFilterChange} />
 
         <Vstack gap="none">
-          <h1 className="mb-oz-md">내 공고 목록 ({totalCount})</h1>
+          <h1 className="mb-oz-md">내 공고 목록 ({count.total})</h1>
           {recruitManageArray.map((recruit) => (
             <RecruitCard isMine key={recruit.id} recruit={recruit} />
           ))}
