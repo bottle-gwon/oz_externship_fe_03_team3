@@ -8,7 +8,7 @@ import {
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
 
-const recruitsManageQueryEndpoint = '/recruitments/:recruitment_id'
+const recruitsManageQueryEndpoint = '/recruitments/:user_id'
 
 const useRecruitsManageQuery = () => {
   const selectedStatusInText = useRecruitManageStore(
