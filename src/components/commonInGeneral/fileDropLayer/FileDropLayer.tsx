@@ -1,7 +1,4 @@
 import { useEffect, useRef, useState, type ChangeEvent } from 'react'
-import { Vstack } from '../layout'
-import RoundBox from '../roundBox/RoundBox'
-import UploadIcon from '@/assets/upload.svg'
 import { FileDropzoneContext } from '../fileDropzone/_FileRecordContext'
 import type { DivProps, FileRecord } from '@/types'
 
@@ -25,6 +22,8 @@ const FileDropLayer = ({
     const fileArray = Object.values(fileRecord)
     const realFileArray = fileArray.filter((file) => file.lastModified)
     onFileArrayChange(realFileArray)
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fileRecord])
 
   useEffect(() => {
