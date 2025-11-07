@@ -102,7 +102,7 @@ const ChatList = () => {
     // if (scrollTimerIdRef.current) {
     //   clearTimeout(scrollTimerIdRef.current)
     // }
-    console.log(data)
+    console.log(data?.pages)
     // 다음 페이지 없으면 로딩 안함
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage()
@@ -117,8 +117,10 @@ const ChatList = () => {
 
   useEffect(() => {
     if (data && !isFetchingNextPage) {
-      const newData = data.pages[data.pages.length - 1].data.messages
-      console.log(newData, '테스트')
+      if (data?.pages) {
+        const newData = data?.pages[data?.pages.length - 1].data?.messages
+        console.log(newData, '테스트')
+      }
     }
   }, [data, isFetchingNextPage])
 
