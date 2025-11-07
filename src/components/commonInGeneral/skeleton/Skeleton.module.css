@@ -10,7 +10,6 @@
   );
   background-size: 200% 100%;
   animation: loading 3s infinite;
-  border-radius: 6px;
 
   width: var(--width);
   height: var(--height);
