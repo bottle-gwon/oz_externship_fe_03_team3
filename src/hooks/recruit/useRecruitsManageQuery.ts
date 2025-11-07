@@ -44,9 +44,8 @@ const useRecruitsManageQuery = () => {
       },
       initialPageParam: 1,
       getNextPageParam: (lastPage) => {
-        const totalPages = Math.ceil(lastPage.count / lastPage.page_size)
-        const currentPage = lastPage.page
-        return currentPage < totalPages ? lastPage.page + 1 : null
+        const totalPages = Math.ceil(lastPage.count.total / lastPage.page_size)
+        return lastPage.page < totalPages ? lastPage.page + 1 : null
       },
     })
   useEffect(() => {
@@ -65,13 +64,13 @@ const useRecruitsManageQuery = () => {
     })
   }, [setRequestNextPage, fetchNextPage])
 
-  const totalCount = data?.pages?.[0]?.count ?? 0
+  const count = data?.pages?.[0]?.count ?? { total: 0, open: 0, closed: 0 }
 
   return {
     isPending,
     error,
     hasNextPage,
-    totalCount,
+    count,
   }
 }
 
