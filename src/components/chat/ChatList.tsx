@@ -1,87 +1,87 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import ChatListCard from './feat/ChatListCard'
 import useStudyHubStore from '@/store/store'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
 import { useChatRoomList } from '@/hooks/chat/useChat'
+import type { ChatRoomData } from '@/types/_chat'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
-const DUMMY_CHATLIST = {
-  status: 'success',
-  code: 'SUCCESS',
-  message: '메시지 목록 조회 성공',
-  data: {
-    room: [
-      {
-        title: '채팅방 테스트 입니다.',
-        study_group_id: 201,
-        sender_id: 5,
-        sender_nickname: '홍길동',
-        content: '오늘 스터디 7시에 시작합니다.',
-        new_message: 3,
-        created_at: '2025-10-15T10:30:00Z',
-      },
-      {
-        title: '채팅방 테스트2',
-        study_group_id: 202,
-        sender_id: 5,
-        sender_nickname: '홍길동',
-        content: '오늘 스터디 7시에 시작합니다.',
-        new_message: 1,
-        created_at: '2025-10-15T10:30:00Z',
-      },
-      {
-        title: '채팅방 테스트3',
-        study_group_id: 203,
-        sender_id: 5,
-        sender_nickname: '홍길동',
-        content: null,
-        new_message: 1,
-        created_at: '2025-10-15T10:30:00Z',
-      },
-      {
-        title: '채팅방 테스트3',
-        study_group_id: 204,
-        sender_id: 5,
-        sender_nickname: '홍길동',
-        content: null,
-        new_message: 0,
-        created_at: '2025-10-15T10:30:00Z',
-      },
-      {
-        title: '채팅방 테스트3',
-        study_group_id: 205,
-        sender_id: 5,
-        sender_nickname: '홍길동',
-        content: null,
-        new_message: 0,
-        created_at: '2025-10-15T10:30:00Z',
-      },
-      {
-        title: '채팅방 테스트3',
-        study_group_id: 206,
-        sender_id: 5,
-        sender_nickname: '홍길동',
-        content: null,
-        new_message: 1,
-        created_at: '2025-10-15T10:30:00Z',
-      },
-    ],
-    pagination: {
-      page: 1,
-      page_size: 20,
-      total_count: 102,
-    },
-  },
-}
+// const DUMMY_CHATLIST = {
+//   status: 'success',
+//   code: 'SUCCESS',
+//   message: '메시지 목록 조회 성공',
+//   data: {
+//     room: [
+//       {
+//         title: '채팅방 테스트 입니다.',
+//         study_group_id: 201,
+//         sender_id: 5,
+//         sender_nickname: '홍길동',
+//         content: '오늘 스터디 7시에 시작합니다.',
+//         new_message: 3,
+//         created_at: '2025-10-15T10:30:00Z',
+//       },
+//       {
+//         title: '채팅방 테스트2',
+//         study_group_id: 202,
+//         sender_id: 5,
+//         sender_nickname: '홍길동',
+//         content: '오늘 스터디 7시에 시작합니다.',
+//         new_message: 1,
+//         created_at: '2025-10-15T10:30:00Z',
+//       },
+//       {
+//         title: '채팅방 테스트3',
+//         study_group_id: 203,
+//         sender_id: 5,
+//         sender_nickname: '홍길동',
+//         content: null,
+//         new_message: 1,
+//         created_at: '2025-10-15T10:30:00Z',
+//       },
+//       {
+//         title: '채팅방 테스트3',
+//         study_group_id: 204,
+//         sender_id: 5,
+//         sender_nickname: '홍길동',
+//         content: null,
+//         new_message: 0,
+//         created_at: '2025-10-15T10:30:00Z',
+//       },
+//       {
+//         title: '채팅방 테스트3',
+//         study_group_id: 205,
+//         sender_id: 5,
+//         sender_nickname: '홍길동',
+//         content: null,
+//         new_message: 0,
+//         created_at: '2025-10-15T10:30:00Z',
+//       },
+//       {
+//         title: '채팅방 테스트3',
+//         study_group_id: 206,
+//         sender_id: 5,
+//         sender_nickname: '홍길동',
+//         content: null,
+//         new_message: 1,
+//         created_at: '2025-10-15T10:30:00Z',
+//       },
+//     ],
+//     pagination: {
+//       page: 1,
+//       page_size: 20,
+//       total_count: 102,
+//     },
+//   },
+// }
 
 // 채팅 목록
 const ChatList = () => {
-  const responseData = DUMMY_CHATLIST
-  const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
+  // const responseData = DUMMY_CHATLIST
 
   // tanstackQuery에서 받아올 내용 임시로 작성
   // const [isPending, setIsPending] = useState(false)
@@ -91,7 +91,9 @@ const ChatList = () => {
   // const timerRef = useRef<NodeJS.Timeout | null>(null)
   // const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
 
-  // const [chatRoomArray, setChatRoomArray] = useState([])
+  const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
+
+  const [chatRoomArray, setChatRoomArray] = useState<ChatRoomData[]>([])
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
     useChatRoomList()
@@ -102,7 +104,6 @@ const ChatList = () => {
     // if (scrollTimerIdRef.current) {
     //   clearTimeout(scrollTimerIdRef.current)
     // }
-    console.log(data?.pages)
     // 다음 페이지 없으면 로딩 안함
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage()
@@ -116,11 +117,15 @@ const ChatList = () => {
   })
 
   useEffect(() => {
-    if (data && !isFetchingNextPage) {
-      if (data?.pages) {
-        const newData = data?.pages[data?.pages.length - 1].data?.messages
-        console.log(newData, '테스트')
-      }
+    if (data?.pages && !isFetchingNextPage) {
+      // const newData = data?.pages[data?.pages.length - 1].data?.messages
+      // console.log(newData, '테스트')
+      // const allMessage = data?.pages
+      //   .map(res => res.data?.messages)
+      //   .filter(res => res !== undefined)
+      const allMessage =
+        data?.pages.flatMap((res) => res.data?.messages || []) || []
+      setChatRoomArray(allMessage)
     }
   }, [data, isFetchingNextPage])
 
@@ -155,7 +160,7 @@ const ChatList = () => {
       >
         {/* 테스트를 위해 스켈레톤을 카드보다 위로 올려 놨습니다. */}
         {isPending && <ChatListSkeleton />}
-        {responseData.data.room.map((el) => (
+        {chatRoomArray.map((el) => (
           <ChatListCard key={el.study_group_id} room={el} />
         ))}
 
