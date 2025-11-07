@@ -1,4 +1,5 @@
 import api from '@/api/api'
+import queryClient from '@/lib/tanstackQueryClient'
 import useNotificationStore from '@/store/notification/notificationStore'
 import type {
   Notification,
@@ -9,10 +10,29 @@ import { sleep } from '@/utils/sleep'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
 
+const endpoint = '/notifications'
+
 const tabToIsRead: Record<NotificationTab, boolean | null> = {
   all: null,
   read: true,
   unread: false,
+}
+
+const getNotifications = async (params: object) => {
+  const state = useNotificationStore.getState()
+  const selectedTab = state.selectedTab
+  const allNotificationArray = state.allNotificationArray
+  const setNotificationArray = state.setNotificationArray
+
+  const previous = queryClient.getQueryData([endpoint, selectedTab])
+  if (!previous) {
+    const filteredNotificationArray = allNotificationArray.filter(
+      (notification) => notification.is_read === tabToIsRead[selectedTab]
+    )
+    setNotificationArray(filteredNotificationArray)
+  }
+
+  return (await api.get(endpoint, { params })).data as NotificationsResponseData
 }
 
 const useNotificationsQuery = () => {
@@ -20,22 +40,18 @@ const useNotificationsQuery = () => {
   const setNotificationArray = useNotificationStore(
     (state) => state.setNotificationArray
   )
+  const setAllNotificationArray = useNotificationStore(
+    (state) => state.setAllNotificationArray
+  )
   const setRequestNextPage = useNotificationStore(
     (state) => state.setRequestNextPage
   )
 
-  const endpoint = '/notifications'
   const params = { is_read: tabToIsRead[selectedTab] }
 
   const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
     queryKey: [endpoint, selectedTab],
-    // queryFn: async () =>
-    //   (await api.get(endpoint, { params })).data as NotificationsResponseData,
-    queryFn: async () => {
-      await sleep(1000)
-      return (await api.get(endpoint, { params }))
-        .data as NotificationsResponseData
-    },
+    queryFn: () => getNotifications(params),
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.next ? lastPageParam + 1 : null,
@@ -54,7 +70,13 @@ const useNotificationsQuery = () => {
       return [...acc, ...page.results]
     }, [])
     setNotificationArray(reducedArray)
-  }, [data, setNotificationArray])
+
+    if (selectedTab === 'all') {
+      setAllNotificationArray(reducedArray)
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   useEffect(() => {
     setRequestNextPage(fetchNextPage)
