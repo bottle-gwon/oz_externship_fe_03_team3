@@ -5,6 +5,7 @@ import { useEffect, useRef, useState } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
+import { useChatRoomList } from '@/hooks/chat/useChat'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
@@ -83,49 +84,61 @@ const ChatList = () => {
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
 
   // tanstackQuery에서 받아올 내용 임시로 작성
-  const [isPending, setIsPending] = useState(false)
-  const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
-  const [hasNextPage, _] = useState(true)
+  // const [isPending, setIsPending] = useState(false)
+  // const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
+  // const [hasNextPage, _] = useState(true)
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
+  // const timerRef = useRef<NodeJS.Timeout | null>(null)
+  // const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
+
+  // const [chatRoomArray, setChatRoomArray] = useState([])
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
+    useChatRoomList()
 
   const LoadingRef = useOneWayInfinityScroll(() => {
     // 스크롤이 타겟에 들어왔을때 (훅에서는 100% 보일때로 설정해둠)
     // 아래 타이머 관련은 추후 삭제하고 api로 연결할 예정입니다. 일단은 예시로 로딩만 볼 수 있게 했습니다.
-    if (scrollTimerIdRef.current) {
-      clearTimeout(scrollTimerIdRef.current)
-    }
-
+    // if (scrollTimerIdRef.current) {
+    //   clearTimeout(scrollTimerIdRef.current)
+    // }
+    console.log(data)
     // 다음 페이지 없으면 로딩 안함
-    if (!hasNextPage) {
-      return
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
     }
 
-    setIsFetchingNextPage(true)
-    scrollTimerIdRef.current = setTimeout(
-      () => setIsFetchingNextPage(false),
-      1500
-    )
+    // setIsFetchingNextPage(true)
+    // scrollTimerIdRef.current = setTimeout(
+    //   () => setIsFetchingNextPage(false),
+    //   1500
+    // )
   })
 
   useEffect(() => {
-    return () => {
-      if (scrollTimerIdRef.current) {
-        clearTimeout(scrollTimerIdRef.current)
-      }
+    if (data && !isFetchingNextPage) {
+      const newData = data.pages[data.pages.length - 1].data.messages
+      console.log(newData, '테스트')
     }
-  }, [])
+  }, [data, isFetchingNextPage])
 
-  useEffect(() => {
-    setIsPending(true)
-    timerRef.current = setTimeout(() => setIsPending(false), 1500)
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     if (scrollTimerIdRef.current) {
+  //       clearTimeout(scrollTimerIdRef.current)
+  //     }
+  //   }
+  // }, [])
+
+  // useEffect(() => {
+  //   setIsPending(true)
+  //   timerRef.current = setTimeout(() => setIsPending(false), 1500)
+  //   return () => {
+  //     if (timerRef.current) {
+  //       clearTimeout(timerRef.current)
+  //     }
+  //   }
+  // }, [])
 
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
   return (
