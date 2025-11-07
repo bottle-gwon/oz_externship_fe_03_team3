@@ -63,7 +63,7 @@ const RecruitDetailContent = ({
 
           <RoundBox padding="xxl">
             <Vstack gap="lg">
-              <Hstack>
+              <Hstack className="justify-between">
                 <RDTitle recruitDetail={recruitDetail} />
 
                 <Hstack className="shrink-0">
