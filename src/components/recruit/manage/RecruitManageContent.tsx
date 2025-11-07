@@ -1,5 +1,5 @@
 import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
-import { mockRecruits } from '../../../testRoutes/testPages/nari/_TestMokData'
+
 import RecruitSummaryCard from '@/components/recruit/manage/RecruitSummaryCard'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
@@ -55,7 +55,7 @@ const RecruitManageContent = () => {
           </SubHeaderButtonSection>
         </SubHeader>
 
-        <RecruitSummaryCard myRecruitArray={mockRecruits} />
+        <RecruitSummaryCard myRecruitArray={recruitManageArray} />
 
         <RecruitManageFilter onChange={handleFilterChange} />
 
