@@ -6,9 +6,16 @@ import NotificationCard from './_NotificationCard'
 import NotificationTabRow from './_NotificationTabRow'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
+import useNotificationStore from '@/store/notification/notificationStore'
+import { notificationTabArray } from '@/types'
+import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 
 const NotificationBox = () => {
-  const { notificationArray } = useNotificationsQuery()
+  const notificationArray = useNotificationStore(
+    (state) => state.notificationArray
+  )
+
+  const { isPending, error } = useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
 
   return (
@@ -34,6 +41,10 @@ const NotificationBox = () => {
         <NotificationTabRow />
 
         <FlexOneContainer isYScrollable className="border-b border-b-gray-200">
+          {isPending && notificationArray.length === 0 && <Skeleton />}
+          {error && notificationArray.length === 0 && (
+            <p>에러가 발생했습니다. 여기를 채워야 해요</p>
+          )}
           {notificationArray.map((notification) => (
             <NotificationCard
               key={notification.id}
