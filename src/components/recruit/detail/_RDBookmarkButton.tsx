@@ -1,6 +1,7 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import useRecruitDetailMutation from '@/hooks/recruitDetail/useRecruitDetailMutation'
 import useDebounceToggle from '@/hooks/useDebounceToggle'
+import useStudyHubStore from '@/store/store'
 import type { RecruitDetail } from '@/types'
 import { Bookmark } from 'lucide-react'
 import { useEffect } from 'react'
@@ -12,6 +13,7 @@ const RDBookmarkButton = ({
   recruitDetail: RecruitDetail
   isWide?: boolean
 }) => {
+  const accessToken = useStudyHubStore((state) => state.accessToken)
   const { toggleBookmarkMutation } = useRecruitDetailMutation(recruitDetail)
   const { debouncedBoolValue, realTimeBoolValue, toggleBoolValue } =
     useDebounceToggle(recruitDetail.is_bookmarked)
@@ -30,6 +32,10 @@ const RDBookmarkButton = ({
     // NOTE: recruitDetail 넣으면 무한 렌더링 일어남
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedBoolValue])
+
+  if (!accessToken) {
+    return null
+  }
 
   return (
     <Button
