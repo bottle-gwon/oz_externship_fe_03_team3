@@ -7,7 +7,6 @@ import NotificationTabRow from './_NotificationTabRow'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
 import useNotificationStore from '@/store/notification/notificationStore'
-import { notificationTabArray } from '@/types'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 
 const NotificationBox = () => {
