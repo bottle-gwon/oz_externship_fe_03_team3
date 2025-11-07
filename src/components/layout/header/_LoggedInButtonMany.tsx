@@ -6,6 +6,7 @@ import type { Me } from '@/types'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
 import { lazy, Suspense } from 'react'
+import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 const NotificationBox = lazy(() => import('./notification/NotificationBox'))
 
 const ProfileButton = ({ me }: { me: Me }) => {
@@ -59,7 +60,9 @@ const NotificationButton = () => {
         </Button>
       </Dropdown.Trigger>
       <Dropdown.Content>
-        <Suspense fallback={null}>
+        <Suspense
+          fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
+        >
           <NotificationBox />
         </Suspense>
       </Dropdown.Content>
