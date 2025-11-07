@@ -1,12 +1,11 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import ChatListCard from './feat/ChatListCard'
 import useStudyHubStore from '@/store/store'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
 import { useChatRoomList } from '@/hooks/chat/useChat'
-import type { ChatRoomData } from '@/types/_chat'
 
 // TODO api 연결할때 지우기!
 // Note: 아직 API가 없어서 일단 임의로 작성 했습니다. 추후에 관련 API 가 나오면 수정 하도록 하겠습니다.
@@ -92,8 +91,8 @@ const ChatList = () => {
   // const scrollTimerIdRef = useRef<NodeJS.Timeout | null>(null)
 
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
-
-  const [chatRoomArray, setChatRoomArray] = useState<ChatRoomData[]>([])
+  const chatRoomArray = useStudyHubStore((state) => state.chatRoomArray)
+  const setChatRoomArray = useStudyHubStore((state) => state.setChatRoomArray)
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending } =
     useChatRoomList()
@@ -127,7 +126,11 @@ const ChatList = () => {
         data?.pages.flatMap((res) => res.data?.messages || []) || []
       setChatRoomArray(allMessage)
     }
-  }, [data, isFetchingNextPage])
+
+    return () => {
+      setChatRoomArray([])
+    }
+  }, [data, isFetchingNextPage, setChatRoomArray])
 
   // useEffect(() => {
   //   return () => {
@@ -160,9 +163,10 @@ const ChatList = () => {
       >
         {/* 테스트를 위해 스켈레톤을 카드보다 위로 올려 놨습니다. */}
         {isPending && <ChatListSkeleton />}
-        {chatRoomArray.map((el) => (
-          <ChatListCard key={el.study_group_id} room={el} />
-        ))}
+        {!isPending &&
+          chatRoomArray.map((el) => (
+            <ChatListCard key={el.study_group_id} room={el} />
+          ))}
 
         {/* 무한 스크롤 훅이 감지하는 위치  */}
         <div ref={LoadingRef} className="h-0.5 w-full shrink-0"></div>

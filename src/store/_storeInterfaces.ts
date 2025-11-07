@@ -14,6 +14,7 @@ type ChatUIState =
 // NOTE:     - 한 번만 내려줘서 해결되면 전역 상태로 등록하지 않습니다.
 
 import type { Me, StudyGroup, Recruit, RecruitDetail } from '@/types'
+import type { ChatRoomData } from '@/types/_chat'
 
 export interface StudyHubState {
   fruitArray: string[] // 타입 정의 예시 1
@@ -59,6 +60,9 @@ export interface StudyHubState {
   openChatList: () => void //채팅 목록 열기 (채팅 아이콘 클릭 했을때)
   openChatRoom: (id: number, title: string) => void
   closeChatUI: () => void //채팅방 닫기
+
+  chatRoomArray: ChatRoomData[]
+  setChatRoomArray: (chatRoomArray: ChatRoomData[]) => void
 
   unReadCounter: number //안읽은 메시지 카운터
   setUnReadCounter: (newCount: number) => void
