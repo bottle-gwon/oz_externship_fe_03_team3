@@ -1,12 +1,24 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import useStudyHubStore from '@/store/store'
 import { Share2 } from 'lucide-react'
+import { useLocation } from 'react-router'
+
+const writeToClipboard = async (text: string) => {
+  const setModalKey = useStudyHubStore.getState().setModalKey
+  try {
+    await navigator.clipboard.writeText(text)
+    setModalKey('clipboardSuccess')
+  } catch {
+    setModalKey('clipboardFail')
+  }
+}
 
 const RDShareButton = ({ isWide }: { isWide?: boolean }) => {
-  const setModalKey = useStudyHubStore((state) => state.setModalKey)
+  const location = useLocation()
 
   const handleClick = () => {
-    setModalKey('clipboard')
+    const url = `${import.meta.env.VITE_OUR_DOMAIN}${location.pathname}`
+    writeToClipboard(url)
   }
   return (
     <Button

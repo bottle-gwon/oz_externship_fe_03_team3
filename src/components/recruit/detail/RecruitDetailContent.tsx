@@ -10,7 +10,7 @@ import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
 import Tag from '@/components/commonInProject/tag/Tag'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import type { RecruitDetail } from '@/types'
-import { ScrollText, Send, Share2 } from 'lucide-react'
+import { ScrollText, Send } from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
 import RWLectureCard from './_RDLectureCard'
 import MDEditor from '@uiw/react-md-editor'
@@ -20,8 +20,7 @@ import ApplicationModalPage from '@/pages/recruit/ApplicationModalPage'
 import RDTitle from './_RDTitle'
 import RDBookmarkButton from './_RDBookmarkButton'
 import RDShareButton from './_RDShareButton'
-import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
-import RDConfirmClipboardModal from './_RDConfirmClipboardModal'
+import RDConfirmClipboardModalMany from './_RDConfirmClipboardModal'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
@@ -122,7 +121,7 @@ const RecruitDetailContent = ({
       <ApplicationModalPage />
 
       {/* <ManageModal recruitContent={recruitDetail.title} /> */}
-      <RDConfirmClipboardModal />
+      <RDConfirmClipboardModalMany />
     </>
   )
 }
