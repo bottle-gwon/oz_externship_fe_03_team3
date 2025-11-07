@@ -20,6 +20,7 @@ export interface ChatRoomData {
   study_group_id: number
   study_name: string
   content: string
+  message_counter: number
   file_url: string | null
   created_at: string
 }
