@@ -5,7 +5,6 @@ import useStudyHubStore from '@/store/store'
 import type { RecruitWriteChildrenProps, Replacing } from '@/types'
 import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import { Controller } from 'react-hook-form'
-import RWImageDropzone from './_RWImageDropzone'
 import useRecruitWriteStore from '@/store/recruitWrite/recruitWriteStore'
 import api from '@/api/api'
 
@@ -66,7 +65,6 @@ const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
               replacingArray={replacingArray}
               onFileArrayDrop={handleFileArrayDrop}
             />
-            <RWImageDropzone />
           </div>
         )}
       />
