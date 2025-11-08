@@ -7,12 +7,14 @@ import rehypeSanitize from 'rehype-sanitize'
 import { commandArray, extraCommandArray } from './_commandArray'
 import markdownPlaceholder from './_markdownPlaceholder'
 import type { Replacing } from '@/types'
+import useFileDrop from '../fileDropLayer/useFileDrop'
 
 interface MarkdownEditorProps {
   onChange: (value: string | undefined) => void
   defaultValue?: string
   insertingTextArray?: string[]
   replacingArray?: Replacing[]
+  onFileArrayDrop: (fileArray: File[]) => void
 }
 
 const MarkdownEditor = memo(
@@ -21,9 +23,15 @@ const MarkdownEditor = memo(
     defaultValue,
     insertingTextArray,
     replacingArray,
+    onFileArrayDrop,
   }: MarkdownEditorProps) => {
     const [text, setText] = useState<string | undefined>(defaultValue)
     const editorRef = useRef<RefMDEditor>(null)
+    const [isDragEntered, setIsDragEntered] = useState(false)
+    const fileDropProps = useFileDrop({
+      onDragEnterChange: (isEntered) => setIsDragEntered(isEntered),
+      onFileArrayDrop,
+    })
 
     useEffect(() => {
       onChange(text)
@@ -42,9 +50,7 @@ const MarkdownEditor = memo(
         return
       }
 
-      // const textarea = editorRef.current.container.querySelector('textarea')
-      // console.log({ textarea })
-      // debugger
+      const textarea = editorRef.current.container.querySelector('textarea')
     }, [insertingTextArray])
 
     useEffect(() => {}, [replacingArray])
@@ -53,7 +59,7 @@ const MarkdownEditor = memo(
       <>
         <div className="wmde-markdown-var"></div>
         <RoundBox
-          color="mono-dim"
+          color={isDragEntered ? 'mono-dim' : 'primary'}
           padding="none"
           className="overflow-hidden"
           data-color-mode="light"
@@ -73,7 +79,6 @@ const MarkdownEditor = memo(
               ref={editorRef}
               textareaProps={{
                 placeholder: markdownPlaceholder,
-                // <ref>
               }}
               components={{
                 toolbar: (command, disabled, executeCommand) => {
@@ -93,6 +98,7 @@ const MarkdownEditor = memo(
                   }
                 },
               }}
+              {...fileDropProps}
             />
             <Hstack className="gap-oz-xs px-oz-lg py-oz-sm bg-gray-50 text-xs text-gray-600">
               <p>마크다운 문법을 사용할 수 있습니다.</p>

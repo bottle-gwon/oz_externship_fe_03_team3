@@ -1,5 +1,6 @@
 // import api from '@/api/api'
 import FileDropLayer from '@/components/commonInGeneral/fileDropLayer/FileDropLayer'
+import useRecruitWriteStore from '@/store/recruitWrite/recruitWriteStore'
 import { useState } from 'react'
 
 // const postImage = async () => {
@@ -10,6 +11,12 @@ import { useState } from 'react'
 
 const RWImageDropzone = () => {
   const [isDragEntered, setIsDragEntered] = useState(false)
+  const setInsertingTextArray = useRecruitWriteStore(
+    (state) => state.setInsertingTextArray
+  )
+  const setReplacingArray = useRecruitWriteStore(
+    (state) => state.setReplacingArray
+  )
 
   const handleFileArrayChange = (_fileArray: File[]) => {
     // NOTE: 테스트할 땐 아래 주석을 해제해주세요
@@ -17,6 +24,7 @@ const RWImageDropzone = () => {
     //   debugger
     // ---- 여기까지
     // TODO: 여기 찍히면 텍스트 인서트하자
+    setInsertingTextArray(['---- 가나다라 ----', '---- 에이비비에이 ----'])
   }
 
   return (

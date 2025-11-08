@@ -3,12 +3,14 @@ import { FileDropzoneContext } from '../fileDropzone/_FileRecordContext'
 import type { DivProps, FileRecord } from '@/types'
 
 interface FileDropLayerProps {
+  isClickable?: boolean
   onFileArrayChange: (fileArray: File[]) => void
   onDragEnterChange: (isDragEntered: boolean) => void
   defaultFileRecord?: FileRecord
 }
 
 const FileDropLayer = ({
+  isClickable,
   onFileArrayChange,
   onDragEnterChange,
   defaultFileRecord,
@@ -21,6 +23,9 @@ const FileDropLayer = ({
   useEffect(() => {
     const fileArray = Object.values(fileRecord)
     const realFileArray = fileArray.filter((file) => file.lastModified)
+    if (realFileArray.length === 0) {
+      return
+    }
     onFileArrayChange(realFileArray)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -86,7 +91,8 @@ const FileDropLayer = ({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        onClick={handleClick}
+        onClick={isClickable ? handleClick : undefined}
+        className={!isClickable && !isDragEntered ? 'pointer-events-none' : ''}
       >
         <input
           ref={inputRef}
