@@ -32,6 +32,7 @@ const MarkdownEditor = memo(
       onDragEnterChange: (isEntered) => setIsDragEntered(isEntered),
       onFileArrayDrop,
     })
+    const [textarea, setTextarea] = useState<HTMLTextAreaElement | null>(null)
 
     useEffect(() => {
       onChange(text)
@@ -45,11 +46,7 @@ const MarkdownEditor = memo(
       if (!insertingTextArray || insertingTextArray.length === 0) {
         return
       }
-      if (!editorRef.current || !editorRef.current.container) {
-        return
-      }
 
-      const textarea = editorRef.current.container.querySelector('textarea')
       if (!textarea) {
         return
       }
@@ -64,7 +61,21 @@ const MarkdownEditor = memo(
         ...afterText,
       ].join('')
       setText(textResult)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [insertingTextArray])
+
+    useEffect(() => {
+      if (!editorRef.current || !editorRef.current.container) {
+        return
+      }
+
+      const target = editorRef.current.container.querySelector('textarea')
+      if (!target) {
+        return
+      }
+      setTextarea(target)
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [editorRef.current])
 
     useEffect(() => {}, [replacingArray])
 
