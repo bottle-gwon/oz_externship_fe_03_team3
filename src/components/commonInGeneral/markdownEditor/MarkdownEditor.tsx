@@ -37,14 +37,14 @@ const MarkdownEditor = memo(
       if (!editorRef.current) {
         return
       }
-      debugger
+      // debugger
       if (!editorRef.current.container) {
         return
       }
 
-      const textarea = editorRef.current.container.querySelector('textarea')
-      console.log({ textarea })
-      debugger
+      // const textarea = editorRef.current.container.querySelector('textarea')
+      // console.log({ textarea })
+      // debugger
     }, [insertingTextArray])
 
     useEffect(() => {}, [replacingArray])
