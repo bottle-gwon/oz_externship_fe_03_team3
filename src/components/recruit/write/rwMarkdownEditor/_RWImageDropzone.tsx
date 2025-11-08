@@ -1,4 +1,4 @@
-import api from '@/api/api'
+// import api from '@/api/api'
 import FileDropLayer from '@/components/commonInGeneral/fileDropLayer/FileDropLayer'
 import { useState } from 'react'
 
