@@ -27,7 +27,8 @@ const MarkdownEditor = memo(
   }: MarkdownEditorProps) => {
     const [text, setText] = useState<string | undefined>(defaultValue)
     const editorRef = useRef<RefMDEditor>(null)
-    const [isDragEntered, setIsDragEntered] = useState(false)
+    // TODO: 파일 드래그 중일 때 스타일 바꿔야
+    const [_isDragEntered, setIsDragEntered] = useState(false)
     const fileDropProps = useFileDrop({
       onDragEnterChange: (isEntered) => setIsDragEntered(isEntered),
       onFileArrayDrop,
@@ -95,7 +96,7 @@ const MarkdownEditor = memo(
       <>
         <div className="wmde-markdown-var"></div>
         <RoundBox
-          color={isDragEntered ? 'mono-dim' : 'primary'}
+          color={'mono-dim'}
           padding="none"
           className="overflow-hidden"
           data-color-mode="light"
