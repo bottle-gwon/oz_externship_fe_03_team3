@@ -77,7 +77,19 @@ const MarkdownEditor = memo(
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [editorRef.current])
 
-    useEffect(() => {}, [replacingArray])
+    useEffect(() => {
+      if (!textarea || !replacingArray) {
+        return
+      }
+
+      const result = replacingArray.reduce((acc, cur) => {
+        const newAcc = acc.replace(cur.insertedText, cur.replacingText)
+        return newAcc
+      }, textarea.value)
+      setText(result)
+
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [replacingArray])
 
     return (
       <>

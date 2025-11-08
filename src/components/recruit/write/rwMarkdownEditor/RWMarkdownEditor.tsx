@@ -19,13 +19,18 @@ const postImages = async (fileArray: File[]) => {
   )
   setInsertingTextArray(insertingPlaceholderArray)
 
-  const response = await api.post('/recruitments/presigned-url', fileArray)
+  const formData = new FormData()
+  fileArray.forEach((file) => {
+    formData.append('files', file) // file must be actual File object
+  })
+  const response = await api.post('/recruitments/presigned-url', formData)
+
   const urlArray: string[] = response.data.data.map(
     (data: { file_url: string }) => data.file_url
   )
   const replacingArray: Replacing[] = urlArray.map((url, index) => ({
     insertedText: insertingPlaceholderArray[index],
-    replacingText: `<img src=${url} />`,
+    replacingText: `<img src="${url}" />`,
   }))
   setReplacingArray(replacingArray)
 }
