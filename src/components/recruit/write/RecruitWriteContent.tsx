@@ -23,7 +23,7 @@ import RWDueDateInput from './_RWDueDateInput'
 import RWExpectedPersonnelSelect from './_RWExpectedPersonnelSelect'
 import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
-import RWMarkdownEditor from './rwMarkdownEditor/RWMarkdownEditor'
+import RWMarkdownEditor from './_RWMarkdownEditor'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
