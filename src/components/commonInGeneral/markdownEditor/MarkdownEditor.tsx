@@ -42,15 +42,28 @@ const MarkdownEditor = memo(
     }, [defaultValue])
 
     useEffect(() => {
-      if (!editorRef.current) {
+      if (!insertingTextArray || insertingTextArray.length === 0) {
         return
       }
-      // debugger
-      if (!editorRef.current.container) {
+      if (!editorRef.current || !editorRef.current.container) {
         return
       }
 
       const textarea = editorRef.current.container.querySelector('textarea')
+      if (!textarea) {
+        return
+      }
+
+      const previousText = textarea.value
+      const beforeText = previousText.slice(0, textarea.selectionStart)
+      const afterText = previousText.slice(textarea.selectionStart)
+      const textResult = [
+        beforeText,
+        '<br>',
+        ...insertingTextArray,
+        ...afterText,
+      ].join('')
+      setText(textResult)
     }, [insertingTextArray])
 
     useEffect(() => {}, [replacingArray])
