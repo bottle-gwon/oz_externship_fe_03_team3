@@ -11,3 +11,8 @@ export type Color = 'mono' | 'danger' | 'primary' | 'success' | 'blue' // Îçî Ï∂
 export type ButtonVariant = 'outlined' | 'contained' | 'ghost'
 
 export type FileRecord = Record<number, File>
+
+export interface Replacing {
+  insertedText: string
+  replacingText: string
+}

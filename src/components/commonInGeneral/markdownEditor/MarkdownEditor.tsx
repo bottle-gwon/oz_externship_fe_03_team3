@@ -1,20 +1,29 @@
 import './markdown.css'
-import MDEditor from '@uiw/react-md-editor'
+import MDEditor, { type RefMDEditor } from '@uiw/react-md-editor'
 import { Hstack, Vstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
-import { memo, useEffect, useState } from 'react'
+import { memo, useEffect, useRef, useState } from 'react'
 import rehypeSanitize from 'rehype-sanitize'
 import { commandArray, extraCommandArray } from './_commandArray'
 import markdownPlaceholder from './_markdownPlaceholder'
+import type { Replacing } from '@/types'
 
 interface MarkdownEditorProps {
   onChange: (value: string | undefined) => void
   defaultValue?: string
+  insertingTextArray?: string[]
+  replacingArray?: Replacing[]
 }
 
 const MarkdownEditor = memo(
-  ({ onChange, defaultValue }: MarkdownEditorProps) => {
+  ({
+    onChange,
+    defaultValue,
+    insertingTextArray,
+    replacingArray,
+  }: MarkdownEditorProps) => {
     const [text, setText] = useState<string | undefined>(defaultValue)
+    const editorRef = useRef<RefMDEditor>(null)
 
     useEffect(() => {
       onChange(text)
@@ -23,6 +32,22 @@ const MarkdownEditor = memo(
     useEffect(() => {
       setText(defaultValue)
     }, [defaultValue])
+
+    useEffect(() => {
+      if (!editorRef.current) {
+        return
+      }
+      debugger
+      if (!editorRef.current.container) {
+        return
+      }
+
+      const textarea = editorRef.current.container.querySelector('textarea')
+      console.log({ textarea })
+      debugger
+    }, [insertingTextArray])
+
+    useEffect(() => {}, [replacingArray])
 
     return (
       <>
@@ -45,8 +70,10 @@ const MarkdownEditor = memo(
               preview="edit"
               commands={commandArray}
               extraCommands={extraCommandArray}
+              ref={editorRef}
               textareaProps={{
                 placeholder: markdownPlaceholder,
+                // <ref>
               }}
               components={{
                 toolbar: (command, disabled, executeCommand) => {
