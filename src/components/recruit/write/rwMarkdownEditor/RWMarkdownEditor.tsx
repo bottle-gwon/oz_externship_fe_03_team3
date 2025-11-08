@@ -15,7 +15,7 @@ const postImages = async (fileArray: File[]) => {
   const setReplacingArray = state.setReplacingArray
 
   const insertingPlaceholderArray = fileArray.map(
-    (file) => `![Uploading ${file.name}]<br>`
+    (file) => `<!-- Uploading "${file.name}"...--><br>`
   )
   setInsertingTextArray(insertingPlaceholderArray)
 
