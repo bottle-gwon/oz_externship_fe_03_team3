@@ -2,13 +2,44 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import { Hstack } from '@/components/commonInGeneral/layout'
 import MarkdownEditor from '@/components/commonInGeneral/markdownEditor/MarkdownEditor'
 import useStudyHubStore from '@/store/store'
-import type { RecruitWriteChildrenProps } from '@/types'
+import type { RecruitWriteChildrenProps, Replacing } from '@/types'
 import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import { Controller } from 'react-hook-form'
 import RWImageDropzone from './_RWImageDropzone'
+import useRecruitWriteStore from '@/store/recruitWrite/recruitWriteStore'
+import api from '@/api/api'
+
+const postImages = async (fileArray: File[]) => {
+  const state = useRecruitWriteStore.getState()
+  const setInsertingTextArray = state.setInsertingTextArray
+  const setReplacingArray = state.setReplacingArray
+
+  const insertingPlaceholderArray = fileArray.map(
+    (file) => `![Uploading ${file.name}]<br>`
+  )
+  setInsertingTextArray(insertingPlaceholderArray)
+
+  const response = await api.post('/recruitments/presigned-url', fileArray)
+  const urlArray: string[] = response.data.data.map(
+    (data: { file_url: string }) => data.file_url
+  )
+  const replacingArray: Replacing[] = urlArray.map((url, index) => ({
+    insertedText: insertingPlaceholderArray[index],
+    replacingText: `<img src=${url} />`,
+  }))
+  setReplacingArray(replacingArray)
+}
 
 const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
   const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
+  const insertingTextArray = useRecruitWriteStore(
+    (state) => state.insertingTextArray
+  )
+  const replacingArray = useRecruitWriteStore((state) => state.replacingArray)
+
+  const handleFileArrayDrop = (fileArray: File[]) => {
+    postImages(fileArray)
+  }
 
   // TODO: 이미지 api 연결하면 이미지 개수도 다르게 세야 함
   return (
@@ -26,6 +57,9 @@ const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
             <MarkdownEditor
               defaultValue={editingRecruit?.content}
               onChange={onChange}
+              insertingTextArray={insertingTextArray}
+              replacingArray={replacingArray}
+              onFileArrayDrop={handleFileArrayDrop}
             />
             <RWImageDropzone />
           </div>
