@@ -1,5 +1,12 @@
+import api from '@/api/api'
 import FileDropLayer from '@/components/commonInGeneral/fileDropLayer/FileDropLayer'
 import { useState } from 'react'
+
+// const postImage = async () => {
+//   const response = await api.post('/recruitments/presigned-url')
+//   const fileUrl = response.data[0].file_url
+//   return fileUrl
+// }
 
 const RWImageDropzone = () => {
   const [isDragEntered, setIsDragEntered] = useState(false)
@@ -9,6 +16,7 @@ const RWImageDropzone = () => {
     // console.log({_fileArray})
     //   debugger
     // ---- 여기까지
+    // TODO: 여기 찍히면 텍스트 인서트하자
   }
 
   return (
