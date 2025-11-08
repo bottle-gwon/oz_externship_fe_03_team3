@@ -1,13 +1,15 @@
 import api from '@/api/api'
+import useStudyHubStore from '@/store/store'
 import {
+  type ChatMessageApiResponse,
+  type ChatMessagePageResponse,
   type ChatRoomApiResponse,
   type ChatRoomPageResponse,
-  type chatMessageListRequest,
+  type ChatMessageListRequest,
 } from '@/types/_chat'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
-const chatRoomEndpoint = '/study-grops'
 
 // 채팅방 리스트 가져오기
 const getChatRoomList = async (page: number) => {
@@ -17,16 +19,15 @@ const getChatRoomList = async (page: number) => {
 }
 
 // 채팅 메시지 리스트 가져오기
-const getMessageList = async (params: chatMessageListRequest) => {
-  const { study_group_id, keyword = '', page = 1, size = 300 } = params
+const getMessageList = async (params: ChatMessageListRequest) => {
+  const { study_group_id, page = 1, size = 20 } = params
   const newParam = new URLSearchParams()
 
-  newParam.append('keyword', keyword)
   newParam.append('page', String(page))
   newParam.append('size', String(size))
 
   const response = await api.get(
-    `${chatRoomEndpoint}/${study_group_id}/messages?${newParam}`
+    `${chatQueryEndpoint}/${study_group_id}/messages?${newParam}`
   )
 
   return response.data
@@ -72,9 +73,47 @@ export const useChatRoomList = () => {
 }
 
 // 채팅 메시지 리스트 가져오기
-export const useChatRoomMessage = (params: chatMessageListRequest) => {
-  return useQuery({
-    queryKey: [chatRoomEndpoint, params],
-    queryFn: () => getMessageList(params),
+export const useChatRoomMessage = () => {
+  // return useQuery({
+  //   queryKey: [chatRoomEndpoint, params],
+  //   queryFn: () => getMessageList(params),
+  // })
+  const chatState = useStudyHubStore((state) => state.chatState)
+
+  // 만약 채팅방이 열리지 않은 상태면 -1을 넣어서 훅이 작동 하지 않도록 한다.(쿼리의 enabled 참고)
+  const get_study_group_id = chatState.status === 'chatRoom' ? chatState.id : -1
+
+  return useInfiniteQuery<
+    ChatMessageApiResponse,
+    Error,
+    ChatMessagePageResponse,
+    [string, number],
+    ChatMessageListRequest
+  >({
+    queryKey: ['message', get_study_group_id],
+    queryFn: ({ pageParam }) => getMessageList(pageParam),
+    getNextPageParam: (lastPage, _, lastPageParam) => {
+      if (lastPage.data && lastPageParam?.size && lastPageParam?.page) {
+        const current = lastPageParam.page
+        const totalPage = Math.ceil(
+          lastPage.data.total_count / lastPageParam.size
+        )
+
+        if (current < totalPage) {
+          return {
+            study_group_id: lastPageParam?.study_group_id,
+            page: current + 1,
+            size: 20,
+          }
+        } else {
+          return null
+        }
+      } else {
+        return null
+      }
+    },
+    initialPageParam: { study_group_id: get_study_group_id, page: 1, size: 0 },
+
+    enabled: get_study_group_id !== -1,
   })
 }
