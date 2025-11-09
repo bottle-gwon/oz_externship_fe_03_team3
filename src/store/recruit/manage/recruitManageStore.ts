@@ -20,6 +20,9 @@ const useRecruitManageStore = create<RecruitManageStoreState>()((set, get) => ({
   setDebounceValue: (debounceValue) => set({ debounceValue }),
   requestNextPage: () => {},
   setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
+
+  count: { total: 0, open: 0, closed: 0 },
+  setCount: (count) => set({ count }),
 }))
 
 export default useRecruitManageStore
