@@ -22,6 +22,8 @@ const useRecruitsManageQuery = (userId: number) => {
     (state) => state.setRequestNextPage
   )
 
+  const setCount = useRecruitManageStore((state) => state.setCount)
+
   const params = useMemo(
     () => ({
       page_size: 10,
@@ -55,7 +57,10 @@ const useRecruitsManageQuery = (userId: number) => {
     }, [])
 
     setRecruitManageArray(recruitManageArray)
-  }, [data, setRecruitManageArray])
+
+    const firstCount = data.pages[0]?.count
+    if (firstCount) setCount(firstCount)
+  }, [data, setRecruitManageArray, setCount])
 
   useEffect(() => {
     setRequestNextPage(() => {

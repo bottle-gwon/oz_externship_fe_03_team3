@@ -1,7 +1,7 @@
 import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
 
 import RecruitSummaryCard from '@/components/recruit/manage/RecruitSummaryCard'
-import { Vstack } from '@/components/commonInGeneral/layout'
+import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHeaderTtileSectoin'
@@ -15,6 +15,9 @@ import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
 import useRecruitManage from '@/hooks/recruit/useRecruitsManageQuery'
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
+import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
@@ -29,49 +32,60 @@ const RecruitManageContent = () => {
   const userId = 24
   // 나중에 api 실제로 연결하면 없어져야함.
   const { hasNextPage, count } = useRecruitManage(userId)
-  const handleFilterChange = useCallback((_filtered: Recruit[]) => {}, [])
+  const handleFilterChange = useCallback((_filtered: Recruit[]) => { }, [])
   const loaderRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(loaderRef, () => {
-    if (hasNextPage) requestNextPage()
-  })
+    const loaderRef = useOneWayInfinityScroll(() => {
+      if (hasNextPage) requestNextPage()
+    })
 
-  return (
-    <Container isPadded>
-      <Vstack gap="xxl">
-        <SubHeader isBackButtonVisible>
-          <SubHeaderTitleSection>
-            <SubHeader.Title>공고 관리</SubHeader.Title>
-            <SubHeader.Subtitle>
-              내가 등록한 스터디 구인공고를 관리하세요
-            </SubHeader.Subtitle>
-          </SubHeaderTitleSection>
-          <SubHeaderButtonSection>
-            <Button
-              color="primary"
-              variant="contained"
-              size="lg"
-              onClick={() => handleClick('/recruit/write')}
-            >
-              + 새 공고 작성하기
-            </Button>
-          </SubHeaderButtonSection>
-        </SubHeader>
+    return (
+      <Container isPadded>
+        <Vstack gap="xxl">
+          <SubHeader isBackButtonVisible>
+            <SubHeaderTitleSection>
+              <SubHeader.Title>공고 관리</SubHeader.Title>
+              <SubHeader.Subtitle>
+                내가 등록한 스터디 구인공고를 관리하세요
+              </SubHeader.Subtitle>
+            </SubHeaderTitleSection>
+            <SubHeaderButtonSection>
+              <Button
+                color="primary"
+                variant="contained"
+                size="lg"
+                onClick={() => handleClick('/recruit/write')}
+              >
+                + 새 공고 작성하기
+              </Button>
+            </SubHeaderButtonSection>
+          </SubHeader>
 
-        <RecruitSummaryCard count={count} />
+          <RecruitSummaryCard count={count} />
 
-        <RecruitManageFilter onChange={handleFilterChange} />
+          <RoundBox
+            isShadowed={false}
+            color="mono-bright"
+            padding="xl"
+            radius="md"
+          >
+            <Hstack gap="none" className="gap-9">
+              <RecruitManageStatusSelect count={count} />
+              <RecruitManageOrderingSelect />
+            </Hstack>
+          </RoundBox>
 
-        <Vstack gap="none">
-          <h1 className="mb-oz-md">내 공고 목록 ({count.total})</h1>
-          {recruitManageArray.map((recruit) => (
-            <RecruitCard isMine key={recruit.id} recruit={recruit} />
-          ))}
+          <Vstack gap="none">
+            <h1 className="mb-oz-md">내 공고 목록 ({count.total})</h1>
+            {recruitManageArray.map((recruit) => (
+              <RecruitCard isMine key={recruit.id} recruit={recruit} />
+            ))}
 
-          <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
+            <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
+          </Vstack>
         </Vstack>
-      </Vstack>
-    </Container>
-  )
-}
+      </Container>
+    )
+  }
 
 export default RecruitManageContent
