@@ -22,12 +22,9 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
     null
   )
-  const { isPending, count, queryClient } = useApplicantsQuery(recruit.id)
+  const { isPending, count } = useApplicantsQuery(recruit.id)
 
   const applicantArray = useApplicantStore((state) => state.applicantArray)
-  const setApplicantArray = useApplicantStore(
-    (state) => state.setApplicantArray
-  )
   const requestNextPage = useApplicantStore((state) => state.requestNextPage)
 
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
@@ -40,10 +37,6 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   if (isPending) return <p>로딩중입니다.</p>
 
   const handleClose = () => {
-    setApplicantArray([])
-    queryClient.removeQueries({
-      queryKey: [`/recruitments/${recruit.id}/applications`],
-    })
     onClose(false)
   }
 
