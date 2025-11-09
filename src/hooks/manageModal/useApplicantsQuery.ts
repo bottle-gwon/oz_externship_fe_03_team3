@@ -1,7 +1,7 @@
 import api from '@/api/api'
 import useApplicantStore from '@/store/recruit/manageModal/applicantStore'
 import type { Applicant, ApplicantResponseData } from '@/types'
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 const useApplicantsQuery = (recruitmentId: number) => {
@@ -47,13 +47,11 @@ const useApplicantsQuery = (recruitmentId: number) => {
   }, [setRequestNextPage, fetchNextPage])
 
   const count = data?.pages[0].count ?? 0
-  const queryClient = useQueryClient()
 
   return {
     isPending,
     error,
     count,
-    queryClient,
   }
 }
 
