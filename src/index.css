@@ -2,6 +2,7 @@
 
 * {
   scrollbar-color: oklch(0.5 0 0) transparent;
+  word-break: keep-all;
 }
 
 :root {
@@ -10,9 +11,61 @@
   font-weight: 400;
 
   /* color-scheme: light dark; */
+  color: var(--color-gray-900);
+  background-color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+@theme {
+  /* Primary (브랜드 컬러) */
+  --color-primary-50: #fefce8;
+  --color-primary-100: #fef9c3;
+  --color-primary-200: #fef08a;
+  --color-primary-300: #fde047;
+  --color-primary-400: #facc15;
+  --color-primary-500: #eab308;
+  --color-primary-600: #ca8a04;
+  --color-primary-700: #a16207;
+  --color-primary-800: #854d0e;
+  --color-primary-900: #713f12;
+
+  /* Gray (중성 컬러) */
+  --color-gray-50: #fafafa;
+  --color-gray-100: #f4f4f5;
+  --color-gray-200: #e4e4e7;
+  --color-gray-300: #d4d4d8;
+  --color-gray-400: #a1a1aa;
+  --color-gray-500: #71717a;
+  --color-gray-600: #52525b;
+  --color-gray-700: #3f3f46;
+  --color-gray-800: #27272a;
+  --color-gray-900: #18181b;
+
+  /* Success (성공 안내) */
+  --color-success-50: #f0fdf4;
+  --color-success-border: #bbf7d0;
+  --color-success-100: #dcfce7;
+  --color-success-500: #22c55e;
+  --color-success-600: #16a34a;
+  --color-success-800: #166534;
+
+  /* Danger (위험/에러) */
+  --color-danger-50: #fef2f2;
+  --color-danger-tag: #fee2e2;
+  --color-danger-border: #fecaca;
+  --color-danger-100: #fca5a5;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-800: #991b1b;
+
+  --spacing-oz-xs: 4px;
+  --spacing-oz-sm: 8px;
+  --spacing-oz-md: 12px;
+  --spacing-oz-lg: 16px;
+  --spacing-oz-xl: 24px;
+  --spacing-oz-xxl: 32px;
 }

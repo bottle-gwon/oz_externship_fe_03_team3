@@ -1,0 +1,113 @@
+import api from '@/api/api'
+import Button from '@/components/commonInGeneral/button/Button'
+import { Vstack } from '@/components/commonInGeneral/layout'
+import Container from '@/components/commonInGeneral/layout/_Container'
+import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
+import useStudyHubStore from '@/store/store'
+
+// NOTE: 로그인 로그아웃을 하면 스토어에 액세스 토큰이 실제로 저장되고 삭제됩니다
+const login = async () => {
+  const response = await api.post('/auth/login', {
+    email: import.meta.env.VITE_LOGIN_ID,
+    password: import.meta.env.VITE_LOGIN_PASSWORD,
+  })
+
+  const accessToken = response.data.data.access
+  const setAccessToken = useStudyHubStore.getState().setAccessToken
+  setAccessToken(accessToken)
+}
+
+const logout = () => {
+  const setAccessToken = useStudyHubStore.getState().setAccessToken
+  setAccessToken(null)
+}
+
+const getLectures = () => api.get('/lectures/')
+
+const getNotifications = () => api.get('/notifications/')
+
+const lecture_id = '550e8400-e29b-41d4-a716-446655440000'
+
+const TestApiPage = () => {
+  return (
+    <Container width="md" isPadded>
+      <RoundBox>
+        <Vstack gap="xxl">
+          <p>개발자 도구의 네트워크 탭을 확인해주세요</p>
+          <TitledRoundBox>
+            <TitledRoundBox.Title>Auth</TitledRoundBox.Title>
+            <p>
+              실제로 스토어에 액세스 토큰이 저장됩니다.
+              <br />
+              이는 로컬 스토리지에 저장되니 주소창에 새 주소를 입력해도
+              유지됩니다
+            </p>
+            <Button onClick={login}>
+              로그인하고 스토어에 액세스 토큰 저장
+            </Button>
+            <Button onClick={logout}>
+              로그아웃하여 스토어에서 액세스 토큰 삭제
+            </Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
+            <TitledRoundBox.Title>Lectures</TitledRoundBox.Title>
+            <p>서버가 살아있나 확인할 땐 여기를 사용해주세요</p>
+            <Button onClick={getLectures}>GET /lectures/</Button>
+            <Button onClick={() => api.get('/lectures/?page=1')}>
+              GET /lectures/?page=1
+            </Button>
+            <Button onClick={() => api.get('/lectures/?page=2')}>
+              GET /lectures/?page=2
+            </Button>
+            <Button
+              onClick={() => api.get('/lectures/?ordering=-created_at&page=2')}
+            >
+              GET /lectures/?ordering=-created_at&page=2
+            </Button>
+            <Button onClick={() => api.get('/lectures/?page=2')}>
+              GET http://api.ozcoding.site/api/v1/lectures/?page=2
+            </Button>
+            <Button onClick={() => api.get('/lectures/categories')}>
+              GET /lectures/categories
+            </Button>
+            <Button
+              onClick={() => api.post('/lectures/bookmarks', { lecture_id })}
+            >
+              POST /lectures/bookmarks
+            </Button>
+            <Button
+              onClick={() => api.delete(`/lectures/bookmarks/${lecture_id}`)}
+            >
+              {'DELETE /lectures/bookmarks/{lecture_id}'}
+            </Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
+            <TitledRoundBox.Title>Notification</TitledRoundBox.Title>
+            <Button onClick={getNotifications}>GET /notifications/</Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
+            <TitledRoundBox.Title>Recruitments</TitledRoundBox.Title>
+            <Button onClick={() => api.get('/recruitments/')}>
+              GET /recruitments/
+            </Button>
+            <Button onClick={() => api.get('/recruitments/1/')}>
+              GET /recruitments/1/
+            </Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
+            <TitledRoundBox.Title>익스프레스 헬스</TitledRoundBox.Title>
+            <Button onClick={() => api.get('/')}>GET /</Button>
+            <Button onClick={() => api.get('/health')}>GET /health</Button>
+          </TitledRoundBox>
+        </Vstack>
+      </RoundBox>
+    </Container>
+  )
+}
+
+export default TestApiPage

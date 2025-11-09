@@ -8,19 +8,25 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "lint:strict": "eslint . --config eslint.config.strict.js",
     "format": "prettier --write --cache .",
     "preview": "vite preview",
     "prepare": "husky"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
     "@tailwindcss/vite": "^4.1.10",
     "@tanstack/react-query": "^5.80.7",
+    "@uiw/react-md-editor": "^4.0.8",
     "axios": "^1.10.0",
     "lucide-react": "^0.515.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-hook-form": "^7.65.0",
     "react-router": "^7.6.2",
+    "rehype-sanitize": "^6.0.0",
     "tailwindcss": "^4.1.10",
+    "zod": "^4.1.12",
     "zustand": "^5.0.5"
   },
   "devDependencies": {

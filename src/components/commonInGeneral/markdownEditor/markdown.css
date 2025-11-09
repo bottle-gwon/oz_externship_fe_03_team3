@@ -1,0 +1,58 @@
+.w-md-editor-toolbar {
+  background-color: var(--color-gray-50) !important;
+  height: unset !important;
+  padding: var(--spacing-oz-sm) !important;
+  font-size: 14px !important;
+  border-bottom: 1px solid var(--color-gray-200) !important;
+}
+
+.w-md-editor-toolbar li > button {
+  all: unset;
+  color: var(--color-gray-900) !important;
+  padding: var(--spacing-oz-sm) !important;
+  width: 32px !important;
+  height: 32px !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  font-weight: var(--font-weight-medium) !important;
+  box-sizing: border-box;
+}
+.w-md-editor-toolbar li.active > button {
+  color: var(--color-gray-900) !important;
+  background-color: white !important;
+  filter: drop-shadow(var(--drop-shadow-xs)) !important;
+}
+
+.w-md-editor-toolbar button:hover {
+  background-color: rgb(255 255 255 / 50%) !important;
+}
+.w-md-editor-toolbar button:active {
+  background-color: rgb(255 255 255) !important;
+}
+.w-md-editor-toolbar button:focus {
+  background-color: rgb(255 255 255) !important;
+}
+
+.w-md-editor-toolbar button:nth-child(1) {
+  width: unset !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+.w-md-editor-toolbar button:nth-child(2) {
+  width: unset !important;
+  padding-left: 12px !important;
+  padding-right: 12px !important;
+}
+
+.w-md-editor {
+  border-radius: 0 !important;
+  padding: 0 !important;
+  box-shadow: none !important;
+  border-bottom: 1px solid var(--color-gray-200) !important;
+}
+.w-md-editor-text {
+  height: 100% !important;
+}

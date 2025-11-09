@@ -8,14 +8,19 @@ interface WithContainerProps {
 
 const Container = ({
   width = 'lg',
+  isPadded,
   ...props
 }: DivProps & WithContainerProps) => {
   const { className, children, ...rest } = props
 
   const widthResult = widthMap[width]
+  const paddingResult = isPadded ? 'p-8' : ''
 
   return (
-    <div {...rest} className={`${className} ${widthResult} mx-auto`}>
+    <div
+      {...rest}
+      className={`${className} ${widthResult} ${paddingResult} mx-auto`}
+    >
       {children}
     </div>
   )

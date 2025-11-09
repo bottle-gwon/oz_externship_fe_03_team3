@@ -1,5 +1,7 @@
+import RecruitManageContent from '@/components/recruit/manage/RecruitManageContent'
+
 const RecruitManagePage = () => {
-  return <div></div>
+  return <RecruitManageContent />
 }
 
 export default RecruitManagePage

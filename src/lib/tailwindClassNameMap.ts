@@ -35,9 +35,16 @@ export const paddingBottomMap = {
   xl: 'pb-6',
   xxl: 'pb-8',
 }
-
 export const widthMap = {
-  sm: 'w-2xl', // 672px 좁은 모달
-  md: 'w-4xl', // 896px 넓은 모달 | 공고 세부 페이지
-  lg: 'w-7xl', // 1280px 그 외 넓은 페이지
+  xs: 'max-w-xs w-full', // 320px 확인 및 경고 모달
+  sm: 'max-w-2xl w-full', // 672px 좁은 모달
+  md: 'max-w-4xl w-full', // 896px 넓은 모달 | 공고 세부 페이지
+  lg: 'max-w-7xl w-full', // 1280px 그 외 넓은 페이지
+}
+
+export const radiusMap = {
+  sm: 'rounded-sm',
+  md: 'rounded-lg',
+  lg: 'rounded-xl',
+  full: 'rounded-full',
 }

@@ -11,12 +11,12 @@ const GridContainer = ({
 }: DivProps & WithGridContainerProps) => {
   const { className, children, ...rest } = props
 
-  const gapResult = gapMap[gap] ?? ''
+  const gapResult = className?.includes('gap-') ? '' : (gapMap[gap] ?? '')
 
   return (
     <div
       {...rest}
-      className={`${className} ${gapResult} grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))]`}
+      className={`${className} ${gapResult} grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))]`}
     >
       {children}
     </div>

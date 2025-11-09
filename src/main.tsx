@@ -5,8 +5,16 @@ import testRouteArray from './testRoutes'
 import { lazy, Suspense } from 'react'
 import NotFoundPage from './pages/errors/NotFoundPage'
 import Layout from './pages/layout/Layout'
+import { QueryClientProvider } from '@tanstack/react-query'
+import queryClient from './lib/tanstackQueryClient'
+// NOTE: 스켈레톤은 lazy로 임포트하지 말고 평범하게 임포트 해주세요
+import LectureSkeleton from './components/lecture/LectureSkeleton'
+import RecruitSkeletone from './components/recruit/title/RecruitSkeletone'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
+const RecruitEditPage = lazy(
+  () => import('./pages/recruit/write/edit/RecruitEditPage')
+)
 const RecruitWritePage = lazy(
   () => import('./pages/recruit/write/RecruitWritePage')
 )
@@ -22,6 +30,11 @@ const routeArray = [
   {
     path: '/recruit',
     element: <RecruitListPage />,
+    fallback: <RecruitSkeletone />,
+  },
+  {
+    path: '/recruit/write/:recruitId',
+    element: <RecruitEditPage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
   {
@@ -35,28 +48,38 @@ const routeArray = [
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
   {
-    path: '/recruit/detail/:recruitId',
+    path: '/recruit/:recruitId',
     element: <RecruitDetailPage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
   {
     path: '/lecture',
     element: <LecturePage />,
-    fallback: <p>나중에 스켈레톤 넣을 자리</p>,
+    // NOTE: 스켈레톤은 lazy로 임포트하지 말고 평범하게 임포트 해주세요
+    fallback: <LectureSkeleton />,
   },
 ]
 
-const suspendedRouterArray = routeArray.map((route) => ({
+const suspendedTestRouteArray = testRouteArray.map((route) => ({
+  path: route.path,
+  element: (
+    <Suspense fallback={<p>test route fallback</p>}>{route.element}</Suspense>
+  ),
+}))
+
+const suspendedRouteArray = routeArray.map((route) => ({
   path: route.path,
   element: <Suspense fallback={route.fallback}>{route.element}</Suspense>,
 }))
 
 const router = createBrowserRouter([
-  ...testRouteArray,
-  { element: <Layout />, children: suspendedRouterArray },
+  ...suspendedTestRouteArray,
+  { element: <Layout />, children: suspendedRouteArray },
   { path: '*', element: <NotFoundPage /> },
 ])
 
 createRoot(document.getElementById('root')!).render(
-  <RouterProvider router={router} />
+  <QueryClientProvider client={queryClient}>
+    <RouterProvider router={router} />
+  </QueryClientProvider>
 )

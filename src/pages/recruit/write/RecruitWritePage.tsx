@@ -1,5 +1,7 @@
+import RecruitWriteContent from '@/components/recruit/write/RecruitWriteContent'
+
 const RecruitWritePage = () => {
-  return <div></div>
+  return <RecruitWriteContent />
 }
 
 export default RecruitWritePage
