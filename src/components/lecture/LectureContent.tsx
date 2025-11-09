@@ -12,6 +12,7 @@ import SubHeader from '../commonInProject/SubHeader/SubHeader'
 import SubHeaderTitleSection from '../commonInProject/SubHeader/_SubHeaderTtileSectoin'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import useLectureStore from '@/store/lecture/lectureStore'
+import { useRef } from 'react'
 
 const LectureContent = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
@@ -23,7 +24,8 @@ const LectureContent = () => {
   const requestNextPage = useLectureStore((state) => state.requestNextPage)
 
   // TODO: request next page 로 이것 바꿔야
-  const targetRef = useOneWayInfinityScroll(requestNextPage)
+  const targetRef = useRef<HTMLDivElement | null>(null)
+  useOneWayInfinityScroll(targetRef, requestNextPage)
 
   return (
     <Container className="py-oz-xxl">
