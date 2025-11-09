@@ -105,7 +105,8 @@ const ChatList = () => {
     error,
   } = useChatRoomList()
 
-  const LoadingRef = useOneWayInfinityScroll(() => {
+  const LoadingRef = useRef<HTMLDivElement | null>(null)
+  useOneWayInfinityScroll(LoadingRef, () => {
     // 스크롤이 타겟에 들어왔을때 (훅에서는 100% 보일때로 설정해둠)
     // 아래 타이머 관련은 추후 삭제하고 api로 연결할 예정입니다. 일단은 예시로 로딩만 볼 수 있게 했습니다.
     // if (scrollTimerIdRef.current) {

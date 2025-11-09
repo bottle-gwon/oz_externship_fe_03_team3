@@ -8,7 +8,7 @@ import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHe
 import Button from '@/components/commonInGeneral/button/Button'
 import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubHeaderButtonSection'
 import { useNavigate } from 'react-router'
-import { useCallback } from 'react'
+import { useCallback, useRef } from 'react'
 
 import type { Recruit } from '@/types'
 import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
@@ -28,7 +28,8 @@ const RecruitManageContent = () => {
   )
   const { hasNextPage, totalCount } = useRecruitManage()
   const handleFilterChange = useCallback((_filtered: Recruit[]) => {}, [])
-  const loaderRef = useOneWayInfinityScroll(() => {
+  const loaderRef = useRef<HTMLDivElement | null>(null)
+  useOneWayInfinityScroll(loaderRef, () => {
     if (hasNextPage) requestNextPage()
   })
 

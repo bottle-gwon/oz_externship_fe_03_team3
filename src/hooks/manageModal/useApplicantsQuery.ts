@@ -18,14 +18,7 @@ const useApplicantsQuery = (recruitmentId: number) => {
     limit: 10,
   }
 
-  const {
-    data,
-    isPending,
-    error,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery({
+  const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
     queryKey: [applicantsQueryEndpoint],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await api.get(applicantsQueryEndpoint, {
@@ -59,10 +52,7 @@ const useApplicantsQuery = (recruitmentId: number) => {
   return {
     isPending,
     error,
-    hasNextPage,
     count,
-    fetchNextPage,
-    isFetchingNextPage,
     queryClient,
   }
 }
