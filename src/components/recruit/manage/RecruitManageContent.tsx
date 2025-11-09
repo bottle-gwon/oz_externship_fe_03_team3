@@ -26,63 +26,72 @@ const RecruitManageContent = () => {
   const requestNextPage = useRecruitManageStore(
     (state) => state.requestNextPage
   )
+
   const userId = 24
   // 나중에 api 실제로 연결하면 없어져야함.
   const { hasNextPage, count } = useRecruitManage(userId)
-  const handleFilterChange = useCallback((_filtered: Recruit[]) => { }, [])
-  const loaderRef = useRef<HTMLDivElement | null>(null)
-  useOneWayInfinityScroll(loaderRef, () => {
-    const loaderRef = useOneWayInfinityScroll(() => {
-      if (hasNextPage) requestNextPage()
-    })
 
-    return (
-      <Container isPadded>
-        <Vstack gap="xxl">
-          <SubHeader isBackButtonVisible>
-            <SubHeaderTitleSection>
-              <SubHeader.Title>공고 관리</SubHeader.Title>
-              <SubHeader.Subtitle>
-                내가 등록한 스터디 구인공고를 관리하세요
-              </SubHeader.Subtitle>
-            </SubHeaderTitleSection>
-            <SubHeaderButtonSection>
-              <Button
-                color="primary"
-                variant="contained"
-                size="lg"
-                onClick={() => handleClick('/recruit/write')}
-              >
-                + 새 공고 작성하기
-              </Button>
-            </SubHeaderButtonSection>
-          </SubHeader>
+  const selectedStatusInText = useRecruitManageStore(
+    (state) => state.selectedStatusInText
+  )
+  const listCount =
+    selectedStatusInText === '전체'
+      ? (count.total ?? 0)
+      : selectedStatusInText === '모집중'
+        ? (count.open ?? 0)
+        : (count.closed ?? 0)
 
-          <RecruitSummaryCard count={count} />
+  const loaderRef = useOneWayInfinityScroll(() => {
+    if (hasNextPage) requestNextPage()
+  })
 
-          <RoundBox
-            isShadowed={false}
-            color="mono-bright"
-            padding="xl"
-            radius="md"
-          >
-            <Hstack gap="none" className="gap-9">
-              <RecruitManageStatusSelect />
-              <RecruitManageOrderingSelect />
-            </Hstack>
-          </RoundBox>
+  return (
+    <Container isPadded>
+      <Vstack gap="xxl">
+        <SubHeader isBackButtonVisible>
+          <SubHeaderTitleSection>
+            <SubHeader.Title>공고 관리</SubHeader.Title>
+            <SubHeader.Subtitle>
+              내가 등록한 스터디 구인공고를 관리하세요
+            </SubHeader.Subtitle>
+          </SubHeaderTitleSection>
+          <SubHeaderButtonSection>
+            <Button
+              color="primary"
+              variant="contained"
+              size="lg"
+              onClick={() => handleClick('/recruit/write')}
+            >
+              + 새 공고 작성하기
+            </Button>
+          </SubHeaderButtonSection>
+        </SubHeader>
 
-          <Vstack gap="none">
-            <h1 className="mb-oz-md">내 공고 목록 ({count.total})</h1>
-            {recruitManageArray.map((recruit) => (
-              <RecruitCard isMine key={recruit.id} recruit={recruit} />
-            ))}
+        <RecruitSummaryCard count={count} />
 
-            <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
-          </Vstack>
+        <RoundBox
+          isShadowed={false}
+          color="mono-bright"
+          padding="xl"
+          radius="md"
+        >
+          <Hstack gap="none" className="gap-9">
+            <RecruitManageStatusSelect />
+            <RecruitManageOrderingSelect />
+          </Hstack>
+        </RoundBox>
+
+        <Vstack gap="none">
+          <h1 className="mb-oz-md">내 공고 목록 ({listCount})</h1>
+          {recruitManageArray.map((recruit) => (
+            <RecruitCard isMine key={recruit.id} recruit={recruit} />
+          ))}
+
+          <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
-      </Container>
-    )
-  }
+      </Vstack>
+    </Container>
+  )
+}
 
 export default RecruitManageContent
