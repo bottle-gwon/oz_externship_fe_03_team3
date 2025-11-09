@@ -8,16 +8,13 @@ import SubHeaderTitleSection from '@/components/commonInProject/SubHeader/_SubHe
 import Button from '@/components/commonInGeneral/button/Button'
 import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubHeaderButtonSection'
 import { useNavigate } from 'react-router'
-import { useCallback, useRef } from 'react'
-
-import type { Recruit } from '@/types'
-import RecruitManageFilter from '@/components/recruit/manage/RecruitManageFilter'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
 import useRecruitManage from '@/hooks/recruit/useRecruitsManageQuery'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
+
 import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
+import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
@@ -70,7 +67,7 @@ const RecruitManageContent = () => {
             radius="md"
           >
             <Hstack gap="none" className="gap-9">
-              <RecruitManageStatusSelect count={count} />
+              <RecruitManageStatusSelect />
               <RecruitManageOrderingSelect />
             </Hstack>
           </RoundBox>
