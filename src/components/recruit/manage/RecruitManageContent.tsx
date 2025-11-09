@@ -27,6 +27,7 @@ const RecruitManageContent = () => {
     (state) => state.requestNextPage
   )
   const userId = 24
+  // 나중에 api 실제로 연결하면 없어져야함.
   const { hasNextPage, count } = useRecruitManage(userId)
   const handleFilterChange = useCallback((_filtered: Recruit[]) => {}, [])
   const loaderRef = useRef<HTMLDivElement | null>(null)
