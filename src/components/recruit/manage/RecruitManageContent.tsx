@@ -26,7 +26,8 @@ const RecruitManageContent = () => {
   const requestNextPage = useRecruitManageStore(
     (state) => state.requestNextPage
   )
-  const { hasNextPage, count } = useRecruitManage()
+  const userId = 24
+  const { hasNextPage, count } = useRecruitManage(userId)
   const handleFilterChange = useCallback((_filtered: Recruit[]) => {}, [])
   const loaderRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(loaderRef, () => {
