@@ -10,11 +10,9 @@ const useRecruitWriteMutation = () => {
   const postRecruitWriteMutation = useMutation({
     mutationFn: (body: FormData) => api.post('/recruitments', body),
     onError: () => {
-      debugger
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { id: number } }) => {
-      debugger
       const id = response.data.id
       navigate(`/recruit/${id}`)
     },
@@ -24,11 +22,9 @@ const useRecruitWriteMutation = () => {
     mutationFn: ({ body, id }: { body: FormData; id: number }) =>
       api.patch(`/recruitments/${id}`, body),
     onError: () => {
-      debugger
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { id: number } }) => {
-      debugger
       const id = response.data.id
       navigate(`/recruit/${id}`)
     },

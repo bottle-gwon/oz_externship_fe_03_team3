@@ -70,13 +70,10 @@ api.interceptors.response.use(
       await getRefreshAndMe()
       // 2) 실패했던 요청 재시도
       return api(error.config)
-    } catch (err) {
-      console.log({ error })
-      console.log({ err })
-      debugger
-      // 3) 재발급 실패 → 로그인 페이지로
-      // window.location.href = '/login'
-      //
+    } catch {
+      // NOTE: 재발급 실패하면 비로그인 상태 화면 보여줌
+
+      return Promise.reject(error)
     }
   }
 )
