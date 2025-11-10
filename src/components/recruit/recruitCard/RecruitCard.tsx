@@ -68,12 +68,12 @@ const RecruitCard = ({
   const confirmDelete = async () => {
     try {
       await api.delete(`/recruitments/${id}`)
-      // 강제에러화면 보고싶을땐 아래 한줄 주석해제
+      // 강제에러화면 보고싶을땐 주석해제
       // throw new Error('FORCE_FAIL')
       setConfirmOpen(false)
       setSuccess(true)
     } catch (err) {
-      console.error(err)
+      // console.error(err)
       setConfirmOpen(false)
       setError(true)
     }
