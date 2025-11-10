@@ -14,7 +14,7 @@ export const dummyApplicantDetail: ApplicantDetail = {
   has_study_experience: true,
   study_experience_detail:
     '작년에 React 스터디를 6개월간 진행했으며, 팀 프로젝트로 쇼핑몰 웹사이트를 완성했습니다.',
-  status: 'pending',
+  status: 'PENDING',
   created_at: '2024-11-25 14:30',
   gender: '남성',
 }
