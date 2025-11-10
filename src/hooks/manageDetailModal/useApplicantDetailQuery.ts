@@ -24,7 +24,7 @@ const useApplicantDetailQuery = (applicantId: number) => {
       return
     }
     setApplicantDetail(data)
-  }, [data])
+  }, [data, setApplicantDetail])
 
   return {
     isPending,
