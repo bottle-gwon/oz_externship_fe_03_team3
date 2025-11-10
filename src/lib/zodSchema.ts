@@ -73,7 +73,14 @@ const recruitWriteCommonObject = {
     )
     .nullish(),
   attachments: z
-    .array(z.file())
+    .array(
+      z
+        .file()
+        .max(
+          RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT_SIZE,
+          `참고 파일은 ${Math.round(RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT_SIZE / 1_000_000)}MB를 초과할 수 없습니다`
+        )
+    )
     .max(
       RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT,
       `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
