@@ -72,8 +72,7 @@ const RecruitCard = ({
       // throw new Error('FORCE_FAIL')
       setConfirmOpen(false)
       setSuccess(true)
-    } catch (err) {
-      // console.error(err)
+    } catch {
       setConfirmOpen(false)
       setError(true)
     }
