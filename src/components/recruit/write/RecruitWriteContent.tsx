@@ -24,6 +24,7 @@ import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
 import RWMarkdownEditor from './_RWMarkdownEditor'
 import useRecruitWriteMutation from '@/hooks/recruitWrite/useRecruitWriteMutation'
+import ErrorModal from '@/components/commonInGeneral/modal/errorModal/ErrorModal'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
@@ -32,8 +33,6 @@ interface RecruitWriteContetProps {
 const RecruitWriteContent = ({
   isEditing = false,
 }: RecruitWriteContetProps) => {
-  // TODO: 마운트 시 스터디 목록 api 호출해야 함
-  // TODO: 나중에 이미지 업로드와 연동해야
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
@@ -137,6 +136,12 @@ const RecruitWriteContent = ({
         isOn={modalKey === 'tagSelect'}
         onClose={() => setModalKey(null)}
       />
+
+      {/* NOTE: ErrorModal에서 setIsOn이 아니라 onClose를 받게 해달라고 요청해야 */}
+      {/* <ErrorModal */}
+      {/*   isOn={modalKey === 'recruitWriteError'} */}
+      {/*   onClose={() => setModalKey(null)} */}
+      {/* /> */}
     </>
   )
 }

@@ -10,6 +10,7 @@ const useRecruitWriteMutation = () => {
   const postRecruitWriteMutation = useMutation({
     mutationFn: (body: FormData) => api.post('/recruitments', body),
     onError: () => {
+      // TODO: 아직 해당 모달 추가 못 함
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { id: number } }) => {
@@ -22,6 +23,7 @@ const useRecruitWriteMutation = () => {
     mutationFn: ({ body, id }: { body: FormData; id: number }) =>
       api.patch(`/recruitments/${id}`, body),
     onError: () => {
+      // TODO: 아직 해당 모달 추가 못 함
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { id: number } }) => {
