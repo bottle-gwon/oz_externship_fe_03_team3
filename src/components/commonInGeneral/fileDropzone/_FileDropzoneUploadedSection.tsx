@@ -1,3 +1,4 @@
+import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import Labeled from '../inputFamily/labeled/Labeled'
 import { Vstack } from '../layout'
 import FileDropzoneUploadedItem from './_FileDropzoneUploadedItem'
@@ -20,6 +21,9 @@ const FileDropzoneUploadedSection = () => {
             key={entry[0]}
             fileId={Number(entry[0])}
             file={entry[1]}
+            isNotValid={
+              entry[1].size > RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT_SIZE
+            }
           />
         ))}
       </Vstack>
