@@ -20,7 +20,11 @@ const RWExpectedPersonnelSelect = ({
         render={({ field: { onChange } }) => (
           <Select
             onOptionSelect={onChange}
-            defaultChildren={`${editingRecruit?.expected_personnel}명`}
+            defaultChildren={
+              editingRecruit
+                ? `${editingRecruit?.expected_personnel}명`
+                : undefined
+            }
           >
             <Select.Trigger>예상 모집 인원을 선택하세요</Select.Trigger>
             <Select.Content>
