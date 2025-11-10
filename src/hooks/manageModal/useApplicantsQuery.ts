@@ -4,7 +4,7 @@ import type { Applicant, ApplicantResponseData } from '@/types'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-const useApplicantsQuery = (recruitmentId: number) => {
+const useApplicantsQuery = (recruitmentId: number, isOn: boolean) => {
   const applicantsQueryEndpoint = `/recruitments/${recruitmentId}/applications`
 
   const setApplicantArray = useApplicantStore(
@@ -29,6 +29,7 @@ const useApplicantsQuery = (recruitmentId: number) => {
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.next ? lastPageParam + 1 : null,
+    enabled: isOn,
   })
 
   useEffect(() => {
