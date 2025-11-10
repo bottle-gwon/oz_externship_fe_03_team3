@@ -9,6 +9,8 @@ import useApplicantsQuery from '@/hooks/manageModal/useApplicantsQuery'
 import type { Recruit } from '@/types'
 import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
+import ApplicantListSkeleton from './skeleton/ApplicantListSkeleton'
+import ApplicantTitleSkeleton from './skeleton/ApplicantTitleSkeleton'
 
 interface ManageModal {
   isOn: boolean
@@ -34,8 +36,6 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   const targetRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(targetRef, requestNextPage, { root: bodyRef.current })
 
-  if (isPending) return <p>로딩중입니다.</p>
-
   const handleClose = () => {
     onClose(false)
   }
@@ -55,12 +55,16 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
         <Modal.Header>
           <Vstack gap="xs">
             <h2 className="text-lg font-semibold">지원현황관리</h2>
-            <p className="text-sm">{`${recruit.title} - 총 ${count}명이 지원했습니다`}</p>
+            {isPending && <ApplicantTitleSkeleton />}
+            {!isPending && (
+              <p className="text-sm">{`${recruit.title} - 총 ${count}명이 지원했습니다`}</p>
+            )}
           </Vstack>
         </Modal.Header>
 
         <Modal.Body ref={bodyRef} className="overflow-auto">
-          {applicantArray.length > 0 && (
+          {isPending && <ApplicantListSkeleton />}
+          {!isPending && applicantArray.length > 0 && (
             <GridContainer gap="lg" className="grid-cols-2">
               {applicantArray.map((applicant) => (
                 <ApplicantCard
