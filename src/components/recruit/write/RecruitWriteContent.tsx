@@ -6,7 +6,7 @@ import {
 } from '@/components/commonInGeneral/layout'
 import Container from '@/components/commonInGeneral/layout/_Container'
 import { Send } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import Divider from '@/components/commonInGeneral/divider/Divider'
 import { type FieldValues } from 'react-hook-form'
 import { useNavigate } from 'react-router'
@@ -16,7 +16,6 @@ import TagSelectModal from '@/components/recruit/write/tagSelectModal/TagSelectM
 import useStudyHubStore from '@/store/store'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
 import RWFileDropzone from './_RWFileDropzone'
-import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import RWTitleInput from './_RWTitleInput'
 import RWEstimatedCostInput from './_RWEstimatedCost'
 import RWDueDateInput from './_RWDueDateInput'
@@ -35,7 +34,6 @@ const RecruitWriteContent = ({
 }: RecruitWriteContetProps) => {
   // TODO: 마운트 시 스터디 목록 api 호출해야 함
   // TODO: 나중에 이미지 업로드와 연동해야
-  const [isOn, setIsOn] = useState(false)
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
@@ -53,8 +51,6 @@ const RecruitWriteContent = ({
     useRecruitWrite(isEditing)
 
   const onSubmit = (data: FieldValues) => {
-    setIsOn(true)
-
     const formData = new FormData()
     const { attachments, ...rest } = data
     const restEntryArray = Object.entries(rest)
@@ -74,18 +70,14 @@ const RecruitWriteContent = ({
     }
   }
 
-  const handleSubmitComplete = () => {
-    setIsOn(false)
-    navigate(-1)
-  }
+  const isPending =
+    postRecruitWriteMutation.isPending || patchRecruitWriteMutation.isPending
 
   return (
     <>
       <Container width="md" isPadded>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Vstack gap="xxl">
-            {/* 여기 바텀 패딩이 없어야할 거 같은데 */}
-            {/* isPaddedBottom 옵션 넣어달라고 하고 우선 이대로 진행하자 */}
             <RWSubHeader isEditing={isEditing} />
 
             <TitledRoundBox>
@@ -110,17 +102,28 @@ const RecruitWriteContent = ({
               <TitledRoundBox.Title>추가 정보</TitledRoundBox.Title>
 
               <RWEstimatedCostInput errors={errors} register={register} />
-              <RWTagSelect setValue={setValue} errors={errors} />
+              <RWTagSelect
+                setValue={setValue}
+                errors={errors}
+                isPending={isPending}
+              />
               <RWFileDropzone errors={errors} control={control} />
             </TitledRoundBox>
 
             <Vstack gap="xl">
               <Divider />
               <Hstack className="justify-end">
-                <Button type="button" onClick={() => navigate(-1)}>
+                <Button
+                  type="button"
+                  onClick={() => navigate(-1)}
+                  status={isPending ? 'pending' : 'enabled'}
+                >
                   취소
                 </Button>
-                <Button color="primary">
+                <Button
+                  color="primary"
+                  status={isPending ? 'pending' : 'enabled'}
+                >
                   <Send size={16} />
                   공고 등록하기
                 </Button>
@@ -134,13 +137,6 @@ const RecruitWriteContent = ({
         isOn={modalKey === 'tagSelect'}
         onClose={() => setModalKey(null)}
       />
-
-      <ConfirmationModal isOn={isOn} onClose={handleSubmitComplete}>
-        <ConfirmationModal.Title>제출이 완료되었습니다</ConfirmationModal.Title>
-        <ConfirmationModal.ButtonSection>
-          <Button onClick={handleSubmitComplete}>확인</Button>
-        </ConfirmationModal.ButtonSection>
-      </ConfirmationModal>
     </>
   )
 }

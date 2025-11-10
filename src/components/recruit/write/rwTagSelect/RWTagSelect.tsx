@@ -13,10 +13,12 @@ import useStudyHubStore from '@/store/store'
 
 interface WithRWTagSelectProps {
   setValue: UseFormSetValue<RecruitWriteSchema>
+  isPending: boolean
 }
 
 const RWTagSelect = ({
   setValue,
+  isPending,
   errors,
 }: RecruitWriteChildrenProps & WithRWTagSelectProps) => {
   const selectedTagArray = useStudyHubStore((state) => state.selectedTagArray)
@@ -47,6 +49,7 @@ const RWTagSelect = ({
           size="sm"
           className="mb-oz-xs"
           onClick={() => setModalKey('tagSelect')}
+          status={isPending ? 'pending' : 'enabled'}
         >
           <Plus size={14} />
           태그 검색
