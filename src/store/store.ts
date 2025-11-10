@@ -64,6 +64,9 @@ const useStudyHubStore = create<StudyHubState>()(
       setUnReadCounter: (newCount) => set({ unReadCounter: newCount }),
       chatRoomArray: [],
       setChatRoomArray: (chatRoomArray) => set({ chatRoomArray }),
+      chatMessageArray: [],
+      setChatMessageArray: (chatMessageArray) => set({ chatMessageArray }),
+
       // notification
     }),
     {

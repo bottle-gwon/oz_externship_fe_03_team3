@@ -4,16 +4,15 @@ import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { useEffect, useRef } from 'react'
+import useStudyHubStore from '@/store/store'
 
 interface ChatArray {
-  messages: MessageList[]
   isPending: boolean
   isFetchingNextPage: boolean
   LoadingRef: React.RefObject<HTMLDivElement | null>
 }
 
 const ChatDisplay = ({
-  messages,
   isPending,
   isFetchingNextPage,
   LoadingRef,
@@ -21,6 +20,7 @@ const ChatDisplay = ({
   // const [scrollHeight, setScrollHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null)
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
+  const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
 
   useEffect(() => {
     if (!containerRef) {
@@ -48,7 +48,7 @@ const ChatDisplay = ({
       )}
 
       {isPending && <ChattingRoomSkeleton />}
-      {messages.map((el) => (
+      {chatMessageArray.map((el) => (
         <ChatBox key={el.id + el.created_at} chat={el} />
       ))}
     </Vstack>

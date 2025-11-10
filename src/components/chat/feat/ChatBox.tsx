@@ -23,13 +23,14 @@ const chatBoxStyle = (isOwner: boolean) => {
 
 // 사용자 임시 아이디 값
 const USER_ID = 8
+const SENDER_NICKNAME = '홍길동'
 
 const ChatBox = ({ chat }: ChatBoxInterface) => {
   const date = new Date(chat.created_at)
   const hour = date.getUTCHours()
   const munite = date.getUTCMinutes()
 
-  const isOwner = USER_ID === chat.sender_id
+  const isOwner = SENDER_NICKNAME === chat.sender_nickname
   const boxStyle = chatBoxStyle(isOwner)
 
   return (

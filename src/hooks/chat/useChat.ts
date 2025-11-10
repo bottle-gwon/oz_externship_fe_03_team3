@@ -27,7 +27,7 @@ const getMessageList = async (params: ChatMessageListRequest) => {
   newParam.append('size', String(size))
 
   const response = await api.get(
-    `${chatQueryEndpoint}/${study_group_id}/messages?${newParam}`
+    `${chatQueryEndpoint}/chatrooms/${study_group_id}/messages?${newParam}`
   )
 
   return response.data
@@ -37,11 +37,6 @@ const getMessageList = async (params: ChatMessageListRequest) => {
 
 // 채팅방 리스트 가져오기
 export const useChatRoomList = () => {
-  // return useQuery({
-  //   queryKey: [chatQueryEndpoint, page],
-  //   queryFn: () => getChatRoomList(page),
-  //   placeholderData: keepPreviousData,
-  // })
   return useInfiniteQuery<
     ChatRoomApiResponse,
     Error,
@@ -74,10 +69,6 @@ export const useChatRoomList = () => {
 
 // 채팅 메시지 리스트 가져오기
 export const useChatRoomMessage = () => {
-  // return useQuery({
-  //   queryKey: [chatRoomEndpoint, params],
-  //   queryFn: () => getMessageList(params),
-  // })
   const chatState = useStudyHubStore((state) => state.chatState)
 
   // 만약 채팅방이 열리지 않은 상태면 -1을 넣어서 훅이 작동 하지 않도록 한다.(쿼리의 enabled 참고)
