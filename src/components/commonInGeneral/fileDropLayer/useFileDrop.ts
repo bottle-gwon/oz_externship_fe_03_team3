@@ -1,20 +1,14 @@
-import { useState, useEffect } from 'react'
+import type { Style } from '@/types'
+import { useState } from 'react'
 
 interface FileDropOptions {
   onFileArrayDrop: (fileArray: File[]) => void
-  onDragEnterChange: (isDragEntered: boolean) => void
 }
 
 const useFileDrop = (options: FileDropOptions) => {
-  const { onFileArrayDrop, onDragEnterChange } = options
+  const { onFileArrayDrop } = options
 
   const [isDragEntered, setIsDragEntered] = useState(false)
-
-  useEffect(() => {
-    onDragEnterChange(isDragEntered)
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDragEntered])
 
   const onDragEnter = () => {
     setIsDragEntered(true)
@@ -37,7 +31,11 @@ const useFileDrop = (options: FileDropOptions) => {
     }
   }
 
-  return { onDragEnter, onDragOver, onDragLeave, onDrop }
+  const style: Style = {
+    backgroundColor: isDragEntered ? 'var(--color-primary-50)' : undefined,
+  }
+
+  return { onDragEnter, onDragOver, onDragLeave, onDrop, style }
 }
 
 export default useFileDrop

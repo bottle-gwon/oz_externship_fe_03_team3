@@ -27,12 +27,7 @@ const MarkdownEditor = memo(
   }: MarkdownEditorProps) => {
     const [text, setText] = useState<string | undefined>(defaultValue)
     const editorRef = useRef<RefMDEditor>(null)
-    // TODO: 파일 드래그 중일 때 스타일 바꿔야
-    const [_isDragEntered, setIsDragEntered] = useState(false)
-    const fileDropProps = useFileDrop({
-      onDragEnterChange: (isEntered) => setIsDragEntered(isEntered),
-      onFileArrayDrop,
-    })
+    const fileDropProps = useFileDrop({ onFileArrayDrop })
     const [textarea, setTextarea] = useState<HTMLTextAreaElement | null>(null)
 
     useEffect(() => {
