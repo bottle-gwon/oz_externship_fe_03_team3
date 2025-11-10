@@ -10,7 +10,6 @@ import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useChatRoomMessage } from '@/hooks/chat/useChat'
 import { useEffect } from 'react'
-import { all } from 'axios'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -25,60 +24,60 @@ const TestUserStatus = {
 }
 
 //채팅 더미
-const TestChat = {
-  messages: [
-    {
-      id: 201,
-      sender_id: 5,
-      sender_nickname: '홍길동',
-      study_group_id: 100,
-      content: '오늘 스터디 7시에 시작합니다.',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T10:30:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 6,
-      sender_nickname: '김길동',
-      study_group_id: 100,
-      content: 'ㅇㅋㅇㅋ',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T10:35:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 7,
-      sender_nickname: '이길동',
-      study_group_id: 100,
-      content: '넵',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T10:37:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 8,
-      sender_nickname: '장길동',
-      study_group_id: 100,
-      content: '테스트 중입니다. 조금 긴 메시지 테스트',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T11:40:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 9,
-      sender_nickname: '선길동',
-      study_group_id: 100,
-      content: '테스트 중입니다.',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T11:45:00Z',
-    },
-  ],
-}
+// const TestChat = {
+//   messages: [
+//     {
+//       id: 201,
+//       sender_id: 5,
+//       sender_nickname: '홍길동',
+//       study_group_id: 100,
+//       content: '오늘 스터디 7시에 시작합니다.',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T10:30:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 6,
+//       sender_nickname: '김길동',
+//       study_group_id: 100,
+//       content: 'ㅇㅋㅇㅋ',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T10:35:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 7,
+//       sender_nickname: '이길동',
+//       study_group_id: 100,
+//       content: '넵',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T10:37:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 8,
+//       sender_nickname: '장길동',
+//       study_group_id: 100,
+//       content: '테스트 중입니다. 조금 긴 메시지 테스트',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T11:40:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 9,
+//       sender_nickname: '선길동',
+//       study_group_id: 100,
+//       content: '테스트 중입니다.',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T11:45:00Z',
+//     },
+//   ],
+// }
 
 const OnlineUser = ({
   isPending,

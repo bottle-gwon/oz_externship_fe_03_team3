@@ -1,5 +1,4 @@
 import { Vstack } from '@/components/commonInGeneral/layout'
-import type { MessageList } from '@/types/_chatInterfaces'
 import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
