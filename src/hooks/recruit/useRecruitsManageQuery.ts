@@ -33,7 +33,7 @@ const useRecruitsManageQuery = (userId: number) => {
     [selectedStatusInText, selectedOrderingInText]
   )
 
-  const endpoint = `/recruitments/${userId}`
+  const endpoint = `/recruitments/user/${userId}`
 
   const { data, isPending, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
