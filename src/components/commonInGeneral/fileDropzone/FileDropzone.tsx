@@ -21,6 +21,7 @@ const FileDropzone = ({
   useEffect(() => {
     const fileArray = Object.values(fileRecord)
     const realFileArray = fileArray.filter((file) => file.lastModified)
+
     onChange(realFileArray)
   }, [fileRecord, onChange])
 
@@ -33,11 +34,13 @@ const FileDropzone = ({
 
   const addFiles = (files: FileList) => {
     let iteration = 0
-    const newRecord: FileRecord = [...files].reduce((acc: FileRecord, file) => {
-      acc[Date.now() + iteration] = file
-      iteration += 1
-      return acc
-    }, {})
+    const newRecord: FileRecord = [...files]
+      .slice(0, 5)
+      .reduce((acc: FileRecord, file) => {
+        acc[Date.now() + iteration] = file
+        iteration += 1
+        return acc
+      }, {})
     setFileRecord({ ...fileRecord, ...newRecord })
   }
 
