@@ -70,9 +70,13 @@ api.interceptors.response.use(
       await getRefreshAndMe()
       // 2) 실패했던 요청 재시도
       return api(error.config)
-    } catch {
+    } catch (err) {
+      console.log({ error })
+      console.log({ err })
+      debugger
       // 3) 재발급 실패 → 로그인 페이지로
-      window.location.href = '/login'
+      // window.location.href = '/login'
+      //
     }
   }
 )

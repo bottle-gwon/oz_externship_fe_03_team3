@@ -54,10 +54,16 @@ const RecruitWriteContent = ({
   const onSubmit = (data: FieldValues) => {
     setIsOn(true)
 
+    const formData = new FormData()
+    const { attachments, ...rest } = data
+    const restEntryArray = Object.entries(rest)
+    restEntryArray.forEach((entry) => formData.append(...entry))
+    attachments.forEach((file: File) => formData.append('attachments', file))
+
     if (isEditing) {
-      postRecruitWriteMutation.mutate(data)
+      patchRecruitWriteMutation.mutate(formData)
     } else {
-      patchRecruitWriteMutation.mutate(data)
+      postRecruitWriteMutation.mutate(formData)
     }
   }
 

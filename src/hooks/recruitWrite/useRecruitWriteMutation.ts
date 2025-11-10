@@ -15,6 +15,7 @@ const useRecruitWriteMutation = () => {
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { id: number } }) => {
+      debugger
       const id = response.data.id
       navigate(`/recruit/${id}`)
     },
@@ -26,6 +27,7 @@ const useRecruitWriteMutation = () => {
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { id: number } }) => {
+      debugger
       const id = response.data.id
       navigate(`/recruit/${id}`)
     },
