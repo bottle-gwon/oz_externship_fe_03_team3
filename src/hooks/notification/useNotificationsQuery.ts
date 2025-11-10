@@ -17,7 +17,7 @@ const tabToIsRead: Record<NotificationTab, boolean | null> = {
   unread: false,
 }
 
-const getNotifications = async (params: object) => {
+const getNotifications = async (params: object, pageParam: number) => {
   const state = useNotificationStore.getState()
   const selectedTab = state.selectedTab
   const allNotificationArray = state.allNotificationArray
@@ -31,7 +31,10 @@ const getNotifications = async (params: object) => {
     setNotificationArray(filteredNotificationArray)
   }
 
-  return (await api.get(endpoint, { params })).data as NotificationsResponseData
+  const response = await api.get(endpoint, {
+    params: { ...params, page: pageParam },
+  })
+  return response.data as NotificationsResponseData
 }
 
 const useNotificationsQuery = () => {
@@ -51,7 +54,7 @@ const useNotificationsQuery = () => {
   const { data, isPending, error, fetchNextPage, hasNextPage } =
     useInfiniteQuery({
       queryKey: [endpoint, selectedTab],
-      queryFn: () => getNotifications(params),
+      queryFn: ({ pageParam }) => getNotifications(params, pageParam),
       initialPageParam: 1,
       getNextPageParam: (lastPage, _allPages, lastPageParam) =>
         lastPage.next ? lastPageParam + 1 : null,
@@ -78,11 +81,11 @@ const useNotificationsQuery = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
-  // useEffect(() => {
-  //   setRequestNextPage(fetchNextPage)
-  // }, [fetchNextPage, setRequestNextPage])
+  useEffect(() => {
+    setRequestNextPage(fetchNextPage)
+  }, [fetchNextPage, setRequestNextPage])
 
-  return { isPending, error, fetchNextPage, hasNextPage }
+  return { isPending, error, hasNextPage, fetchNextPage }
 }
 
 export default useNotificationsQuery
