@@ -8,21 +8,35 @@ import ApplicantDetailCard from './_ApplicantDetailCard'
 import ManageDetailModalButtons from './_ManageDetailModalButtons'
 import ManageDetailConfirmationModal from './_ManageDetailConfirmationModal'
 import useStudyHubStore from '@/store/store'
-import { dummyApplicantDetail } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantDetail'
+import useApplicantDetailStore from '@/store/recruit/manageDetailModal/applicantDetailstore'
+import useApplicantDetailQuery from '@/hooks/manageDetailModal/useApplicantDetailQuery'
 
 interface ManageDetailModalProps {
   isOn: boolean
   onClose: () => void
-  applicantId: number | null // api 연결할때 사용
+  applicantId: number
 }
 
-const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
+const ManageDetailModal = ({
+  isOn,
+  onClose,
+  applicantId,
+}: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const applicant = dummyApplicantDetail
-  const statusStyle = statusStyles[applicant.status]
+  const { isPending } = useApplicantDetailQuery(applicantId)
+  const applicantDetail = useApplicantDetailStore(
+    (state) => state.applicantDetail
+  )
+  const statusStyle = statusStyles[applicantDetail.status]
   const experienceStyle =
-    experienceStyles[String(applicant.has_study_experience) as 'true' | 'false']
+    experienceStyles[
+      String(applicantDetail.has_study_experience) as 'true' | 'false'
+    ]
+
+  if (isPending) {
+    return <p>로딩중입니다..</p>
+  }
 
   const handleClose = () => {
     onClose()
@@ -50,12 +64,12 @@ const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
               <Vstack>
                 <p className="text-sm font-medium text-gray-700">지원자 정보</p>
                 <Hstack gap="lg">
-                  <ProfileImage url={applicant.profile_image} size="xl" />
+                  <ProfileImage url={applicantDetail.profile_image} size="xl" />
                   <Vstack gap="none" className="justify-center">
                     <h3 className="text-lg font-semibold">
-                      {applicant.nickname}
+                      {applicantDetail.nickname}
                     </h3>
-                    <p className="text-gray-600">{applicant.gender}</p>
+                    <p className="text-gray-600">{applicantDetail.gender}</p>
                   </Vstack>
                 </Hstack>
               </Vstack>
@@ -69,23 +83,28 @@ const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
                 </Vstack>
                 <Vstack gap="xs" className="items-end">
                   <p className="text-sm text-gray-600">지원한 일시</p>
-                  <p className="text-sm font-medium">{applicant.created_at}</p>
+                  <p className="text-sm font-medium">
+                    {applicantDetail.created_at}
+                  </p>
                 </Vstack>
               </Hstack>
             </RoundBox>
 
             <ApplicantDetailCard
               title="자기소개"
-              content={applicant.introduction}
+              content={applicantDetail.introduction}
             />
             <ApplicantDetailCard
               title="지원 동기"
-              content={applicant.motivation}
+              content={applicantDetail.motivation}
             />
-            <ApplicantDetailCard title="스터디 목표" content={applicant.goal} />
+            <ApplicantDetailCard
+              title="스터디 목표"
+              content={applicantDetail.goal}
+            />
             <ApplicantDetailCard
               title="가능한 시간대"
-              content={applicant.available_times}
+              content={applicantDetail.available_times}
             />
 
             <Vstack>
@@ -96,7 +115,7 @@ const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
                     {experienceStyle.content}
                   </Tag>
                   <p className="text-gray-700">
-                    {applicant.study_experience_detail}
+                    {applicantDetail.study_experience_detail}
                   </p>
                 </Vstack>
               </RoundBox>
@@ -105,7 +124,7 @@ const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
         </Modal.Body>
 
         <Modal.Footer>
-          {applicant.status === 'pending' && (
+          {applicantDetail.status === 'PENDING' && (
             <ManageDetailModalButtons
               onApprove={handleApproveClick}
               onReject={handleRejectClick}
@@ -114,7 +133,7 @@ const ManageDetailModal = ({ isOn, onClose }: ManageDetailModalProps) => {
         </Modal.Footer>
       </Modal>
 
-      <ManageDetailConfirmationModal nickname={applicant.nickname} />
+      <ManageDetailConfirmationModal nickname={applicantDetail.nickname} />
     </>
   )
 }
