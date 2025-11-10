@@ -17,11 +17,15 @@ const NotificationBox = () => {
     (state) => state.notificationArray
   )
 
-  const { isPending, error, hasNextPage, fetchNextPage } =
-    useNotificationsQuery()
+  const { isPending, error, hasNextPage } = useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
+  // fetchNextPage를 바로 넣으면 연달아 두 번 1, 2 페이지 요청이 감. 왜?
+  // useOneWayInfinityScroll(targetRef, () => {
+  //   fetchNextPage()
+  // })
 
-  useOneWayInfinityScroll(targetRef, fetchNextPage)
+  const requestNextPage = useNotificationStore((state) => state.requestNextPage)
+  useOneWayInfinityScroll(targetRef, requestNextPage)
 
   if (isPending) {
     return <Skeleton heightInPixel={475} widthInPixel={384} />
@@ -64,7 +68,9 @@ const NotificationBox = () => {
           <div />
         </FlexOneContainer>
 
-        {hasNextPage && <div ref={targetRef} className="h-[45px] bg-gray-50" />}
+        {hasNextPage && notificationArray.length > 0 && (
+          <div ref={targetRef} className="h-[45px] bg-gray-50" />
+        )}
       </Vstack>
     </RoundBox>
   )
