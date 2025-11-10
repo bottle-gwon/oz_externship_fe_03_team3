@@ -84,7 +84,6 @@ export const useChatRoomMessage = () => {
     queryKey: ['message', get_study_group_id],
     queryFn: ({ pageParam }) => getMessageList(pageParam),
     getNextPageParam: (lastPage, _, lastPageParam) => {
-      console.log(lastPage, lastPageParam, '테스트')
       if (lastPage.data && lastPageParam?.size && lastPageParam?.page) {
         const current = lastPageParam.page
         const totalPage = Math.ceil(

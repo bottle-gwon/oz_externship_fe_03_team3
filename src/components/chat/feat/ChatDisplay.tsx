@@ -4,6 +4,7 @@ import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { useEffect, useRef } from 'react'
 import useStudyHubStore from '@/store/store'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
 interface ChatArray {
   isPending: boolean
@@ -21,6 +22,14 @@ const ChatDisplay = ({
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
   const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
 
+  // 윈도잉(가상화 리스트)
+  const rowVirtualizer = useVirtualizer({
+    count: chatMessageArray.length, // 렌더링할 아이템 개수
+    getScrollElement: () => containerRef.current, //스크롤 요소
+    estimateSize: (_) => 80, // 각 메시지 예상 높이 여기서는 최저 높이로 설정 했습니다.
+    overscan: 3, // 화면 바깥에 미리 렌더링 할 메시지 수
+  })
+
   useEffect(() => {
     if (!containerRef) {
       return
@@ -32,7 +41,7 @@ const ChatDisplay = ({
       containerRef.current.scrollTop = 20
       // setScrollHeight(containerRef.current.scrollHeight)
     }
-  }, [])
+  }, [containerRef])
 
   return (
     <Vstack
@@ -40,16 +49,39 @@ const ChatDisplay = ({
       className={`mx-[-24px] h-full ${overflow}`}
       ref={containerRef}
     >
-      {/* 테스트를 위해서 위로 올려 뒀습니다. */}
-      <div ref={LoadingRef}></div>
-      {isFetchingNextPage && (
-        <Skeleton widthInPixel={270} heightInPixel={100} className="shrink-0" />
-      )}
+      <div className={`relative w-full h-[${rowVirtualizer.getTotalSize()}]`}>
+        {/* 가상화 리스트 적용 */}
+        <Vstack
+          className="absolute w-full"
+          style={{
+            transform: `translateY(${rowVirtualizer.getVirtualItems()[0]?.start ?? 0}px)`,
+          }}
+        >
+          {isPending && <ChattingRoomSkeleton />}
+          {isFetchingNextPage && (
+            <Skeleton
+              widthInPixel={270}
+              heightInPixel={100}
+              className="shrink-0"
+            />
+          )}
 
-      {isPending && <ChattingRoomSkeleton />}
-      {chatMessageArray.map((el) => (
+          <div ref={LoadingRef}></div>
+          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+            const message = chatMessageArray[virtualRow.index]
+            return (
+              <ChatBox
+                key={virtualRow.key}
+                chat={message}
+                measure={rowVirtualizer.measureElement}
+              />
+            )
+          })}
+        </Vstack>
+      </div>
+      {/* {chatMessageArray.map((el) => (
         <ChatBox key={el.id + el.created_at} chat={el} />
-      ))}
+      ))} */}
     </Vstack>
   )
 }

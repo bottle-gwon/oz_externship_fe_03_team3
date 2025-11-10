@@ -155,6 +155,7 @@ const ChattingRoom = () => {
   //   }
   // }, [])
 
+  // 데이터 저장, 정렬
   useEffect(() => {
     if (data?.pages && !isFetchingNextPage) {
       const allMessage =
