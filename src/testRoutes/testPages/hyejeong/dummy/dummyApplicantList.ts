@@ -11,7 +11,7 @@ export const dummyApplicantArray: Applicant[] = [
     },
     available_time: '평일 저녁, 주말 오전',
     has_study_experience: true,
-    status: 'pending',
+    status: 'PENDING',
     created_at: '2025-10-16 11:25',
   },
   {
@@ -23,7 +23,7 @@ export const dummyApplicantArray: Applicant[] = [
     },
     available_time: '주중 오후',
     has_study_experience: false,
-    status: 'accepted',
+    status: 'ACCEPTED',
     created_at: '2025-10-15 19:48',
   },
   {
@@ -35,7 +35,7 @@ export const dummyApplicantArray: Applicant[] = [
     },
     available_time: '평일 저녁, 주말 오전',
     has_study_experience: true,
-    status: 'rejected',
+    status: 'REJECTED',
     created_at: '2025-10-16 11:25',
   },
   {
@@ -47,7 +47,7 @@ export const dummyApplicantArray: Applicant[] = [
     },
     available_time: '주중 오후',
     has_study_experience: false,
-    status: 'accepted',
+    status: 'ACCEPTED',
     created_at: '2025-10-15 19:48',
   },
 ]
