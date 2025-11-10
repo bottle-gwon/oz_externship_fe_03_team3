@@ -62,7 +62,7 @@ const recruitWriteCommonObject = {
     .number('예상 모집 인원을 선택해주세요')
     .min(1, '예상 모집 인원을 선택해주세요'),
   study_group_id: z.coerce
-    .number('스터디 그룹을 선택해주세요')
+    .string('스터디 그룹을 선택해주세요')
     .min(1, '스터디 그룹을 선택해주세요'),
   estimated_cost: z.coerce.number().nullish(),
   tags: z

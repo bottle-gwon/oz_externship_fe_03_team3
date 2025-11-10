@@ -107,6 +107,13 @@ const TestApiPage = () => {
           </TitledRoundBox>
 
           <TitledRoundBox>
+            <TitledRoundBox.Title>Study</TitledRoundBox.Title>
+            <Button onClick={() => api.get('/studies/groups')}>
+              GET /studies/groups
+            </Button>
+          </TitledRoundBox>
+
+          <TitledRoundBox>
             <TitledRoundBox.Title>익스프레스 헬스</TitledRoundBox.Title>
             <Button onClick={() => api.get('/')}>GET /</Button>
             <Button onClick={() => api.get('/health')}>GET /health</Button>

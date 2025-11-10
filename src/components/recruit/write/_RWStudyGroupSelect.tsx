@@ -2,31 +2,30 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Select from '@/components/commonInGeneral/select/Select'
 import useStudyHubStore from '@/store/store'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Controller } from 'react-hook-form'
-import dummyGetStudyGroupsResponse from './_dummyGetStudyGroupsResponse'
 import type { RecruitWriteChildrenProps, StudyGroup } from '@/types'
 import RWStudyGroupInfo from './_RWStudyGroupInfo'
+import { useQuery } from '@tanstack/react-query'
+import api from '@/api/api'
 
 const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
   const [selectedStudyGroup, setSelectedStudyGroup] =
     useState<StudyGroup | null>(null)
   const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
 
-  // TODO: api 연결할 땐 useQuery로 교체해야
-  const studyGroupArray = useStudyHubStore((state) => state.studyGroupArray)
-  const setStudyGroupArray = useStudyHubStore(
-    (state) => state.setStudyGroupArray
-  )
-  useEffect(() => {
-    const dummyResponse = dummyGetStudyGroupsResponse
-    const array = dummyResponse.data.study_groups
-    setStudyGroupArray(array)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  const endpoint = '/studies/groups'
+  const { data, isPending, error } = useQuery({
+    queryKey: [endpoint],
+    queryFn: async () => (await api.get(endpoint)).data.results as StudyGroup[],
+  })
 
   const handleOptionSelect = (study_group_id: string | number) => {
-    const result = studyGroupArray.find(({ id }) => id === study_group_id)
+    if (!data) {
+      return
+    }
+
+    const result = data.find(({ uuid }) => uuid === study_group_id)
     if (!result) {
       return
     }
@@ -50,11 +49,15 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
             >
               <Select.Trigger>스터디 그룹을 선택해주세요</Select.Trigger>
               <Select.Content>
-                {studyGroupArray.map((studyGroup) => (
-                  <Select.Option key={studyGroup.id} value={studyGroup.id}>
-                    {studyGroup.name}
-                  </Select.Option>
-                ))}
+                {data &&
+                  data.map((studyGroup) => (
+                    <Select.Option
+                      key={studyGroup.uuid}
+                      value={studyGroup.uuid}
+                    >
+                      {studyGroup.name}
+                    </Select.Option>
+                  ))}
               </Select.Content>
             </Select>
           )}
