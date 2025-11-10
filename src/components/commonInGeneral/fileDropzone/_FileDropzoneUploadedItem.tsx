@@ -8,9 +8,10 @@ import Button from '../button/Button'
 interface FifleDropzoneUploaedItemProps {
   fileId: number
   file: File
+  isNotValid: boolean
 }
 const FileDropzoneUploadedItem = memo(
-  ({ fileId, file }: FifleDropzoneUploaedItemProps) => {
+  ({ fileId, file, isNotValid }: FifleDropzoneUploaedItemProps) => {
     const { setFileRecord } = useFileDropzoneContext()
 
     const handleXClick = () => {
@@ -24,13 +25,20 @@ const FileDropzoneUploadedItem = memo(
     const size = Math.round(file.size / 10_000) / 100
 
     return (
-      <RoundBox onClick={(event) => event.stopPropagation()}>
+      <RoundBox
+        onClick={(event) => event.stopPropagation()}
+        color={isNotValid ? 'danger' : 'mono-bright'}
+      >
         <Hstack className="gap-oz-sm items-center">
           <Hstack className="gap-oz-sm grow items-center text-sm">
             <FileText size={14} className="text-gray-400" />
             {file.name}
           </Hstack>
-          <p className="text-xs text-gray-500">{size}MB</p>
+          <p
+            className={`text-xs ${isNotValid ? 'text-danger-500' : 'text-gray-500'}`}
+          >
+            {size}MB
+          </p>
           <Button variant="ghost" className="p-0">
             <X onClick={handleXClick} size={14} />
           </Button>
