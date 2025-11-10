@@ -11,9 +11,6 @@ const useNotificationStore = create<NotificationStoreState>()((set, _get) => ({
   allNotificationArray: [],
   setAllNotificationArray: (allNotificationArray) =>
     set({ allNotificationArray }),
-
-  requestNextPage: () => {},
-  setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
 }))
 
 export default useNotificationStore
