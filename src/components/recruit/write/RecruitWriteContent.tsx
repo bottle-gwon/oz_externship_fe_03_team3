@@ -24,7 +24,6 @@ import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
 import RWMarkdownEditor from './_RWMarkdownEditor'
 import useRecruitWriteMutation from '@/hooks/recruitWrite/useRecruitWriteMutation'
-import ErrorModal from '@/components/commonInGeneral/modal/errorModal/ErrorModal'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
