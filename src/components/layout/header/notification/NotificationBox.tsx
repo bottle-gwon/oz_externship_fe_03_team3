@@ -12,7 +12,8 @@ import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useRef } from 'react'
 
 const NotificationBox = () => {
-  const targetRef = useRef<HTMLDivElement>(null)
+  const rootRef = useRef<HTMLDivElement | null>(null)
+  const targetRef = useRef<HTMLDivElement | null>(null)
   const notificationArray = useNotificationStore(
     (state) => state.notificationArray
   )
@@ -20,7 +21,11 @@ const NotificationBox = () => {
   const { isPending, error, hasNextPage, fetchNextPage } =
     useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
-  useOneWayInfinityScroll(targetRef, fetchNextPage)
+  useOneWayInfinityScroll(targetRef, fetchNextPage, {
+    threshold: 0,
+    root: rootRef.current,
+    rootMargin: '0px 0px 300px 0px',
+  })
 
   if (isPending) {
     return <Skeleton heightInPixel={475} widthInPixel={384} />
@@ -53,17 +58,20 @@ const NotificationBox = () => {
 
         <NotificationTabRow />
 
-        <FlexOneContainer isYScrollable className="border-b border-b-gray-200">
+        <FlexOneContainer
+          isYScrollable
+          className="border-b border-b-gray-200"
+          ref={rootRef}
+        >
           {notificationArray.map((notification) => (
             <NotificationCard
               key={notification.id}
               notification={notification}
             />
           ))}
-          {hasNextPage && (
-            <div ref={targetRef} className="h-[45px] bg-gray-50" />
-          )}
+          {hasNextPage && <div ref={targetRef} />}
         </FlexOneContainer>
+        <div className="h-[45px] bg-gray-50" />
       </Vstack>
     </RoundBox>
   )
