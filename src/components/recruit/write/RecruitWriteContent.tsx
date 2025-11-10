@@ -39,6 +39,7 @@ const RecruitWriteContent = ({
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
+  const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
 
   const navigate = useNavigate()
   const { postRecruitWriteMutation, patchRecruitWriteMutation } =
@@ -61,7 +62,13 @@ const RecruitWriteContent = ({
     attachments.forEach((file: File) => formData.append('attachments', file))
 
     if (isEditing) {
-      patchRecruitWriteMutation.mutate(formData)
+      if (!editingRecruit) {
+        throw new Error('---- 수정 중인 공고를 못 찾았어요')
+      }
+      patchRecruitWriteMutation.mutate({
+        body: formData,
+        id: editingRecruit.id,
+      })
     } else {
       postRecruitWriteMutation.mutate(formData)
     }

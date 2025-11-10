@@ -1,19 +1,32 @@
-import dummyRecruitDetailResponse from '@/components/recruit/detail/_dummyRecruitDetailResponse'
 import RecruitWriteContent from '@/components/recruit/write/RecruitWriteContent'
+import useRecruitDetailQuery from '@/hooks/recruitDetail/useRecruitDetailQuery'
 import useStudyHubStore from '@/store/store'
 import { useEffect } from 'react'
+import { useParams } from 'react-router'
 
 const RecruitEditPage = () => {
-  // TODO: url 파라미터 -> 내 공고 api -> editingRecruit에 저장
-  // const recruitId = Number(useParams().recruitId)
+  const recruitId = Number(useParams().recruitId)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 
-  // TODO: useMyRecruitQuery 여기서 호출해야
-  // NOTE: api 연결 후 삭제될 부분입니다
+  const { data, error, isPending } = useRecruitDetailQuery(recruitId)
   useEffect(() => {
-    setEditingRecruit(dummyRecruitDetailResponse)
-  }, [setEditingRecruit])
-  // NOTE: ---- 여기까지
+    if (!data) {
+      return
+    }
+
+    setEditingRecruit(data)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
+
+  if (isPending) {
+    // TODO: 스켈레톤을 만들어야 합니다
+    return <p>여기에 스켈레톤을 넣어야 합니다</p>
+  }
+
+  if (error) {
+    // TODO: 에러 페이지를 만들어야 합니다
+    return <p>여기에 에러 페이지를 만들어야 합니다</p>
+  }
 
   return <RecruitWriteContent isEditing />
 }

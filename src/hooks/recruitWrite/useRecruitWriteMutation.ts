@@ -1,7 +1,6 @@
 import api from '@/api/api'
 import useStudyHubStore from '@/store/store'
 import { useMutation } from '@tanstack/react-query'
-import type { FieldValues } from 'react-hook-form'
 import { useNavigate } from 'react-router'
 
 const useRecruitWriteMutation = () => {
@@ -9,7 +8,7 @@ const useRecruitWriteMutation = () => {
   const navigate = useNavigate()
 
   const postRecruitWriteMutation = useMutation({
-    mutationFn: (body: FieldValues) => api.post('/recruitments', body),
+    mutationFn: (body: FormData) => api.post('/recruitments', body),
     onError: () => {
       debugger
       setModalKey('recruitWriteError')
@@ -20,8 +19,10 @@ const useRecruitWriteMutation = () => {
       navigate(`/recruit/${id}`)
     },
   })
+
   const patchRecruitWriteMutation = useMutation({
-    mutationFn: (body: FieldValues) => api.patch('/recruitments', body),
+    mutationFn: ({ body, id }: { body: FormData; id: number }) =>
+      api.patch(`/recruitments/${id}`, body),
     onError: () => {
       debugger
       setModalKey('recruitWriteError')
