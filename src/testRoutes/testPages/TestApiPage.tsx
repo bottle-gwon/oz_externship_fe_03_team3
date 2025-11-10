@@ -23,10 +23,6 @@ const logout = () => {
   setAccessToken(null)
 }
 
-const getLectures = () => api.get('/lectures/')
-
-const getNotifications = () => api.get('/notifications/')
-
 const lecture_id = '550e8400-e29b-41d4-a716-446655440000'
 
 const TestApiPage = () => {
@@ -54,20 +50,23 @@ const TestApiPage = () => {
           <TitledRoundBox>
             <TitledRoundBox.Title>Lectures</TitledRoundBox.Title>
             <p>서버가 살아있나 확인할 땐 여기를 사용해주세요</p>
-            <Button onClick={getLectures}>GET /lectures/</Button>
-            <Button onClick={() => api.get('/lectures/?page=1')}>
-              GET /lectures/?page=1
+            <Button onClick={() => api.get('/lectures')}>GET /lectures</Button>
+            <Button onClick={() => api.get('/lectures/')}>
+              GET /lectures/
             </Button>
-            <Button onClick={() => api.get('/lectures/?page=2')}>
-              GET /lectures/?page=2
+            <Button onClick={() => api.get('/lectures?page=1')}>
+              GET /lectures?page=1
+            </Button>
+            <Button onClick={() => api.get('/lectures?page=2')}>
+              GET /lectures?page=2
             </Button>
             <Button
-              onClick={() => api.get('/lectures/?ordering=-created_at&page=2')}
+              onClick={() => api.get('/lectures?ordering=-created_at&page=2')}
             >
-              GET /lectures/?ordering=-created_at&page=2
+              GET /lectures?ordering=-created_at&page=2
             </Button>
-            <Button onClick={() => api.get('/lectures/?page=2')}>
-              GET http://api.ozcoding.site/api/v1/lectures/?page=2
+            <Button onClick={() => api.get('/lectures?page=2')}>
+              GET http://api.ozcoding.site/api/v1/lectures?page=2
             </Button>
             <Button onClick={() => api.get('/lectures/categories')}>
               GET /lectures/categories
@@ -86,16 +85,24 @@ const TestApiPage = () => {
 
           <TitledRoundBox>
             <TitledRoundBox.Title>Notification</TitledRoundBox.Title>
-            <Button onClick={getNotifications}>GET /notifications/</Button>
+            <Button onClick={() => api.get('/notifications')}>
+              GET /notifications
+            </Button>
+            <Button onClick={() => api.get('/notifications/')}>
+              GET /notifications/
+            </Button>
           </TitledRoundBox>
 
           <TitledRoundBox>
             <TitledRoundBox.Title>Recruitments</TitledRoundBox.Title>
+            <Button onClick={() => api.get('/recruitments')}>
+              GET /recruitments
+            </Button>
             <Button onClick={() => api.get('/recruitments/')}>
               GET /recruitments/
             </Button>
-            <Button onClick={() => api.get('/recruitments/1/')}>
-              GET /recruitments/1/
+            <Button onClick={() => api.get('/recruitments/1')}>
+              GET /recruitments/1
             </Button>
           </TitledRoundBox>
 
