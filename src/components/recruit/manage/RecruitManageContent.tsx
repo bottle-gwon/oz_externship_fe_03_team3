@@ -15,6 +15,7 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
 import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
+import { useRef } from 'react'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
@@ -29,7 +30,7 @@ const RecruitManageContent = () => {
 
   const userId = 24
   // 나중에 api 실제로 연결하면 없어져야함.
-  const { hasNextPage, count } = useRecruitManage(userId)
+  const { count } = useRecruitManage(userId)
 
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
@@ -41,9 +42,8 @@ const RecruitManageContent = () => {
         ? (count.open ?? 0)
         : (count.closed ?? 0)
 
-  const loaderRef = useOneWayInfinityScroll(() => {
-    if (hasNextPage) requestNextPage()
-  })
+  const loaderRef = useRef<HTMLDivElement | null>(null)
+  useOneWayInfinityScroll(loaderRef, requestNextPage)
 
   return (
     <Container isPadded>
