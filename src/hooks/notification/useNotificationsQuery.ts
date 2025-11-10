@@ -45,9 +45,6 @@ const useNotificationsQuery = () => {
   const setAllNotificationArray = useNotificationStore(
     (state) => state.setAllNotificationArray
   )
-  const setRequestNextPage = useNotificationStore(
-    (state) => state.setRequestNextPage
-  )
 
   const params = { is_read: tabToIsRead[selectedTab] }
 
@@ -80,10 +77,6 @@ const useNotificationsQuery = () => {
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
-
-  useEffect(() => {
-    setRequestNextPage(fetchNextPage)
-  }, [fetchNextPage, setRequestNextPage])
 
   return { isPending, error, hasNextPage, fetchNextPage }
 }

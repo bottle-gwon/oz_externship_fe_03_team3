@@ -9,7 +9,4 @@ export interface NotificationStoreState {
 
   allNotificationArray: Notification[]
   setAllNotificationArray: (notificationArray: Notification[]) => void
-
-  requestNextPage: () => void
-  setRequestNextPage: (requestNextPage: () => void) => void
 }
