@@ -6,17 +6,16 @@ export interface LectureInStudyGroup {
 }
 
 export interface StudyGroup {
-  id: number
+  uuid: string
   name: string
-  current_headcount: number
-  max_headcount: number
-  is_leader: boolean
   profile_img_url: string
+  max_headcount: number
   start_at: string
   end_at: string
   status: string
+  current_headcount: number
+  is_leader: boolean
   lectures: LectureInStudyGroup[]
-  review_count: number
-  star_rating_average: number
-  is_reviewed: boolean
+  total_pages: number
+  total_gropus: number
 }
