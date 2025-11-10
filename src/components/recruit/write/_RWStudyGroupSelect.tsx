@@ -15,7 +15,7 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
   const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
 
   const endpoint = '/studies/groups'
-  const { data, isPending, error } = useQuery({
+  const { data } = useQuery({
     queryKey: [endpoint],
     queryFn: async () => (await api.get(endpoint)).data.results as StudyGroup[],
   })
