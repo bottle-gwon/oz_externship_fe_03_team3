@@ -4,6 +4,7 @@ import type { MessageList } from '@/types/_chatInterfaces'
 
 interface ChatBoxInterface {
   chat: MessageList
+  measure: (node: Element | null | undefined) => void
 }
 const chatBoxStyle = (isOwner: boolean) => {
   if (isOwner) {
@@ -25,7 +26,7 @@ const chatBoxStyle = (isOwner: boolean) => {
 const USER_ID = 8
 const SENDER_NICKNAME = '홍길동'
 
-const ChatBox = ({ chat }: ChatBoxInterface) => {
+const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
   const date = new Date(chat.created_at)
   const hour = date.getUTCHours()
   const munite = date.getUTCMinutes()
@@ -34,7 +35,7 @@ const ChatBox = ({ chat }: ChatBoxInterface) => {
   const boxStyle = chatBoxStyle(isOwner)
 
   return (
-    <Vstack gap="xs" className={`w-full ${boxStyle.align}`}>
+    <Vstack gap="xs" className={`w-full ${boxStyle.align}`} ref={measure}>
       {chat.sender_id !== USER_ID && (
         <span className="text-xs text-gray-600">{chat.sender_nickname}</span>
       )}
