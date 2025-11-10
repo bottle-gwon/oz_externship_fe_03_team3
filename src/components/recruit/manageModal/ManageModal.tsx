@@ -24,7 +24,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
     null
   )
-  const { isPending, count } = useApplicantsQuery(recruit.id)
+  const { isPending, count } = useApplicantsQuery(recruit.id, isOn)
 
   const applicantArray = useApplicantStore((state) => state.applicantArray)
   const requestNextPage = useApplicantStore((state) => state.requestNextPage)
@@ -76,7 +76,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
             </GridContainer>
           )}
 
-          {applicantArray.length === 0 && (
+          {!isPending && applicantArray.length === 0 && (
             <Vstack gap="none" className="text-center text-gray-500">
               아직 지원자가 없습니다
             </Vstack>
