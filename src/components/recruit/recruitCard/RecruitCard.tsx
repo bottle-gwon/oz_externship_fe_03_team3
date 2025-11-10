@@ -17,6 +17,7 @@ import { useState } from 'react'
 import ManageModal from '../manageModal/ManageModal'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
+import api from '@/api/api'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -47,6 +48,8 @@ const RecruitCard = ({
   const navigate = useNavigate()
   const [manageOpen, setManageOpen] = useState(false)
   const [isDelete, setIsDelete] = useState(false)
+  const [success, setSuccess] = useState(false)
+  const [error, setError] = useState(false)
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [bookmarked, setBookmarked] = useState<boolean>(is_bookmarked)
 
@@ -62,10 +65,18 @@ const RecruitCard = ({
     setConfirmOpen(true)
   }
 
-  const confirmDelete = () => {
-    // 실제 삭제 API 연동 전까지는 카드만 숨김
-    setIsDelete(true)
-    setConfirmOpen(false)
+  const confirmDelete = async () => {
+    try {
+      await api.delete(`/recruitments/${id}`)
+      // 강제에러화면 보고싶을땐 아래 한줄 주석해제
+      // throw new Error('FORCE_FAIL')
+      setConfirmOpen(false)
+      setSuccess(true)
+    } catch (err) {
+      console.error(err)
+      setConfirmOpen(false)
+      setError(true)
+    }
   }
 
   const cancelDelete = () => {
@@ -273,6 +284,38 @@ const RecruitCard = ({
           <Button onClick={cancelDelete}>취소</Button>
           <Button onClick={confirmDelete} color="danger">
             삭제
+          </Button>
+        </ConfirmationModal.ButtonSection>
+      </ConfirmationModal>
+
+      <ConfirmationModal isOn={success} onClose={() => setSuccess(false)}>
+        <ConfirmationModal.Title>{`'${title}'의 삭제가 완료되었습니다.`}</ConfirmationModal.Title>
+        <ConfirmationModal.ButtonSection>
+          <Button
+            onClick={() => {
+              setIsDelete(true)
+              setSuccess(false)
+            }}
+          >
+            확인
+          </Button>
+        </ConfirmationModal.ButtonSection>
+      </ConfirmationModal>
+
+      <ConfirmationModal isOn={error} onClose={() => setError(false)}>
+        <ConfirmationModal.Title>{`'${title}'의 삭제가 실패하였습니다.`}</ConfirmationModal.Title>
+        <ConfirmationModal.Content>
+          <p className="text-sm">
+            해당 오류가 반복될 경우 관리자에게 문의해주세요.
+          </p>
+        </ConfirmationModal.Content>
+        <ConfirmationModal.ButtonSection>
+          <Button
+            onClick={() => {
+              setError(false)
+            }}
+          >
+            확인
           </Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
