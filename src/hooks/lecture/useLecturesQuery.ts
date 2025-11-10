@@ -3,7 +3,6 @@ import { textToLectureOrdering } from '@/utils/simpleMaps'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 import api from '@/api/api'
-import { makeUrlFromParams } from '@/utils/urls'
 import useLectureStore from '@/store/lecture/lectureStore'
 
 const queryEndpoint = '/lectures'
@@ -14,8 +13,7 @@ const getLecturesByPage = async (
   pageParam: number
 ) => {
   const params = { ...paramsWithoutPage, page: pageParam }
-  const url = makeUrlFromParams(queryEndpoint, params)
-  const response = await api.get(url)
+  const response = await api.get(queryEndpoint, { params })
   return response.data as LecturesResponseData
 }
 
