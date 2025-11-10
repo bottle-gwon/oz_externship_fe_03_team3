@@ -8,14 +8,20 @@ import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
 import useNotificationStore from '@/store/notification/notificationStore'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
+import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
+import { useRef } from 'react'
 
 const NotificationBox = () => {
+  const targetRef = useRef<HTMLDivElement>(null)
   const notificationArray = useNotificationStore(
     (state) => state.notificationArray
   )
 
-  const { isPending, error } = useNotificationsQuery()
+  const { isPending, error, hasNextPage, fetchNextPage } =
+    useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
+
+  useOneWayInfinityScroll(targetRef, fetchNextPage)
 
   if (isPending) {
     return <Skeleton heightInPixel={475} widthInPixel={384} />
@@ -55,9 +61,10 @@ const NotificationBox = () => {
               notification={notification}
             />
           ))}
+          <div />
         </FlexOneContainer>
 
-        <div className="h-[45px] bg-gray-50" />
+        {hasNextPage && <div ref={targetRef} className="h-[45px] bg-gray-50" />}
       </Vstack>
     </RoundBox>
   )

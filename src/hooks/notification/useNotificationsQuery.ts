@@ -48,13 +48,14 @@ const useNotificationsQuery = () => {
 
   const params = { is_read: tabToIsRead[selectedTab] }
 
-  const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
-    queryKey: [endpoint, selectedTab],
-    queryFn: () => getNotifications(params),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-      lastPage.next ? lastPageParam + 1 : null,
-  })
+  const { data, isPending, error, fetchNextPage, hasNextPage } =
+    useInfiniteQuery({
+      queryKey: [endpoint, selectedTab],
+      queryFn: () => getNotifications(params),
+      initialPageParam: 1,
+      getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+        lastPage.next ? lastPageParam + 1 : null,
+    })
 
   useEffect(() => {
     // data의 초깃값은 undefined입니다. 이는 무시합니다
@@ -77,11 +78,11 @@ const useNotificationsQuery = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
-  useEffect(() => {
-    setRequestNextPage(fetchNextPage)
-  }, [fetchNextPage, setRequestNextPage])
+  // useEffect(() => {
+  //   setRequestNextPage(fetchNextPage)
+  // }, [fetchNextPage, setRequestNextPage])
 
-  return { isPending, error }
+  return { isPending, error, fetchNextPage, hasNextPage }
 }
 
 export default useNotificationsQuery
