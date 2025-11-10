@@ -27,7 +27,7 @@ const NotificationBox = () => {
     rootMargin: '0px 0px 300px 0px',
   })
 
-  if (isPending) {
+  if (isPending && notificationArray.length === 0) {
     return <Skeleton heightInPixel={475} widthInPixel={384} />
   }
 
