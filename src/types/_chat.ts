@@ -39,14 +39,11 @@ export interface ChatRoomPagination {
 
 // 채팅방 목록
 export interface ChatRoomData {
-  id: number
-  sender_id: number
-  sender_nickname: string
-  study_group_id: number
-  study_name: string
-  content: string
-  message_counter: number
-  file_url: string | null
+  uuid: string
+  last_message_sender_nickname: string
+  name: string
+  last_message_content: string
+  unread_message_count: number
   created_at: string
 }
 
