@@ -80,6 +80,8 @@ const RecruitCard = ({
   const confirmDelete = () => {
     deleteRecruitmentMutation.mutate({
       data: recruit.id,
+      //실패 확인하고 싶을때
+      // data: -1,
       newOne: { id: recruit.id, is_closed: recruit.is_closed },
     })
     setConfirmOpen(false)
