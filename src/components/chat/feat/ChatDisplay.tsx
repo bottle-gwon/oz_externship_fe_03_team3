@@ -22,13 +22,14 @@ const ChatDisplay = ({
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
   const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
   const [init, setInit] = useState(true) // 초기 스크롤 세팅할 플래그
+  const previndex = useRef(0)
 
   // 윈도잉(가상화 리스트)
   const rowVirtualizer = useVirtualizer({
     count: chatMessageArray.length, // 렌더링할 아이템 개수
     getScrollElement: () => containerRef.current, //스크롤 요소
     estimateSize: (_) => 120, // 각 메시지 예상 높이
-    overscan: 20, // 화면 바깥에 미리 렌더링 할 메시지 수
+    overscan: 10, // 화면 바깥에 미리 렌더링 할 메시지 수
   })
 
   // 처음 들어오면 아래로 이동하는 useEffect
@@ -42,12 +43,27 @@ const ChatDisplay = ({
         align: 'end',
       })
       setInit(false)
-    } else if (containerRef.current) {
-      rowVirtualizer.scrollToIndex(2, { align: 'end' })
+      previndex.current = 0
     }
   }, [rowVirtualizer, chatMessageArray.length, init, isPending])
 
-  useEffect(() => {}, [])
+  useEffect(() => {
+    if (
+      !init &&
+      !isFetchingNextPage &&
+      chatMessageArray.length > previndex.current
+    ) {
+      rowVirtualizer.scrollToIndex(
+        chatMessageArray.length - previndex.current - 1,
+        {
+          align: 'end',
+        }
+      )
+      previndex.current = chatMessageArray.length
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFetchingNextPage, chatMessageArray.length, rowVirtualizer])
 
   return (
     <Vstack
