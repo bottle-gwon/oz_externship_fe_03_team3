@@ -72,6 +72,14 @@ export const recruitConditionInTextArray = ['전체', '모집중', '마감됨'] 
 export type RecruitConditionInText =
   (typeof recruitConditionInTextArray)[number]
 
+//---- recruit delete
+export interface RecruitDelete {
+  id: number
+  is_closed: boolean
+}
+
+export type RecruitDeleteResponseData = void
+
 // ---- recruit write
 export interface RecruitWriteChildrenProps {
   errors: FieldErrors<RecruitWriteSchema>
