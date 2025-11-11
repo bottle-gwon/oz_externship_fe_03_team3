@@ -15,7 +15,8 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
 import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
+import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal' // ★
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
@@ -30,6 +31,10 @@ const RecruitManageContent = () => {
 
   const userId = 24
   // 나중에 api 실제로 연결하면 없어져야함.
+  const [deletedTitle, setDeletedTitle] = useState('')
+  const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false)
+  const [deleteErrorOpen, setDeleteErrorOpen] = useState(false)
+
   const { count } = useRecruitManage(userId)
 
   const selectedStatusInText = useRecruitManageStore(
@@ -84,11 +89,54 @@ const RecruitManageContent = () => {
         <Vstack gap="none">
           <h1 className="mb-oz-md">내 공고 목록 ({listCount})</h1>
           {recruitManageArray.map((recruit) => (
-            <RecruitCard isMine key={recruit.id} recruit={recruit} />
+            <RecruitCard
+              isMine
+              key={recruit.id}
+              recruit={recruit}
+              onDeleteSuccess={(t) => {
+                setDeletedTitle(t)
+                setDeleteSuccessOpen(true)
+              }}
+              onDeleteError={(t) => {
+                setDeletedTitle(t)
+                setDeleteErrorOpen(true)
+              }}
+            />
           ))}
 
           <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
+
+        {/* 페이지 레벨 모달 */}
+        <ConfirmationModal
+          isOn={deleteSuccessOpen}
+          onClose={() => setDeleteSuccessOpen(false)}
+        >
+          <ConfirmationModal.Title>
+            {`'${deletedTitle}'의 삭제가 완료되었습니다.`}
+          </ConfirmationModal.Title>
+          <ConfirmationModal.ButtonSection>
+            <Button onClick={() => setDeleteSuccessOpen(false)}>확인</Button>
+          </ConfirmationModal.ButtonSection>
+        </ConfirmationModal>
+
+        <ConfirmationModal
+          isOn={deleteErrorOpen}
+          onClose={() => setDeleteErrorOpen(false)}
+        >
+          <ConfirmationModal.Title>
+            {`'${deletedTitle}'의 삭제가 실패하였습니다.`}
+          </ConfirmationModal.Title>
+          <ConfirmationModal.Content>
+            <p className="text-sm">
+              오류가 발생했습니다. 잠시 후 다시 시도하세요. 해당 오류가 반복될
+              경우 관리자에게 문의해주세요
+            </p>
+          </ConfirmationModal.Content>
+          <ConfirmationModal.ButtonSection>
+            <Button onClick={() => setDeleteErrorOpen(false)}>확인</Button>
+          </ConfirmationModal.ButtonSection>
+        </ConfirmationModal>
       </Vstack>
     </Container>
   )
