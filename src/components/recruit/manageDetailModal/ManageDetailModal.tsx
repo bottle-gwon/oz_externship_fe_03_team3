@@ -26,6 +26,10 @@ const ManageDetailModal = ({
   const { data: applicantDetail, isPending } =
     useApplicantDetailQuery(applicantId)
 
+  if (isPending) {
+    return <p>로딩중입니다..</p>
+  }
+
   if (!applicantDetail) {
     return <p>데이터를 찾을 수 없습니다.</p>
   }
@@ -35,10 +39,6 @@ const ManageDetailModal = ({
     experienceStyles[
       String(applicantDetail.has_study_experience) as 'true' | 'false'
     ]
-
-  if (isPending) {
-    return <p>로딩중입니다..</p>
-  }
 
   const handleClose = () => {
     onClose()
