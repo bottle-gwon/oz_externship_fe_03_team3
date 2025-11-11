@@ -17,7 +17,9 @@ import { useState } from 'react'
 import ManageModal from '../manageModal/ManageModal'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
-import api from '@/api/api'
+import useManageDeleteMutation from '@/hooks/manage/useManageDeleteMutation'
+
+const userId = 24
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -65,17 +67,19 @@ const RecruitCard = ({
     setConfirmOpen(true)
   }
 
-  const confirmDelete = async () => {
-    try {
-      await api.delete(`/recruitments/${id}`)
-      // 강제에러화면 보고싶을땐 주석해제
-      // throw new Error('FORCE_FAIL')
-      setConfirmOpen(false)
-      setSuccess(true)
-    } catch {
-      setConfirmOpen(false)
+  const { deleteRecruitmentMutation } = useManageDeleteMutation(userId, {
+    onSuccess: () => setSuccess(true),
+    onError: () => {
       setError(true)
-    }
+    },
+  })
+
+  const confirmDelete = () => {
+    deleteRecruitmentMutation.mutate({
+      data: recruit.id,
+      newOne: { id: recruit.id, is_closed: recruit.is_closed },
+    })
+    setConfirmOpen(false)
   }
 
   const cancelDelete = () => {
