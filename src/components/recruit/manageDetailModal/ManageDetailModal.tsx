@@ -8,7 +8,6 @@ import ApplicantDetailCard from './_ApplicantDetailCard'
 import ManageDetailModalButtons from './_ManageDetailModalButtons'
 import ManageDetailConfirmationModal from './_ManageDetailConfirmationModal'
 import useStudyHubStore from '@/store/store'
-import useApplicantDetailStore from '@/store/recruit/manageDetailModal/applicantDetailstore'
 import useApplicantDetailQuery from '@/hooks/manageDetailModal/useApplicantDetailQuery'
 
 interface ManageDetailModalProps {
@@ -24,10 +23,13 @@ const ManageDetailModal = ({
 }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const { isPending } = useApplicantDetailQuery(applicantId)
-  const applicantDetail = useApplicantDetailStore(
-    (state) => state.applicantDetail
-  )
+  const { data: applicantDetail, isPending } =
+    useApplicantDetailQuery(applicantId)
+
+  if (!applicantDetail) {
+    return <p>데이터를 찾을 수 없습니다.</p>
+  }
+
   const statusStyle = statusStyles[applicantDetail.status]
   const experienceStyle =
     experienceStyles[
