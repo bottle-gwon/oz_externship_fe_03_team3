@@ -71,7 +71,12 @@ const ChatDisplay = ({
       className={`mx-[-24px] h-full ${overflow}`}
       ref={containerRef}
     >
-      <div className={`relative w-full h-[${rowVirtualizer.getTotalSize()}]`}>
+      <div
+        className={`w-full] relative`}
+        style={{
+          height: `${rowVirtualizer.getTotalSize()}px`,
+        }}
+      >
         {/* 가상화 리스트 적용 */}
         <Vstack
           className="absolute top-0 left-0 w-full"
