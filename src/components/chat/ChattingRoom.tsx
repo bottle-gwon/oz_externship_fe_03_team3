@@ -9,7 +9,7 @@ import ChattingStatusSkeleton from './skeleton/ChattingStatusSkeleton'
 import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useChatRoomMessage } from '@/hooks/chat/useChat'
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
