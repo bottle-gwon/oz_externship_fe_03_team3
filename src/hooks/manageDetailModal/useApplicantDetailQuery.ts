@@ -1,15 +1,9 @@
 import api from '@/api/api'
-import useApplicantDetailStore from '@/store/recruit/manageDetailModal/applicantDetailstore'
 import type { ApplicantDetail } from '@/types'
 import { useQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
 
 const useApplicantDetailQuery = (applicantId: number) => {
   const applicantsQueryEndpoint = `/recruitments/applications/${applicantId}`
-
-  const setApplicantDetail = useApplicantDetailStore(
-    (state) => state.setApplicantDetail
-  )
 
   const { data, isPending, error } = useQuery({
     queryKey: [applicantsQueryEndpoint],
@@ -19,14 +13,8 @@ const useApplicantDetailQuery = (applicantId: number) => {
     },
   })
 
-  useEffect(() => {
-    if (!data) {
-      return
-    }
-    setApplicantDetail(data)
-  }, [data, setApplicantDetail])
-
   return {
+    data,
     isPending,
     error,
   }
