@@ -5,10 +5,11 @@ import { Hstack, Vstack } from '../commonInGeneral/layout'
 import ChatUserStatus from './feat/ChatUserStatus'
 import ChatInput from './feat/ChatInput'
 import ChatDisplay from './feat/ChatDisplay'
-import { useEffect, useRef, useState } from 'react'
 import ChattingStatusSkeleton from './skeleton/ChattingStatusSkeleton'
 import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
+import { useChatRoomMessage } from '@/hooks/chat/useChat'
+import { useEffect, useRef } from 'react'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -23,60 +24,60 @@ const TestUserStatus = {
 }
 
 //채팅 더미
-const TestChat = {
-  messages: [
-    {
-      id: 201,
-      sender_id: 5,
-      sender_nickname: '홍길동',
-      study_group_id: 100,
-      content: '오늘 스터디 7시에 시작합니다.',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T10:30:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 6,
-      sender_nickname: '김길동',
-      study_group_id: 100,
-      content: 'ㅇㅋㅇㅋ',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T10:35:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 7,
-      sender_nickname: '이길동',
-      study_group_id: 100,
-      content: '넵',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T10:37:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 8,
-      sender_nickname: '장길동',
-      study_group_id: 100,
-      content: '테스트 중입니다. 조금 긴 메시지 테스트',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T11:40:00Z',
-    },
-    {
-      id: 201,
-      sender_id: 9,
-      sender_nickname: '선길동',
-      study_group_id: 100,
-      content: '테스트 중입니다.',
-      file_url: null,
-      is_read: true,
-      created_at: '2025-10-15T11:45:00Z',
-    },
-  ],
-}
+// const TestChat = {
+//   messages: [
+//     {
+//       id: 201,
+//       sender_id: 5,
+//       sender_nickname: '홍길동',
+//       study_group_id: 100,
+//       content: '오늘 스터디 7시에 시작합니다.',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T10:30:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 6,
+//       sender_nickname: '김길동',
+//       study_group_id: 100,
+//       content: 'ㅇㅋㅇㅋ',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T10:35:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 7,
+//       sender_nickname: '이길동',
+//       study_group_id: 100,
+//       content: '넵',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T10:37:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 8,
+//       sender_nickname: '장길동',
+//       study_group_id: 100,
+//       content: '테스트 중입니다. 조금 긴 메시지 테스트',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T11:40:00Z',
+//     },
+//     {
+//       id: 201,
+//       sender_id: 9,
+//       sender_nickname: '선길동',
+//       study_group_id: 100,
+//       content: '테스트 중입니다.',
+//       file_url: null,
+//       is_read: true,
+//       created_at: '2025-10-15T11:45:00Z',
+//     },
+//   ],
+// }
 
 const OnlineUser = ({
   isPending,
@@ -95,58 +96,84 @@ const OnlineUser = ({
 const ChattingRoom = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
   const openChatList = useStudyHubStore((state) => state.openChatList)
+  const setChatMessageArray = useStudyHubStore(
+    (state) => state.setChatMessageArray
+  )
 
-  const [isPending, setIsPending] = useState(true) //임시 로딩
-  const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
-  const [hasNextPage, _] = useState(true)
+  // const [isPending, setIsPending] = useState(true) //임시 로딩
+  // const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
+  // const [hasNextPage, _] = useState(true)
 
-  const timerRef = useRef<NodeJS.Timeout | null>(null)
-  const scrollTimerRef = useRef<NodeJS.Timeout | null>(null)
+  // const timerRef = useRef<NodeJS.Timeout | null>(null)
+  // const scrollTimerRef = useRef<NodeJS.Timeout | null>(null)
+
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    isError,
+    error,
+  } = useChatRoomMessage()
 
   const LoadingRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(LoadingRef, () => {
     // 스크롤이 타겟에 들어왔을때 (훅에서는 100% 보일때로 설정해둠)
     // 아래 타이머 관련은 추후 삭제하고 api로 연결할 예정입니다. 일단은 예시로 로딩만 볼 수 있게 했습니다.
-    if (scrollTimerRef.current) {
-      clearTimeout(scrollTimerRef.current)
+    // if (scrollTimerRef.current) {
+    //   clearTimeout(scrollTimerRef.current)
+    // }
+
+    // 로딩중일때, 다음 페이지가 없으면 는 무한 스크롤 시작 안함
+    if (hasNextPage && !isFetchingNextPage) {
+      fetchNextPage()
     }
 
-    // 로딩중일때 는 무한 스크롤 시작 안함
-    if (isPending) {
-      return
-    }
-    // 다음 페이지 없으면 로딩 안함
-    if (!hasNextPage) {
-      return
-    }
-
-    setIsFetchingNextPage(true)
-    scrollTimerRef.current = setTimeout(
-      () => setIsFetchingNextPage(false),
-      1500
-    )
+    // setIsFetchingNextPage(true)
+    // scrollTimerRef.current = setTimeout(
+    //   () => setIsFetchingNextPage(false),
+    //   1500
+    // )
   })
 
-  useEffect(() => {
-    return () => {
-      if (scrollTimerRef.current) {
-        clearTimeout(scrollTimerRef.current)
-      }
-    }
-  }, [])
+  // useEffect(() => {
+  //   return () => {
+  //     if (scrollTimerRef.current) {
+  //       clearTimeout(scrollTimerRef.current)
+  //     }
+  //   }
+  // }, [])
 
+  // useEffect(() => {
+  //   setIsPending(true)
+  //   timerRef.current = setTimeout(() => setIsPending(false), 1500)
+  //   return () => {
+  //     if (timerRef.current) {
+  //       clearTimeout(timerRef.current)
+  //     }
+  //   }
+  // }, [])
+
+  // 데이터 저장, 정렬
   useEffect(() => {
-    setIsPending(true)
-    timerRef.current = setTimeout(() => setIsPending(false), 1500)
-    return () => {
-      if (timerRef.current) {
-        clearTimeout(timerRef.current)
-      }
+    if (data?.pages && !isFetchingNextPage) {
+      const allMessage =
+        data?.pages.flatMap((res) => res.data?.messages || []) || []
+
+      const sortMessage = allMessage.sort(
+        (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
+      )
+      setChatMessageArray(sortMessage)
     }
-  }, [])
+  }, [data, isFetchingNextPage, setChatMessageArray])
 
   if (chatState.status !== 'chatRoom') {
     return
+  }
+
+  if (isError) {
+    return <>{error} 임시</>
   }
 
   return (
@@ -179,7 +206,6 @@ const ChattingRoom = () => {
       {/* 채팅창 */}
       <ChattingLayout.Body className="h-[280px] grow justify-between border-transparent !py-0">
         <ChatDisplay
-          messages={TestChat.messages}
           isPending={isPending}
           isFetchingNextPage={isFetchingNextPage}
           LoadingRef={LoadingRef}

@@ -1,19 +1,18 @@
 import { Vstack } from '@/components/commonInGeneral/layout'
-import type { MessageList } from '@/types/_chatInterfaces'
 import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
-import { useEffect, useRef } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import useStudyHubStore from '@/store/store'
+import { useVirtualizer } from '@tanstack/react-virtual'
 
 interface ChatArray {
-  messages: MessageList[]
   isPending: boolean
   isFetchingNextPage: boolean
   LoadingRef: React.RefObject<HTMLDivElement | null>
 }
 
 const ChatDisplay = ({
-  messages,
   isPending,
   isFetchingNextPage,
   LoadingRef,
@@ -21,19 +20,50 @@ const ChatDisplay = ({
   // const [scrollHeight, setScrollHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null)
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
+  const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
+  const [init, setInit] = useState(true) // 초기 스크롤 세팅할 플래그
+  const previndex = useRef(0)
 
-  useEffect(() => {
+  // 윈도잉(가상화 리스트)
+  const rowVirtualizer = useVirtualizer({
+    count: chatMessageArray.length, // 렌더링할 아이템 개수
+    getScrollElement: () => containerRef.current, //스크롤 요소
+    estimateSize: (_) => 120, // 각 메시지 예상 높이
+    overscan: 10, // 화면 바깥에 미리 렌더링 할 메시지 수
+  })
+
+  // 처음 들어오면 아래로 이동하는 useEffect
+  // Todo 추후에 안읽은 메시지로 이동 하도록 변경
+  useLayoutEffect(() => {
     if (!containerRef) {
       return
     }
-    if (containerRef.current) {
-      // const scrollTop = containerRef.current.scrollHeight - scrollHeight;
-
-      // 추후에 안읽은 메시지로 이동 하도록 변경
-      containerRef.current.scrollTop = 20
-      // setScrollHeight(containerRef.current.scrollHeight)
+    if (containerRef.current && init && !isPending) {
+      rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
+        align: 'end',
+      })
+      setInit(false)
+      previndex.current = 0
     }
-  }, [])
+  }, [rowVirtualizer, chatMessageArray.length, init, isPending])
+
+  useEffect(() => {
+    if (
+      !init &&
+      !isFetchingNextPage &&
+      chatMessageArray.length > previndex.current
+    ) {
+      rowVirtualizer.scrollToIndex(
+        chatMessageArray.length - previndex.current - 1,
+        {
+          align: 'end',
+        }
+      )
+      previndex.current = chatMessageArray.length
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFetchingNextPage, chatMessageArray.length, rowVirtualizer])
 
   return (
     <Vstack
@@ -41,16 +71,44 @@ const ChatDisplay = ({
       className={`mx-[-24px] h-full ${overflow}`}
       ref={containerRef}
     >
-      {/* 테스트를 위해서 위로 올려 뒀습니다. */}
-      <div ref={LoadingRef}></div>
-      {isFetchingNextPage && (
-        <Skeleton widthInPixel={270} heightInPixel={100} className="shrink-0" />
-      )}
+      <div
+        className={`w-full] relative`}
+        style={{
+          height: `${rowVirtualizer.getTotalSize()}px`,
+        }}
+      >
+        {/* 가상화 리스트 적용 */}
+        <Vstack
+          className="absolute top-0 left-0 w-full"
+          style={{
+            transform: `translateY(${rowVirtualizer.getVirtualItems()[0]?.start ?? 0}px)`,
+          }}
+        >
+          {isPending && <ChattingRoomSkeleton />}
+          {isFetchingNextPage && (
+            <Skeleton
+              widthInPixel={270}
+              heightInPixel={100}
+              className="shrink-0"
+            />
+          )}
 
-      {isPending && <ChattingRoomSkeleton />}
-      {messages.map((el) => (
+          <div ref={LoadingRef}></div>
+          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
+            const message = chatMessageArray[virtualRow.index]
+            return (
+              <ChatBox
+                key={virtualRow.key}
+                chat={message}
+                measure={rowVirtualizer.measureElement}
+              />
+            )
+          })}
+        </Vstack>
+      </div>
+      {/* {chatMessageArray.map((el) => (
         <ChatBox key={el.id + el.created_at} chat={el} />
-      ))}
+      ))} */}
     </Vstack>
   )
 }
