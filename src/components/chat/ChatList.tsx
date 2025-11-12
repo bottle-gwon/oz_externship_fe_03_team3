@@ -18,8 +18,8 @@ const ChatList = () => {
 
   const { data, isPending, isError, error } = useChatRoomList()
 
-  // const LoadingRef = useRef<HTMLDivElement | null>(null)
   // 페이지 네이션 쪽에 문제가 생겼다 해서 무한 스크롤 관련 로직은 일단 주석 처리 해놨습니다.
+  // const LoadingRef = useRef<HTMLDivElement | null>(null)
   // useOneWayInfinityScroll(LoadingRef, () => {
   // 다음 페이지 없으면 로딩 안함
   // if (hasNextPage && !isFetchingNextPage) {
@@ -33,9 +33,8 @@ const ChatList = () => {
     //     data.flatMap((res) => res.data?.messages || []) || []
     //   setChatRoomArray(allMessage)
     // }
-    console.log(data)
-    if (data?.data?.messages) {
-      setChatRoomArray(data.data.messages)
+    if (data?.data) {
+      setChatRoomArray(data.data)
     }
   }, [data, setChatRoomArray])
 
