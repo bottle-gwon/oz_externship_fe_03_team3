@@ -22,8 +22,6 @@ import RDBookmarkButton from './_RDBookmarkButton'
 import RDShareButton from './_RDShareButton'
 import RDConfirmClipboardModalMany from './_RDConfirmClipboardModal'
 import ManageModal from '../manageModal/ManageModal'
-import { useState } from 'react'
-import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
