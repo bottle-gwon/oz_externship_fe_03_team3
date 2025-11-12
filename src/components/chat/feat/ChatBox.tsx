@@ -27,8 +27,8 @@ const SENDER_NICKNAME = '스터디장_김'
 
 const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
   const date = new Date(chat.created_at)
-  const hour = date.getUTCHours()
-  const munite = date.getUTCMinutes()
+  const hour = String(date.getUTCHours()).padStart(2, '0')
+  const munite = String(date.getUTCMinutes()).padStart(2, '0')
 
   const isOwner = SENDER_NICKNAME === chat?.sender.nickname
   const boxStyle = chatBoxStyle(isOwner)
