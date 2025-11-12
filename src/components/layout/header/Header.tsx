@@ -39,9 +39,13 @@ const loginForDev = async () => {
 const logoutForDev = async () => {
   const state = useStudyHubStore.getState()
   const accessToken = state.accessToken
-  await subApi.post('/auth/logout', undefined, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
+  await subApi.post(
+    `${import.meta.env.VITE_ORIGINAL_BASE_URL_FOR_DEV}/auth/logout`,
+    undefined,
+    {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    }
+  )
   state.setMe(null)
   state.setAccessToken(null)
 }
