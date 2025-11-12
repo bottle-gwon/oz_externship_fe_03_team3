@@ -76,6 +76,12 @@ const useStudyHubStore = create<StudyHubState>()(
       setChatRoomArray: (chatRoomArray) => set({ chatRoomArray }),
       chatMessageArray: [],
       setChatMessageArray: (chatMessageArray) => set({ chatMessageArray }),
+      addChatMessageArray: (message) =>
+        set((state) => ({
+          chatMessageArray: [...state.chatMessageArray, message],
+        })),
+      chatConnected: false,
+      setChatConnected: (chatConnected) => set({ chatConnected }),
 
       // notification
     }),
