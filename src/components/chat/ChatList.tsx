@@ -33,8 +33,8 @@ const ChatList = () => {
     //     data.flatMap((res) => res.data?.messages || []) || []
     //   setChatRoomArray(allMessage)
     // }
-    if (data?.data?.data) {
-      setChatRoomArray(data.data.data)
+    if (data?.data) {
+      setChatRoomArray(data.data)
     } else {
       setChatRoomArray([])
     }
