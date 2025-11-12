@@ -1,5 +1,6 @@
 import useStudyHubStore from '@/store/store'
 import type { Color } from '@/types'
+import useApplicantConfirmMutation from './useApplicantConfirmMutation'
 
 interface ButtonConfig {
   text: string
@@ -12,35 +13,46 @@ interface ConfirmationConfig {
   buttons: ButtonConfig[]
 }
 
-const useManageDetailConfirmation = (nickname: string) => {
+interface useManageDetailConfirmationProps {
+  nickname: string
+  applicantId: number
+}
+
+const useManageDetailConfirmation = ({
+  nickname,
+  applicantId,
+}: useManageDetailConfirmationProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
+  const { approveApplicantMutation, rejectApplicantMutation } =
+    useApplicantConfirmMutation()
 
   // 승인 버튼 클릭
   const handleApproveClick = () => {
-    setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
+    approveApplicantMutation.mutate(applicantId)
   }
 
   // 거절 버튼 클릭
   const handleRejectClick = () => {
-    setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
+    rejectApplicantMutation.mutate(applicantId)
   }
 
   // 승인 확정
   const handleConfirmApprove = async () => {
-    // 승인 API 호출
     setModalKeyArray(['manage'])
   }
 
   // 거절 확정
   const handleConfirmReject = async () => {
-    // 거절 API 호출
     setModalKeyArray(['manage'])
   }
 
   const handleClose = () => {
     setModalKeyArray(['manage', 'manageDetail'])
   }
+
+  const isPending =
+    approveApplicantMutation.isPending || rejectApplicantMutation.isPending
 
   const confirmationConfig: Record<string, ConfirmationConfig> = {
     confirmApprove: {
@@ -99,7 +111,7 @@ const useManageDetailConfirmation = (nickname: string) => {
 
   const currentConfig = confirmationConfig[currentModalKey]
 
-  return { currentConfig, handleClose }
+  return { isPending, currentConfig, handleClose }
 }
 
 export default useManageDetailConfirmation

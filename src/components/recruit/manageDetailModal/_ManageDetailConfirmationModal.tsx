@@ -4,12 +4,16 @@ import useManageDetailConfirmation from '@/hooks/manageDetailModal/useManageDeta
 
 interface ManageDetailConfirmationModalProps {
   nickname: string
+  applicantId: number
 }
 
 const ManageDetailConfirmationModal = ({
   nickname,
+  applicantId,
 }: ManageDetailConfirmationModalProps) => {
-  const { currentConfig, handleClose } = useManageDetailConfirmation(nickname)
+  const { isPending, currentConfig, handleClose } = useManageDetailConfirmation(
+    { nickname, applicantId }
+  )
 
   if (!currentConfig) {
     return null
@@ -25,6 +29,7 @@ const ManageDetailConfirmationModal = ({
             variant="contained"
             color={button.color}
             onClick={button.onClick}
+            status={isPending ? 'pending' : 'enabled'}
           >
             {button.text}
           </Button>

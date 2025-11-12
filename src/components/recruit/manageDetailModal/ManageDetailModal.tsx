@@ -136,7 +136,10 @@ const ManageDetailModal = ({
         </Modal.Footer>
       </Modal>
 
-      <ManageDetailConfirmationModal nickname={applicantDetail.nickname} />
+      <ManageDetailConfirmationModal
+        applicantId={applicantId}
+        nickname={applicantDetail.nickname}
+      />
     </>
   )
 }
