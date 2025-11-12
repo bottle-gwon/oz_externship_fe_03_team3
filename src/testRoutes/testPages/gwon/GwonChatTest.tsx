@@ -9,7 +9,7 @@ const GwonChatTest = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
 
   const testOpenChatRoom = () => {
-    openChatRoom(123, '리눅스 공부')
+    openChatRoom('123', '리눅스 공부')
   }
   return (
     <>
