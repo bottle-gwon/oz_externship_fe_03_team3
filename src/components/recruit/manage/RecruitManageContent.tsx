@@ -17,6 +17,7 @@ import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
 import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
 import { useRef, useState } from 'react'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal' // ★
+import useStudyHubStore from '@/store/store'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()

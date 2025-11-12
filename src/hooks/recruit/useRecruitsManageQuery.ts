@@ -1,12 +1,13 @@
 import api from '@/api/api'
 import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
+import useStudyHubStore from '@/store/store'
 import type { Recruit, RecruitsManageResponse } from '@/types'
 import {
   textToRecruitManageState,
   textToRecruitOrdering,
 } from '@/utils/simpleMaps'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 
 const queryEndpoint = '/recruitments/user'
 
