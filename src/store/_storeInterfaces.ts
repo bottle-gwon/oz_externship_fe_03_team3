@@ -68,6 +68,10 @@ export interface StudyHubState {
 
   chatMessageArray: ChatMessage[]
   setChatMessageArray: (chatMessageArray: ChatMessage[]) => void
+  addChatMessageArray: (message: ChatMessage) => void
+
+  chatConnected: boolean //연결상태
+  setChatConnected: (chatConnected: boolean) => void
 
   unReadCounter: number //안읽은 메시지 카운터
   setUnReadCounter: (newCount: number) => void

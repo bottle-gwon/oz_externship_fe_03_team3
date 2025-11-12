@@ -10,10 +10,11 @@ export interface ChatMessageSender {
   nickname: string
 }
 export interface ChatMessage {
+  type?: 'chat.message'
   id: number
   content: string
   sender: ChatMessageSender
-  is_read: boolean
+  is_read?: boolean
   created_at: string
 }
 export interface ChatMessageApiResponseData {
