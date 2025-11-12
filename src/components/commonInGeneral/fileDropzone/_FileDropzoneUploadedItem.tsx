@@ -39,7 +39,7 @@ const FileDropzoneUploadedItem = memo(
           >
             {size}MB
           </p>
-          <Button variant="ghost" className="p-0">
+          <Button variant="ghost" className="p-0" type="button">
             <X onClick={handleXClick} size={14} />
           </Button>
         </Hstack>
