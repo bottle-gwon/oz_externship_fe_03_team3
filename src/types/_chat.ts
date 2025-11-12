@@ -1,6 +1,6 @@
 // 메시지 내역 조회
 export interface ChatMessageListRequest {
-  study_group_id: number //스터디 그룹id
+  study_group_id: string //스터디 그룹id
   page?: number //없으면 기본값 1
   size?: number //없으면 기본값 20
 }

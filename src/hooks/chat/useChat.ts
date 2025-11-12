@@ -3,8 +3,8 @@ import useStudyHubStore from '@/store/store'
 import {
   type ChatMessageApiResponse,
   type ChatMessagePageResponse,
-  type ChatRoomApiResponse,
-  type ChatRoomPageResponse,
+  // type ChatRoomApiResponse,
+  // type ChatRoomPageResponse,
   type ChatMessageListRequest,
 } from '@/types/_chat'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
@@ -80,13 +80,14 @@ export const useChatRoomMessage = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
 
   // 만약 채팅방이 열리지 않은 상태면 -1을 넣어서 훅이 작동 하지 않도록 한다.(쿼리의 enabled 참고)
-  const get_study_group_id = chatState.status === 'chatRoom' ? chatState.id : -1
+  const get_study_group_id =
+    chatState.status === 'chatRoom' ? chatState.id : '-1'
 
   return useInfiniteQuery<
     ChatMessageApiResponse,
     Error,
     ChatMessagePageResponse,
-    [string, number],
+    [string, string],
     ChatMessageListRequest
   >({
     queryKey: ['message', get_study_group_id],
@@ -113,6 +114,6 @@ export const useChatRoomMessage = () => {
     },
     initialPageParam: { study_group_id: get_study_group_id, page: 1, size: 20 },
 
-    enabled: get_study_group_id !== -1,
+    enabled: get_study_group_id !== '-1',
   })
 }
