@@ -66,6 +66,8 @@ const RecruitCard = ({
     setConfirmOpen(true)
   }
 
+
+
   const { deleteRecruitmentMutation } = useManageDeleteMutation({
     onSuccess: () => {
       onDeleteSuccess?.(title)
