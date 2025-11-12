@@ -25,7 +25,7 @@ const getRefreshAndMe = async (): Promise<string> => {
   const responseMe = await subApi.get('/users/me ', {
     headers: { Authorization: `Bearer ${accessToken}` },
   })
-  const me = responseMe.data
+  const me = responseMe.data.data
 
   const state = useStudyHubStore.getState()
   const setAccessToken = state.setAccessToken

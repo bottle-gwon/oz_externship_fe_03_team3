@@ -7,26 +7,32 @@ import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
 import { lazy, Suspense } from 'react'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
+import { subApi } from '@/api/api'
 const NotificationBox = lazy(() => import('./notification/NotificationBox'))
 
-const ProfileButton = ({ me }: { me: Me }) => {
-  const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
-  const setMe = useStudyHubStore((state) => state.setMe)
+const logout = async () => {
+  const state = useStudyHubStore.getState()
+  const accessToken = state.accessToken
+  await subApi.post('/auth/logout', undefined, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+  state.setMe(null)
+  state.setAccessToken(null)
+}
 
+const ProfileButton = ({ me }: { me: Me }) => {
   const handleChange = (value: string) => {
     switch (value) {
       case 'mypage':
         window.location.href = import.meta.env.VITE_MYPAGE_PAGE_URL
         return
       case 'logout':
-        setMe(null)
-        setAccessToken(null)
+        logout()
         return
       default:
         throw new Error('---- 잘못된 드롭다운 값이 선택되었습니다')
     }
   }
-
   return (
     <Dropdown>
       <Dropdown.Trigger>

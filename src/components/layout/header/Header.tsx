@@ -28,7 +28,7 @@ const loginForDev = async () => {
       headers: { Authorization: `Bearer ${accessToken}` },
     }
   )
-  const me = responseMe.data
+  const me = responseMe.data.data
 
   const setAccessToken = useStudyHubStore.getState().setAccessToken
   const setMe = useStudyHubStore.getState().setMe
