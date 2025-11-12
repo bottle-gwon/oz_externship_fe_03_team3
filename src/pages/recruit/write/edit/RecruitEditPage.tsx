@@ -1,3 +1,4 @@
+import NotFoundContent from '@/components/commonInGeneral/error/NotFoundContent'
 import RecruitWriteContent from '@/components/recruit/write/RecruitWriteContent'
 import useRecruitDetailQuery from '@/hooks/recruitDetail/useRecruitDetailQuery'
 import useStudyHubStore from '@/store/store'
@@ -24,8 +25,7 @@ const RecruitEditPage = () => {
   }
 
   if (error) {
-    // TODO: 에러 페이지를 만들어야 합니다
-    return <p>여기에 에러 페이지를 만들어야 합니다</p>
+    return <NotFoundContent path="/recruit" label="구인 공고로" />
   }
 
   return <RecruitWriteContent isEditing />

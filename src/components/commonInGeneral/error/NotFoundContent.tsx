@@ -1,11 +1,13 @@
-import type { JSX } from 'react'
 import ErrorDisplay from './ErrorDisplay'
+import RedirectButton, {
+  type RedirectButtonProps,
+} from '../button/RedirectButton'
 
 const NotFoundContent = ({
-  redirectButton,
-}: {
-  redirectButton?: JSX.Element
-}) => {
+  path,
+  label,
+  isExternal = false,
+}: RedirectButtonProps) => {
   return (
     <ErrorDisplay>
       <ErrorDisplay.Code>404</ErrorDisplay.Code>
@@ -16,7 +18,7 @@ const NotFoundContent = ({
         <br />
         입력하신 주소가 정확한지 다시 한 번 확인해주세요.
       </p>
-      {redirectButton}
+      <RedirectButton path={path} label={label} isExternal={isExternal} />
     </ErrorDisplay>
   )
 }
