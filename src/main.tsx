@@ -45,7 +45,7 @@ const routeArray = [
     fallback: <RecruitWriteSkeleton />,
   },
   {
-    path: '/recruit/manage',
+    path: '/recruit/manage/:user_id',
     element: <RecruitManagePage />,
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
