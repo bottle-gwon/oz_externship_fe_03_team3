@@ -1,5 +1,6 @@
 import NotFoundContent from '@/components/commonInGeneral/error/NotFoundContent'
 import RecruitWriteContent from '@/components/recruit/write/RecruitWriteContent'
+import RecruitWriteSkeleton from '@/components/recruit/write/RecruitWriteSkeleton'
 import useRecruitDetailQuery from '@/hooks/recruitDetail/useRecruitDetailQuery'
 import useStudyHubStore from '@/store/store'
 import { useEffect } from 'react'
@@ -34,8 +35,7 @@ const RecruitEditPage = () => {
   }
 
   if (isPending) {
-    // TODO: 스켈레톤을 만들어야 합니다
-    return <p>여기에 스켈레톤을 넣어야 합니다</p>
+    return <RecruitWriteSkeleton />
   }
 
   if (error) {

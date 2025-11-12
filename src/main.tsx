@@ -11,6 +11,7 @@ import LectureSkeleton from './components/lecture/LectureSkeleton'
 import RecruitSkeletone from './components/recruit/title/RecruitSkeletone'
 import RecruitDetailSkeleton from './components/recruit/detail/RecruitDetailSkeleton'
 import GlobalNotFoundPage from './pages/errors/GlobalNotFoundPage'
+import RecruitWriteSkeleton from './components/recruit/write/RecruitWriteSkeleton'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
 const RecruitEditPage = lazy(
@@ -36,12 +37,12 @@ const routeArray = [
   {
     path: '/recruit/write/:recruitId',
     element: <RecruitEditPage />,
-    fallback: <p>나중에 스켈레톤 넣을 자리</p>,
+    fallback: <RecruitWriteSkeleton />,
   },
   {
     path: '/recruit/write',
     element: <RecruitWritePage />,
-    fallback: <p>나중에 스켈레톤 넣을 자리</p>,
+    fallback: <RecruitWriteSkeleton />,
   },
   {
     path: '/recruit/manage',
