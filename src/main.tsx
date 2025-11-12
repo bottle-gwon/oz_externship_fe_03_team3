@@ -3,7 +3,6 @@ import './index.css'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import testRouteArray from './testRoutes'
 import { lazy, Suspense } from 'react'
-import NotFoundPage from './pages/errors/NotFoundPage'
 import Layout from './pages/layout/Layout'
 import { QueryClientProvider } from '@tanstack/react-query'
 import queryClient from './lib/tanstackQueryClient'
@@ -11,6 +10,7 @@ import queryClient from './lib/tanstackQueryClient'
 import LectureSkeleton from './components/lecture/LectureSkeleton'
 import RecruitSkeletone from './components/recruit/title/RecruitSkeletone'
 import RecruitDetailSkeleton from './components/recruit/detail/RecruitDetailSkeleton'
+import GlobalNotFoundPage from './pages/errors/GlobalNotFoundPage'
 
 const RecruitListPage = lazy(() => import('./pages/recruit/RecruitListPage'))
 const RecruitEditPage = lazy(
@@ -75,8 +75,13 @@ const suspendedRouteArray = routeArray.map((route) => ({
 
 const router = createBrowserRouter([
   ...suspendedTestRouteArray,
-  { element: <Layout />, children: suspendedRouteArray },
-  { path: '*', element: <NotFoundPage /> },
+  {
+    element: <Layout />,
+    children: [
+      ...suspendedRouteArray,
+      { path: '*', element: <GlobalNotFoundPage /> },
+    ],
+  },
 ])
 
 createRoot(document.getElementById('root')!).render(
