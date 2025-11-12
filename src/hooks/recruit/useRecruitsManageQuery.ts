@@ -6,7 +6,19 @@ import {
   textToRecruitOrdering,
 } from '@/utils/simpleMaps'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { useEffect, useMemo } from 'react'
+import { useEffect } from 'react'
+
+const queryEndpoint = '/recruitments/user'
+
+const getManageByPage = async (
+  endpoint: string,
+  paramsWithoutPage: object,
+  pageParam: number
+) => {
+  const params = { ...paramsWithoutPage, page: pageParam }
+  const response = await api.get(endpoint, { params })
+  return response.data as RecruitsManageResponse
+}
 
 const useRecruitsManageQuery = () => {
   const selectedStatusInText = useRecruitManageStore(
@@ -72,7 +84,6 @@ const useRecruitsManageQuery = () => {
   return {
     isPending,
     error,
-    hasNextPage,
     count,
   }
 }
