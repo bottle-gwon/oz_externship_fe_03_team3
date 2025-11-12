@@ -34,8 +34,6 @@ const ChatList = () => {
     //   setChatRoomArray(allMessage)
     // }
     if (data?.data?.data) {
-      console.log(data)
-
       setChatRoomArray(data.data.data)
     } else {
       setChatRoomArray([])
