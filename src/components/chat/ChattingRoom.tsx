@@ -124,7 +124,6 @@ const ChattingRoom = () => {
     // if (scrollTimerRef.current) {
     //   clearTimeout(scrollTimerRef.current)
     // }
-
     // 로딩중일때, 다음 페이지가 없으면 는 무한 스크롤 시작 안함
     if (hasNextPage && !isFetchingNextPage) {
       fetchNextPage()

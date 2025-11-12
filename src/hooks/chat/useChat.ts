@@ -96,7 +96,7 @@ export const useChatRoomMessage = () => {
       if (lastPage.data && lastPageParam?.size && lastPageParam?.page) {
         const current = lastPageParam.page
         const totalPage = Math.ceil(
-          lastPage.data.total_count / lastPageParam.size
+          lastPage.data.pagination.total_count / lastPageParam.size
         )
 
         if (current < totalPage) {

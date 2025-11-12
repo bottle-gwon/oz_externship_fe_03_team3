@@ -5,18 +5,20 @@ export interface ChatMessageListRequest {
   size?: number //없으면 기본값 20
 }
 // 채팅방 메시지
+export interface ChatMessageSender {
+  id: number
+  nickname: string
+}
 export interface ChatMessage {
   id: number
   content: string
-  sender_id: number
-  sender_nickname: string
+  sender: ChatMessageSender
   is_read: boolean
   created_at: string
-  updated_at: string
 }
 export interface ChatMessageApiResponseData {
   messages: ChatMessage[]
-  total_count: number
+  pagination: ChatRoomPagination
 }
 
 export interface ChatMessageApiResponse {
@@ -35,6 +37,17 @@ export interface ChatRoomPagination {
   page: number
   page_size: number
   total_count: number
+}
+export interface MessageList {
+  id: number
+  sender_id: number
+  sender_nickname: string
+  // study_group_id: number
+  content: string
+  // file_url: string | null
+  is_read: boolean
+  created_at: string
+  updated_at: string
 }
 
 // 채팅방 목록
