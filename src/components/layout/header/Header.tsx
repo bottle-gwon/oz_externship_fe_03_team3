@@ -8,7 +8,7 @@ import LoggedInButtonMany from './_LoggedInButtonMany'
 import LoggedOutButtonMany from './_LoggedOutButtonMany'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
-import api from '@/api/api'
+import api, { subApi } from '@/api/api'
 
 // NOTE: 로그인 테스트용 함수 -> 리프레시 로직 아직 없음
 // TODO: 리프레시 로직 적용하고 나면 삭제해야
@@ -36,9 +36,14 @@ const loginForDev = async () => {
   setAccessToken(accessToken)
   setMe(me)
 }
-const logoutForDev = () => {
-  const setAccessToken = useStudyHubStore.getState().setAccessToken
-  setAccessToken(null)
+const logoutForDev = async () => {
+  const state = useStudyHubStore.getState()
+  const accessToken = state.accessToken
+  await subApi.post('/auth/logout', undefined, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+  state.setMe(null)
+  state.setAccessToken(null)
 }
 
 // TODO: 리프레시 토큰 캐시로 받고 로그인 api 연결하면 삭제해야!
