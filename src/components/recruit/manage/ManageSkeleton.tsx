@@ -7,7 +7,7 @@ const ManageSkeleton = () => {
       <Vstack gap="xxl">
         <Hstack gap="none" className="items-center justify-between">
           <Hstack className="gap-oz-md items-center">
-            <Skeleton heightInPixel={40} widthInPixel={40} radius="lg" />
+            <Skeleton heightInPixel={40} widthInPixel={40} radius="full" />
             <Vstack gap="sm">
               <Skeleton heightInPixel={40} widthInPixel={200} />
               <Skeleton heightInPixel={20} widthInPixel={300} />
