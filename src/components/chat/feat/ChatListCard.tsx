@@ -7,17 +7,22 @@ interface ChatListCardInterface {
 }
 
 const ChatListCard = ({ room }: ChatListCardInterface) => {
-  const date = new Date(room.created_at)
-  const month = date.getMonth()
-  const day = date.getDay()
+  const date = new Date(room.last_message?.created_at)
+  const month = date.getUTCMonth()
+  const day = date.getUTCDay()
+
+  const dateMessage = date.getUTCMonth()
+    ? `${month}월 ${day}일`
+    : '시작일이 없습니다'
+
   const openChatList = useStudyHubStore((state) => state.openChatRoom)
 
   const onClickChatRoom = () => {
     openChatList(room.uuid, room.name)
   }
 
-  const roomContent = room.last_message_content
-    ? `${room.last_message_sender_nickname}: ${room.last_message_content}`
+  const roomContent = room?.last_message?.content
+    ? `${room.last_message.sender_nickname}: ${room.last_message.content}`
     : '(대화가 없습니다. 대화를 시작해보세요)'
 
   return (
@@ -28,8 +33,8 @@ const ChatListCard = ({ room }: ChatListCardInterface) => {
     >
       <Hstack className="justify-between">
         <p className="text-sm text-gray-900">{room.name}</p>
-        <Hstack>
-          <p className="text-xs text-gray-500">{`${month}월 ${day}일`}</p>
+        <Hstack className="items-center justify-center">
+          <p className="text-xs text-gray-500">{`${dateMessage}`}</p>
           {room.unread_message_count >= 1 && (
             <p className="bg-danger-500 h-[20px] min-w-[20px] rounded-full px-[6px] py-[2px] text-center text-xs text-white">
               {room.unread_message_count}

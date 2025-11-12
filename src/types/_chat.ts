@@ -38,13 +38,18 @@ export interface ChatRoomPagination {
 }
 
 // 채팅방 목록
+
+export interface ChatRoomLastMessage {
+  id: number
+  content: string
+  sender_nickname: string
+  created_at: string
+}
 export interface ChatRoomData {
   uuid: string
-  last_message_sender_nickname: string
   name: string
-  last_message_content: string
+  last_message: ChatRoomLastMessage
   unread_message_count: number
-  created_at: string
 }
 
 export interface ChatRoomApiResponseData {
