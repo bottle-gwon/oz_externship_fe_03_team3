@@ -9,7 +9,7 @@ import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import SubHeader from '@/components/commonInProject/SubHeader/SubHeader'
 import Tag from '@/components/commonInProject/tag/Tag'
 import TitledRoundBox from '@/components/commonInProject/TitledRoundBox/TitledRoundBox'
-import type { RecruitDetail } from '@/types'
+import type { Recruit, RecruitDetail } from '@/types'
 import { ScrollText, Send } from 'lucide-react'
 import RDInfoRow from './_RDInfoRow'
 import RWLectureCard from './_RDLectureCard'
@@ -21,6 +21,9 @@ import RDTitle from './_RDTitle'
 import RDBookmarkButton from './_RDBookmarkButton'
 import RDShareButton from './_RDShareButton'
 import RDConfirmClipboardModalMany from './_RDConfirmClipboardModal'
+import ManageModal from '../manageModal/ManageModal'
+import { useState } from 'react'
+import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
@@ -28,7 +31,12 @@ const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   // TODO: ManageModal prop 수정되면 클릭 후 해당 모달 띄우기
   if (isMine) {
     return (
-      <Button color="blue" variant="contained" size="lg">
+      <Button
+        color="blue"
+        variant="contained"
+        size="lg"
+        onClick={() => setModalKey('manage')}
+      >
         <ScrollText size={16} />
         지원 내역
       </Button>
@@ -55,6 +63,13 @@ const RecruitDetailContent = ({
   recruitDetail: RecruitDetail
   isMine?: boolean
 }) => {
+  const modalKey = useStudyHubStore((state) => state.modalKey)
+  const setModalKey = useStudyHubStore((state) => state.setModalKey)
+  const simplifiedRecruit = {
+    id: recruitDetail.id,
+    title: recruitDetail.title,
+  } as Recruit
+
   return (
     <>
       <Container width="md" className="py-oz-xxl">
@@ -120,7 +135,11 @@ const RecruitDetailContent = ({
 
       <ApplicationModalPage />
 
-      {/* <ManageModal recruitContent={recruitDetail.title} /> */}
+      <ManageModal
+        isOn={modalKey === 'manage'}
+        onClose={() => setModalKey(null)}
+        recruit={simplifiedRecruit}
+      />
       <RDConfirmClipboardModalMany />
     </>
   )

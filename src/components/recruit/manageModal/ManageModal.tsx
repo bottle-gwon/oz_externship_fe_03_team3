@@ -19,8 +19,6 @@ interface ManageModal {
 }
 
 const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
-  recruit = dummyRecruitArray[0]
-
   const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
     null
   )
