@@ -1,5 +1,7 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import SendIcon from '@/assets/send.svg'
+import useStudyHubStore from '@/store/store'
+import { useEffect, useRef } from 'react'
 
 interface ChatInput {
   isPending: boolean
@@ -21,8 +23,63 @@ const chatInputStatus = (isPending: boolean) => {
   }
 }
 
+// 테스트 임시용
+const URL = import.meta.env.VITE_API_BASE_URL
+
 const ChatInput = ({ isPending }: ChatInput) => {
   const LoadingStatus = chatInputStatus(isPending)
+  const addChatMessageArray = useStudyHubStore(
+    (state) => state.addChatMessageArray
+  )
+  const setChatConnected = useStudyHubStore((state) => state.setChatConnected)
+  const chatConnected = useStudyHubStore((state) => state.chatConnected)
+
+  const ws = useRef<WebSocket>(null)
+
+  const handleOpen = () => {
+    console.log('연결 성공')
+    // ws.current?.send('connected by react app')
+  }
+
+  const handleMessage = (event: MessageEvent) => {
+    console.log('메시지 수신:', event.data)
+    if (event.data !== '채팅 연결완') {
+      addChatMessageArray(JSON.parse(event.data))
+    }
+  }
+
+  const handleError = (error: Event) => {
+    console.error('WebSocket 에러:', error)
+    setChatConnected(false)
+  }
+
+  const handleClose = () => {
+    console.log('WebSocket 연결 종료')
+    setChatConnected(false)
+  }
+
+  useEffect(() => {
+    // 추후 URL 안에 방 id 들어가도록 변경
+    ws.current = new WebSocket(URL)
+
+    ws.current.addEventListener('open', handleOpen)
+    ws.current.addEventListener('message', handleMessage)
+    ws.current.addEventListener('error', handleError)
+    ws.current.addEventListener('close', handleClose)
+
+    return () => {
+      if (ws.current) {
+        ws.current.removeEventListener('open', handleOpen)
+        ws.current.removeEventListener('message', handleMessage)
+        ws.current.removeEventListener('error', handleError)
+        ws.current.removeEventListener('close', handleClose)
+
+        if (ws.current.readyState === WebSocket.OPEN) {
+          ws.current.close()
+        }
+      }
+    }
+  }, [handleOpen, handleMessage, handleError, handleClose])
 
   return (
     <Hstack
