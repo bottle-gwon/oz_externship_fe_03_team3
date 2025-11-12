@@ -10,14 +10,12 @@ import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubH
 import { useNavigate } from 'react-router'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
-import useRecruitManage from '@/hooks/recruit/useRecruitsManageQuery'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
 import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
 import { useRef, useState } from 'react'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal' // ★
-// import useStudyHubStore from '@/store/store'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
@@ -34,11 +32,11 @@ const RecruitManageContent = () => {
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false)
   const [deleteErrorOpen, setDeleteErrorOpen] = useState(false)
 
-  const { count } = useRecruitManage()
-
+  const count = useRecruitManageStore((state) => state.count)
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
   )
+
   const listCount =
     selectedStatusInText === '전체'
       ? (count.total ?? 0)
@@ -106,7 +104,6 @@ const RecruitManageContent = () => {
           <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
 
-        {/* 페이지 레벨 모달 */}
         <ConfirmationModal
           isOn={deleteSuccessOpen}
           onClose={() => setDeleteSuccessOpen(false)}
