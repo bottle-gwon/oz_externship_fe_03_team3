@@ -13,6 +13,17 @@ export interface Recruit {
   bookmark_count: number
   is_closed: boolean
   is_bookmarked: boolean
+
+  //없어진 앤드포인트 임시
+  id?: number
+  content?: string
+  current_headcount?: number
+  estimated_fee?: number
+  due_date?: string
+  study_group?: { id: number; uuid: string; name: string }
+  author?: { id: number; nickname: string; profile_img_url: string }
+  created_at?: string
+  updated_at?: string
 }
 
 export interface RecruitLecture {
@@ -56,8 +67,8 @@ export interface RecruitCount {
 // ---- recruit manage
 export interface RecruitsManageResponse {
   count: { total: number; open: number; closed: number }
-  previous?: string | null
-  next?: string | null
+  previous: string | null
+  next: string | null
   results: Recruit[]
   status?: '' | 'open' | 'closed'
   ordering?: 'created_at' | 'bookmarks' | 'views'
