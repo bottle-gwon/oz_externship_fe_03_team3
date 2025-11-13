@@ -68,7 +68,7 @@ const useStudyHubStore = create<StudyHubState>()(
       chatState: { status: 'off' },
       openChatList: () => set({ chatState: { status: 'chatList' } }),
       openChatRoom: (id, title) =>
-        set({ chatState: { status: 'chatRoom', id, title } }),
+        set({ chatState: { status: 'chatRoom', id, title }, page: 0 }),
       closeChatUI: () => set({ chatState: { status: 'off' } }),
       unReadCounter: 0,
       setUnReadCounter: (newCount) => set({ unReadCounter: newCount }),
@@ -76,10 +76,16 @@ const useStudyHubStore = create<StudyHubState>()(
       setChatRoomArray: (chatRoomArray) => set({ chatRoomArray }),
       chatMessageArray: [],
       setChatMessageArray: (chatMessageArray) => set({ chatMessageArray }),
-      addChatMessageArray: (message) =>
+      addChatMessage: (message) =>
         set((state) => ({
           chatMessageArray: [...state.chatMessageArray, message],
         })),
+      addChatMessageArray: (messageArray) =>
+        set((state) => ({
+          chatMessageArray: [...state.chatMessageArray, ...messageArray],
+        })),
+      page: 0,
+      setPage: (page) => set({ page }),
 
       // chat socket
       chatSocket: null,
@@ -98,7 +104,7 @@ const useStudyHubStore = create<StudyHubState>()(
         ws.addEventListener('message', (event) => {
           console.log('메시지 수신:', event.data)
           if (event.data !== '채팅 연결완') {
-            get().addChatMessageArray(JSON.parse(event.data))
+            get().addChatMessage(JSON.parse(event.data))
           }
         })
 
