@@ -22,16 +22,24 @@ const postImages = async (fileArray: File[]) => {
   fileArray.forEach((file) => {
     formData.append('files', file) // file must be actual File object
   })
-  const response = await api.post('/recruitments/presigned-url', formData)
+  try {
+    const response = await api.post('/recruitments/presigned-url', formData)
 
-  const urlArray: string[] = response.data.data.map(
-    (data: { file_url: string }) => data.file_url
-  )
-  const replacingArray: Replacing[] = urlArray.map((url, index) => ({
-    insertedText: insertingPlaceholderArray[index],
-    replacingText: `<img src="${url}" />`,
-  }))
-  setReplacingArray(replacingArray)
+    const urlArray: string[] = response.data.data.map(
+      (data: { file_url: string }) => data.file_url
+    )
+    const replacingArray: Replacing[] = urlArray.map((url, index) => ({
+      insertedText: insertingPlaceholderArray[index],
+      replacingText: `<img src="${url}" />`,
+    }))
+    setReplacingArray(replacingArray)
+  } catch {
+    const replacingArray: Replacing[] = fileArray.map((file, index) => ({
+      insertedText: insertingPlaceholderArray[index],
+      replacingText: `<!-- ${file.name} 업로드를 실패했습니다 -->`,
+    }))
+    setReplacingArray(replacingArray)
+  }
 }
 
 const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
