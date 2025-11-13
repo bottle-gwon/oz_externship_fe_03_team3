@@ -80,8 +80,58 @@ const useStudyHubStore = create<StudyHubState>()(
         set((state) => ({
           chatMessageArray: [...state.chatMessageArray, message],
         })),
+
+      // chat socket
+      chatSocket: null,
       chatConnected: false,
       setChatConnected: (chatConnected) => set({ chatConnected }),
+
+      chatConnect: (url) => {
+        const ws = new WebSocket(url)
+
+        // 초기 연결시 이벤트
+        ws.addEventListener('open', () => {
+          console.log('연결 성공')
+          get().setChatConnected(true)
+        })
+        // 메시지 수신
+        ws.addEventListener('message', (event) => {
+          console.log('메시지 수신:', event.data)
+          if (event.data !== '채팅 연결완') {
+            get().addChatMessageArray(JSON.parse(event.data))
+          }
+        })
+
+        // 에러 처리
+        ws.addEventListener('error', (error) => {
+          console.error('채팅 소켓 에러:', error) // 임시 에러
+          get().setChatConnected(false) // 에러 발생시 연결 해제
+        })
+
+        // 연결 종료
+        ws.addEventListener('close', () => {
+          get().setChatConnected(false)
+          set({ chatSocket: null })
+        })
+
+        set({ chatSocket: ws })
+      },
+
+      chatDisConnect: () => {
+        const socket = get().chatSocket
+        if (socket) {
+          socket.close()
+          set({ chatSocket: null, chatConnected: false })
+        }
+      },
+
+      sendMessage: (message) => {
+        const chatSocket = get().chatSocket
+        const chatSend = { type: 'chat.message', content: message }
+
+        if (chatSocket?.readyState === WebSocket.OPEN)
+          chatSocket.send(JSON.stringify(chatSend))
+      },
 
       // notification
     }),
