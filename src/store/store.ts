@@ -110,6 +110,7 @@ const useStudyHubStore = create<StudyHubState>()(
 
         // 연결 종료
         ws.addEventListener('close', () => {
+          console.log('연결 종료')
           get().setChatConnected(false)
           set({ chatSocket: null })
         })
@@ -132,6 +133,8 @@ const useStudyHubStore = create<StudyHubState>()(
         if (chatSocket?.readyState === WebSocket.OPEN)
           chatSocket.send(JSON.stringify(chatSend))
       },
+      chatScrollBottom: false,
+      setChatScrollBottom: (chatScrollBottom) => set({ chatScrollBottom }),
 
       // notification
     }),

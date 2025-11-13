@@ -21,8 +21,27 @@ const ChatDisplay = ({
   const containerRef = useRef<HTMLDivElement>(null)
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
   const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
+  const chatScrollBottom = useStudyHubStore((state) => state.chatScrollBottom)
+  const setChatScrollBottom = useStudyHubStore(
+    (state) => state.setChatScrollBottom
+  )
+
   const [init, setInit] = useState(true) // 초기 스크롤 세팅할 플래그
   const previndex = useRef(0)
+
+  const handleScroll = () => {
+    if (!containerRef.current) {
+      return
+    }
+    const { scrollHeight, scrollTop, clientHeight } = containerRef.current
+    const scrollBottom = scrollHeight - scrollTop - clientHeight
+
+    if (scrollBottom > 10) {
+      setChatScrollBottom(false)
+    } else {
+      setChatScrollBottom(true)
+    }
+  }
 
   // 윈도잉(가상화 리스트)
   const rowVirtualizer = useVirtualizer({
@@ -47,18 +66,27 @@ const ChatDisplay = ({
     }
   }, [rowVirtualizer, chatMessageArray.length, init, isPending])
 
+  // 메시지 추가 할때 이동
   useEffect(() => {
     if (
       !init &&
       !isFetchingNextPage &&
       chatMessageArray.length > previndex.current
     ) {
-      rowVirtualizer.scrollToIndex(
-        chatMessageArray.length - previndex.current - 1,
-        {
+      if (chatScrollBottom) {
+        rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
           align: 'end',
-        }
-      )
+          behavior: 'smooth',
+        })
+      } else {
+        rowVirtualizer.scrollToIndex(
+          chatMessageArray.length - previndex.current - 1,
+          {
+            align: 'end',
+          }
+        )
+      }
+
       previndex.current = chatMessageArray.length
     }
 
@@ -70,6 +98,7 @@ const ChatDisplay = ({
       padding="md"
       className={`mx-[-24px] h-full ${overflow}`}
       ref={containerRef}
+      onScroll={handleScroll}
     >
       <div
         className={`w-full] relative`}
