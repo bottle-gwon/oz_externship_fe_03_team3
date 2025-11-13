@@ -16,7 +16,6 @@ import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import ManageModal from '../manageModal/ManageModal'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
-import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 import useManageDeleteMutation from '@/hooks/manage/useManageDeleteMutation'
 
 export type RecruitCardProps = {
@@ -274,7 +273,7 @@ const RecruitCard = ({
       <ManageModal
         isOn={manageOpen}
         onClose={setManageOpen}
-        recruit={dummyRecruitArray[0]} // Todo: 현재는 더미 데이터 사용 중, 추후 클릭된 공고 데이터 전달
+        recruit={recruit}
       />
 
       <ConfirmationModal isOn={confirmOpen} onClose={cancelDelete}>

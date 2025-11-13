@@ -40,7 +40,7 @@ const ProfileButton = ({ me }: { me: Me }) => {
           className="py-oz-sm p-0"
         >
           <Hstack className="items-center">
-            <ProfileImage url={me.profile_image_url} />
+            <ProfileImage url={me.profile_img_url} />
             <p className="shrink-0 text-gray-700">{me.name}</p>
           </Hstack>
         </Button>
