@@ -16,16 +16,18 @@ interface ConfirmationConfig {
 interface useManageDetailConfirmationProps {
   nickname: string
   applicant: Applicant
+  recruitmentId: string
 }
 
 const useManageDetailConfirmation = ({
   nickname,
   applicant,
+  recruitmentId,
 }: useManageDetailConfirmationProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
   const { approveApplicantMutation, rejectApplicantMutation } =
-    useApplicantConfirmMutation()
+    useApplicantConfirmMutation(recruitmentId)
 
   // 승인 버튼 클릭
   const handleApproveClick = () => {
@@ -33,10 +35,9 @@ const useManageDetailConfirmation = ({
       data: applicant,
       newOne: {
         ...applicant,
-        status: 'ACCEPTED',
+        status: 'APPROVED',
       },
     })
-    setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
   }
 
   // 거절 버튼 클릭
@@ -48,7 +49,6 @@ const useManageDetailConfirmation = ({
         status: 'REJECTED',
       },
     })
-    setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
   }
 
   // 승인 확정

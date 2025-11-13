@@ -6,14 +6,16 @@ import type { Applicant } from '@/types'
 interface ManageDetailConfirmationModalProps {
   nickname: string
   applicant: Applicant
+  recruitmentId: string
 }
 
 const ManageDetailConfirmationModal = ({
   nickname,
   applicant,
+  recruitmentId,
 }: ManageDetailConfirmationModalProps) => {
   const { isPending, currentConfig, handleClose } = useManageDetailConfirmation(
-    { nickname, applicant }
+    { nickname, applicant, recruitmentId }
   )
 
   if (!currentConfig) {

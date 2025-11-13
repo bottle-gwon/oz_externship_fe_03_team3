@@ -33,11 +33,11 @@ const updateManageDeleteCache = (
   }),
 })
 
-const useManageDeleteMutation = (
-  userId: string,
-  opts?: { onSuccess?: () => void; onError?: (error: Error) => void }
-) => {
-  const queryEndpoint = `/recruitments/user/${userId}`
+const useManageDeleteMutation = (opts?: {
+  onSuccess?: () => void
+  onError?: (error: Error) => void
+}) => {
+  const queryEndpoint = `/recruitments/mine`
 
   const deleteRecruitmentMutation = useSimpleMutation({
     queryEndpoint,

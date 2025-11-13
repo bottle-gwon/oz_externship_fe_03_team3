@@ -15,12 +15,14 @@ interface ManageDetailModalProps {
   isOn: boolean
   onClose: () => void
   applicant: Applicant
+  recruitmentId: string
 }
 
 const ManageDetailModal = ({
   isOn,
   onClose,
   applicant,
+  recruitmentId,
 }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
@@ -145,6 +147,7 @@ const ManageDetailModal = ({
       <ManageDetailConfirmationModal
         applicant={applicant}
         nickname={applicantDetail.applicant.nickname}
+        recruitmentId={recruitmentId}
       />
     </>
   )

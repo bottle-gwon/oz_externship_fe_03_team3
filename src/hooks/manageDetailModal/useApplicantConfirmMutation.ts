@@ -2,6 +2,7 @@ import api from '@/api/api'
 import useSimpleMutation from '../useSimpleMutation'
 import type { Applicant, ApplicantResponseData } from '@/types'
 import type { InfiniteData } from '@tanstack/react-query'
+import useStudyHubStore from '@/store/store'
 
 const approveApplicant = (data: Applicant) => {
   return api.post(`/recruitments/applications/${data.uuid}/approve`)
@@ -14,27 +15,47 @@ const rejectApplicant = (data: Applicant) => {
 const updateApplicationCache = (
   previous: InfiniteData<ApplicantResponseData, unknown>,
   newOne: Applicant
-) => ({
-  ...previous,
-  pages: previous.pages.map((page) => ({
-    ...page,
-    results: page.results.map((applicant) =>
-      applicant.uuid === newOne.uuid ? newOne : applicant
-    ),
-  })),
-})
+) => {
+  const updated = {
+    ...previous,
+    pages: previous.pages.map((page) => {
+      console.log('Page results:', page.results)
+      return {
+        ...page,
+        results: page.results.map((applicant) => {
+          const isMatch = applicant.uuid === newOne.uuid
+          console.log(
+            `Applicant ${applicant.uuid} === ${newOne.uuid}:`,
+            isMatch
+          )
+          return isMatch ? newOne : applicant
+        }),
+      }
+    }),
+  }
 
-const useApplicantConfirmMutation = () => {
+  console.log('Updated cache:', updated)
+  return updated
+}
+
+const useApplicantConfirmMutation = (recruitmentId: string) => {
+  const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
   const approveApplicantMutation = useSimpleMutation({
-    queryEndpoint: '/applications', // 실제 queryKey에 맞게 수정 필요
+    queryEndpoint: `/recruitments/${recruitmentId}/applications/list`,
     mutationFnWithData: approveApplicant,
     updateCacheForUi: updateApplicationCache,
+    handleSuccess: () => {
+      setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
+    },
   })
 
   const rejectApplicantMutation = useSimpleMutation({
-    queryEndpoint: '/applications', // 실제 queryKey에 맞게 수정 필요
+    queryEndpoint: `/recruitments/${recruitmentId}/applications/list`,
     mutationFnWithData: rejectApplicant,
     updateCacheForUi: updateApplicationCache,
+    handleSuccess: () => {
+      setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
+    },
   })
 
   return { approveApplicantMutation, rejectApplicantMutation }

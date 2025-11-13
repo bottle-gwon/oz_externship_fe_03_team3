@@ -87,6 +87,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
           isOn={modalKeyArray.includes('manageDetail')}
           onClose={onDetailModalClose}
           applicant={selectedApplicant}
+          recruitmentId={recruit.uuid}
         />
       )}
     </>

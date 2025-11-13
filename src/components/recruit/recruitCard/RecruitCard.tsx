@@ -19,8 +19,6 @@ import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationMo
 import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 import useManageDeleteMutation from '@/hooks/manage/useManageDeleteMutation'
 
-const userId = ''
-
 export type RecruitCardProps = {
   recruit: Recruit
   isMine?: boolean
@@ -68,7 +66,7 @@ const RecruitCard = ({
     setConfirmOpen(true)
   }
 
-  const { deleteRecruitmentMutation } = useManageDeleteMutation(userId, {
+  const { deleteRecruitmentMutation } = useManageDeleteMutation({
     onSuccess: () => {
       onDeleteSuccess?.(title)
     },

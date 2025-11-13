@@ -1,13 +1,13 @@
 import type { Color } from './_commonInGeneralInterfaces'
 
-export type ApplicantStatus = 'PENDING' | 'ACCEPTED' | 'REJECTED'
+export type ApplicantStatus = 'PENDING' | 'APPROVED' | 'REJECTED'
 
 export const statusStyles: Record<
   ApplicantStatus,
   { content: string; style: Color }
 > = {
   PENDING: { content: '대기중', style: 'primary' },
-  ACCEPTED: { content: '승인됨', style: 'success' },
+  APPROVED: { content: '승인됨', style: 'success' },
   REJECTED: { content: '거절됨', style: 'danger' },
 }
 

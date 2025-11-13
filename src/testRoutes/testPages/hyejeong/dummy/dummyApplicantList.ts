@@ -24,7 +24,7 @@ export const dummyApplicantArray: Applicant[] = [
     },
     available_time: '주중 오후',
     has_study_experience: false,
-    status: 'ACCEPTED',
+    status: 'APPROVED',
     applied_at: '2025-10-15 19:48',
   },
   {
