@@ -131,7 +131,7 @@ const ChattingRoom = () => {
     //   clearTimeout(scrollTimerRef.current)
     // }
     // 로딩중일때, 다음 페이지가 없으면 는 무한 스크롤 시작 안함
-    if (hasNextPage && !isFetchingNextPage! && chatInit) {
+    if (hasNextPage && !isFetchingNextPage! && !chatInit) {
       fetchNextPage()
     }
 
@@ -169,7 +169,6 @@ const ChattingRoom = () => {
 
   useEffect(() => {
     if (data?.pages && !isFetchingNextPage) {
-      console.log(data, '테스트')
       const messages = data?.pages[data.pageParams.length - 1]?.data?.messages
 
       if (!messages) {

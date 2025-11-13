@@ -42,7 +42,7 @@ const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
         padding="sm"
         radius="lg"
         isBordered={false}
-        className={`min-h-9 max-w-[220px] ${boxStyle.box} px-3`}
+        className={`min-h-9 max-w-[220px] ${boxStyle.box} px-3 wrap-break-word`}
       >
         <span className={`text-sm ${boxStyle.text}`}>{chat.content}</span>
       </RoundBox>

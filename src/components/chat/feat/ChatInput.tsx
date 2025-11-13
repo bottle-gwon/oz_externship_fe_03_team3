@@ -45,7 +45,7 @@ const ChatInput = ({ isPending }: ChatInput) => {
   }, [chatConnect, chatDisConnect, chatState])
 
   const handleMessageKeydown = (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && inputValue !== '') {
+    if (e.key === 'Enter' && inputValue !== '' && !e.nativeEvent.isComposing) {
       sendMessage(inputValue)
       setInputValue('')
     }
