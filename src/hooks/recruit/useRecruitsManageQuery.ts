@@ -9,19 +9,19 @@ import {
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
 
-const queryEndpoint = '/recruitments/user'
+const queryEndpoint = '/recruitments/mine'
 
 const getManageByPage = async (
-  endpoint: string,
   paramsWithoutPage: object,
   pageParam: number
 ) => {
   const params = { ...paramsWithoutPage, page: pageParam }
-  const response = await api.get(endpoint, { params })
+  const response = await api.get(queryEndpoint, { params })
   return response.data as RecruitsManageResponse
 }
 
 const useRecruitsManageQuery = () => {
+  const accessToken = useStudyHubStore((state) => state.accessToken)
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
   )
@@ -46,21 +46,15 @@ const useRecruitsManageQuery = () => {
     [selectedStatusInText, selectedOrderingInText]
   )
 
-  const endpoint = `/recruitments/mine`
-
-  const { data, isPending, error, fetchNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: [endpoint, params],
-      queryFn: async ({ pageParam = 1 }) => {
-        const response = await api.get(endpoint, {
-          params: { ...params, page: pageParam },
-        })
-        return response.data as RecruitsManageResponse
-      },
-      initialPageParam: 1,
-      getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-        lastPage.next ? lastPageParam + 1 : null,
-    })
+  const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
+    queryKey: [queryEndpoint, paramsWithoutPage],
+    queryFn: async ({ pageParam = 1 }) =>
+      getManageByPage(paramsWithoutPage, pageParam),
+    initialPageParam: 1,
+    enabled: !!accessToken,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+      lastPage.next ? lastPageParam + 1 : null,
+  })
   useEffect(() => {
     if (!data) return
 
