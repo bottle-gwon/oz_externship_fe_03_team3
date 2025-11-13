@@ -23,7 +23,6 @@ const LectureContent = () => {
   const isSearching = useLectureStore((state) => state.isSearching)
   const requestNextPage = useLectureStore((state) => state.requestNextPage)
 
-  // TODO: request next page 로 이것 바꿔야
   const targetRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(targetRef, requestNextPage)
 
