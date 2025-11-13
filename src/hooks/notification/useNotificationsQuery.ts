@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 const endpoint = '/notifications'
 
 const tabToIsRead: Record<NotificationTab, boolean | null> = {
-  all: null,
+  total: null,
   read: true,
   unread: false,
 }

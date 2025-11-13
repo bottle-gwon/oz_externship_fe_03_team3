@@ -3,7 +3,7 @@ import useNotificationStore from '@/store/notification/notificationStore'
 import { notificationTabArray, type NotificationTab } from '@/types'
 
 const tabToLabel: Record<NotificationTab, string> = {
-  all: '전체 보기',
+  total: '전체 보기',
   unread: '읽지 않음',
   read: '읽음',
 }
