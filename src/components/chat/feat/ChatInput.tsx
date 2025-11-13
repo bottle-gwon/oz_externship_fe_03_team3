@@ -1,7 +1,7 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import SendIcon from '@/assets/send.svg'
 import useStudyHubStore from '@/store/store'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 interface ChatInput {
   isPending: boolean
@@ -29,11 +29,12 @@ const URL = import.meta.env.VITE_API_BASE_URL
 const ChatInput = ({ isPending }: ChatInput) => {
   const LoadingStatus = chatInputStatus(isPending)
 
-  const setChatConnected = useStudyHubStore((state) => state.setChatConnected)
   const chatState = useStudyHubStore((state) => state.chatState)
-  const chatConnected = useStudyHubStore((state) => state.chatConnected)
   const chatConnect = useStudyHubStore((state) => state.chatConnect)
   const chatDisConnect = useStudyHubStore((state) => state.chatDisConnect)
+  const sendMessage = useStudyHubStore((state) => state.sendMessage)
+
+  const [inputValue, setInputValue] = useState<string>('')
 
   useEffect(() => {
     if (chatState.status === 'chatRoom')
@@ -42,6 +43,23 @@ const ChatInput = ({ isPending }: ChatInput) => {
       chatDisConnect()
     }
   }, [chatConnect, chatDisConnect, chatState])
+
+  const handleMessageKeydown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter' && inputValue !== '') {
+      sendMessage(inputValue)
+      setInputValue('')
+    }
+  }
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value)
+  }
+
+  const onClickSend = () => {
+    if (inputValue !== '') {
+      sendMessage(inputValue)
+      setInputValue('')
+    }
+  }
 
   return (
     <Hstack
@@ -53,10 +71,14 @@ const ChatInput = ({ isPending }: ChatInput) => {
         placeholder={LoadingStatus.message}
         className={`${LoadingStatus.input} h-[38px] w-full rounded-3xl border border-gray-300 px-[13px] py-[9px]`}
         disabled={isPending} // 로딩시에는 입력 금지
+        value={inputValue}
+        onChange={onChangeInput}
+        onKeyDown={handleMessageKeydown}
       />
       <button
         className={`${LoadingStatus.button} flex size-8 shrink-0 cursor-pointer items-center justify-center rounded-full p-2`}
         disabled={isPending}
+        onClick={onClickSend}
       >
         <img src={SendIcon} />
       </button>
