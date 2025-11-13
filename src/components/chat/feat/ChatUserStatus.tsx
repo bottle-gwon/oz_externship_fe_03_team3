@@ -5,8 +5,8 @@ import RoundBox from '../../commonInGeneral/roundBox/RoundBox'
 type UserStatus = {
   name: string
   id: number
-  isConnected: boolean
-  isLeader: boolean
+  // isConnected: boolean
+  // isLeader: boolean
 }
 
 interface StatusInterface {
@@ -14,9 +14,10 @@ interface StatusInterface {
 }
 
 const ChatUserStatus = ({ status }: StatusInterface) => {
-  const indicator = status.isConnected ? 'bg-success-500' : 'bg-gray-300'
-  const leaderStyle = status.isLeader ? 'text-primary-600' : 'text-gray-700' //리더면 색 지정 다르게
-
+  // const indicator = status.isConnected ? 'bg-success-500' : 'bg-gray-300'
+  // const leaderStyle = status.isLeader ? 'text-primary-600' : 'text-gray-700' //리더면 색 지정 다르게
+  const indicator = 'bg-success-500'
+  const leaderStyle = 'text-gray-700'
   return (
     <RoundBox
       padding="none"
