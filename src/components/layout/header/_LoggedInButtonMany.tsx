@@ -8,7 +8,7 @@ import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
 import { lazy, Suspense } from 'react'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { subApi } from '@/api/api'
-const NotificationBox = lazy(() => import('./notification/NotificationBox'))
+import NotificationButton from './notification/NotificationButton'
 
 const logout = async () => {
   const state = useStudyHubStore.getState()
@@ -53,25 +53,6 @@ const ProfileButton = ({ me }: { me: Me }) => {
         <Dropdown.MenuItem value="mypage">마이페이지</Dropdown.MenuItem>
         <Dropdown.MenuItem value="logout">로그아웃</Dropdown.MenuItem>
       </Dropdown.Menu>
-    </Dropdown>
-  )
-}
-
-const NotificationButton = () => {
-  return (
-    <Dropdown>
-      <Dropdown.Trigger>
-        <Button variant="ghost" size="lg">
-          <Bell />
-        </Button>
-      </Dropdown.Trigger>
-      <Dropdown.Content>
-        <Suspense
-          fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
-        >
-          <NotificationBox />
-        </Suspense>
-      </Dropdown.Content>
     </Dropdown>
   )
 }
