@@ -13,15 +13,15 @@ const RWEstimatedCostInput = ({
   }
 
   return (
-    <Labeled isInDanger={Boolean(errors.estimated_cost)}>
+    <Labeled isInDanger={Boolean(errors.estimated_fee)}>
       <Labeled.Header>예상 결제 비용(원)</Labeled.Header>
       <Labeled.Input
-        {...register('estimated_cost')}
+        {...register('estimated_fee')}
         type="number"
         placeholder="미입력시 강의 비용 자동 계산"
         defaultValue={editingRecruit?.estimated_fee || undefined}
       />
-      <Labeled.Footer>{errors?.estimated_cost?.message}</Labeled.Footer>
+      <Labeled.Footer>{errors?.estimated_fee?.message}</Labeled.Footer>
     </Labeled>
   )
 }
