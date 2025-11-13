@@ -10,17 +10,17 @@ const RDInfoRow = ({ recruitDetail }: { recruitDetail: RecruitDetail }) => {
       <RDInfoBox>
         <img src={UsersThree} />
         <RDInfoBox.Title>모집 인원</RDInfoBox.Title>
-        <RDInfoBox.Content>{`${recruitDetail.expected_personnel}명`}</RDInfoBox.Content>
+        <RDInfoBox.Content>{`${recruitDetail.expected_headcount}명`}</RDInfoBox.Content>
       </RDInfoBox>
       <RDInfoBox>
         <CircleDollarSign size={24} className="text-gray-600" />
         <RDInfoBox.Title>예상 비용</RDInfoBox.Title>
-        <RDInfoBox.Content>{`${recruitDetail.expected_fee.toLocaleString()}원`}</RDInfoBox.Content>
+        <RDInfoBox.Content>{`${recruitDetail.estimated_fee.toLocaleString()}원`}</RDInfoBox.Content>
       </RDInfoBox>
       <RDInfoBox>
         <img src={CalendarWithDot} />
         <RDInfoBox.Title>마감일</RDInfoBox.Title>
-        <RDInfoBox.Content>{recruitDetail.due_date}</RDInfoBox.Content>
+        <RDInfoBox.Content>{recruitDetail.close_at}</RDInfoBox.Content>
       </RDInfoBox>
       <RDInfoBox>
         <Users size={24} className="text-gray-600" />

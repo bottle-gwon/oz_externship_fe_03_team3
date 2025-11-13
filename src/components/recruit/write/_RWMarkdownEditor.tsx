@@ -45,13 +45,12 @@ const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
     postImages(fileArray)
   }
 
-  // TODO: 이미지 api 연결하면 이미지 개수도 다르게 세야 함
+  // NOTE: 대용 코치님께서 마크다운 에디터에 넣는 이미지 수는 제한이 없다고 하셨습니다.
   return (
     <Labeled isRequired isInDanger={Boolean(errors.content)}>
       <Labeled.Header>스터디 그룹 소개</Labeled.Header>
       <Hstack className="justify-between text-xs text-gray-500">
         <p>마크다운 문법을 사용할 수 있습니다</p>
-        <p>이미지 {editingRecruit?.content_images.length}/5개</p>
       </Hstack>
       <Controller
         control={control}

@@ -64,7 +64,7 @@ const RecruitDetailContent = ({
   const modalKey = useStudyHubStore((state) => state.modalKey)
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const simplifiedRecruit = {
-    id: recruitDetail.id,
+    uuid: recruitDetail.uuid,
     title: recruitDetail.title,
   } as Recruit
 
@@ -131,7 +131,7 @@ const RecruitDetailContent = ({
         </Vstack>
       </Container>
 
-      <ApplicationModalPage />
+      <ApplicationModalPage recruitDetail={recruitDetail} />
 
       <ManageModal
         isOn={modalKey === 'manage'}

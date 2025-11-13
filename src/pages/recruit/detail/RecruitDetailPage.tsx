@@ -8,9 +8,9 @@ import { useParams } from 'react-router'
 const RecruitDetailPage = () => {
   const me = useStudyHubStore((state) => state.me)
   const params = useParams()
-  const recruitId = Number(params.recruitId)
+  const recruitUuid = params.recruitUuid ?? ''
 
-  const { data, isPending, error } = useRecruitDetailQuery(recruitId)
+  const { data, isPending, error } = useRecruitDetailQuery(recruitUuid)
 
   if (isPending) {
     return <RecruitDetailSkeleton />
@@ -20,7 +20,7 @@ const RecruitDetailPage = () => {
     return <NotFoundContent path="/recruit" label="구인 공고로" />
   }
 
-  const isMine = me && me.nickname === data.author_nickname
+  const isMine = me && me.nickname === data.author
   return <RecruitDetailContent recruitDetail={data} isMine={isMine ?? false} />
 }
 

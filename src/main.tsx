@@ -50,7 +50,7 @@ const routeArray = [
     fallback: <p>나중에 스켈레톤 넣을 자리</p>,
   },
   {
-    path: '/recruit/:recruitId',
+    path: '/recruit/:recruitUuid',
     element: <RecruitDetailPage />,
     fallback: <RecruitDetailSkeleton />,
   },

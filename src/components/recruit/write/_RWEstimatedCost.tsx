@@ -19,7 +19,7 @@ const RWEstimatedCostInput = ({
         {...register('estimated_cost')}
         type="number"
         placeholder="미입력시 강의 비용 자동 계산"
-        defaultValue={editingRecruit?.expected_fee || undefined}
+        defaultValue={editingRecruit?.estimated_fee || undefined}
       />
       <Labeled.Footer>{errors?.estimated_cost?.message}</Labeled.Footer>
     </Labeled>

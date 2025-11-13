@@ -7,13 +7,13 @@ import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 const RecruitEditPage = () => {
-  const recruitId = Number(useParams().recruitId)
+  const recruitUuid = useParams().uuid ?? ''
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 
   const navigate = useNavigate()
 
-  const { data, error, isPending } = useRecruitDetailQuery(recruitId)
+  const { data, error, isPending } = useRecruitDetailQuery(recruitUuid)
   useEffect(() => {
     if (!data) {
       return

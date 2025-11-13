@@ -3,7 +3,6 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import Textarea from '@/components/commonInGeneral/inputFamily/textarea/Textarea'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import { Send } from 'lucide-react'
-import { useState } from 'react'
 import {
   applicationSchema,
   dangerHelperText,
@@ -26,6 +25,9 @@ const ApplicationModalPage = ({
   // NOTE: 외부에서 이 모달을 띄우기 위해 전역 모달 상태를 사용했습니다
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
+  const removeModalKeyFromArray = useStudyHubStore(
+    (state) => state.removeModalKeyFromArray
+  )
   const { applyMutation } = useApplyMutation()
 
   const {
@@ -212,7 +214,10 @@ const ApplicationModalPage = ({
         </Modal>
       </form>
 
-      <ConfirmationModal isOn={confirmOn} onClose={closeAllAndReset}>
+      <ConfirmationModal
+        isOn={modalKeyArray.includes('applySuccess')}
+        onClose={closeAllAndReset}
+      >
         <ConfirmationModal.Title>
           {`'스터디 제목' 의 제출이 완료되었습니다.`}
         </ConfirmationModal.Title>
@@ -224,7 +229,10 @@ const ApplicationModalPage = ({
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
 
-      <ConfirmationModal isOn={failOn} onClose={() => setFailOn(false)}>
+      <ConfirmationModal
+        isOn={modalKeyArray.includes('applyError')}
+        onClose={() => removeModalKeyFromArray('applyError')}
+      >
         <ConfirmationModal.Title>
           {`'스터디 제목' 의 제출에 실패하였습니다.`}
         </ConfirmationModal.Title>
@@ -234,7 +242,9 @@ const ApplicationModalPage = ({
           {`문제가 지속되면 관리자에게 문의하세요.`}
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => setFailOn(false)}>확인</Button>
+          <Button onClick={() => removeModalKeyFromArray('applyError')}>
+            확인
+          </Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
     </>
