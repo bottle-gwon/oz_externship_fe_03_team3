@@ -29,7 +29,7 @@ const RecruitSubHeader = ({ isLoggedIn }: RecruitSubHeaderProps) => {
               color="primary"
               variant="outlined"
               size="lg"
-              onClick={() => handleClick('/recruit/manager')}
+              onClick={() => handleClick('/recruit/manage')}
             >
               <img src={ScrollText} />
               공고 관리

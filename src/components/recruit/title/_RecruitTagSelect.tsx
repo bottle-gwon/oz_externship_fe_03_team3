@@ -1,28 +1,18 @@
+import api from '@/api/api'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Select from '@/components/commonInGeneral/select/Select'
 import useRecruitStore from '@/store/recruit/recruitStore'
-import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
+import type { RecruitTag } from '@/types'
+import { useQuery } from '@tanstack/react-query'
 
-const calcTagArray = () => {
-  const tagRecords = dummyRecruitArray.reduce((outerAcc, recruit) => {
-    const dict = recruit.tags.reduce(
-      (innerAcc: Record<number, string>, tag) => {
-        innerAcc[tag.id] = tag.name
-        return innerAcc
-      },
-      {}
-    )
-
-    const newOuterAcc = { ...outerAcc, ...dict }
-    return newOuterAcc
-  }, {})
-
-  const tagArray = Object.values(tagRecords).sort() as string[]
-  return tagArray
-}
 const RecruitTagSelect = () => {
-  const tagArray = calcTagArray()
   const setSelectedTag = useRecruitStore((state) => state.setSelectedTag)
+
+  const endpoint = '/recruitments/tags'
+  const { data } = useQuery({
+    queryKey: [endpoint],
+    queryFn: async () => (await api.get(endpoint)).data.results as RecruitTag[],
+  })
 
   const handleOptionSelect = (option: string | number) => {
     if (typeof option !== 'string') {
@@ -39,9 +29,10 @@ const RecruitTagSelect = () => {
         <Select.Trigger>전체 태그</Select.Trigger>
         <Select.Content>
           <Select.Option>전체 태그</Select.Option>
-          {tagArray.map((tag) => (
-            <Select.Option key={tag}>{tag}</Select.Option>
-          ))}
+          {data &&
+            data.map((tag) => (
+              <Select.Option key={tag.id}>{tag.name}</Select.Option>
+            ))}
         </Select.Content>
       </Select>
     </Vstack>

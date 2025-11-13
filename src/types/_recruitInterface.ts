@@ -7,7 +7,7 @@ export interface Recruit {
   thumbnail_img_url: string
   expected_headcount: number
   lectures: RecruitLecture[]
-  tags: { id: number; name: string }[]
+  tags: RecruitTag[]
   close_at: string
   views_count: number
   bookmark_count: number
@@ -24,6 +24,11 @@ export interface RecruitLecture {
   url_link: string
 }
 
+export interface RecruitTag {
+  id: number
+  name: string
+}
+
 export interface RecruitmentQueryParams {
   keyword?: string
   tag?: string
@@ -35,11 +40,17 @@ export interface RecruitmentQueryParams {
 }
 
 export interface RecruitsResponseData {
-  recommendations?: Recruit[]
+  recommended_recruitments?: Recruit[]
   results: Recruit[]
-  page: number
-  page_size: number
-  total_count: number
+  next: string
+  previous: string
+  count: RecruitCount
+}
+
+export interface RecruitCount {
+  total: number
+  open: number
+  closed: number
 }
 
 // ---- recruit manage
