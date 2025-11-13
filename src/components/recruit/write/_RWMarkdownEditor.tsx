@@ -72,8 +72,7 @@ const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
         • 마크다운 문법: **굵게**, *기울임*, # 제목, - 목록 등
       </Labeled.Footer>
       <Labeled.Footer>
-        • 이미지 추가: ![설명](이미지URL) - 최대{' '}
-        {RECRUIT_WRITE_CONFIG.MAX_IMAGE}개, 각{' '}
+        • 이미지 추가: ![설명](이미지URL) - 각{' '}
         {RECRUIT_WRITE_CONFIG.MAX_IMAGE_FILE_SIZE} 이하
       </Labeled.Footer>
     </Labeled>

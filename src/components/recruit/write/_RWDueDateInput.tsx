@@ -10,14 +10,14 @@ const RWDueDateInput = ({ errors, register }: RecruitWriteChildrenProps) => {
   }
 
   return (
-    <Labeled isRequired isInDanger={Boolean(errors.due_date)}>
+    <Labeled isRequired isInDanger={Boolean(errors.close_at)}>
       <Labeled.Header>공고 마감 기한</Labeled.Header>
       <Labeled.Input
-        {...register('due_date')}
+        {...register('close_at')}
         type="date"
         defaultValue={editingRecruit?.close_at.slice(0, 10)}
       />
-      <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
+      <Labeled.Footer>{errors?.close_at?.message}</Labeled.Footer>
     </Labeled>
   )
 }

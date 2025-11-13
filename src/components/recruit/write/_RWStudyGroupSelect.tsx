@@ -34,11 +34,11 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
 
   return (
     <Vstack>
-      <Labeled isRequired isInDanger={Boolean(errors.study_group_id)}>
+      <Labeled isRequired isInDanger={Boolean(errors.study_group)}>
         <Labeled.Header>대상 스터디 그룹</Labeled.Header>
         <Controller
           control={control}
-          name="study_group_id"
+          name="study_group"
           render={({ field: { onChange } }) => (
             <Select
               defaultChildren={editingRecruit?.study_group_name}
@@ -62,7 +62,7 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
             </Select>
           )}
         />
-        <Labeled.Footer>{errors?.study_group_id?.message}</Labeled.Footer>
+        <Labeled.Footer>{errors?.study_group?.message}</Labeled.Footer>
       </Labeled>
       {selectedStudyGroup && (
         <RWStudyGroupInfo studyGroup={selectedStudyGroup} />

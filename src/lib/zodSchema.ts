@@ -58,10 +58,10 @@ export const defaultApplicationValues: ApplicationForm = {
 }
 
 const recruitWriteCommonObject = {
-  expected_personnel: z
+  expected_headcount: z
     .number('예상 모집 인원을 선택해주세요')
     .min(1, '예상 모집 인원을 선택해주세요'),
-  study_group_id: z.coerce
+  study_group: z.coerce
     .string('스터디 그룹을 선택해주세요')
     .min(1, '스터디 그룹을 선택해주세요'),
   estimated_cost: z.coerce.number().nullish(),
@@ -86,15 +86,12 @@ const recruitWriteCommonObject = {
       `참고 파일은 ${RECRUIT_WRITE_CONFIG.MAX_ATTACHMENT}개를 초과할 수 없습니다`
     )
     .nullish(),
-  images: z.array(z.string()).nullish(),
 }
 
 const recruitWriteSpecificObejct = {
   title: z.string().min(1, '제목을 입력하세요'),
   content: z.string().min(1, '스터디 그룹을 소개해주세요'),
-  due_date: z.coerce
-    .date('공고 마감 기한을 선택해주세요')
-    .min(new Date(), '마감일은 오늘 이후여야 합니다'),
+  close_at: z.string().min(1, '공고 마감 기한을 선택해주세요'),
 }
 
 const recruitEditSpecificObject = {
@@ -106,22 +103,21 @@ const recruitEditSpecificObject = {
     .string()
     .transform((arg) => (arg === '' ? undefined : arg))
     .nullish(),
-  due_date: z.preprocess(
+  close_at: z.preprocess(
     (arg) => (arg === '' ? undefined : arg),
-    z.coerce.date().min(new Date(), '마감일은 오늘 이후여야 합니다').nullish()
+    z.string().nullish()
   ),
 }
 
 export const recruitWriteSchema = z
-  .object({ ...recruitWriteCommonObject, ...recruitWriteSpecificObejct })
-  .refine(
-    (data) =>
-      !data.images || data.images.length <= RECRUIT_WRITE_CONFIG.MAX_IMAGE,
-    {
-      message: `공고 내용의 이미지는 ${RECRUIT_WRITE_CONFIG.MAX_IMAGE}개를 초과할 수 없습니다`,
-      path: ['content'],
-    }
-  )
+  .object({
+    ...recruitWriteCommonObject,
+    ...recruitWriteSpecificObejct,
+  })
+  .refine((data) => new Date(data.close_at) > new Date(), {
+    message: '마감일은 오늘 이후여야 합니다',
+    path: ['close_at'],
+  })
 
 export type RecruitWriteSchema = z.infer<typeof recruitWriteSchema>
 
@@ -130,12 +126,8 @@ const recruitEditBaseSchema = z
     ...recruitWriteCommonObject,
     ...recruitEditSpecificObject,
   })
-  .refine(
-    (data) =>
-      !data.images || data.images.length <= RECRUIT_WRITE_CONFIG.MAX_IMAGE,
-    {
-      message: `공고 내용의 이미지는 ${RECRUIT_WRITE_CONFIG.MAX_IMAGE}개를 초과할 수 없습니다`,
-      path: ['content'],
-    }
-  )
+  .refine((data) => !data.close_at || new Date(data.close_at) > new Date(), {
+    message: '마감일은 오늘 이후여야 합니다',
+    path: ['close_at'],
+  })
 export const recruitEditSchema = recruitEditBaseSchema.partial()
