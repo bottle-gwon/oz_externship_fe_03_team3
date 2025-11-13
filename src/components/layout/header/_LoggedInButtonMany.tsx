@@ -1,12 +1,9 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack } from '@/components/commonInGeneral/layout'
 import useStudyHubStore from '@/store/store'
-import { Bell } from 'lucide-react'
 import type { Me } from '@/types'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
-import { lazy, Suspense } from 'react'
-import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { subApi } from '@/api/api'
 import NotificationButton from './notification/NotificationButton'
 
