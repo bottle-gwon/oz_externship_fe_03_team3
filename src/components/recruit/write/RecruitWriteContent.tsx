@@ -126,7 +126,7 @@ const RecruitWriteContent = ({
                   status={isPending ? 'pending' : 'enabled'}
                 >
                   <Send size={16} />
-                  공고 등록하기
+                  {isEditing ? '공고 수정하기' : '공고 등록하기'}
                 </Button>
               </Hstack>
             </Vstack>
