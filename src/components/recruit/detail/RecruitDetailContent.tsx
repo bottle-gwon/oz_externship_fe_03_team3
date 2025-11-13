@@ -25,8 +25,10 @@ import ManageModal from '../manageModal/ManageModal'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
+  const appendModalKeyToArray = useStudyHubStore(
+    (state) => state.appendModalKeyToArray
+  )
 
-  // TODO: ManageModal prop 수정되면 클릭 후 해당 모달 띄우기
   if (isMine) {
     return (
       <Button
@@ -46,7 +48,7 @@ const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
       color="primary"
       variant="contained"
       size="lg"
-      onClick={() => setModalKey('apply')}
+      onClick={() => appendModalKeyToArray('apply')}
     >
       <Send size={16} />
       지원하기
