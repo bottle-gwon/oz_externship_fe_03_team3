@@ -81,6 +81,8 @@ export interface StudyHubState {
   chatConnect: (url: string) => void
   chatDisConnect: () => void
   sendMessage: (message: string) => void
+  chatScrollBottom: boolean // 채팅 스크롤이 제일 아래 있는지 확인
+  setChatScrollBottom: (chatScrollBottom: boolean) => void
 
   // notification
 }
