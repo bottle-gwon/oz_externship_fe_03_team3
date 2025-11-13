@@ -20,7 +20,9 @@ const RDInfoRow = ({ recruitDetail }: { recruitDetail: RecruitDetail }) => {
       <RDInfoBox>
         <img src={CalendarWithDot} />
         <RDInfoBox.Title>마감일</RDInfoBox.Title>
-        <RDInfoBox.Content>{recruitDetail.close_at}</RDInfoBox.Content>
+        <RDInfoBox.Content>
+          {recruitDetail.close_at.slice(0, 10)}
+        </RDInfoBox.Content>
       </RDInfoBox>
       <RDInfoBox>
         <Users size={24} className="text-gray-600" />
