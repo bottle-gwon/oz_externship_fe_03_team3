@@ -27,8 +27,13 @@ const useRecruitWriteMutation = () => {
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { uuid: string } }) => {
+<<<<<<< HEAD
       const uuid = response.data.uuid
       navigate(`/recruit/${uuid}`)
+=======
+      const id = response.data.uuid
+      navigate(`/recruit/${id}`)
+>>>>>>> e7621b3 (fix: API 변경(id → uuid)에 따라 타입 및 컴포넌트 수정)
     },
   })
 
