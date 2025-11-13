@@ -8,11 +8,13 @@ interface ChatListCardInterface {
 
 const ChatListCard = ({ room }: ChatListCardInterface) => {
   const date = new Date(room.last_message?.created_at)
-  const month = date.getUTCMonth()
-  const day = date.getUTCDay()
+  const chatData = date.toLocaleString('ko-KR', {
+    month: 'long',
+    day: 'numeric',
+  })
 
-  const dateMessage = date.getUTCMonth()
-    ? `${month}월 ${day}일`
+  const dateMessage = room.last_message?.created_at
+    ? chatData
     : '시작일이 없습니다'
 
   const openChatList = useStudyHubStore((state) => state.openChatRoom)

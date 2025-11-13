@@ -6,6 +6,7 @@ import ChatListSkeleton from './skeleton/ChatListSkeleton'
 // import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 // import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
 import { useChatRoomList } from '@/hooks/chat/useChat'
+import type { ChatRoomData } from '@/types/_chat'
 // import NoMoreChatList from './feat/NoMoreChatList'
 
 // 채팅 목록
@@ -15,6 +16,7 @@ const ChatList = () => {
   const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
   const chatRoomArray = useStudyHubStore((state) => state.chatRoomArray)
   const setChatRoomArray = useStudyHubStore((state) => state.setChatRoomArray)
+  const setUnReadCounter = useStudyHubStore((state) => state.setUnReadCounter)
 
   const { data, isPending, isError, error } = useChatRoomList()
 
@@ -33,12 +35,16 @@ const ChatList = () => {
     //     data.flatMap((res) => res.data?.messages || []) || []
     //   setChatRoomArray(allMessage)
     // }
-    if (data?.data) {
+    if (data?.data && Array.isArray(data?.data)) {
       setChatRoomArray(data.data)
+      const count = data?.data?.reduce((acc: number, cur: ChatRoomData) => {
+        return acc + cur.unread_message_count
+      }, 0)
+      setUnReadCounter(count)
     } else {
       setChatRoomArray([])
     }
-  }, [data, setChatRoomArray])
+  }, [data, setChatRoomArray, setUnReadCounter])
 
   // 임시 에러 처리
   if (isError) {
