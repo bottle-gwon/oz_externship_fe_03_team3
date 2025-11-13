@@ -9,22 +9,24 @@ const updateManageDeleteCache = (
 ) => ({
   ...previous,
   pages: previous.pages.map((page) => {
+    const removedOnPage = page.results.some(
+      (recruitment) => recruitment.uuid === removedRecruit.uuid
+    )
     const filteredResults = page.results.filter(
       (recruitment) => recruitment.uuid !== removedRecruit.uuid
     )
 
-    const pageStatus = page.status
     const { total, open, closed } = page.count
-    const decreaseOpen = removedRecruit.is_closed ? 0 : 1
-    const decreaseClosed = removedRecruit.is_closed ? 1 : 0
+
+    const isClosed = removedRecruit.is_closed
+    const openDelta = !isClosed && removedOnPage ? 1 : 0
+    const closedDelta = isClosed && removedOnPage ? 1 : 0
 
     const updatedCount = {
-      total: Math.max(0, total - 1),
-      open: pageStatus === 'closed' ? open : Math.max(0, open - decreaseOpen),
-      closed:
-        pageStatus === 'open' ? closed : Math.max(0, closed - decreaseClosed),
+      total: removedOnPage ? Math.max(0, total - 1) : total,
+      open: Math.max(0, open - openDelta),
+      closed: Math.max(0, closed - closedDelta),
     }
-
     return {
       ...page,
       results: filteredResults,
@@ -41,8 +43,8 @@ const useManageDeleteMutation = (opts?: {
 
   const deleteRecruitmentMutation = useSimpleMutation({
     queryEndpoint,
-    mutationFnWithData: async (recruitmentId: string) => {
-      await api.delete(`/recruitments/${recruitmentId}`)
+    mutationFnWithData: async (recruitmentUuid: string) => {
+      await api.delete(`/recruitments/${recruitmentUuid}`)
     },
     updateCacheForUi: updateManageDeleteCache,
     handleSuccess: opts?.onSuccess,
