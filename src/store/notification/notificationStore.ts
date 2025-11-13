@@ -2,7 +2,7 @@ import { create } from 'zustand'
 import type { NotificationStoreState } from './_notificationStoreInterfaces'
 
 const useNotificationStore = create<NotificationStoreState>()((set, _get) => ({
-  selectedTab: 'all',
+  selectedTab: 'total',
   setSelectedTab: (selectedTab) => set({ selectedTab }),
 
   notificationArray: [],

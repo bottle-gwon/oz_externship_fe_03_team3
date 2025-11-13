@@ -21,7 +21,7 @@ const NotificationButton = () => {
   const { isPending, error } = useNotificationsQuery()
 
   const isShowingSkeleton =
-    isPending && notificationArray.length === 0 && selectedTab === 'all'
+    isPending && notificationArray.length === 0 && selectedTab === 'total'
   const isShowingError = error && notificationArray.length === 0
 
   const unreadCount = notificationCounts?.unread ?? 0

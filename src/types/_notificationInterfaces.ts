@@ -21,7 +21,7 @@ export interface Notification {
   updated_at: string
 }
 
-export const notificationTabArray = ['all', 'unread', 'read'] as const
+export const notificationTabArray = ['total', 'unread', 'read'] as const
 export type NotificationTab = (typeof notificationTabArray)[number]
 
 export type NotificationCounts = Record<NotificationTab, number>
