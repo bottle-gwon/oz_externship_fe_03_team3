@@ -20,7 +20,7 @@ const RecruitDetailPage = () => {
     return <NotFoundContent path="/recruit" label="구인 공고로" />
   }
 
-  const isMine = me && me.nickname === data.author
+  const isMine = me && me.nickname === data.author.nickname
   return <RecruitDetailContent recruitDetail={data} isMine={isMine ?? false} />
 }
 

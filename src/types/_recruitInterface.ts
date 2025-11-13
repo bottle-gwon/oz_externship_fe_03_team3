@@ -104,9 +104,15 @@ export interface RecruitDetailLecture {
   price: number
 }
 
+export interface RecruitAuthor {
+  id: number
+  nickname: string
+  profile_img_url: string
+}
+
 export interface RecruitDetail {
-  author: string
-  study_name: string // NOTE: study_name swag 문서, 명세서에 둘 다 빠져있음, 요청 드림
+  author: RecruitAuthor
+  study_group_name: string // NOTE: study_name swag 문서, 명세서에 둘 다 빠져있음, 요청 드림
   uuid: string // NOTE: id 삭제, uuid만 사용
   title: string
   content: string
