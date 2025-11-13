@@ -1,3 +1,4 @@
+import NotFoundContent from '@/components/commonInGeneral/error/NotFoundContent'
 import RecruitDetailContent from '@/components/recruit/detail/RecruitDetailContent'
 import RecruitDetailSkeleton from '@/components/recruit/detail/RecruitDetailSkeleton'
 import useRecruitDetailQuery from '@/hooks/recruitDetail/useRecruitDetailQuery'
@@ -7,22 +8,19 @@ import { useParams } from 'react-router'
 const RecruitDetailPage = () => {
   const me = useStudyHubStore((state) => state.me)
   const params = useParams()
-  const recruitId = Number(params.recruitId)
+  const recruitUuid = params.recruitUuid ?? ''
 
-  const { data, isPending, error } = useRecruitDetailQuery(recruitId)
+  const { data, isPending, error } = useRecruitDetailQuery(recruitUuid)
 
   if (isPending) {
     return <RecruitDetailSkeleton />
   }
 
   if (error || !data) {
-    return (
-      // TODO: 여기 적당한 것으로 교체해야 함
-      <p>오류가 나면 이게 보입니다. 여기를 대체할 컴포넌트를 만들어야 합니다</p>
-    )
+    return <NotFoundContent path="/recruit" label="구인 공고로" />
   }
 
-  const isMine = me && me.nickname === data.author_nickname
+  const isMine = me && me.nickname === data.author.nickname
   return <RecruitDetailContent recruitDetail={data} isMine={isMine ?? false} />
 }
 

@@ -21,13 +21,16 @@ export interface Notification {
   updated_at: string
 }
 
+export const notificationTabArray = ['total', 'unread', 'read'] as const
+export type NotificationTab = (typeof notificationTabArray)[number]
+
+export type NotificationCounts = Record<NotificationTab, number>
+
 // NOTE: 엔드포인트가 notifications라서 복수형으로 썼습니다
 export interface NotificationsResponseData {
   count: number
+  counts: NotificationCounts
   next: string | null
   previous: string | null
   results: Notification[]
 }
-
-export const notificationTabArray = ['all', 'unread', 'read']
-export type NotificationTab = (typeof notificationTabArray)[number]

@@ -3,7 +3,7 @@ import useNotificationStore from '@/store/notification/notificationStore'
 import { notificationTabArray, type NotificationTab } from '@/types'
 
 const tabToLabel: Record<NotificationTab, string> = {
-  all: '전체 보기',
+  total: '전체 보기',
   unread: '읽지 않음',
   read: '읽음',
 }
@@ -21,6 +21,14 @@ const NotificationTab = ({
   isSelected?: boolean
 }) => {
   const setSelectedTab = useNotificationStore((state) => state.setSelectedTab)
+  const notificationCounts = useNotificationStore(
+    (state) => state.notificationCounts
+  )
+
+  const countText =
+    notificationCounts && notificationCounts[tab]
+      ? ` (${notificationCounts[tab]})`
+      : ''
 
   return (
     <div className="relative">
@@ -33,7 +41,7 @@ const NotificationTab = ({
         )}
         onClick={() => setSelectedTab(tab)}
       >
-        {tabToLabel[tab]}
+        {`${tabToLabel[tab]}${countText}`}
       </Button>
       {isSelected && <NotificationTabUnderline />}
     </div>

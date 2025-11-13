@@ -1,3 +1,4 @@
+import UnknwonErrorContent from '@/components/commonInGeneral/error/UnknownErrorContent'
 import LectureContent from '@/components/lecture/LectureContent'
 import LectureSkeleton from '@/components/lecture/LectureSkeleton'
 import useLecturesQuery from '@/hooks/lecture/useLecturesQuery'
@@ -11,9 +12,9 @@ const LecturePage = () => {
     return <LectureSkeleton />
   }
 
-  // NOTE: 채팅창 스켈레톤 버그를 확인할 땐 아래 주석을 해제해주세요
-  // debugger
-  if (error) return <p>뭔가 오류가 일어났어요 여기를 채워야 해요</p>
+  if (error) {
+    return <UnknwonErrorContent />
+  }
 
   return <LectureContent />
 }

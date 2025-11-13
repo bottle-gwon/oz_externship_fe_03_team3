@@ -27,8 +27,8 @@ const useRecruitWriteMutation = () => {
       setModalKey('recruitWriteError')
     },
     onSuccess: (response: { data: { uuid: string } }) => {
-      const id = response.data.uuid
-      navigate(`/recruit/${id}`)
+      const uuid = response.data.uuid
+      navigate(`/recruit/${uuid}`)
     },
   })
 

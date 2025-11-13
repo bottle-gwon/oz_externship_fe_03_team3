@@ -22,7 +22,7 @@ const RWExpectedPersonnelSelect = ({
             onOptionSelect={onChange}
             defaultChildren={
               editingRecruit
-                ? `${editingRecruit?.expected_personnel}명`
+                ? `${editingRecruit?.expected_headcount}명`
                 : undefined
             }
           >
