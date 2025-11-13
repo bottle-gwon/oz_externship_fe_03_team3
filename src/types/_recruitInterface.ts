@@ -1,11 +1,6 @@
 import type { RecruitWriteSchema } from '@/lib/zodSchema'
 import type { FieldErrors, Control, UseFormRegister } from 'react-hook-form'
 
-export interface RecruitTag {
-  id: number
-  name: string
-}
-
 export interface Recruit {
   uuid: string
   title: string
