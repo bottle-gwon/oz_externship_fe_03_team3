@@ -21,6 +21,14 @@ const NotificationTab = ({
   isSelected?: boolean
 }) => {
   const setSelectedTab = useNotificationStore((state) => state.setSelectedTab)
+  const notificationCounts = useNotificationStore(
+    (state) => state.notificationCounts
+  )
+
+  const countText =
+    notificationCounts && notificationCounts[tab]
+      ? ` (${notificationCounts[tab]})`
+      : ''
 
   return (
     <div className="relative">
@@ -33,7 +41,7 @@ const NotificationTab = ({
         )}
         onClick={() => setSelectedTab(tab)}
       >
-        {tabToLabel[tab]}
+        {`${tabToLabel[tab]}${countText}`}
       </Button>
       {isSelected && <NotificationTabUnderline />}
     </div>
