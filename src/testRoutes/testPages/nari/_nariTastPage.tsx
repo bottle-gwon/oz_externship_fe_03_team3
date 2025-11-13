@@ -7,7 +7,7 @@ const NariTastPage = () => {
     <div>
       {/* <RecruitSummaryCard myRecruitArray={mockRecruits} /> */}
       {mockRecruits.map((recruit) => (
-        <RecruitCard key={recruit.id} recruit={recruit} />
+        <RecruitCard key={recruit.uuid} recruit={recruit} />
       ))}
     </div>
   )

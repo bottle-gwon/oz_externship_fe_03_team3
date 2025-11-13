@@ -6,7 +6,7 @@ import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
 import useStudyHubStore from '@/store/store'
 import useApplicantStore from '@/store/recruit/manageModal/applicantStore'
 import useApplicantsQuery from '@/hooks/manageModal/useApplicantsQuery'
-import type { Recruit } from '@/types'
+import type { Applicant, Recruit } from '@/types'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import ApplicantListSkeleton from './skeleton/ApplicantListSkeleton'
 import ApplicantTitleSkeleton from './skeleton/ApplicantTitleSkeleton'
@@ -18,10 +18,10 @@ interface ManageModal {
 }
 
 const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
-  const [selectedApplicantId, setSelectedApplicantId] = useState<number | null>(
+  const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
     null
   )
-  const { isPending, count } = useApplicantsQuery(recruit.id, isOn)
+  const { isPending, count } = useApplicantsQuery(recruit.uuid, isOn)
 
   const applicantArray = useApplicantStore((state) => state.applicantArray)
   const requestNextPage = useApplicantStore((state) => state.requestNextPage)
@@ -37,13 +37,13 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
     onClose(false)
   }
 
-  const handleCardClick = (applicantId: number) => {
-    setSelectedApplicantId(applicantId)
+  const handleCardClick = (applicant: Applicant) => {
+    setSelectedApplicant(applicant)
     setModalKeyArray([...modalKeyArray, 'manageDetail'])
   }
   const onDetailModalClose = () => {
     setModalKeyArray(['manage'])
-    setSelectedApplicantId(null)
+    setSelectedApplicant(null)
   }
 
   return (
@@ -67,7 +67,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
                 <ApplicantCard
                   key={applicant.id}
                   applicant={applicant}
-                  onClick={() => handleCardClick(applicant.id)}
+                  onClick={() => handleCardClick(applicant)}
                 />
               ))}
             </GridContainer>
@@ -82,11 +82,11 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
         </Modal.Body>
       </Modal>
 
-      {modalKeyArray.includes('manageDetail') && selectedApplicantId && (
+      {modalKeyArray.includes('manageDetail') && selectedApplicant && (
         <ManageDetailModal
           isOn={modalKeyArray.includes('manageDetail')}
           onClose={onDetailModalClose}
-          applicantId={selectedApplicantId}
+          applicant={selectedApplicant}
         />
       )}
     </>

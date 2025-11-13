@@ -10,7 +10,7 @@ const updateManageDeleteCache = (
   ...previous,
   pages: previous.pages.map((page) => {
     const filteredResults = page.results.filter(
-      (recruitment) => recruitment.id !== removedRecruit.id
+      (recruitment) => recruitment.uuid !== removedRecruit.uuid
     )
 
     const pageStatus = page.status
@@ -34,14 +34,14 @@ const updateManageDeleteCache = (
 })
 
 const useManageDeleteMutation = (
-  userId: number,
+  userId: string,
   opts?: { onSuccess?: () => void; onError?: (error: Error) => void }
 ) => {
   const queryEndpoint = `/recruitments/user/${userId}`
 
   const deleteRecruitmentMutation = useSimpleMutation({
     queryEndpoint,
-    mutationFnWithData: async (recruitmentId: number) => {
+    mutationFnWithData: async (recruitmentId: string) => {
       await api.delete(`/recruitments/${recruitmentId}`)
     },
     updateCacheForUi: updateManageDeleteCache,

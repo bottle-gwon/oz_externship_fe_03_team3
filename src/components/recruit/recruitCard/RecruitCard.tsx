@@ -19,7 +19,7 @@ import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationMo
 import { dummyRecruitArray } from '@/testRoutes/testPages/hyejeong/dummy/dummyRecruitList'
 import useManageDeleteMutation from '@/hooks/manage/useManageDeleteMutation'
 
-const userId = 24
+const userId = ''
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -39,16 +39,16 @@ const RecruitCard = ({
   onDeleteError,
 }: RecruitCardProps) => {
   const {
-    id,
+    uuid,
     thumbnail_img_url,
     title,
     expected_headcount,
-    due_date,
     tags,
     views_count,
     bookmark_count,
     lectures,
     is_bookmarked,
+    close_at,
   } = recruit
 
   const navigate = useNavigate()
@@ -56,11 +56,11 @@ const RecruitCard = ({
   const [confirmOpen, setConfirmOpen] = useState(false)
   const [bookmarked, setBookmarked] = useState<boolean>(is_bookmarked)
 
-  const goDetail = () => navigate(`/recruit/${id}`)
+  const goDetail = () => navigate(`/recruit/${uuid}`)
 
   const handleEdit = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.stopPropagation()
-    navigate(`/recruit/write/${id}`)
+    navigate(`/recruit/write/${uuid}`)
   }
 
   const handleDelete = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -79,10 +79,10 @@ const RecruitCard = ({
 
   const confirmDelete = () => {
     deleteRecruitmentMutation.mutate({
-      data: recruit.id,
+      data: recruit.uuid,
       //실패 확인하고 싶을때
       // data: -1,
-      newOne: { id: recruit.id, is_closed: recruit.is_closed },
+      newOne: { uuid: recruit.uuid, is_closed: recruit.is_closed },
     })
     setConfirmOpen(false)
   }
@@ -209,7 +209,7 @@ const RecruitCard = ({
                 <Calendar className="size-4" />
                 {/* 추후 svg 아이콘으로 추가 */}
                 마감일 :{' '}
-                {(due_date ?? '').slice(0, 10).replace(/-/g, '. ') + '.'}
+                {(close_at ?? '').slice(0, 10).replace(/-/g, '. ') + '.'}
               </Hstack>
             </Vstack>
 
@@ -220,7 +220,7 @@ const RecruitCard = ({
               <ul className="list-inside list-disc pl-2">
                 {lectures.map((lectures) => (
                   <li
-                    key={lectures.id}
+                    key={lectures.uuid}
                     aria-label="강의목록"
                     className="text-md"
                   >

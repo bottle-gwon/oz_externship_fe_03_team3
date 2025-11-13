@@ -3,7 +3,7 @@ import Modal from '@/components/commonInGeneral/modal/Modal'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Tag from '@/components/commonInProject/tag/Tag'
-import { experienceStyles, statusStyles } from '@/types'
+import { experienceStyles, statusStyles, type Applicant } from '@/types'
 import ApplicantDetailCard from './_ApplicantDetailCard'
 import ManageDetailModalButtons from './_ManageDetailModalButtons'
 import ManageDetailConfirmationModal from './_ManageDetailConfirmationModal'
@@ -14,18 +14,19 @@ import ManageDetailSkeleton from './ManageDetailSkeleton'
 interface ManageDetailModalProps {
   isOn: boolean
   onClose: () => void
-  applicantId: number
+  applicant: Applicant
 }
 
 const ManageDetailModal = ({
   isOn,
   onClose,
-  applicantId,
+  applicant,
 }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const { data: applicantDetail, isPending } =
-    useApplicantDetailQuery(applicantId)
+  const { data: applicantDetail, isPending } = useApplicantDetailQuery(
+    applicant.uuid
+  )
 
   if (isPending) {
     return <ManageDetailSkeleton isOn={isOn} onClose={onClose} />
@@ -67,12 +68,17 @@ const ManageDetailModal = ({
               <Vstack>
                 <p className="text-sm font-medium text-gray-700">지원자 정보</p>
                 <Hstack gap="lg">
-                  <ProfileImage url={applicantDetail.profile_image} size="xl" />
+                  <ProfileImage
+                    url={applicantDetail.applicant.profile_img_url}
+                    size="xl"
+                  />
                   <Vstack gap="none" className="justify-center">
                     <h3 className="text-lg font-semibold">
-                      {applicantDetail.nickname}
+                      {applicantDetail.applicant.nickname}
                     </h3>
-                    <p className="text-gray-600">{applicantDetail.gender}</p>
+                    <p className="text-gray-600">
+                      {applicantDetail.applicant.gender}
+                    </p>
                   </Vstack>
                 </Hstack>
               </Vstack>
@@ -87,7 +93,7 @@ const ManageDetailModal = ({
                 <Vstack gap="xs" className="items-end">
                   <p className="text-sm text-gray-600">지원한 일시</p>
                   <p className="text-sm font-medium">
-                    {applicantDetail.created_at}
+                    {applicantDetail.applied_at}
                   </p>
                 </Vstack>
               </Hstack>
@@ -95,7 +101,7 @@ const ManageDetailModal = ({
 
             <ApplicantDetailCard
               title="자기소개"
-              content={applicantDetail.introduction}
+              content={applicantDetail.self_introduction}
             />
             <ApplicantDetailCard
               title="지원 동기"
@@ -103,11 +109,11 @@ const ManageDetailModal = ({
             />
             <ApplicantDetailCard
               title="스터디 목표"
-              content={applicantDetail.goal}
+              content={applicantDetail.objective}
             />
             <ApplicantDetailCard
               title="가능한 시간대"
-              content={applicantDetail.available_times}
+              content={applicantDetail.available_time}
             />
 
             <Vstack>
@@ -118,7 +124,7 @@ const ManageDetailModal = ({
                     {experienceStyle.content}
                   </Tag>
                   <p className="text-gray-700">
-                    {applicantDetail.study_experience_detail}
+                    {applicantDetail.study_experience}
                   </p>
                 </Vstack>
               </RoundBox>
@@ -137,8 +143,8 @@ const ManageDetailModal = ({
       </Modal>
 
       <ManageDetailConfirmationModal
-        applicantId={applicantId}
-        nickname={applicantDetail.nickname}
+        applicant={applicant}
+        nickname={applicantDetail.applicant.nickname}
       />
     </>
   )

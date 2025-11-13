@@ -1,5 +1,5 @@
 import useStudyHubStore from '@/store/store'
-import type { Color } from '@/types'
+import type { Applicant, Color } from '@/types'
 import useApplicantConfirmMutation from './useApplicantConfirmMutation'
 
 interface ButtonConfig {
@@ -15,12 +15,12 @@ interface ConfirmationConfig {
 
 interface useManageDetailConfirmationProps {
   nickname: string
-  applicantId: number
+  applicant: Applicant
 }
 
 const useManageDetailConfirmation = ({
   nickname,
-  applicantId,
+  applicant,
 }: useManageDetailConfirmationProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
@@ -29,12 +29,26 @@ const useManageDetailConfirmation = ({
 
   // 승인 버튼 클릭
   const handleApproveClick = () => {
-    approveApplicantMutation.mutate(applicantId)
+    approveApplicantMutation.mutate({
+      data: applicant,
+      newOne: {
+        ...applicant,
+        status: 'ACCEPTED',
+      },
+    })
+    setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
   }
 
   // 거절 버튼 클릭
   const handleRejectClick = () => {
-    rejectApplicantMutation.mutate(applicantId)
+    rejectApplicantMutation.mutate({
+      data: applicant,
+      newOne: {
+        ...applicant,
+        status: 'REJECTED',
+      },
+    })
+    setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
   }
 
   // 승인 확정

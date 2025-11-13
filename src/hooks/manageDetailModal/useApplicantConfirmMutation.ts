@@ -1,35 +1,40 @@
 import api from '@/api/api'
-import useStudyHubStore from '@/store/store'
-import { useMutation } from '@tanstack/react-query'
+import useSimpleMutation from '../useSimpleMutation'
+import type { Applicant, ApplicantResponseData } from '@/types'
+import type { InfiniteData } from '@tanstack/react-query'
+
+const approveApplicant = (data: Applicant) => {
+  return api.post(`/recruitments/applications/${data.uuid}/approve`)
+}
+
+const rejectApplicant = (data: Applicant) => {
+  return api.post(`/recruitments/applications/${data.uuid}/reject`)
+}
+
+const updateApplicationCache = (
+  previous: InfiniteData<ApplicantResponseData, unknown>,
+  newOne: Applicant
+) => ({
+  ...previous,
+  pages: previous.pages.map((page) => ({
+    ...page,
+    results: page.results.map((applicant) =>
+      applicant.uuid === newOne.uuid ? newOne : applicant
+    ),
+  })),
+})
 
 const useApplicantConfirmMutation = () => {
-  const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const approveApplicantMutation = useMutation({
-    mutationFn: async (applicationId: number) => {
-      const body = { status: 'APPROVED' }
-      const response = await api.post(
-        `/recruitments/applications/${applicationId}`,
-        body
-      )
-      return response.data
-    },
-    onSuccess: () => {
-      setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
-    },
+  const approveApplicantMutation = useSimpleMutation({
+    queryEndpoint: '/applications', // 실제 queryKey에 맞게 수정 필요
+    mutationFnWithData: approveApplicant,
+    updateCacheForUi: updateApplicationCache,
   })
 
-  const rejectApplicantMutation = useMutation({
-    mutationFn: async (applicationId: number) => {
-      const body = { status: 'REJECTED' }
-      const response = await api.post(
-        `/recruitments/applications/${applicationId}`,
-        body
-      )
-      return response.data
-    },
-    onSuccess: () => {
-      setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
-    },
+  const rejectApplicantMutation = useSimpleMutation({
+    queryEndpoint: '/applications', // 실제 queryKey에 맞게 수정 필요
+    mutationFnWithData: rejectApplicant,
+    updateCacheForUi: updateApplicationCache,
   })
 
   return { approveApplicantMutation, rejectApplicantMutation }

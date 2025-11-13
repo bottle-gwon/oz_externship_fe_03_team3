@@ -91,7 +91,7 @@ const RecruitManageContent = () => {
           {recruitManageArray.map((recruit) => (
             <RecruitCard
               isMine
-              key={recruit.id}
+              key={recruit.uuid}
               recruit={recruit}
               onDeleteSuccess={(t) => {
                 setDeletedTitle(t)

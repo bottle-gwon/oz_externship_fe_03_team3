@@ -2,25 +2,26 @@ import type { RecruitWriteSchema } from '@/lib/zodSchema'
 import type { FieldErrors, Control, UseFormRegister } from 'react-hook-form'
 
 export interface Recruit {
-  id: number
   uuid: string
   title: string
-  content: string
   thumbnail_img_url: string
   expected_headcount: number
-  current_headcount: number
-  estimated_fee: number
+  lectures: RecruitLecture[]
+  tags: { id: number; name: string }[]
+  close_at: string
   views_count: number
   bookmark_count: number
-  due_date: string
   is_closed: boolean
-  tags: { id: number; name: string }[]
-  lectures: { id: number; title: string; instructor: string }[]
-  study_group: { id: number; uuid: string; name: string }
-  author: { id: number; nickname: string; profile_img_url: string }
   is_bookmarked: boolean
-  created_at: string
-  updated_at: string
+}
+
+export interface RecruitLecture {
+  uuid: string
+  title: string
+  instructor: string
+  thumbnail_img_url: string
+  platform: string
+  url_link: string
 }
 
 export interface RecruitmentQueryParams {
@@ -74,7 +75,7 @@ export type RecruitConditionInText =
 
 //---- recruit delete
 export interface RecruitDelete {
-  id: number
+  uuid: string
   is_closed: boolean
 }
 

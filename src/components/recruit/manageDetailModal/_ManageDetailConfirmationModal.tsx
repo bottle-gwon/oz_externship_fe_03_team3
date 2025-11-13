@@ -1,18 +1,19 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import useManageDetailConfirmation from '@/hooks/manageDetailModal/useManageDetailConfirmation'
+import type { Applicant } from '@/types'
 
 interface ManageDetailConfirmationModalProps {
   nickname: string
-  applicantId: number
+  applicant: Applicant
 }
 
 const ManageDetailConfirmationModal = ({
   nickname,
-  applicantId,
+  applicant,
 }: ManageDetailConfirmationModalProps) => {
   const { isPending, currentConfig, handleClose } = useManageDetailConfirmation(
-    { nickname, applicantId }
+    { nickname, applicant }
   )
 
   if (!currentConfig) {
