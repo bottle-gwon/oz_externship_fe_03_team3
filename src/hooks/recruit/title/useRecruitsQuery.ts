@@ -78,7 +78,6 @@ const useRecruitsQuery = () => {
 
   // 전체 공고 수
   const totalCount = data?.pages[0].count.total ?? 0
-  console.log(data)
 
   return {
     isPending,
