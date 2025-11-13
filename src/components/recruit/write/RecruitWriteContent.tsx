@@ -55,7 +55,6 @@ const RecruitWriteContent = ({
     const restEntryArray = Object.entries(rest)
     restEntryArray.forEach((entry) => formData.append(...entry))
     attachments.forEach((file: File) => formData.append('attachments', file))
-    debugger
 
     if (isEditing) {
       if (!editingRecruit) {
