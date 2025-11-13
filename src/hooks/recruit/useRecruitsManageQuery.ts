@@ -38,13 +38,13 @@ const useRecruitsManageQuery = () => {
   const setCount = useRecruitManageStore((state) => state.setCount)
   const count = useRecruitManageStore((state) => state.count)
 
-  const params = useMemo(
+  const paramsWithoutPage = useMemo(
     () => ({
       page_size: 10,
       status: textToRecruitManageState[selectedStatusInText],
       ordering: textToRecruitOrdering[selectedOrderingInText],
     }),
-    [selectedStatusInText, selectedOrderingInText]
+    [selectedOrderingInText, selectedStatusInText]
   )
 
   const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
