@@ -9,7 +9,8 @@ import ChattingStatusSkeleton from './skeleton/ChattingStatusSkeleton'
 import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useChatRoomMessage } from '@/hooks/chat/useChat'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
+import type { ChatMessage } from '@/types/_chat'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
 const TestUserStatus = {
@@ -99,6 +100,12 @@ const ChattingRoom = () => {
   const setChatMessageArray = useStudyHubStore(
     (state) => state.setChatMessageArray
   )
+  const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
+  const addChatMessageArray = useStudyHubStore(
+    (state) => state.addChatMessageArray
+  )
+  const page = useStudyHubStore((state) => state.page)
+  const setPage = useStudyHubStore((state) => state.setPage)
 
   // const [isPending, setIsPending] = useState(true) //임시 로딩
   // const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
@@ -155,15 +162,41 @@ const ChattingRoom = () => {
   // }, [])
 
   // 데이터 저장, 정렬
+  const sortMessage = (message: ChatMessage[]) => {
+    return message.sort(
+      (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
+    )
+  }
+
   useEffect(() => {
     if (data?.pages && !isFetchingNextPage) {
-      const allMessage =
-        data?.pages.flatMap((res) => res.data?.messages || []) || []
+      console.log(data, '테스트')
+      const messages = data?.pages[data.pageParams.length - 1]?.data?.messages
 
-      const sortMessage = allMessage.sort(
-        (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
-      )
-      setChatMessageArray(sortMessage)
+      if (!messages) {
+        return
+      }
+
+      if (page === 0) {
+        if (data.pageParams.length === 0) {
+          const allMessage = [...messages].flatMap((res) => res || []) || []
+          const sortMessaged = sortMessage(allMessage)
+          setChatMessageArray(sortMessaged)
+        } else {
+          const allMessage =
+            data?.pages.flatMap((res) => res.data?.messages || []) || []
+          const sortMessaged = sortMessage(allMessage)
+          setChatMessageArray(sortMessaged)
+        }
+      } else {
+        const allMessage =
+          [...chatMessageArray, ...messages].flatMap((res) => res || []) || []
+        const sortMessaged = sortMessage(allMessage)
+
+        setChatMessageArray(sortMessaged)
+      }
+
+      setPage(data.pageParams.length)
     }
   }, [data, isFetchingNextPage, setChatMessageArray])
 
