@@ -12,11 +12,11 @@ const RWExpectedPersonnelSelect = ({
   const editingRecruit = useStudyHubStore((state) => state.editingRecruit)
 
   return (
-    <Labeled isRequired isInDanger={Boolean(errors.expected_personnel)}>
+    <Labeled isRequired isInDanger={Boolean(errors.expected_headcount)}>
       <Labeled.Header>예상 모집 인원</Labeled.Header>
       <Controller
         control={control}
-        name="expected_personnel"
+        name="expected_headcount"
         render={({ field: { onChange } }) => (
           <Select
             onOptionSelect={onChange}
@@ -40,7 +40,7 @@ const RWExpectedPersonnelSelect = ({
           </Select>
         )}
       />
-      <Labeled.Footer>{errors?.expected_personnel?.message}</Labeled.Footer>
+      <Labeled.Footer>{errors?.expected_headcount?.message}</Labeled.Footer>
     </Labeled>
   )
 }
