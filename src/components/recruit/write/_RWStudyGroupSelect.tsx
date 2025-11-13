@@ -2,7 +2,7 @@ import Labeled from '@/components/commonInGeneral/inputFamily/labeled/Labeled'
 import { Vstack } from '@/components/commonInGeneral/layout'
 import Select from '@/components/commonInGeneral/select/Select'
 import useStudyHubStore from '@/store/store'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller } from 'react-hook-form'
 import type { RecruitWriteChildrenProps, StudyGroup } from '@/types'
 import RWStudyGroupInfo from './_RWStudyGroupInfo'
@@ -31,6 +31,21 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
     }
     setSelectedStudyGroup(result)
   }
+
+  useEffect(() => {
+    if (!editingRecruit || !data) {
+      return
+    }
+
+    const defaultStudyGroup = data.find(
+      (studyGroup) => studyGroup.name === editingRecruit.study_group_name
+    )
+    if (!defaultStudyGroup) {
+      return
+    }
+
+    setSelectedStudyGroup(defaultStudyGroup)
+  }, [editingRecruit, data])
 
   return (
     <Vstack>
