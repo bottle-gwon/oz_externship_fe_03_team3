@@ -45,6 +45,9 @@ const useNotificationsQuery = () => {
   const setAllNotificationArray = useNotificationStore(
     (state) => state.setAllNotificationArray
   )
+  const setNotificationCounts = useNotificationStore(
+    (state) => state.setNotificationCounts
+  )
 
   const params = { is_read: tabToIsRead[selectedTab] }
 
@@ -74,6 +77,9 @@ const useNotificationsQuery = () => {
     if (selectedTab === 'all') {
       setAllNotificationArray(reducedArray)
     }
+
+    const counts = data.pages[0].counts
+    setNotificationCounts(counts)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])

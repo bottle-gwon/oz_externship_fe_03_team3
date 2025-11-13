@@ -1,4 +1,4 @@
-import type { Notification, NotificationTab } from '@/types'
+import type { Notification, NotificationCounts, NotificationTab } from '@/types'
 
 export interface NotificationStoreState {
   selectedTab: NotificationTab
@@ -9,4 +9,7 @@ export interface NotificationStoreState {
 
   allNotificationArray: Notification[]
   setAllNotificationArray: (notificationArray: Notification[]) => void
+
+  notificationCounts: NotificationCounts | null
+  setNotificationCounts: (notificationCounts: NotificationCounts) => void
 }

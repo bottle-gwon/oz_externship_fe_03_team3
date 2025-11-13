@@ -11,6 +11,9 @@ const useNotificationStore = create<NotificationStoreState>()((set, _get) => ({
   allNotificationArray: [],
   setAllNotificationArray: (allNotificationArray) =>
     set({ allNotificationArray }),
+
+  notificationCounts: null,
+  setNotificationCounts: (notificationCounts) => set({ notificationCounts }),
 }))
 
 export default useNotificationStore

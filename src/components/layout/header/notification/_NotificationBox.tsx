@@ -48,7 +48,11 @@ const NotificationBox = () => {
 
         <NotificationTabRow />
 
-        <FlexOneContainer className="border-b border-b-gray-200" ref={rootRef}>
+        <FlexOneContainer
+          isYScrollable
+          className="border-b border-b-gray-200"
+          ref={rootRef}
+        >
           {notificationArray.map((notification) => (
             <NotificationCard
               key={notification.id}

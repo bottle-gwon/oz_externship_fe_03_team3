@@ -7,24 +7,37 @@ import NotificationBox from './_NotificationBox'
 import useNotificationStore from '@/store/notification/notificationStore'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
+import CountBadge from '@/components/commonInGeneral/countBadge/CountBadge'
 
 const NotificationButton = () => {
   const notificationArray = useNotificationStore(
     (state) => state.notificationArray
   )
   const selectedTab = useNotificationStore((state) => state.selectedTab)
+  const notificationCounts = useNotificationStore(
+    (state) => state.notificationCounts
+  )
 
   const { isPending, error } = useNotificationsQuery()
 
   const isShowingSkeleton =
     isPending && notificationArray.length === 0 && selectedTab === 'all'
 
+  const unreadCount = notificationCounts?.unread ?? 0
+
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <Button variant="ghost" size="lg">
-          <Bell />
-        </Button>
+        <div className="relative">
+          <Button variant="ghost" size="lg">
+            <Bell />
+          </Button>
+          <CountBadge
+            isVisible={Boolean(unreadCount)}
+            count={unreadCount}
+            topRightClassName="top-[-6px] right-0"
+          />
+        </div>
       </Dropdown.Trigger>
       <Dropdown.Content>
         {/* NOTE: 읽음, 읽지 않음 탭에선 전체 알림을 필터링한 것을 스켈레톤 대용으로 사용하기에 스켈레톤이 필요 없습니다 */}
