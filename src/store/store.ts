@@ -68,7 +68,11 @@ const useStudyHubStore = create<StudyHubState>()(
       chatState: { status: 'off' },
       openChatList: () => set({ chatState: { status: 'chatList' } }),
       openChatRoom: (id, title) =>
-        set({ chatState: { status: 'chatRoom', id, title }, page: 0 }),
+        set({
+          chatState: { status: 'chatRoom', id, title },
+          page: 0,
+          chatInit: true,
+        }),
       closeChatUI: () => set({ chatState: { status: 'off' } }),
       unReadCounter: 0,
       setUnReadCounter: (newCount) => set({ unReadCounter: newCount }),
@@ -86,6 +90,8 @@ const useStudyHubStore = create<StudyHubState>()(
         })),
       page: 0,
       setPage: (page) => set({ page }),
+      chatInit: true,
+      setChatInit: (chatInit) => set({ chatInit }),
 
       // chat socket
       chatSocket: null,

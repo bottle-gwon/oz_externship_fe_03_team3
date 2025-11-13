@@ -9,7 +9,7 @@ import ChattingStatusSkeleton from './skeleton/ChattingStatusSkeleton'
 import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useChatRoomMessage } from '@/hooks/chat/useChat'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 import type { ChatMessage } from '@/types/_chat'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
@@ -101,9 +101,8 @@ const ChattingRoom = () => {
     (state) => state.setChatMessageArray
   )
   const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
-  const addChatMessageArray = useStudyHubStore(
-    (state) => state.addChatMessageArray
-  )
+  const chatInit = useStudyHubStore((state) => state.chatInit)
+
   const page = useStudyHubStore((state) => state.page)
   const setPage = useStudyHubStore((state) => state.setPage)
 
@@ -132,7 +131,7 @@ const ChattingRoom = () => {
     //   clearTimeout(scrollTimerRef.current)
     // }
     // 로딩중일때, 다음 페이지가 없으면 는 무한 스크롤 시작 안함
-    if (hasNextPage && !isFetchingNextPage) {
+    if (hasNextPage && !isFetchingNextPage! && chatInit) {
       fetchNextPage()
     }
 
@@ -198,6 +197,8 @@ const ChattingRoom = () => {
 
       setPage(data.pageParams.length)
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isFetchingNextPage, setChatMessageArray])
 
   if (chatState.status !== 'chatRoom') {

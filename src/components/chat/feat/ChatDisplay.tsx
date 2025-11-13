@@ -25,8 +25,11 @@ const ChatDisplay = ({
   const setChatScrollBottom = useStudyHubStore(
     (state) => state.setChatScrollBottom
   )
+  const chatInit = useStudyHubStore((state) => state.chatInit) // 초기 스크롤 세팅할 플래그
+  const setChatInit = useStudyHubStore((state) => state.setChatInit)
 
-  const [init, setInit] = useState(true) // 초기 스크롤 세팅할 플래그
+  console.log(chatMessageArray, '다시')
+
   const previndex = useRef(0)
 
   const handleScroll = () => {
@@ -57,19 +60,26 @@ const ChatDisplay = ({
     if (!containerRef) {
       return
     }
-    if (containerRef.current && init && !isPending) {
+    console.log(chatInit)
+    if (containerRef.current && chatInit && !isPending) {
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
       })
-      setInit(false)
+      setChatInit(false)
       previndex.current = 0
     }
-  }, [rowVirtualizer, chatMessageArray.length, init, isPending])
+  }, [
+    rowVirtualizer,
+    chatMessageArray.length,
+    chatInit,
+    isPending,
+    setChatInit,
+  ])
 
   // 메시지 추가 할때 이동
   useEffect(() => {
     if (
-      !init &&
+      !chatInit &&
       !isFetchingNextPage &&
       chatMessageArray.length > previndex.current
     ) {
