@@ -1,12 +1,12 @@
 import RecruitCard from '@/components/recruit/recruitCard/RecruitCard'
-import { mockRecruits } from './_TestMokData'
+import { dummyRecruitArray } from '../hyejeong/dummy/dummyRecruitList'
 // import RecruitSummaryCard from '../../../components/recruit/manage/RecruitSummaryCard'
 
 const NariTastPage = () => {
   return (
     <div>
       {/* <RecruitSummaryCard myRecruitArray={mockRecruits} /> */}
-      {mockRecruits.map((recruit) => (
+      {dummyRecruitArray.map((recruit) => (
         <RecruitCard key={recruit.uuid} recruit={recruit} />
       ))}
     </div>

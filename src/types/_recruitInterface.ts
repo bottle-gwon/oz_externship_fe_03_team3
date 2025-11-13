@@ -109,7 +109,7 @@ export interface RecruitDetail {
   // NOTE: author api 요청드림
   author_nickname: string
   study_name: string
-  id: number
+  uuid: string
   title: string
   content: string
   // TODO: 이미지 api 연결하고 이부분 살펴봐야 함
