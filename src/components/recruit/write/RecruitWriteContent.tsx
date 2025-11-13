@@ -49,11 +49,13 @@ const RecruitWriteContent = ({
     useRecruitWrite(isEditing)
 
   const onSubmit = (data: FieldValues) => {
-    const formData = new FormData()
     const { attachments, ...rest } = data
+
+    const formData = new FormData()
     const restEntryArray = Object.entries(rest)
     restEntryArray.forEach((entry) => formData.append(...entry))
     attachments.forEach((file: File) => formData.append('attachments', file))
+    debugger
 
     if (isEditing) {
       if (!editingRecruit) {

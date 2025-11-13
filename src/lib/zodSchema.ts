@@ -64,14 +64,20 @@ const recruitWriteCommonObject = {
   study_group: z.coerce
     .string('스터디 그룹을 선택해주세요')
     .min(1, '스터디 그룹을 선택해주세요'),
-  estimated_cost: z.coerce.number().nullish(),
-  tags: z
-    .array(z.string())
-    .max(
-      RECRUIT_WRITE_CONFIG.MAX_TAG,
-      `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
-    )
-    .nullish(),
+  estimated_fee: z.preprocess(
+    (arg) => (!arg ? undefined : arg),
+    z.coerce.number().nullish()
+  ),
+  tags: z.preprocess(
+    (arg: string[]) => (arg.length === 0 ? undefined : arg),
+    z
+      .array(z.string())
+      .max(
+        RECRUIT_WRITE_CONFIG.MAX_TAG,
+        `태그는 ${RECRUIT_WRITE_CONFIG.MAX_TAG}개를 초과할 수 없습니다`
+      )
+      .nullish()
+  ),
   attachments: z
     .array(
       z
