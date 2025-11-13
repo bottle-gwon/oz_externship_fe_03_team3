@@ -7,7 +7,9 @@ import { useEffect } from 'react'
 import { useNavigate, useParams } from 'react-router'
 
 const RecruitEditPage = () => {
-  const recruitUuid = useParams().uuid ?? ''
+  const params = useParams()
+  const recruitUuid = params.recruitUuid ?? ''
+
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 

@@ -24,6 +24,7 @@ import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
 import RWMarkdownEditor from './_RWMarkdownEditor'
 import useRecruitWriteMutation from '@/hooks/recruitWrite/useRecruitWriteMutation'
+import { trimObject } from '@/utils/trim'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
@@ -50,9 +51,10 @@ const RecruitWriteContent = ({
 
   const onSubmit = (data: FieldValues) => {
     const { attachments, ...rest } = data
+    const trimmedRest = trimObject(rest)
 
     const formData = new FormData()
-    const restEntryArray = Object.entries(rest)
+    const restEntryArray = Object.entries(trimmedRest)
     restEntryArray.forEach((entry) => formData.append(...entry))
     attachments.forEach((file: File) => formData.append('attachments', file))
 

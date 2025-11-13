@@ -36,7 +36,8 @@ const RWTagSelect = ({
     if (!editingRecruit?.tags) {
       return
     }
-    setSelectedTagArray(editingRecruit.tags)
+    const defaultTagArray = editingRecruit.tags.map(({ name }) => name)
+    setSelectedTagArray(defaultTagArray)
   }, [editingRecruit, setSelectedTagArray])
 
   return (

@@ -36,7 +36,7 @@ const routeArray = [
     fallback: <RecruitSkeletone />,
   },
   {
-    path: '/recruit/write/:recruitId',
+    path: '/recruit/write/:recruitUuid',
     element: <RecruitEditPage />,
     fallback: <RecruitWriteSkeleton />,
   },
