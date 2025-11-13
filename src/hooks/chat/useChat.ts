@@ -15,7 +15,6 @@ const chatQueryEndpoint = '/chat'
 const getChatRoomList = async () => {
   // const response = await api.get(`${chatQueryEndpoint}/chatrooms?page=${page}`)
   const response = await api.get(`${chatQueryEndpoint}/chatrooms`)
-
   return response.data
 }
 
