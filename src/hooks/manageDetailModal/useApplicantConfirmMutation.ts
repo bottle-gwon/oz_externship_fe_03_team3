@@ -19,22 +19,16 @@ const updateApplicationCache = (
   const updated = {
     ...previous,
     pages: previous.pages.map((page) => {
-      console.log('Page results:', page.results)
       return {
         ...page,
         results: page.results.map((applicant) => {
           const isMatch = applicant.uuid === newOne.uuid
-          console.log(
-            `Applicant ${applicant.uuid} === ${newOne.uuid}:`,
-            isMatch
-          )
           return isMatch ? newOne : applicant
         }),
       }
     }),
   }
 
-  console.log('Updated cache:', updated)
   return updated
 }
 
