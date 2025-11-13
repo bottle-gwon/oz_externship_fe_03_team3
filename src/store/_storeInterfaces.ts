@@ -39,6 +39,8 @@ export interface StudyHubState {
 
   modalKeyArray: string[] // 모달 위에 모달을 띄울 때 사용해주세요
   setModalKeyArray: (modalKeyArray: string[]) => void
+  appendModalKeyToArray: (modalKey: string) => void
+  removeModalKeyFromArray: (modalKey: string) => void
 
   // recruit
   studyGroupArray: StudyGroup[]

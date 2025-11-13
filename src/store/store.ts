@@ -38,6 +38,16 @@ const useStudyHubStore = create<StudyHubState>()(
 
       modalKeyArray: [],
       setModalKeyArray: (modalKeyArray) => set({ modalKeyArray }),
+      appendModalKeyToArray: (modalKey) => {
+        const modalKeyArray = get().modalKeyArray
+        set({ modalKeyArray: [...modalKeyArray, modalKey] })
+      },
+      removeModalKeyFromArray: (modalKey) => {
+        const modalKeyArray = get().modalKeyArray.filter(
+          (el) => el !== modalKey
+        )
+        set({ modalKeyArray })
+      },
 
       // recruit
       studyGroupArray: [],

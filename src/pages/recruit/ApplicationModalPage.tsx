@@ -15,13 +15,18 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, type SubmitHandler } from 'react-hook-form'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import useStudyHubStore from '@/store/store'
+import useApplyMutation from '@/hooks/apply/useApplyMutation'
+import type { RecruitDetail } from '@/types'
 
-const ApplicationModalPage = () => {
-  const [confirmOn, setConfirmOn] = useState(false)
-  const [failOn, setFailOn] = useState(false)
+const ApplicationModalPage = ({
+  recruitDetail,
+}: {
+  recruitDetail: RecruitDetail
+}) => {
   // NOTE: 외부에서 이 모달을 띄우기 위해 전역 모달 상태를 사용했습니다
-  const modalKey = useStudyHubStore((state) => state.modalKey)
-  const setModalKey = useStudyHubStore((state) => state.setModalKey)
+  const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
+  const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
+  const { applyMutation } = useApplyMutation()
 
   const {
     register,
@@ -42,33 +47,23 @@ const ApplicationModalPage = () => {
   const applicationText = (k: textFieldKey) =>
     errors[k] ? dangerHelperText[k] : helperText[k]
 
-  const onSubmit: SubmitHandler<ApplicationForm> = (_data) => {
-    try {
-      //api연결 시 테스트로그 제거 및 setConfirmOn(true)주석 비활성화
-      // setConfirmOn(true)
-      //테스트 로그
-      // console.log({ _data })
-      // debugger
-      throw new Error('forced-fail')
-    } catch (error) {
-      //api 연결 시 void error 제거
-      void error
-      setFailOn(true)
-    }
+  const onSubmit: SubmitHandler<ApplicationForm> = (data) => {
+    debugger
+    applyMutation.mutate({ body: data, uuid: recruitDetail.uuid })
   }
-  // 추후 상세페이지 제작 후 api 연결
 
   const closeAllAndReset = () => {
     reset(defaultApplicationValues)
-    setConfirmOn(false)
-    setModalKey(null)
-    setFailOn(false)
+    setModalKeyArray([])
   }
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Modal isOn={modalKey === 'apply'} onClose={() => setModalKey(null)}>
+        <Modal
+          isOn={modalKeyArray.includes('apply')}
+          onClose={() => setModalKeyArray([])}
+        >
           <Modal.Header>
             <div className="space-y-1">
               <div className="text-lg font-semibold">스터디 지원서 작성</div>
