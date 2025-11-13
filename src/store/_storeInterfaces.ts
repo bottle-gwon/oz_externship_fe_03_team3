@@ -70,11 +70,17 @@ export interface StudyHubState {
   setChatMessageArray: (chatMessageArray: ChatMessage[]) => void
   addChatMessageArray: (message: ChatMessage) => void
 
+  unReadCounter: number //안읽은 메시지 카운터
+  setUnReadCounter: (newCount: number) => void
+
+  // chat socket
   chatConnected: boolean //연결상태
   setChatConnected: (chatConnected: boolean) => void
 
-  unReadCounter: number //안읽은 메시지 카운터
-  setUnReadCounter: (newCount: number) => void
+  chatSocket: WebSocket | null
+  chatConnect: (url: string) => void
+  chatDisConnect: () => void
+  sendMessage: (message: string) => void
 
   // notification
 }
