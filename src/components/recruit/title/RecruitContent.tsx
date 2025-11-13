@@ -24,8 +24,6 @@ const RecruitContent = () => {
   const { hasNextPage, totalCount } = useRecruitsQuery()
   const requestNextPage = useRecruitStore((state) => state.requestNextPage)
 
-  console.log(totalCount)
-
   return (
     <Container className="py-oz-xxl">
       <Vstack gap="xxl">

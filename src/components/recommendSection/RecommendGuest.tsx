@@ -25,6 +25,12 @@ const emptyStateContent = {
 const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
   const content = emptyStateContent[type]
 
+  const redirectToLogin = () =>
+    (window.location.href = import.meta.env.VITE_LOGIN_PAGE_URL)
+
+  const redirectToSignup = () =>
+    (window.location.href = import.meta.env.VITE_SIGNUP_PAGE_URL)
+
   return (
     <Container width="lg" className="px-oz-xxl">
       <RoundBox
@@ -45,11 +51,15 @@ const RecommendGuest = ({ type }: { type: RecommendPageType }) => {
             {content.description}
           </p>
           <Hstack gap="lg">
-            <Button color="primary">
+            <Button color="primary" onClick={redirectToLogin}>
               <LogIn size={18} />
               로그인하기
             </Button>
-            <Button color="primary" variant="outlined">
+            <Button
+              color="primary"
+              variant="outlined"
+              onClick={redirectToSignup}
+            >
               <UserPlus size={18} />
               회원가입하기
             </Button>
