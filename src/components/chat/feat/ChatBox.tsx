@@ -27,9 +27,11 @@ const SENDER_NICKNAME = '스터디장_김'
 
 const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
   const date = new Date(chat.created_at)
-  const hour = String(date.getUTCHours()).padStart(2, '0')
-  const munite = String(date.getUTCMinutes()).padStart(2, '0')
-
+  const time = date.toLocaleTimeString('ko-KR', {
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  })
   const isOwner = SENDER_NICKNAME === chat?.sender.nickname
   const boxStyle = chatBoxStyle(isOwner)
 
@@ -46,7 +48,7 @@ const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
       >
         <span className={`text-sm ${boxStyle.text}`}>{chat.content}</span>
       </RoundBox>
-      <span className="text-xs text-gray-500">{`${hour}:${munite}`}</span>
+      <span className="text-xs text-gray-500">{time}</span>
     </Vstack>
   )
 }
