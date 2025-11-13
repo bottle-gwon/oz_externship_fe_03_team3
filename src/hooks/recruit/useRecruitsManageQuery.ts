@@ -36,6 +36,7 @@ const useRecruitsManageQuery = () => {
   )
 
   const setCount = useRecruitManageStore((state) => state.setCount)
+  const count = useRecruitManageStore((state) => state.count)
 
   const params = useMemo(
     () => ({
@@ -64,17 +65,17 @@ const useRecruitsManageQuery = () => {
 
     setRecruitManageArray(recruitManageArray)
 
-    const firstCount = data.pages[0]?.count
-    if (firstCount) setCount(firstCount)
-  }, [data, setRecruitManageArray, setCount])
+    if (selectedStatusInText === '전체') {
+      const firstCount = data.pages[0]?.count
+      if (firstCount) setCount(firstCount)
+    }
+  }, [data, setRecruitManageArray, setCount, selectedStatusInText])
 
   useEffect(() => {
     setRequestNextPage(() => {
       void fetchNextPage()
     })
   }, [setRequestNextPage, fetchNextPage])
-
-  const count = data?.pages?.[0]?.count ?? { total: 0, open: 0, closed: 0 }
 
   return {
     isPending,
