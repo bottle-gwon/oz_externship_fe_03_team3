@@ -23,13 +23,13 @@ const ApplicantCard = ({ applicant, onClick }: ApplicantCardProps) => {
     >
       <Hstack gap="lg">
         <Hstack className="items-center">
-          <ProfileImage url={applicant.application.profile_image} size="lg" />
+          <ProfileImage url={applicant.applicant.profile_img_url} size="lg" />
         </Hstack>
         <Hstack gap="none" className="w-full justify-between">
           <Vstack gap="none">
-            <h3 className="font-medium">{applicant.application.nickname}</h3>
+            <h3 className="font-medium">{applicant.applicant.nickname}</h3>
             <p className="text-sm text-gray-600">
-              {applicant.application.gender}
+              {applicant.applicant.gender}
             </p>
           </Vstack>
           <Tag color={statusStyle.style} className="h-6">
@@ -40,7 +40,7 @@ const ApplicantCard = ({ applicant, onClick }: ApplicantCardProps) => {
       <Vstack gap="md" className="pl-16 text-sm text-gray-600">
         <Hstack gap="sm" className="items-center">
           <Calendar size={14} className="text-gray-400" />
-          지원일시: {applicant.created_at}
+          지원일시: {applicant.applied_at}
         </Hstack>
         <Vstack gap="none">
           <p className="text-xs font-medium text-gray-700">가능한 시간대</p>

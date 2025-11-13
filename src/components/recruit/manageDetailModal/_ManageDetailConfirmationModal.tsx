@@ -1,15 +1,22 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import useManageDetailConfirmation from '@/hooks/manageDetailModal/useManageDetailConfirmation'
+import type { Applicant } from '@/types'
 
 interface ManageDetailConfirmationModalProps {
   nickname: string
+  applicant: Applicant
+  recruitmentId: string
 }
 
 const ManageDetailConfirmationModal = ({
   nickname,
+  applicant,
+  recruitmentId,
 }: ManageDetailConfirmationModalProps) => {
-  const { currentConfig, handleClose } = useManageDetailConfirmation(nickname)
+  const { isPending, currentConfig, handleClose } = useManageDetailConfirmation(
+    { nickname, applicant, recruitmentId }
+  )
 
   if (!currentConfig) {
     return null
@@ -25,6 +32,7 @@ const ManageDetailConfirmationModal = ({
             variant="contained"
             color={button.color}
             onClick={button.onClick}
+            status={isPending ? 'pending' : 'enabled'}
           >
             {button.text}
           </Button>

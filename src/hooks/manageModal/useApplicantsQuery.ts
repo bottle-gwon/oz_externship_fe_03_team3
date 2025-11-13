@@ -4,8 +4,8 @@ import type { Applicant, ApplicantResponseData } from '@/types'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
-const useApplicantsQuery = (recruitmentId: number, isOn: boolean) => {
-  const applicantsQueryEndpoint = `/recruitments/${recruitmentId}/applications`
+const useApplicantsQuery = (recruitmentId: string, isOn: boolean) => {
+  const applicantsQueryEndpoint = `/recruitments/${recruitmentId}/applications/list`
 
   const setApplicantArray = useApplicantStore(
     (state) => state.setApplicantArray
@@ -15,7 +15,7 @@ const useApplicantsQuery = (recruitmentId: number, isOn: boolean) => {
   )
 
   const params = {
-    limit: 10,
+    page_size: 10,
   }
 
   const { data, isPending, error, fetchNextPage } = useInfiniteQuery({

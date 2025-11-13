@@ -1,20 +1,20 @@
 import type { ApplicantDetail } from '@/types'
-import img from '../profile-img.jpg'
 
 export const dummyApplicantDetail: ApplicantDetail = {
-  id: 123,
-  nickname: '홍길동',
-  profile_image: img,
-  introduction:
-    '안녕하세요! 프론트엔드 개발을 배우고 있는 홍길동입니다. 현재 React를 활용한 프로젝트를 진행하고 있으며, Unity를 통한 게임 개발에 관심이 생겨 지원했습니다.',
-  motivation:
-    'Unity 게임 개발을 통해 새로운 영역에 도전하고 싶습니다. 특히 3D 게임 개발 경험을 쌓고 향후 게임 개발자로 전향하는 것이 목표입니다.',
-  goal: '3개월 후에는 Unity를 활용한 완성도 높은 3D 게임을 개발할 수 있는 능력을 갖추고 싶습니다.',
-  available_times: ['월 18:00-20:00', '수 19:00-21:00'],
+  id: 1,
+  uuid: 'a1b2c3d4-e29b-41d4-a716-446655440001',
+  applicant: {
+    nickname: 'django_kim',
+    profile_img_url: 'https://cdn.example.com/profiles/django_kim.jpg',
+    gender: 'MALE',
+  },
+  self_introduction:
+    '안녕하세요. Django 백엔드 개발자를 목표로 공부하고 있습니다.',
+  motivation: '실무 프로젝트 경험을 쌓고 싶어서 지원하게 되었습니다.',
+  objective: '3개월 내에 Django REST Framework를 활용한 API 개발 능력 향상',
+  available_time: '평일 저녁 19:00~21:00, 주말 오전 10:00~12:00',
   has_study_experience: true,
-  study_experience_detail:
-    '작년에 React 스터디를 6개월간 진행했으며, 팀 프로젝트로 쇼핑몰 웹사이트를 완성했습니다.',
+  study_experience: 'React 스터디를 통해 팀 프로젝트를 완성했습니다.',
   status: 'PENDING',
-  created_at: '2024-11-25 14:30',
-  gender: '남성',
+  applied_at: '2025-01-15 14:30',
 }

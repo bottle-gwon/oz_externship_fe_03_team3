@@ -29,13 +29,11 @@ const RecruitManageContent = () => {
     (state) => state.requestNextPage
   )
 
-  const userId = 24
-  // 나중에 api 실제로 연결하면 없어져야함.
   const [deletedTitle, setDeletedTitle] = useState('')
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false)
   const [deleteErrorOpen, setDeleteErrorOpen] = useState(false)
 
-  const { count } = useRecruitManage(userId)
+  const { count } = useRecruitManage()
 
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
@@ -91,7 +89,7 @@ const RecruitManageContent = () => {
           {recruitManageArray.map((recruit) => (
             <RecruitCard
               isMine
-              key={recruit.id}
+              key={recruit.uuid}
               recruit={recruit}
               onDeleteSuccess={(t) => {
                 setDeletedTitle(t)

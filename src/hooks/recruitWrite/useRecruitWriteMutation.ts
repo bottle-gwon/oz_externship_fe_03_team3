@@ -13,8 +13,8 @@ const useRecruitWriteMutation = () => {
       // TODO: 아직 해당 모달 추가 못 함
       setModalKey('recruitWriteError')
     },
-    onSuccess: (response: { data: { id: number } }) => {
-      const id = response.data.id
+    onSuccess: (response: { data: { uuid: string } }) => {
+      const id = response.data.uuid
       navigate(`/recruit/${id}`)
     },
   })

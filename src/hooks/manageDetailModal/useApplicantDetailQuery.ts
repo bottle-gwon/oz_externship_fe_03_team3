@@ -2,7 +2,7 @@ import api from '@/api/api'
 import type { ApplicantDetail } from '@/types'
 import { useQuery } from '@tanstack/react-query'
 
-const useApplicantDetailQuery = (applicantId: number) => {
+const useApplicantDetailQuery = (applicantId: string) => {
   const applicantsQueryEndpoint = `/recruitments/applications/${applicantId}`
 
   const { data, isPending, error } = useQuery({

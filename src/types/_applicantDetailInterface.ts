@@ -2,15 +2,18 @@ import type { ApplicantStatus } from './_applicantTagStyleInterface'
 
 export interface ApplicantDetail {
   id: number
-  nickname: string
-  profile_image: string
-  introduction: string
+  uuid: string
+  applicant: {
+    nickname: string
+    profile_img_url: string
+    gender: string
+  }
+  self_introduction: string
   motivation: string
-  goal: string
-  available_times: string[]
+  objective: string
+  available_time: string
   has_study_experience: boolean
-  study_experience_detail: string
+  study_experience: string
   status: ApplicantStatus
-  created_at: string
-  gender: string
+  applied_at: string
 }
