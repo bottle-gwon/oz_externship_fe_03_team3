@@ -72,6 +72,8 @@ export interface StudyHubState {
   addChatMessageArray: (message: ChatMessage[]) => void
   page: number
   setPage: (page: number) => void
+  chatInit: boolean
+  setChatInit: (chatInit: boolean) => void
 
   unReadCounter: number //안읽은 메시지 카운터
   setUnReadCounter: (newCount: number) => void
