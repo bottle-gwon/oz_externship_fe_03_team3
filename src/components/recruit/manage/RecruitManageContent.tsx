@@ -90,12 +90,12 @@ const RecruitManageContent = () => {
               isMine
               key={recruit.uuid}
               recruit={recruit}
-              onDeleteSuccess={(t) => {
-                setDeletedTitle(t)
+              onDeleteSuccess={(title) => {
+                setDeletedTitle(title)
                 setDeleteSuccessOpen(true)
               }}
-              onDeleteError={(t) => {
-                setDeletedTitle(t)
+              onDeleteError={(title) => {
+                setDeletedTitle(title)
                 setDeleteErrorOpen(true)
               }}
             />

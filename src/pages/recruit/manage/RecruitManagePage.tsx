@@ -6,7 +6,7 @@ import RecruitContent from '@/components/recruit/title/RecruitContent'
 
 const RecruitManagePage = () => {
   const userId = useStudyHubStore((state) => state.me?.id ?? 0)
-  const { isPending, error } = useRecruitManage(userId)
+  const { isPending, error } = useRecruitManage()
 
   if (!userId) {
     return <RecruitContent />
