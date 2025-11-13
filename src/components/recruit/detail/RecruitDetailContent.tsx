@@ -90,7 +90,7 @@ const RecruitDetailContent = ({
 
               <Hstack>
                 {recruitDetail.tags.map((tag) => (
-                  <Tag key={tag}>{tag}</Tag>
+                  <Tag key={tag.id}>{tag.name}</Tag>
                 ))}
               </Hstack>
 
