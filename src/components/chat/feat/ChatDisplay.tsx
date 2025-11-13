@@ -2,7 +2,7 @@ import { Vstack } from '@/components/commonInGeneral/layout'
 import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef } from 'react'
 import useStudyHubStore from '@/store/store'
 import { useVirtualizer } from '@tanstack/react-virtual'
 
@@ -28,8 +28,6 @@ const ChatDisplay = ({
   const chatInit = useStudyHubStore((state) => state.chatInit) // 초기 스크롤 세팅할 플래그
   const setChatInit = useStudyHubStore((state) => state.setChatInit)
 
-  console.log(chatMessageArray, '다시')
-
   const previndex = useRef(0)
 
   const handleScroll = () => {
@@ -41,6 +39,7 @@ const ChatDisplay = ({
 
     if (scrollBottom > 10) {
       setChatScrollBottom(false)
+      // setChatScrollBottom(true)
     } else {
       setChatScrollBottom(true)
     }
@@ -60,7 +59,6 @@ const ChatDisplay = ({
     if (!containerRef) {
       return
     }
-    console.log(chatInit)
     if (containerRef.current && chatInit && !isPending) {
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
