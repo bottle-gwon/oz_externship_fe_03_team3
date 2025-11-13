@@ -14,7 +14,7 @@ type ChatUIState =
 // NOTE:     - 한 번만 내려줘서 해결되면 전역 상태로 등록하지 않습니다.
 
 import type { Me, StudyGroup, Recruit, RecruitDetail } from '@/types'
-import type { ChatMessage, ChatRoomData } from '@/types/_chat'
+import type { ChatMessage, ChatRoomData, ChatRoomOnline } from '@/types/_chat'
 
 export interface StudyHubState {
   fruitArray: string[] // 타입 정의 예시 1
@@ -81,6 +81,9 @@ export interface StudyHubState {
   // chat socket
   chatConnected: boolean //연결상태
   setChatConnected: (chatConnected: boolean) => void
+
+  chatOnline: ChatRoomOnline | null //온라인 유저
+  setChatOnline: (chatOnline: ChatRoomOnline) => void
 
   chatSocket: WebSocket | null
   chatConnect: (url: string) => void

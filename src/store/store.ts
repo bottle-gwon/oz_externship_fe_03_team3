@@ -96,6 +96,8 @@ const useStudyHubStore = create<StudyHubState>()(
       // chat socket
       chatSocket: null,
       chatConnected: false,
+      chatOnline: null, //온라인 유저
+      setChatOnline: (chatOnline) => set({ chatOnline }),
       setChatConnected: (chatConnected) => set({ chatConnected }),
 
       chatConnect: (url) => {
@@ -110,7 +112,12 @@ const useStudyHubStore = create<StudyHubState>()(
         ws.addEventListener('message', (event) => {
           console.log('메시지 수신:', event.data)
           if (event.data !== '채팅 연결완') {
-            get().addChatMessage(JSON.parse(event.data))
+            const response = JSON.parse(event.data)
+            if (response?.type === 'chat.message') {
+              get().addChatMessage(response)
+            } else if (response?.type === 'online.users') {
+              get().setChatOnline(response)
+            }
           }
         })
 

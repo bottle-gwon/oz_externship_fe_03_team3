@@ -1,3 +1,5 @@
+export type MessageType = 'chat.message' | 'online.users'
+
 // 메시지 내역 조회
 export interface ChatMessageListRequest {
   study_group_id: string //스터디 그룹id
@@ -10,7 +12,7 @@ export interface ChatMessageSender {
   nickname: string
 }
 export interface ChatMessage {
-  type?: 'chat.message'
+  type?: MessageType
   id: number
   content: string
   sender: ChatMessageSender
@@ -81,4 +83,17 @@ export interface ChatRoomApiResponse {
 export interface ChatRoomPageResponse {
   pageParams: number[]
   pages: ChatRoomApiResponse[] | null
+}
+
+// 온라인 유저
+export interface ChatUser {
+  id: number
+  nickname: string
+  name: string
+}
+
+export interface ChatRoomOnline {
+  type: MessageType
+  count: number
+  users: ChatUser[]
 }

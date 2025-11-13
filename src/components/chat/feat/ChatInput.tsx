@@ -24,7 +24,8 @@ const chatInputStatus = (isPending: boolean) => {
 }
 
 // 테스트 임시용
-const URL = import.meta.env.VITE_API_BASE_URL
+// const URL = import.meta.env.VITE_API_BASE_URL
+const URL = import.meta.env.VITE_SOCEKT_BASE_URL
 
 const ChatInput = ({ isPending }: ChatInput) => {
   const LoadingStatus = chatInputStatus(isPending)
@@ -33,12 +34,15 @@ const ChatInput = ({ isPending }: ChatInput) => {
   const chatConnect = useStudyHubStore((state) => state.chatConnect)
   const chatDisConnect = useStudyHubStore((state) => state.chatDisConnect)
   const sendMessage = useStudyHubStore((state) => state.sendMessage)
+  // const accessToken = useStudyHubStore((state) => state.accessToken)
 
   const [inputValue, setInputValue] = useState<string>('')
 
   useEffect(() => {
     if (chatState.status === 'chatRoom')
-      chatConnect(`${URL}/ws/study-groups/${chatState.id}/chat`)
+      chatConnect(`${URL}/ws/study-groups/${chatState.id}/chat`) //테스트용
+    // chatConnect(`${URL}/${chatState.id}/?tokken=${accessToken}`)  //실제 api 연결
+
     return () => {
       chatDisConnect()
     }

@@ -13,16 +13,16 @@ import { useEffect, useRef } from 'react'
 import type { ChatMessage } from '@/types/_chat'
 
 //  Todo 관련 API 업데이트 적용되면 바로 변경 할것!
-const TestUserStatus = {
-  result: [
-    { name: '홍길동', id: 31, isConnected: true, isLeader: true },
-    { name: '김길동', id: 32, isConnected: true, isLeader: false },
-    { name: '정길동', id: 33, isConnected: false, isLeader: false },
-    { name: '장길동', id: 34, isConnected: true, isLeader: false },
-    { name: '주길동', id: 35, isConnected: false, isLeader: false },
-    { name: '이길동', id: 36, isConnected: true, isLeader: false },
-  ],
-}
+// const TestUserStatus = {
+//   result: [
+//     { name: '홍길동', id: 31, isConnected: true, isLeader: true },
+//     { name: '김길동', id: 32, isConnected: true, isLeader: false },
+//     { name: '정길동', id: 33, isConnected: false, isLeader: false },
+//     { name: '장길동', id: 34, isConnected: true, isLeader: false },
+//     { name: '주길동', id: 35, isConnected: false, isLeader: false },
+//     { name: '이길동', id: 36, isConnected: true, isLeader: false },
+//   ],
+// }
 
 //채팅 더미
 // const TestChat = {
@@ -80,18 +80,16 @@ const TestUserStatus = {
 //   ],
 // }
 
-const OnlineUser = ({
-  isPending,
-  online,
-}: {
-  isPending: boolean
-  online: number
-}) => {
-  if (isPending) {
+const OnlineUser = ({ isPending }: { isPending: boolean }) => {
+  const chatOnline = useStudyHubStore((state) => state.chatOnline)
+
+  if (isPending && chatOnline !== null) {
     return <Skeleton widthInPixel={162} heightInPixel={14} />
   }
 
-  return <p className="text-xs text-gray-600">{`${online}명 온라인`}</p>
+  return (
+    <p className="text-xs text-gray-600">{`${chatOnline?.count}명 온라인`}</p>
+  )
 }
 
 const ChattingRoom = () => {
@@ -105,6 +103,7 @@ const ChattingRoom = () => {
 
   const page = useStudyHubStore((state) => state.page)
   const setPage = useStudyHubStore((state) => state.setPage)
+  const chatOnline = useStudyHubStore((state) => state.chatOnline)
 
   // const [isPending, setIsPending] = useState(true) //임시 로딩
   // const [isFetchingNextPage, setIsFetchingNextPage] = useState(false)
@@ -222,15 +221,15 @@ const ChattingRoom = () => {
             <p className="text-base font-semibold text-gray-900">
               {chatState.title}
             </p>
-            <OnlineUser isPending={isPending} online={0} />
+            <OnlineUser isPending={isPending} />
           </Vstack>
         </Hstack>
       </ChattingLayout.Header>
 
       {/* 채팅방 사용자들 스테이터스 */}
-      <ChattingLayout.UserStatus isPending={isPending}>
+      <ChattingLayout.UserStatus isPending={isPending && !chatOnline}>
         {isPending && <ChattingStatusSkeleton />}
-        {TestUserStatus.result.map((el) => (
+        {chatOnline?.users.map((el) => (
           <ChatUserStatus key={el.id} status={el} />
         ))}
       </ChattingLayout.UserStatus>
