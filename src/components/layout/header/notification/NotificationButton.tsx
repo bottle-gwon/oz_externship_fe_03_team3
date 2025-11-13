@@ -22,6 +22,7 @@ const NotificationButton = () => {
 
   const isShowingSkeleton =
     isPending && notificationArray.length === 0 && selectedTab === 'all'
+  const isShowingError = error && notificationArray.length === 0
 
   const unreadCount = notificationCounts?.unread ?? 0
 
@@ -45,7 +46,7 @@ const NotificationButton = () => {
           <Skeleton heightInPixel={475} widthInPixel={384} />
         )}
         {/* TODO: 여기 에러 컴포넌트도 작게 만들어야 함 */}
-        {error && <RoundBox>알 수 없는 에러가 발생했습니다</RoundBox>}
+        {isShowingError && <RoundBox>알 수 없는 에러가 발생했습니다</RoundBox>}
         <Suspense
           fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
         >
