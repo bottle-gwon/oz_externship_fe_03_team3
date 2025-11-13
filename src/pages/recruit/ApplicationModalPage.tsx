@@ -50,7 +50,6 @@ const ApplicationModalPage = ({
     errors[k] ? dangerHelperText[k] : helperText[k]
 
   const onSubmit: SubmitHandler<ApplicationForm> = (data) => {
-    debugger
     applyMutation.mutate({ body: data, uuid: recruitDetail.uuid })
   }
 
