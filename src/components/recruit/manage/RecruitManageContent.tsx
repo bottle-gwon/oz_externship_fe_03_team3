@@ -16,6 +16,8 @@ import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
 import RecruitManageStatusSelect from './_RecruitManageStatusSelect'
 import { useRef, useState } from 'react'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal' // ★
+import type { Recruit } from '@/types'
+import ManageModal from '../manageModal/ManageModal'
 
 const RecruitManageContent = () => {
   const navigate = useNavigate()
@@ -32,6 +34,10 @@ const RecruitManageContent = () => {
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false)
   const [deleteErrorOpen, setDeleteErrorOpen] = useState(false)
 
+  // ★ 추가: ManageModal 관련 상태
+  const [manageModalOpen, setManageModalOpen] = useState(false)
+  const [selectedRecruit, setSelectedRecruit] = useState<Recruit | null>(null)
+
   const count = useRecruitManageStore((state) => state.count)
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
@@ -46,6 +52,12 @@ const RecruitManageContent = () => {
 
   const loaderRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(loaderRef, requestNextPage)
+
+  // ★ 추가: 지원내역 클릭 핸들러
+  const handleManageClick = (recruit: Recruit) => {
+    setSelectedRecruit(recruit)
+    setManageModalOpen(true)
+  }
 
   return (
     <Container isPadded>
@@ -94,6 +106,7 @@ const RecruitManageContent = () => {
                 setDeletedTitle(title)
                 setDeleteSuccessOpen(true)
               }}
+              onManageClick={handleManageClick} // ★ 추가
               onDeleteError={(title) => {
                 setDeletedTitle(title)
                 setDeleteErrorOpen(true)
@@ -103,6 +116,14 @@ const RecruitManageContent = () => {
 
           <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
+        {/* ★ 추가: 단일 ManageModal */}
+        {selectedRecruit && (
+          <ManageModal
+            isOn={manageModalOpen}
+            onClose={setManageModalOpen}
+            recruit={selectedRecruit}
+          />
+        )}
 
         <ConfirmationModal
           isOn={deleteSuccessOpen}
