@@ -47,11 +47,13 @@ const NotificationButton = () => {
           <Skeleton heightInPixel={475} widthInPixel={384} />
         )}
         {isShowingError && <NotificationErrorContent />}
-        <Suspense
-          fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
-        >
-          <NotificationBox />
-        </Suspense>
+        {!isShowingSkeleton && !isShowingError && (
+          <Suspense
+            fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
+          >
+            <NotificationBox />
+          </Suspense>
+        )}
       </Dropdown.Content>
     </Dropdown>
   )

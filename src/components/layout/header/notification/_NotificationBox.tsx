@@ -27,10 +27,7 @@ const NotificationBox = () => {
   })
 
   return (
-    <RoundBox
-      padding="none"
-      className="overflow-hidden shadow-[0_25px_50px_-12px_rgb(0_0_0_/_0.25)]"
-    >
+    <RoundBox padding="none" className="shadow-oz-lg overflow-hidden">
       <Vstack className="h-[475px] w-[384px] gap-0 overflow-hidden">
         <Hstack className="p-oz-lg items-center justify-between border-b border-b-gray-200">
           <h2 className="text-lg font-semibold">알림</h2>
