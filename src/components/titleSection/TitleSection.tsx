@@ -33,7 +33,7 @@ const title: Record<string, TitleContentType> = {
               label: '공고 관리',
               color: 'primary',
               variant: 'outlined',
-              url: '/recruit/manager',
+              url: '/recruit/manage',
             },
             {
               label: '+ 공고 작성하기',
