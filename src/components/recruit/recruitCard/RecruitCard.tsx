@@ -1,12 +1,4 @@
-import {
-  Bookmark,
-  Calendar,
-  Eye,
-  FileText,
-  Pencil,
-  Trash2,
-  Users,
-} from 'lucide-react'
+import { Bookmark, Eye, Pencil, Trash2 } from 'lucide-react'
 import RoundBox from '../../commonInGeneral/roundBox/RoundBox'
 import type { Recruit } from '@/types'
 import Tag from '@/components/commonInProject/tag/Tag'
@@ -16,6 +8,10 @@ import { useNavigate } from 'react-router'
 import { useState } from 'react'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import useManageDeleteMutation from '@/hooks/manage/useManageDeleteMutation'
+import Img from '@/components/commonInProject/img/Img'
+import UsersThreeGray from '@/assets/users-three-gray.svg'
+import calendar from '@/assets/calender.svg'
+import scrollTextWhite from '@/assets/scroll-text-white.svg'
 
 export type RecruitCardProps = {
   recruit: Recruit
@@ -98,7 +94,7 @@ const RecruitCard = ({
           if (e.key === 'Enter') goDetail()
         }}
       >
-        <Hstack padding="xs">
+        <Hstack padding="md">
           <RoundBox
             isBordered={false}
             borderStyle="none"
@@ -107,7 +103,7 @@ const RecruitCard = ({
             className={`${imageClassName} flex-none overflow-hidden bg-gray-200`}
             aria-label="공고 이미지"
           >
-            <img
+            <Img
               src={thumbnail_img_url}
               alt="imgBox"
               className={imageClassName}
@@ -183,8 +179,7 @@ const RecruitCard = ({
                 aria-label="모집인원수"
                 className="items-center"
               >
-                <Users className="size-4" />
-                {/* 추후 svg 아이콘으로 추가 */}
+                <img src={UsersThreeGray} className="size-4 text-gray-400" />
                 모집인원 : {expected_headcount ?? ''}명
               </Hstack>
 
@@ -194,8 +189,7 @@ const RecruitCard = ({
                 aria-label="마감일"
                 className="items-center"
               >
-                <Calendar className="size-4" />
-                {/* 추후 svg 아이콘으로 추가 */}
+                <img src={calendar} className="size-4" />
                 마감일 :{' '}
                 {(close_at ?? '').slice(0, 10).replace(/-/g, '. ') + '.'}
               </Hstack>
@@ -250,7 +244,7 @@ const RecruitCard = ({
                       onManageClick?.(recruit)
                     }}
                   >
-                    <FileText className="size-4" />
+                    <img src={scrollTextWhite} className="size-4" />
                     {/* 추후 svg 아이콘으로 추가 */}
                     <span>지원내역</span>
                   </Button>
