@@ -6,3 +6,7 @@ export const RECRUIT_WRITE_CONFIG = {
   MAX_ATTACHMENT: 3,
   MAX_ATTACHMENT_SIZE: 5_000_000,
 } as const
+
+export const CHAT_CONFIG = {
+  MAX_CHAT_MESSAGE: 300,
+} as const
