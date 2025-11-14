@@ -14,7 +14,6 @@ import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
 import { useNavigate } from 'react-router'
 import { useState } from 'react'
-import ManageModal from '../manageModal/ManageModal'
 import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationModal/ConfirmationModal'
 import useManageDeleteMutation from '@/hooks/manage/useManageDeleteMutation'
 
