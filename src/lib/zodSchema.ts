@@ -61,7 +61,7 @@ const recruitWriteCommonObject = {
   expected_headcount: z
     .number('예상 모집 인원을 선택해주세요')
     .min(1, '예상 모집 인원을 선택해주세요'),
-  study_group: z.coerce
+  study_group: z
     .string('스터디 그룹을 선택해주세요')
     .min(1, '스터디 그룹을 선택해주세요'),
   estimated_fee: z.preprocess(
