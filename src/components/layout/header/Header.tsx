@@ -39,15 +39,18 @@ const loginForDev = async () => {
 const logoutForDev = async () => {
   const state = useStudyHubStore.getState()
   const accessToken = state.accessToken
-  await subApi.post(
-    `${import.meta.env.VITE_ORIGINAL_BASE_URL_FOR_DEV}/auth/logout`,
-    undefined,
-    {
-      headers: { Authorization: `Bearer ${accessToken}` },
-    }
-  )
-  state.setMe(null)
-  state.setAccessToken(null)
+  try {
+    await subApi.post(
+      `${import.meta.env.VITE_ORIGINAL_BASE_URL_FOR_DEV}/auth/logout`,
+      undefined,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    )
+  } finally {
+    state.setMe(null)
+    state.setAccessToken(null)
+  }
 }
 
 // TODO: 리프레시 토큰 캐시로 받고 로그인 api 연결하면 삭제해야!

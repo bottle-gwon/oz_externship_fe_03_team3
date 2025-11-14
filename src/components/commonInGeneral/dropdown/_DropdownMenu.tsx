@@ -21,7 +21,7 @@ const DropdownMenu = ({
 
   return (
     <DropdownContent>
-      <RoundBox padding="none" className="w-[192px]">
+      <RoundBox padding="none" className="shadow-oz-sm w-[192px]">
         {children}
       </RoundBox>
     </DropdownContent>

@@ -10,11 +10,14 @@ import NotificationButton from './notification/NotificationButton'
 const logout = async () => {
   const state = useStudyHubStore.getState()
   const accessToken = state.accessToken
-  await subApi.post('/auth/logout', undefined, {
-    headers: { Authorization: `Bearer ${accessToken}` },
-  })
-  state.setMe(null)
-  state.setAccessToken(null)
+  try {
+    await subApi.post('/auth/logout', undefined, {
+      headers: { Authorization: `Bearer ${accessToken}` },
+    })
+  } finally {
+    state.setMe(null)
+    state.setAccessToken(null)
+  }
 }
 
 const ProfileButton = ({ me }: { me: Me }) => {
