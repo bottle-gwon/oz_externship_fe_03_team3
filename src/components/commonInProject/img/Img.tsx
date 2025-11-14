@@ -1,7 +1,7 @@
 import type { ImgProps } from '@/types'
+import recruitNoImage from '@/assets/no-image.png'
 
-const placeholder =
-  'https://cdn.shortpixel.ai/spai/q_lossy+ret_img+to_auto/linuxiac.com/wp-content/uploads/2020/06/archlinux-1024x768.jpg'
+const placeholder = recruitNoImage
 
 interface WithImgProps {
   isWide?: boolean

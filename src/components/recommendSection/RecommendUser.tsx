@@ -23,7 +23,7 @@ const RecommendUser = <T extends RecommendPageType>({
   const me = useStudyHubStore((state) => state.me)
   const userName = me?.nickname
   const title =
-    type === 'recruit' ? ` 님을 위한 맟춤 스터디 공고` : ` 님을 위한 추천 강의`
+    type === 'recruit' ? ` 님을 위한 맞춤 스터디 공고` : ` 님을 위한 추천 강의`
 
   return (
     <Container width="lg">
