@@ -5,7 +5,7 @@ import type { LucideIcon } from 'lucide-react'
 export type SummaryCardProps = {
   value: number
   label: string
-  Icon: LucideIcon
+  Icon: LucideIcon | string
   color?: 'mono-dim' | 'success' | 'danger'
 }
 
@@ -14,7 +14,11 @@ const SummaryCard = ({ value, label, Icon, color }: SummaryCardProps) => {
     <RoundBox padding="lg" className="h-20 w-62">
       <Hstack gap="sm" padding="xs" className="items-center">
         <RoundBox color={color} borderStyle="none" className="h-10 w-10">
-          <Icon className="size-4" />
+          {typeof Icon === 'string' ? (
+            <img src={Icon} className="size-4" />
+          ) : (
+            <Icon className="size-4" />
+          )}
         </RoundBox>
         <Vstack gap="xs" padding="xs" className="h-11 justify-center">
           <span className="flex items-center truncate text-xl font-bold text-gray-900">
