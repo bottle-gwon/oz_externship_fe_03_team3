@@ -9,6 +9,8 @@ import useNotificationMutation from '@/hooks/notification/useNotificationsMutati
 import useNotificationStore from '@/store/notification/notificationStore'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useRef } from 'react'
+import ErrorDisplay from '@/components/commonInGeneral/error/ErrorDisplay'
+import UnknwonErrorContent from '@/components/commonInGeneral/error/UnknownErrorContent'
 
 const NotificationBox = () => {
   const rootRef = useRef<HTMLDivElement | null>(null)
@@ -17,7 +19,7 @@ const NotificationBox = () => {
     (state) => state.notificationArray
   )
 
-  const { hasNextPage, fetchNextPage } = useNotificationsQuery()
+  const { error, hasNextPage, fetchNextPage } = useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
 
   useOneWayInfinityScroll(targetRef, fetchNextPage, {
@@ -50,6 +52,12 @@ const NotificationBox = () => {
           className="border-b border-b-gray-200"
           ref={rootRef}
         >
+          {error && <UnknwonErrorContent isSmall />}
+          {notificationArray.length === 0 && (
+            <ErrorDisplay isSmall>
+              <ErrorDisplay.Code>Empty</ErrorDisplay.Code>
+            </ErrorDisplay>
+          )}
           {notificationArray.map((notification) => (
             <NotificationCard
               key={notification.id}
