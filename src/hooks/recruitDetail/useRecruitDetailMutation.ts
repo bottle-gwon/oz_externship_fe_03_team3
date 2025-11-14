@@ -6,7 +6,8 @@ const useRecruitDetailMutation = (recruitDetail: RecruitDetail) => {
   const queryEndpoint = `/recruitments/${recruitDetail.uuid}/`
   const toggleBookmarkMutation = useSimpleMutation({
     queryEndpoint: queryEndpoint,
-    mutationFnWithData: () => api.post(`${queryEndpoint}bookmark`),
+    mutationFnWithData: () =>
+      api.post(`/recruitments/bookmarks/${recruitDetail.uuid}`),
     updateCacheForUi: (_previous: RecruitDetail, newOne: RecruitDetail) => {
       return newOne
     },
