@@ -7,6 +7,7 @@ import {
   // type ChatRoomPageResponse,
   type ChatMessageListRequest,
 } from '@/types/_chat'
+import { CHAT_CONFIG } from '@/utils/constants'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
@@ -92,17 +93,14 @@ export const useChatRoomMessage = () => {
     queryKey: ['message', get_study_group_id],
     queryFn: ({ pageParam }) => getMessageList(pageParam),
     getNextPageParam: (lastPage, _, lastPageParam) => {
-      if (lastPage.data && lastPageParam?.size && lastPageParam?.page) {
+      if (lastPage.next && lastPageParam?.size && lastPageParam?.page) {
         const current = lastPageParam.page
-        const totalPage = Math.ceil(
-          lastPage.data.pagination.total_count / lastPageParam.size
-        )
-
+        const totalPage = Math.ceil(lastPage.count / lastPageParam.size)
         if (current < totalPage) {
           return {
             study_group_id: lastPageParam?.study_group_id,
             page: current + 1,
-            size: 20,
+            size: CHAT_CONFIG.MAX_CHAT_MESSAGE,
           }
         } else {
           return null
@@ -111,7 +109,11 @@ export const useChatRoomMessage = () => {
         return null
       }
     },
-    initialPageParam: { study_group_id: get_study_group_id, page: 1, size: 20 },
+    initialPageParam: {
+      study_group_id: get_study_group_id,
+      page: 1,
+      size: CHAT_CONFIG.MAX_CHAT_MESSAGE,
+    },
 
     enabled: get_study_group_id !== '-1',
   })
