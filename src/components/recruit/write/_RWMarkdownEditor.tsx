@@ -23,7 +23,7 @@ const postImages = async (fileArray: File[]) => {
     formData.append('files', file) // file must be actual File object
   })
   try {
-    const response = await api.post('/recruitments/presigned-url', formData)
+    const response = await api.post('/recruitments/presigned_url', formData)
 
     const urlArray: string[] = response.data.data.map(
       (data: { file_url: string }) => data.file_url
