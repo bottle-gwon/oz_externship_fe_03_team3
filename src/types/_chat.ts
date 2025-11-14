@@ -19,16 +19,16 @@ export interface ChatMessage {
   is_read?: boolean
   created_at: string
 }
-export interface ChatMessageApiResponseData {
-  messages: ChatMessage[]
-  pagination: ChatRoomPagination
-}
+// export interface ChatMessageApiResponseData {
+//   messages: ChatMessage[]
+//   pagination: ChatRoomPagination
+// }
 
 export interface ChatMessageApiResponse {
-  status: string
-  code: string
-  message: string
-  data: ChatMessageApiResponseData | null
+  count: number
+  next: string
+  previous: string
+  results: ChatMessage[] | null
 }
 
 export interface ChatMessagePageResponse {

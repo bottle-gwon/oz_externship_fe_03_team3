@@ -169,9 +169,9 @@ const ChattingRoom = () => {
   // 메시지 정렬, 메시지 배열 초기화
   useEffect(() => {
     if (data?.pages && !isFetchingNextPage) {
-      const messageArray =
-        data?.pages[data.pageParams.length - 1]?.data?.messages
-      // const messageArray = data?.pages[data.pageParams.length - 1]?.results
+      // const messageArray =
+      // data?.pages[data.pageParams.length - 1]?.data?.messages
+      const messageArray = data?.pages[data.pageParams.length - 1]?.results
 
       if (!messageArray) {
         return
@@ -184,7 +184,7 @@ const ChattingRoom = () => {
           setChatMessageArray(sortMessaged)
         } else {
           const allMessage =
-            data?.pages.flatMap((res) => res.data?.messages || []) || []
+            data?.pages.flatMap((res) => res.results || []) || []
           const sortMessaged = sortMessage(allMessage)
           setChatMessageArray(sortMessaged)
         }
