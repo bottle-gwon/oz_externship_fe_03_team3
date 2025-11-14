@@ -22,12 +22,22 @@ import RDBookmarkButton from './_RDBookmarkButton'
 import RDShareButton from './_RDShareButton'
 import RDConfirmClipboardModalMany from './_RDConfirmClipboardModal'
 import ManageModal from '../manageModal/ManageModal'
+import LoginRequiredModal from '@/components/commonInProject/LoginRequiredModal/LoginRequiredModal'
 
 const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const appendModalKeyToArray = useStudyHubStore(
     (state) => state.appendModalKeyToArray
   )
+  const accessToken = useStudyHubStore((state) => state.accessToken)
+
+  const handleApplyClick = () => {
+    if (!accessToken) {
+      setModalKey('loginRequired')
+      return
+    }
+    appendModalKeyToArray('apply')
+  }
 
   if (isMine) {
     return (
@@ -48,7 +58,7 @@ const RDConditionalButton = ({ isMine }: { isMine: boolean }) => {
       color="primary"
       variant="contained"
       size="lg"
-      onClick={() => appendModalKeyToArray('apply')}
+      onClick={handleApplyClick}
     >
       <Send size={16} />
       지원하기
@@ -141,6 +151,8 @@ const RecruitDetailContent = ({
         recruit={simplifiedRecruit}
       />
       <RDConfirmClipboardModalMany />
+
+      <LoginRequiredModal />
     </>
   )
 }

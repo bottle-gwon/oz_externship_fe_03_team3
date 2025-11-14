@@ -71,8 +71,11 @@ api.interceptors.response.use(
       // 2) 실패했던 요청 재시도
       return api(error.config)
     } catch {
-      // NOTE: 재발급 실패하면 비로그인 상태 화면 보여줌
+      const state = useStudyHubStore.getState()
+      state.setAccessToken(null)
+      state.setMe(null)
 
+      // NOTE: 재발급 실패하면 비로그인 상태 화면 보여줌
       return Promise.reject(error)
     }
   }

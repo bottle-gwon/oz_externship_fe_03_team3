@@ -14,6 +14,7 @@ const RDBookmarkButton = ({
   isWide?: boolean
 }) => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
+  const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const { toggleBookmarkMutation } = useRecruitDetailMutation(recruitDetail)
   const { debouncedBoolValue, realTimeBoolValue, toggleBoolValue } =
     useDebounceToggle(recruitDetail.is_bookmarked)
@@ -33,8 +34,12 @@ const RDBookmarkButton = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedBoolValue])
 
-  if (!accessToken) {
-    return null
+  const handleClick = () => {
+    if (!accessToken) {
+      setModalKey('loginRequired')
+      return
+    }
+    toggleBoolValue()
   }
 
   return (
@@ -43,7 +48,7 @@ const RDBookmarkButton = ({
       size="lg"
       shape={isWide ? 'rectangle' : 'square'}
       color={realTimeBoolValue ? 'primary' : 'mono'}
-      onClick={toggleBoolValue}
+      onClick={handleClick}
     >
       <Bookmark size={isWide ? 16 : undefined} />
       {isWide && '북마크'}
