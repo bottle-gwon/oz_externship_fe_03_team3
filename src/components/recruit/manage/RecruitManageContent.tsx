@@ -10,7 +10,6 @@ import SubHeaderButtonSection from '@/components/commonInProject/SubHeader/_SubH
 import { useNavigate } from 'react-router'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
-import useRecruitManage from '@/hooks/recruit/useRecruitsManageQuery'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 import RecruitManageOrderingSelect from './_RecruitManageOrderingSelect'
@@ -29,17 +28,15 @@ const RecruitManageContent = () => {
     (state) => state.requestNextPage
   )
 
-  const userId = 24
-  // 나중에 api 실제로 연결하면 없어져야함.
   const [deletedTitle, setDeletedTitle] = useState('')
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false)
   const [deleteErrorOpen, setDeleteErrorOpen] = useState(false)
 
-  const { count } = useRecruitManage(userId)
-
+  const count = useRecruitManageStore((state) => state.count)
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
   )
+
   const listCount =
     selectedStatusInText === '전체'
       ? (count.total ?? 0)
@@ -91,14 +88,14 @@ const RecruitManageContent = () => {
           {recruitManageArray.map((recruit) => (
             <RecruitCard
               isMine
-              key={recruit.id}
+              key={recruit.uuid}
               recruit={recruit}
-              onDeleteSuccess={(t) => {
-                setDeletedTitle(t)
+              onDeleteSuccess={(title) => {
+                setDeletedTitle(title)
                 setDeleteSuccessOpen(true)
               }}
-              onDeleteError={(t) => {
-                setDeletedTitle(t)
+              onDeleteError={(title) => {
+                setDeletedTitle(title)
                 setDeleteErrorOpen(true)
               }}
             />
@@ -107,7 +104,6 @@ const RecruitManageContent = () => {
           <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
 
-        {/* 페이지 레벨 모달 */}
         <ConfirmationModal
           isOn={deleteSuccessOpen}
           onClose={() => setDeleteSuccessOpen(false)}

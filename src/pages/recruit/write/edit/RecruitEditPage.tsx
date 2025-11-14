@@ -1,14 +1,19 @@
+import NotFoundContent from '@/components/commonInGeneral/error/NotFoundContent'
 import RecruitWriteContent from '@/components/recruit/write/RecruitWriteContent'
+import RecruitWriteSkeleton from '@/components/recruit/write/RecruitWriteSkeleton'
 import useRecruitDetailQuery from '@/hooks/recruitDetail/useRecruitDetailQuery'
 import useStudyHubStore from '@/store/store'
 import { useEffect } from 'react'
-import { useParams } from 'react-router'
+import { useNavigate, useParams } from 'react-router'
 
 const RecruitEditPage = () => {
-  const recruitId = Number(useParams().recruitId)
+  const recruitUuid = useParams().uuid ?? ''
+  const accessToken = useStudyHubStore((state) => state.accessToken)
   const setEditingRecruit = useStudyHubStore((state) => state.setEditingRecruit)
 
-  const { data, error, isPending } = useRecruitDetailQuery(recruitId)
+  const navigate = useNavigate()
+
+  const { data, error, isPending } = useRecruitDetailQuery(recruitUuid)
   useEffect(() => {
     if (!data) {
       return
@@ -18,14 +23,23 @@ const RecruitEditPage = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])
 
+  useEffect(() => {
+    if (accessToken) {
+      return
+    }
+    navigate('/recruit', { replace: true })
+  }, [accessToken, navigate])
+
+  if (!accessToken) {
+    return null
+  }
+
   if (isPending) {
-    // TODO: 스켈레톤을 만들어야 합니다
-    return <p>여기에 스켈레톤을 넣어야 합니다</p>
+    return <RecruitWriteSkeleton />
   }
 
   if (error) {
-    // TODO: 에러 페이지를 만들어야 합니다
-    return <p>여기에 에러 페이지를 만들어야 합니다</p>
+    return <NotFoundContent path="/recruit" label="구인 공고로" />
   }
 
   return <RecruitWriteContent isEditing />

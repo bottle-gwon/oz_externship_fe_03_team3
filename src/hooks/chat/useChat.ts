@@ -3,17 +3,18 @@ import useStudyHubStore from '@/store/store'
 import {
   type ChatMessageApiResponse,
   type ChatMessagePageResponse,
-  type ChatRoomApiResponse,
-  type ChatRoomPageResponse,
+  // type ChatRoomApiResponse,
+  // type ChatRoomPageResponse,
   type ChatMessageListRequest,
 } from '@/types/_chat'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
 
 // 채팅방 리스트 가져오기
-const getChatRoomList = async (page: number) => {
-  const response = await api.get(`${chatQueryEndpoint}/chatrooms?page=${page}`)
+const getChatRoomList = async () => {
+  // const response = await api.get(`${chatQueryEndpoint}/chatrooms?page=${page}`)
+  const response = await api.get(`${chatQueryEndpoint}/chatrooms`)
 
   return response.data
 }
@@ -36,34 +37,41 @@ const getMessageList = async (params: ChatMessageListRequest) => {
 //-------------------------tanstackQuery---------------------------------
 
 // 채팅방 리스트 가져오기
-export const useChatRoomList = () => {
-  return useInfiniteQuery<
-    ChatRoomApiResponse,
-    Error,
-    ChatRoomPageResponse,
-    [string],
-    number
-  >({
-    queryKey: [chatQueryEndpoint],
-    queryFn: ({ pageParam }) => getChatRoomList(pageParam),
-    getNextPageParam: (lastPage) => {
-      if (lastPage.data) {
-        const current = lastPage.data.pagination.page
-        const totalPage = Math.ceil(
-          lastPage.data?.pagination.total_count /
-            lastPage.data?.pagination.page_size
-        )
+// 현재 채팅방에 페이지 네이션 추가하면 충돌이 발생한다 해서 무한 스크롤 로직은 주석 처리 해놨습니다.
+// export const useChatRoomList = () => {
+//   return useInfiniteQuery<
+//     ChatRoomApiResponse,
+//     Error,
+//     ChatRoomPageResponse,
+//     [string],
+//     number
+//   >({
+//     queryKey: [chatQueryEndpoint],
+//     queryFn: ({ pageParam }) => getChatRoomList(pageParam),
+//     getNextPageParam: (lastPage) => {
+//       if (lastPage.data) {
+//         const current = lastPage.data.pagination.page
+//         const totalPage = Math.ceil(
+//           lastPage.data?.pagination.total_count /
+//             lastPage.data?.pagination.page_size
+//         )
 
-        if (current < totalPage) {
-          return current + 1
-        } else {
-          return null
-        }
-      } else {
-        return null
-      }
-    },
-    initialPageParam: 1,
+//         if (current < totalPage) {
+//           return current + 1
+//         } else {
+//           return null
+//         }
+//       } else {
+//         return null
+//       }
+//     },
+//     initialPageParam: 1,
+//   })
+// }
+export const useChatRoomList = () => {
+  return useQuery({
+    queryKey: [chatQueryEndpoint],
+    queryFn: getChatRoomList,
   })
 }
 
@@ -72,13 +80,14 @@ export const useChatRoomMessage = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
 
   // 만약 채팅방이 열리지 않은 상태면 -1을 넣어서 훅이 작동 하지 않도록 한다.(쿼리의 enabled 참고)
-  const get_study_group_id = chatState.status === 'chatRoom' ? chatState.id : -1
+  const get_study_group_id =
+    chatState.status === 'chatRoom' ? chatState.id : '-1'
 
   return useInfiniteQuery<
     ChatMessageApiResponse,
     Error,
     ChatMessagePageResponse,
-    [string, number],
+    [string, string],
     ChatMessageListRequest
   >({
     queryKey: ['message', get_study_group_id],
@@ -87,7 +96,7 @@ export const useChatRoomMessage = () => {
       if (lastPage.data && lastPageParam?.size && lastPageParam?.page) {
         const current = lastPageParam.page
         const totalPage = Math.ceil(
-          lastPage.data.total_count / lastPageParam.size
+          lastPage.data.pagination.total_count / lastPageParam.size
         )
 
         if (current < totalPage) {
@@ -105,6 +114,6 @@ export const useChatRoomMessage = () => {
     },
     initialPageParam: { study_group_id: get_study_group_id, page: 1, size: 20 },
 
-    enabled: get_study_group_id !== -1,
+    enabled: get_study_group_id !== '-1',
   })
 }

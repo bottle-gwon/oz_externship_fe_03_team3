@@ -1,5 +1,6 @@
 import api from '@/api/api'
 import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
+import useStudyHubStore from '@/store/store'
 import type { Recruit, RecruitsManageResponse } from '@/types'
 import {
   textToRecruitManageState,
@@ -8,7 +9,19 @@ import {
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect, useMemo } from 'react'
 
-const useRecruitsManageQuery = (userId: number) => {
+const queryEndpoint = '/recruitments/mine'
+
+const getManageByPage = async (
+  paramsWithoutPage: object,
+  pageParam: number
+) => {
+  const params = { ...paramsWithoutPage, page: pageParam }
+  const response = await api.get(queryEndpoint, { params })
+  return response.data as RecruitsManageResponse
+}
+
+const useRecruitsManageQuery = () => {
+  const accessToken = useStudyHubStore((state) => state.accessToken)
   const selectedStatusInText = useRecruitManageStore(
     (state) => state.selectedStatusInText
   )
@@ -23,32 +36,26 @@ const useRecruitsManageQuery = (userId: number) => {
   )
 
   const setCount = useRecruitManageStore((state) => state.setCount)
+  const count = useRecruitManageStore((state) => state.count)
 
-  const params = useMemo(
+  const paramsWithoutPage = useMemo(
     () => ({
       page_size: 10,
       status: textToRecruitManageState[selectedStatusInText],
       ordering: textToRecruitOrdering[selectedOrderingInText],
     }),
-    [selectedStatusInText, selectedOrderingInText]
+    [selectedOrderingInText, selectedStatusInText]
   )
 
-  const endpoint = `/recruitments/user/${userId}`
-
-  const { data, isPending, error, fetchNextPage, hasNextPage } =
-    useInfiniteQuery({
-      queryKey: [endpoint, params, userId],
-      queryFn: async ({ pageParam = 1 }) => {
-        const response = await api.get(endpoint, {
-          params: { ...params, page: pageParam },
-        })
-        return response.data as RecruitsManageResponse
-      },
-      initialPageParam: 1,
-      enabled: Number.isFinite(userId) && userId > 0,
-      getNextPageParam: (lastPage, _allPages, lastPageParam) =>
-        lastPage.next ? lastPageParam + 1 : null,
-    })
+  const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
+    queryKey: [queryEndpoint, paramsWithoutPage],
+    queryFn: async ({ pageParam = 1 }) =>
+      getManageByPage(paramsWithoutPage, pageParam),
+    initialPageParam: 1,
+    enabled: !!accessToken,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+      lastPage.next ? lastPageParam + 1 : null,
+  })
   useEffect(() => {
     if (!data) return
 
@@ -58,9 +65,11 @@ const useRecruitsManageQuery = (userId: number) => {
 
     setRecruitManageArray(recruitManageArray)
 
-    const firstCount = data.pages[0]?.count
-    if (firstCount) setCount(firstCount)
-  }, [data, setRecruitManageArray, setCount])
+    if (selectedStatusInText === '전체') {
+      const firstCount = data.pages[0]?.count
+      if (firstCount) setCount(firstCount)
+    }
+  }, [data, setRecruitManageArray, setCount, selectedStatusInText])
 
   useEffect(() => {
     setRequestNextPage(() => {
@@ -68,18 +77,15 @@ const useRecruitsManageQuery = (userId: number) => {
     })
   }, [setRequestNextPage, fetchNextPage])
 
-  const count = data?.pages?.[0]?.count ?? { total: 0, open: 0, closed: 0 }
-
   return {
     isPending,
     error,
-    hasNextPage,
     count,
   }
 }
 
-const useRecruitManage = (userId: number) => {
-  return useRecruitsManageQuery(userId)
+const useRecruitManage = () => {
+  return useRecruitsManageQuery()
 }
 
 export default useRecruitManage

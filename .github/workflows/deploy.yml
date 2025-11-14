@@ -15,6 +15,12 @@ jobs:
       - name: 의존성 설치 -> 빌드
         env:
           VITE_API_BASE_URL: ${{ secrets.VITE_API_BASE_URL }}
+          VITE_LANDING_PAGE_URL: ${{ secrets.VITE_LANDING_PAGE_URL }}
+          VITE_LOGIN_PAGE_URL: ${{ secrets.VITE_LOGIN_PAGE_URL }}
+          VITE_SIGNUP_PAGE_URL: ${{ secrets.VITE_SIGNUP_PAGE_URL }}
+          VITE_MYPAGE_PAGE_URL: ${{ secrets.VITE_MYPAGE_PAGE_URL }}
+          VITE_STUDY_PAGE_URL: ${{ secrets.VITE_MYPAGE_PAGE_URL }}
+          VITE_OUR_DOMAIN: ${{ secrets.VITE_STUDY_PAGE_URL }}
         run: |
           npm install
           npm run build

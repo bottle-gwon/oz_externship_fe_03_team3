@@ -2,25 +2,42 @@ import type { RecruitWriteSchema } from '@/lib/zodSchema'
 import type { FieldErrors, Control, UseFormRegister } from 'react-hook-form'
 
 export interface Recruit {
-  id: number
   uuid: string
   title: string
-  content: string
   thumbnail_img_url: string
   expected_headcount: number
-  current_headcount: number
-  estimated_fee: number
+  lectures: RecruitLecture[]
+  tags: RecruitTag[]
+  close_at: string
   views_count: number
   bookmark_count: number
-  due_date: string
   is_closed: boolean
-  tags: { id: number; name: string }[]
-  lectures: { id: number; title: string; instructor: string }[]
-  study_group: { id: number; uuid: string; name: string }
-  author: { id: number; nickname: string; profile_img_url: string }
   is_bookmarked: boolean
-  created_at: string
-  updated_at: string
+
+  //없어진 앤드포인트 임시
+  id?: number
+  content?: string
+  current_headcount?: number
+  estimated_fee?: number
+  due_date?: string
+  study_group?: { id: number; uuid: string; name: string }
+  author?: { id: number; nickname: string; profile_img_url: string }
+  created_at?: string
+  updated_at?: string
+}
+
+export interface RecruitLecture {
+  uuid: string
+  title: string
+  instructor: string
+  thumbnail_img_url: string
+  platform: string
+  url_link: string
+}
+
+export interface RecruitTag {
+  id: number
+  name: string
 }
 
 export interface RecruitmentQueryParams {
@@ -34,18 +51,24 @@ export interface RecruitmentQueryParams {
 }
 
 export interface RecruitsResponseData {
-  recommendations?: Recruit[]
+  recommended_recruitments?: Recruit[]
   results: Recruit[]
-  page: number
-  page_size: number
-  total_count: number
+  next: string
+  previous: string
+  count: RecruitCount
+}
+
+export interface RecruitCount {
+  total: number
+  open: number
+  closed: number
 }
 
 // ---- recruit manage
 export interface RecruitsManageResponse {
   count: { total: number; open: number; closed: number }
-  previous?: string | null
-  next?: string | null
+  previous: string | null
+  next: string | null
   results: Recruit[]
   status?: '' | 'open' | 'closed'
   ordering?: 'created_at' | 'bookmarks' | 'views'
@@ -74,7 +97,7 @@ export type RecruitConditionInText =
 
 //---- recruit delete
 export interface RecruitDelete {
-  id: number
+  uuid: string
   is_closed: boolean
 }
 
@@ -104,23 +127,27 @@ export interface RecruitDetailLecture {
   price: number
 }
 
-export interface RecruitDetail {
-  // NOTE: author api 요청드림
-  author_nickname: string
-  study_name: string
+export interface RecruitAuthor {
   id: number
+  nickname: string
+  profile_img_url: string
+}
+
+export interface RecruitDetail {
+  author: RecruitAuthor
+  study_group_name: string // NOTE: study_name swag 문서, 명세서에 둘 다 빠져있음, 요청 드림
+  uuid: string // NOTE: id 삭제, uuid만 사용
   title: string
   content: string
-  // TODO: 이미지 api 연결하고 이부분 살펴봐야 함
-  content_images: string[] // 이것도 필요하니 detail 쪽으로 가야겠네... 하지만 이미지는 아직 어떻게 하는지 모르겠다
+  images: string[]
   attachments: RecruitDetailAttachment[] // 이게 필요하다그러니 detail 매번 요청보내야 함
-  expected_personnel: number
-  expected_fee: number
-  lectures: RecruitDetailLecture[]
+  expected_headcount: number
+  estimated_fee: number
+  lectures: RecruitDetailLecture[] // NOTE: api 명세서에 있는데도 swag에서 빠짐, 요청 드림
   tags: string[]
-  due_date: string
+  close_at: string
   created_at: string
-  views: number
+  view_count: number
   bookmark_count: number
   is_bookmarked: boolean
 }

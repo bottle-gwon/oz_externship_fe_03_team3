@@ -1,22 +1,24 @@
 // 메시지 내역 조회
 export interface ChatMessageListRequest {
-  study_group_id: number //스터디 그룹id
+  study_group_id: string //스터디 그룹id
   page?: number //없으면 기본값 1
   size?: number //없으면 기본값 20
 }
 // 채팅방 메시지
+export interface ChatMessageSender {
+  id: number
+  nickname: string
+}
 export interface ChatMessage {
   id: number
   content: string
-  sender_id: number
-  sender_nickname: string
+  sender: ChatMessageSender
   is_read: boolean
   created_at: string
-  updated_at: string
 }
 export interface ChatMessageApiResponseData {
   messages: ChatMessage[]
-  total_count: number
+  pagination: ChatRoomPagination
 }
 
 export interface ChatMessageApiResponse {
@@ -36,18 +38,31 @@ export interface ChatRoomPagination {
   page_size: number
   total_count: number
 }
-
-// 채팅방 목록
-export interface ChatRoomData {
+export interface MessageList {
   id: number
   sender_id: number
   sender_nickname: string
-  study_group_id: number
-  study_name: string
+  // study_group_id: number
   content: string
-  message_counter: number
-  file_url: string | null
+  // file_url: string | null
+  is_read: boolean
   created_at: string
+  updated_at: string
+}
+
+// 채팅방 목록
+
+export interface ChatRoomLastMessage {
+  id: number
+  content: string
+  sender_nickname: string
+  created_at: string
+}
+export interface ChatRoomData {
+  uuid: string
+  name: string
+  last_message: ChatRoomLastMessage
+  unread_message_count: number
 }
 
 export interface ChatRoomApiResponseData {

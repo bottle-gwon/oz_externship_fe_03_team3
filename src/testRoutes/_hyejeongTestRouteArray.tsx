@@ -4,9 +4,6 @@ import { lazy } from 'react'
 const HyejeongRecruitPage = lazy(
   () => import('./testPages/hyejeong/HyejeongRecruitPage')
 )
-const HyejeongRecommendSection = lazy(
-  () => import('./testPages/hyejeong/HyejeongRecommendSection')
-)
 const HyejeongSubHeader = lazy(
   () => import('./testPages/hyejeong/HyejeongSubHeader')
 )
@@ -16,15 +13,8 @@ const HyejeongApplicantCardModal = lazy(
 const HyejeongManageModal = lazy(
   () => import('./testPages/hyejeong/HyejeongManageModal')
 )
-const HyejeongManageDetailModal = lazy(
-  () => import('./testPages/hyejeong/HyejeongManageDetailModal')
-)
 
 const hyejeongTestRouteArray = [
-  {
-    path: '/test/hyejeong',
-    element: <HyejeongRecommendSection />,
-  },
   {
     path: '/test/hyejeong/recruitlist',
     element: <HyejeongRecruitPage />,
@@ -40,10 +30,6 @@ const hyejeongTestRouteArray = [
   {
     path: 'test/hyejeong/managemodal',
     element: <HyejeongManageModal />,
-  },
-  {
-    path: 'test/hyejeong/managedetail',
-    element: <HyejeongManageDetailModal />,
   },
 ]
 

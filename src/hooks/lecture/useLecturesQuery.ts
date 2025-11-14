@@ -1,7 +1,7 @@
 import type { Lecture, LecturesResponseData } from '@/types'
 import { textToLectureOrdering } from '@/utils/simpleMaps'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { useEffect } from 'react'
+import { useEffect, useMemo } from 'react'
 import api from '@/api/api'
 import useLectureStore from '@/store/lecture/lectureStore'
 
@@ -32,15 +32,18 @@ const useLecturesQuery = () => {
   )
 
   // 페이지별 요청을 useInfiniteQuery가 모두 담당하기 때문에 params를 상태로 관리할 필요가 없어졌습니다
-  const paramsWithoutPage = {
-    page_size: 12,
-    search: debounceValue,
-    category: selectedCategory,
-    ordering: textToLectureOrdering[selectedOrderingInText],
-  }
+  const paramsWithoutPage = useMemo(
+    () => ({
+      page_size: 12,
+      search: debounceValue,
+      category: selectedCategory,
+      ordering: textToLectureOrdering[selectedOrderingInText],
+    }),
+    [debounceValue, selectedCategory, selectedOrderingInText]
+  )
 
   const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
-    queryKey: [queryEndpoint],
+    queryKey: [queryEndpoint, paramsWithoutPage],
     queryFn: async ({ pageParam }) =>
       getLecturesByPage(paramsWithoutPage, pageParam),
     initialPageParam: 1,

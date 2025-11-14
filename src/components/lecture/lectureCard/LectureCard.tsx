@@ -26,7 +26,7 @@ const LectureCard = ({ lecture }: { lecture: Lecture }) => {
       <LectureThumbnailSection lecture={lecture} />
 
       <Vstack className="p-5" gap="none">
-        <Hstack className="gap-2 pb-2">
+        <Hstack className="flex-wrap gap-2 pb-2">
           <DifficultyTag difficulty={lecture.difficulty} />
           {lecture.categories.map((category) => (
             <Tag key={category.id} color="mono">

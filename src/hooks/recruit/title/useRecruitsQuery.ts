@@ -45,11 +45,8 @@ const useRecruitsQuery = () => {
         return response.data as RecruitsResponseData
       },
       initialPageParam: 1,
-      getNextPageParam: (lastPage) => {
-        const totalPages = Math.ceil(lastPage.total_count / lastPage.page_size)
-        const currentPage = lastPage.page
-        return currentPage < totalPages ? currentPage + 1 : null
-      },
+      getNextPageParam: (lastPage, _allPages, lastPageParam) =>
+        lastPage.next ? lastPageParam + 1 : null,
     })
 
   // 공고 목록 업데이트
@@ -70,8 +67,8 @@ const useRecruitsQuery = () => {
       return
     }
 
-    if (data.pages[0].recommendations) {
-      setRecommendedRecruitArray(data.pages[0].recommendations)
+    if (data.pages[0].recommended_recruitments) {
+      setRecommendedRecruitArray(data.pages[0].recommended_recruitments)
     }
   }, [data, isLoggedIn, setRecommendedRecruitArray])
 
@@ -80,7 +77,7 @@ const useRecruitsQuery = () => {
   }, [setRequestNextPage, fetchNextPage])
 
   // 전체 공고 수
-  const totalCount = data?.pages[0].total_count ?? 0
+  const totalCount = data?.pages[0].count.total ?? 0
 
   return {
     isPending,

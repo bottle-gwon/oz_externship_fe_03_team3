@@ -5,6 +5,6 @@ export interface Me {
   name: string
   phone_number: string
   birthday: string
-  profile_image_url: string
+  profile_img_url: string
   created_at: string
 }

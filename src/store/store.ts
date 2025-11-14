@@ -38,6 +38,16 @@ const useStudyHubStore = create<StudyHubState>()(
 
       modalKeyArray: [],
       setModalKeyArray: (modalKeyArray) => set({ modalKeyArray }),
+      appendModalKeyToArray: (modalKey) => {
+        const modalKeyArray = get().modalKeyArray
+        set({ modalKeyArray: [...modalKeyArray, modalKey] })
+      },
+      removeModalKeyFromArray: (modalKey) => {
+        const modalKeyArray = get().modalKeyArray.filter(
+          (el) => el !== modalKey
+        )
+        set({ modalKeyArray })
+      },
 
       // recruit
       studyGroupArray: [],
@@ -70,7 +80,7 @@ const useStudyHubStore = create<StudyHubState>()(
       // notification
     }),
     {
-      name: 'food-storage', // name of the item in the storage (must be unique)
+      name: 'studyhub-storage', // name of the item in the storage (must be unique)
       storage: createJSONStorage(() => localStorage), // (optional) by default, 'localStorage' is used
       partialize: (state) => ({ accessToken: state.accessToken, me: state.me }),
     }

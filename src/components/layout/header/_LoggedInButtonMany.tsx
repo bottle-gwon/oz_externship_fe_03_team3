@@ -1,32 +1,35 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import { Hstack } from '@/components/commonInGeneral/layout'
 import useStudyHubStore from '@/store/store'
-import { Bell } from 'lucide-react'
 import type { Me } from '@/types'
 import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
-import { lazy, Suspense } from 'react'
-import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
-const NotificationBox = lazy(() => import('./notification/NotificationBox'))
+import { subApi } from '@/api/api'
+import NotificationButton from './notification/NotificationButton'
+
+const logout = async () => {
+  const state = useStudyHubStore.getState()
+  const accessToken = state.accessToken
+  await subApi.post('/auth/logout', undefined, {
+    headers: { Authorization: `Bearer ${accessToken}` },
+  })
+  state.setMe(null)
+  state.setAccessToken(null)
+}
 
 const ProfileButton = ({ me }: { me: Me }) => {
-  const setAccessToken = useStudyHubStore((state) => state.setAccessToken)
-  const setMe = useStudyHubStore((state) => state.setMe)
-
   const handleChange = (value: string) => {
     switch (value) {
       case 'mypage':
         window.location.href = import.meta.env.VITE_MYPAGE_PAGE_URL
         return
       case 'logout':
-        setMe(null)
-        setAccessToken(null)
+        logout()
         return
       default:
         throw new Error('---- 잘못된 드롭다운 값이 선택되었습니다')
     }
   }
-
   return (
     <Dropdown>
       <Dropdown.Trigger>
@@ -37,7 +40,7 @@ const ProfileButton = ({ me }: { me: Me }) => {
           className="py-oz-sm p-0"
         >
           <Hstack className="items-center">
-            <ProfileImage url={me.profile_image_url} />
+            <ProfileImage url={me.profile_img_url} />
             <p className="shrink-0 text-gray-700">{me.name}</p>
           </Hstack>
         </Button>
@@ -47,25 +50,6 @@ const ProfileButton = ({ me }: { me: Me }) => {
         <Dropdown.MenuItem value="mypage">마이페이지</Dropdown.MenuItem>
         <Dropdown.MenuItem value="logout">로그아웃</Dropdown.MenuItem>
       </Dropdown.Menu>
-    </Dropdown>
-  )
-}
-
-const NotificationButton = () => {
-  return (
-    <Dropdown>
-      <Dropdown.Trigger>
-        <Button variant="ghost" size="lg">
-          <Bell />
-        </Button>
-      </Dropdown.Trigger>
-      <Dropdown.Content>
-        <Suspense
-          fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
-        >
-          <NotificationBox />
-        </Suspense>
-      </Dropdown.Content>
     </Dropdown>
   )
 }

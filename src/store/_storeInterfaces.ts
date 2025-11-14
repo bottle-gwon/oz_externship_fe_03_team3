@@ -1,7 +1,7 @@
 type ChatUIState =
   | { status: 'off' } //채팅창 닫기
   | { status: 'chatList' } //채팅방 목록 조회
-  | { status: 'chatRoom'; id: number; title: string } //채팅방 접속
+  | { status: 'chatRoom'; id: string; title: string } //채팅방 접속
 
 // NOTE: 사용 전 아래를 읽어주세요.
 // NOTE: 1. 스토어의 타입은 store.ts 외의 파일에선 임포트 될 일이 없으므로 store.ts와 같은 폴더에 둡니다.
@@ -39,6 +39,8 @@ export interface StudyHubState {
 
   modalKeyArray: string[] // 모달 위에 모달을 띄울 때 사용해주세요
   setModalKeyArray: (modalKeyArray: string[]) => void
+  appendModalKeyToArray: (modalKey: string) => void
+  removeModalKeyFromArray: (modalKey: string) => void
 
   // recruit
   studyGroupArray: StudyGroup[]
@@ -58,7 +60,7 @@ export interface StudyHubState {
   // chat
   chatState: ChatUIState
   openChatList: () => void //채팅 목록 열기 (채팅 아이콘 클릭 했을때)
-  openChatRoom: (id: number, title: string) => void
+  openChatRoom: (id: string, title: string) => void
   closeChatUI: () => void //채팅방 닫기
 
   chatRoomArray: ChatRoomData[]

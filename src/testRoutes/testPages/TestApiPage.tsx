@@ -24,6 +24,7 @@ const logout = () => {
 }
 
 const lecture_id = '550e8400-e29b-41d4-a716-446655440000'
+const recruitUuid = 'da41b7c3-8891-4d17-a9ac-5f8709bb1239'
 
 const TestApiPage = () => {
   return (
@@ -103,6 +104,9 @@ const TestApiPage = () => {
             </Button>
             <Button onClick={() => api.get('/recruitments/1')}>
               GET /recruitments/1
+            </Button>
+            <Button onClick={() => api.get(`/recruitments/${recruitUuid}`)}>
+              GET /recruitments/:recruitUuid
             </Button>
           </TitledRoundBox>
 

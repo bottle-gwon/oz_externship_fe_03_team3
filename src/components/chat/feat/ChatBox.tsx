@@ -1,9 +1,9 @@
 import { Vstack } from '@/components/commonInGeneral/layout'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
-import type { MessageList } from '@/types/_chatInterfaces'
+import type { ChatMessage } from '@/types/_chat'
 
 interface ChatBoxInterface {
-  chat: MessageList
+  chat: ChatMessage
   measure: (node: Element | null | undefined) => void
 }
 const chatBoxStyle = (isOwner: boolean) => {
@@ -23,21 +23,20 @@ const chatBoxStyle = (isOwner: boolean) => {
 }
 
 // 사용자 임시 아이디 값
-const USER_ID = 8
-const SENDER_NICKNAME = '홍길동'
+const SENDER_NICKNAME = '스터디장_김'
 
 const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
   const date = new Date(chat.created_at)
-  const hour = date.getUTCHours()
-  const munite = date.getUTCMinutes()
+  const hour = String(date.getUTCHours()).padStart(2, '0')
+  const munite = String(date.getUTCMinutes()).padStart(2, '0')
 
-  const isOwner = SENDER_NICKNAME === chat.sender_nickname
+  const isOwner = SENDER_NICKNAME === chat?.sender.nickname
   const boxStyle = chatBoxStyle(isOwner)
 
   return (
     <Vstack gap="xs" className={`w-full ${boxStyle.align}`} ref={measure}>
-      {chat.sender_id !== USER_ID && (
-        <span className="text-xs text-gray-600">{chat.sender_nickname}</span>
+      {!isOwner && (
+        <span className="text-xs text-gray-600">{chat?.sender.nickname}</span>
       )}
       <RoundBox
         padding="sm"

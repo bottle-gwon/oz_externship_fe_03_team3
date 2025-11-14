@@ -4,8 +4,10 @@ import Button from '@/components/commonInGeneral/button/Button'
 import useLecturesMutation from '@/hooks/lecture/useLecturesMutation'
 import useDebounceToggle from '@/hooks/useDebounceToggle'
 import { useEffect } from 'react'
+import useStudyHubStore from '@/store/store'
 
 const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
+  const accessToken = useStudyHubStore((state) => state.accessToken)
   const { debouncedBoolValue, realTimeBoolValue, toggleBoolValue } =
     useDebounceToggle(lecture.is_bookmarked)
   const { postBookmarkMutation, deleteBookmarkMutation } = useLecturesMutation()
@@ -31,6 +33,10 @@ const LectureBookmarkButton = ({ lecture }: { lecture: Lecture }) => {
     // NOTE: lecture 포함하면 무한 렌더링 발생
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedBoolValue])
+
+  if (!accessToken) {
+    return null
+  }
 
   return (
     <Button

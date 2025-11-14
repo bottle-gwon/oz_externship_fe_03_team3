@@ -61,7 +61,7 @@ const RecruitWriteContent = ({
       }
       patchRecruitWriteMutation.mutate({
         body: formData,
-        id: editingRecruit.id,
+        uuid: editingRecruit.uuid,
       })
     } else {
       postRecruitWriteMutation.mutate(formData)

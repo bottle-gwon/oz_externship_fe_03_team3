@@ -1,0 +1,20 @@
+import api from '@/api/api'
+import useStudyHubStore from '@/store/store'
+import { useMutation } from '@tanstack/react-query'
+
+const useApplyMutation = () => {
+  const appendModalKeyToArray = useStudyHubStore(
+    (state) => state.appendModalKeyToArray
+  )
+
+  const applyMutation = useMutation({
+    mutationFn: ({ body, uuid }: { body: object; uuid: string }) =>
+      api.post(`/recruitments/${uuid}/applications`, body),
+    onError: () => appendModalKeyToArray('applyError'),
+    onSuccess: () => appendModalKeyToArray('applySuccess'),
+  })
+
+  return { applyMutation }
+}
+
+export default useApplyMutation

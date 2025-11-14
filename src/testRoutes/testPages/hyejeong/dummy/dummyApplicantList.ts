@@ -1,53 +1,56 @@
 import type { Applicant } from '@/types/_applicantInterface'
-import img from '../profile-img.jpg'
 
 export const dummyApplicantArray: Applicant[] = [
   {
     id: 12,
-    application: {
+    uuid: '550e8400-e29b-41d4-a716-446655440012',
+    applicant: {
       nickname: 'dev_juwon',
-      gender: '남성',
-      profile_image: img,
+      gender: 'MALE',
+      profile_img_url: 'https://cdn.example.com/profiles/juwon.png',
     },
     available_time: '평일 저녁, 주말 오전',
     has_study_experience: true,
     status: 'PENDING',
-    created_at: '2025-10-16 11:25',
+    applied_at: '2025-10-16 11:25',
   },
   {
     id: 13,
-    application: {
+    uuid: '550e8400-e29b-41d4-a716-446655440013',
+    applicant: {
       nickname: 'frontend_park',
-      gender: '여성',
-      profile_image: null,
+      gender: 'FEMALE',
+      profile_img_url: 'https://cdn.example.com/profiles/juwon.png',
     },
     available_time: '주중 오후',
     has_study_experience: false,
-    status: 'ACCEPTED',
-    created_at: '2025-10-15 19:48',
+    status: 'APPROVED',
+    applied_at: '2025-10-15 19:48',
   },
   {
     id: 14,
-    application: {
-      nickname: 'dev_juwon',
-      gender: '남성',
-      profile_image: img,
+    uuid: '550e8400-e29b-41d4-a716-446655440014',
+    applicant: {
+      nickname: 'js_kim',
+      gender: 'MALE',
+      profile_img_url: 'https://cdn.example.com/profiles/js_kim.jpg',
     },
-    available_time: '평일 저녁, 주말 오전',
+    available_time: '주말 전일',
     has_study_experience: true,
     status: 'REJECTED',
-    created_at: '2025-10-16 11:25',
+    applied_at: '2025-10-14 10:32',
   },
   {
     id: 15,
-    application: {
-      nickname: 'frontend_park',
-      gender: '여성',
-      profile_image: null,
+    uuid: '550e8400-e29b-41d4-a716-446655440015',
+    applicant: {
+      nickname: 'react_sujin',
+      gender: 'FEMALE',
+      profile_img_url: 'https://cdn.example.com/profiles/sujin.png',
     },
-    available_time: '주중 오후',
-    has_study_experience: false,
-    status: 'ACCEPTED',
-    created_at: '2025-10-15 19:48',
+    available_time: '평일 오후 7시 이후',
+    has_study_experience: true,
+    status: 'PENDING',
+    applied_at: '2025-10-18 21:05',
   },
 ]

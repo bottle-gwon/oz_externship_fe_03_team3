@@ -14,6 +14,9 @@ const RecruitSubHeader = ({ isLoggedIn }: RecruitSubHeaderProps) => {
   const navigate = useNavigate()
   const handleClick = (url: string) => navigate(url)
 
+  const redirectToLogin = () =>
+    (window.location.href = import.meta.env.VITE_LOGIN_PAGE_URL)
+
   return (
     <SubHeader isBackButtonVisible={false} isXPadded>
       <SubHeaderTitleSection>
@@ -29,7 +32,7 @@ const RecruitSubHeader = ({ isLoggedIn }: RecruitSubHeaderProps) => {
               color="primary"
               variant="outlined"
               size="lg"
-              onClick={() => handleClick('/recruit/manager')}
+              onClick={() => handleClick('/recruit/manage')}
             >
               <img src={ScrollText} />
               공고 관리
@@ -49,7 +52,7 @@ const RecruitSubHeader = ({ isLoggedIn }: RecruitSubHeaderProps) => {
             color="primary"
             variant="contained"
             size="lg"
-            onClick={() => handleClick('/login')}
+            onClick={redirectToLogin}
           >
             <LogIn className="mr-oz-sm" />
             로그인 후 공고 작성

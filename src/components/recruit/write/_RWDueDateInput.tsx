@@ -15,7 +15,7 @@ const RWDueDateInput = ({ errors, register }: RecruitWriteChildrenProps) => {
       <Labeled.Input
         {...register('due_date')}
         type="date"
-        defaultValue={editingRecruit?.due_date.slice(0, 10)}
+        defaultValue={editingRecruit?.close_at.slice(0, 10)}
       />
       <Labeled.Footer>{errors?.due_date?.message}</Labeled.Footer>
     </Labeled>

@@ -12,7 +12,7 @@ import { useEffect } from 'react'
 const endpoint = '/notifications'
 
 const tabToIsRead: Record<NotificationTab, boolean | null> = {
-  all: null,
+  total: null,
   read: true,
   unread: false,
 }
@@ -45,6 +45,9 @@ const useNotificationsQuery = () => {
   const setAllNotificationArray = useNotificationStore(
     (state) => state.setAllNotificationArray
   )
+  const setNotificationCounts = useNotificationStore(
+    (state) => state.setNotificationCounts
+  )
 
   const params = { is_read: tabToIsRead[selectedTab] }
 
@@ -71,9 +74,12 @@ const useNotificationsQuery = () => {
     }, [])
     setNotificationArray(reducedArray)
 
-    if (selectedTab === 'all') {
+    if (selectedTab === 'total') {
       setAllNotificationArray(reducedArray)
     }
+
+    const counts = data.pages[0].counts
+    setNotificationCounts(counts)
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data])

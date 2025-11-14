@@ -10,7 +10,7 @@ const RDTitle = ({ recruitDetail }: { recruitDetail: RecruitDetail }) => {
       <Hstack className="flex-wrap">
         <Hstack>
           <UserRound />
-          작성자: {recruitDetail.author_nickname}
+          작성자: {recruitDetail.author.nickname}
         </Hstack>
         <Hstack>
           <Calendar />
@@ -18,7 +18,7 @@ const RDTitle = ({ recruitDetail }: { recruitDetail: RecruitDetail }) => {
         </Hstack>
         <Hstack>
           <Eye />
-          조회: {recruitDetail.views}
+          조회: {recruitDetail.view_count}
         </Hstack>
         <Hstack>
           <Bookmark />
