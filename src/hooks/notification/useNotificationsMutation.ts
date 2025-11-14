@@ -36,16 +36,17 @@ const updateAllNotificationCache = (
 const useNotificationMutation = () => {
   const selectedTab = useNotificationStore((state) => state.selectedTab)
   const queryEndpoint = '/notifications'
+  const queryKey = [queryEndpoint, selectedTab]
 
   const postSingleMutation = useSimpleMutation({
-    queryKey: [queryEndpoint, selectedTab],
+    queryKey,
     mutationFnWithData: (data: Notification) =>
       api.post(`${queryEndpoint}/${data.id}/read`),
     updateCacheForUi: updateOneNotificationCache,
   })
 
   const patchAllMutation = useSimpleMutation({
-    queryEndpoint,
+    queryKey,
     mutationFnWithData: () => api.patch(`${queryEndpoint}/read-all`),
     updateCacheForUi: updateAllNotificationCache,
   })
