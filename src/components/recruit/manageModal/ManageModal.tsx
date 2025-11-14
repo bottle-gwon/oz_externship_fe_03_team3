@@ -63,7 +63,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
 
         <Modal.Body
           ref={bodyRef}
-          className={`min-h-[492px] overflow-auto ${isPending && applicantArray.length === 0 && 'justify-center'} `}
+          className={`min-h-[492px] overflow-auto ${!isPending && applicantArray.length === 0 && 'justify-center'} `}
         >
           {isPending && <ApplicantListSkeleton />}
           {!isPending && applicantArray.length > 0 && (
@@ -78,7 +78,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
             </GridContainer>
           )}
 
-          {isPending && applicantArray.length === 0 && (
+          {!isPending && applicantArray.length === 0 && (
             <Vstack gap="none" className="text-center text-gray-500">
               아직 지원자가 없습니다
             </Vstack>
