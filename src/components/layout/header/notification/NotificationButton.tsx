@@ -6,7 +6,6 @@ import { Suspense } from 'react'
 import NotificationBox from './_NotificationBox'
 import useNotificationStore from '@/store/notification/notificationStore'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
-import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import CountBadge from '@/components/commonInGeneral/countBadge/CountBadge'
 import NotificationErrorContent from './NotificationErrorContent'
 
