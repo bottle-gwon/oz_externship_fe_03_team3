@@ -34,6 +34,7 @@ const useRecruitWriteMutation = () => {
       navigate(`/recruit/${uuid}`, { replace: true })
       queryClient.invalidateQueries({ queryKey: ['/recruitments'] })
       queryClient.invalidateQueries({ queryKey: ['/recruitments/mine'] })
+      queryClient.invalidateQueries({ queryKey: [`/recruitments/${uuid}`] })
     },
   })
 
