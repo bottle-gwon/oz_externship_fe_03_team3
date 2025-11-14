@@ -228,6 +228,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
           <TagSearch />
           {currentTagArray.length !== 0 && <TagSelection />}
           <TagList responseData={responseData} />
+          {}
         </Modal.Body>
 
         <Modal.Footer>
