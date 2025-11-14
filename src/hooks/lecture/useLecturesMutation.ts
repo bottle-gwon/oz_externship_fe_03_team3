@@ -2,6 +2,7 @@ import useSimpleMutation from '../useSimpleMutation'
 import type { Lecture, LecturesResponseData } from '@/types'
 import api from '@/api/api'
 import type { InfiniteData } from '@tanstack/react-query'
+import useLectureStore from '@/store/lecture/lectureStore'
 
 const postBookmark = (body: Lecture) => {
   const realBody = {
@@ -28,14 +29,16 @@ const updatePagedLectureCache = (
 })
 
 const useLecturesMutation = () => {
+  const paramsWithoutPage = useLectureStore((state) => state.paramsWithoutPage)
+  const queryKey = ['/lectures', paramsWithoutPage]
   const postBookmarkMutation = useSimpleMutation({
-    queryEndpoint: '/lectures',
+    queryKey,
     mutationFnWithData: postBookmark,
     updateCacheForUi: updatePagedLectureCache,
   })
 
   const deleteBookmarkMutation = useSimpleMutation({
-    queryEndpoint: '/lectures',
+    queryKey,
     mutationFnWithData: (data: Lecture) =>
       api.delete(`/lectures/bookmarks/${data.uuid}`),
     updateCacheForUi: updatePagedLectureCache,

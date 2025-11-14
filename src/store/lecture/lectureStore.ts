@@ -26,6 +26,9 @@ const useLectureStore = create<LectureStoreState>()((set, get) => ({
   debounceValue: '',
   setDebounceValue: (debounceValue) => set({ debounceValue }),
 
+  paramsWithoutPage: {},
+  setParamsWithoutPage: (paramsWithoutPage) => set({ paramsWithoutPage }),
+
   requestNextPage: () => {},
   setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
 }))
