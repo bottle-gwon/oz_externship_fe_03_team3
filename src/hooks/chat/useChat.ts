@@ -9,7 +9,11 @@ import {
   type ChatRoomData,
 } from '@/types/_chat'
 import { CHAT_CONFIG } from '@/utils/constants'
-import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
+import {
+  useInfiniteQuery,
+  useQuery,
+  useQueryClient,
+} from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
 
@@ -136,10 +140,12 @@ export const useChatRoomMessage = () => {
   })
 }
 
-export const useUnreadChatCount = () => {
+export const useUnreadChatCount = (): number => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
+  const unReadCounter = useStudyHubStore((state) => state.unReadCounter)
+  const queryClient = useQueryClient()
 
-  return useQuery({
+  const { data } = useQuery({
     queryKey: ['counter'],
     queryFn: getChatCounter,
     refetchInterval() {
@@ -150,4 +156,12 @@ export const useUnreadChatCount = () => {
       return 3000 // 3초마다 요청 보내기
     },
   })
+
+  // 새로운 메시지 도착 하면 채팅 방 다시 가져오기
+  if (unReadCounter !== data) {
+    queryClient.invalidateQueries({
+      queryKey: [chatQueryEndpoint],
+    })
+  }
+  return data || 0
 }
