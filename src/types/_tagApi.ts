@@ -6,10 +6,13 @@ export interface Tag {
 
 // 태그 검색 응답
 export interface TagApiResponse {
-  tags: Tag[]
-  page: number
-  page_size: number
-  total_count: number
+  results: Tag[]
+  next: string | null
+  previous: string | null
+  count: number
+  // page: number
+  // page_size: number
+  // total_count: number
 }
 
 // 태그 검색 요청 파라미터
