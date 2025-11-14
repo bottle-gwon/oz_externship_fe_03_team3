@@ -7,7 +7,7 @@ import {
   // type ChatRoomPageResponse,
   type ChatMessageListRequest,
 } from '@/types/_chat'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
 
 const chatQueryEndpoint = '/chat'
 

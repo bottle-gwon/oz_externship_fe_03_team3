@@ -1,7 +1,7 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import ChatListCard from './feat/ChatListCard'
 import useStudyHubStore from '@/store/store'
-import { useEffect, useRef } from 'react'
+import { useEffect } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
 // import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 // import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
