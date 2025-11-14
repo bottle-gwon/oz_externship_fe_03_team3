@@ -9,11 +9,13 @@ import SelectOption from './_SelectOption'
 interface WithSelectProps {
   onOptionSelect: (option: string | number) => void
   defaultChildren?: string
+  isInDanger?: boolean
 }
 
 const Select = ({
   onOptionSelect,
   defaultChildren,
+  isInDanger,
   ...props
 }: DivProps & WithSelectProps) => {
   const { className, children, ...rest } = props
@@ -46,6 +48,7 @@ const Select = ({
         selectedIcon,
         setSelectedIcon,
         triggerRef,
+        isInDanger,
       }}
     >
       <Vstack {...rest} gap="xs" className={`${className} relative gap-0`}>

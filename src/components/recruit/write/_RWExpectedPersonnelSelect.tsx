@@ -19,6 +19,7 @@ const RWExpectedPersonnelSelect = ({
         name="expected_headcount"
         render={({ field: { onChange } }) => (
           <Select
+            isInDanger={Boolean(errors.expected_headcount)}
             onOptionSelect={onChange}
             defaultChildren={
               editingRecruit
