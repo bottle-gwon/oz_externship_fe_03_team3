@@ -4,7 +4,6 @@ import FlexOneContainer from '@/components/commonInGeneral/layout/_FlexOneContai
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import NotificationCard from './_NotificationCard'
 import NotificationTabRow from './_NotificationTabRow'
-import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
 import useNotificationStore from '@/store/notification/notificationStore'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
@@ -18,11 +17,13 @@ const NotificationBox = () => {
   const notificationArray = useNotificationStore(
     (state) => state.notificationArray
   )
+  const error = useNotificationStore((state) => state.error)
+  const hasNextPage = useNotificationStore((state) => state.hasNextPage)
+  const requestNextPage = useNotificationStore((state) => state.requestNextPage)
 
-  const { error, hasNextPage, fetchNextPage } = useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
 
-  useOneWayInfinityScroll(targetRef, fetchNextPage, {
+  useOneWayInfinityScroll(targetRef, requestNextPage, {
     threshold: 0,
     root: rootRef.current,
     rootMargin: '0px 0px 300px 0px',
@@ -54,7 +55,7 @@ const NotificationBox = () => {
         >
           {error && <UnknwonErrorContent isSmall />}
           {notificationArray.length === 0 && (
-            <ErrorDisplay isSmall>
+            <ErrorDisplay isSmall color="mono-bright">
               <ErrorDisplay.Code>Empty</ErrorDisplay.Code>
             </ErrorDisplay>
           )}
