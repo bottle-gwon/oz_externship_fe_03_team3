@@ -16,9 +16,10 @@ const getSearchTag = async (params: TagApiSearchParam) => {
   const { keyword = '', page = 1, page_size = 5 } = params
   const newParam = new URLSearchParams()
   const encodedKeyowrd = encodeURIComponent(keyword)
-  newParam.append('search', encodedKeyowrd) //키워드 필수로 변경됨
+
   newParam.append('page', String(page))
   newParam.append('page_size', String(page_size))
+  newParam.append('search', encodedKeyowrd) //키워드 필수로 변경됨
 
   const response = await api.get(`${queryEndpoint}?${newParam}`)
 
@@ -28,7 +29,7 @@ const getSearchTag = async (params: TagApiSearchParam) => {
 // 새로운 태그 추가
 // 아직 확정적이진 않아서 이부분 향후 수정할 예정입니다.
 const postNewTag = async (newTag: string) => {
-  const newTagParam = { tags: [newTag] }
+  const newTagParam = { name: newTag }
   const response = await api.post(queryEndpoint, newTagParam)
 
   return response.data
