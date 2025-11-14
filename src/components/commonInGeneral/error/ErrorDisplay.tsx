@@ -52,7 +52,12 @@ const ErrorDisplay = ({
 }: ErrorDisplayProps) => {
   return (
     <ErrorDisplayContext.Provider value={{ color, isSmall }}>
-      <FlexOneContainer className="gap-oz-xl flex h-full flex-col items-center justify-center">
+      <FlexOneContainer
+        className={[
+          isSmall ? 'gap-oz-lg' : 'gap-oz-xl',
+          'flex h-full flex-col items-center justify-center',
+        ].join(' ')}
+      >
         {children}
       </FlexOneContainer>
     </ErrorDisplayContext.Provider>
