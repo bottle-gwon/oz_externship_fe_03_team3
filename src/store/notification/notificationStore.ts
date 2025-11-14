@@ -14,6 +14,13 @@ const useNotificationStore = create<NotificationStoreState>()((set, _get) => ({
 
   notificationCounts: null,
   setNotificationCounts: (notificationCounts) => set({ notificationCounts }),
+
+  error: null,
+  setError: (error) => set({ error }),
+  hasNextPage: false,
+  setHasNextPage: (hasNextPage) => set({ hasNextPage }),
+  requestNextPage: () => {},
+  setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
 }))
 
 export default useNotificationStore
