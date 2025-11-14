@@ -1,8 +1,9 @@
 import queryClient from '@/lib/tanstackQueryClient'
 import { useMutation } from '@tanstack/react-query'
 
-interface SimpleMutationOptions<TPrevious, TNewOne, TData> {
-  queryEndpoint: string
+interface SimpleMutationOptions<TPrevious, TNewOne, TData, TQueryKey> {
+  queryEndpoint?: string
+  queryKey?: TQueryKey[] // NOTE: queryKey를 사용하면 queryEndpoint를 무시합니다
   mutationFnWithData: (data: TData) => void
   updateCacheForUi: (previous: TPrevious, newOne: TNewOne) => TPrevious
   handleSuccess?: () => void
@@ -12,11 +13,12 @@ interface SimpleMutationOptions<TPrevious, TNewOne, TData> {
 // NOTE: mutate 함수에 넣는 매개변수 명을 body에서 data로 바꾸고 타입을 제네릭으로 바꿨습니다
 // NOTE: 제네릭 타임은 data자리에 넣는 걸 따라가기 때문에 따로 신경쓰지 않으셔도 됩니다
 // NOTE: mutateFnWithData는 전달인자로 받은 data를 조작해서 url, body 등을 만들고 api 요청을 하는 함수입니다
-export const useSimpleMutation = <TPrevious, TNewOne, TData>(
-  options: SimpleMutationOptions<TPrevious, TNewOne, TData>
+export const useSimpleMutation = <TPrevious, TNewOne, TData, TQueryKey>(
+  options: SimpleMutationOptions<TPrevious, TNewOne, TData, TQueryKey>
 ) => {
   const {
     queryEndpoint,
+    queryKey, // NOTE: queryKeyq를 사용하면 queryEndpoint를 무시합니다
     mutationFnWithData,
     updateCacheForUi,
     handleSuccess,
@@ -40,13 +42,14 @@ export const useSimpleMutation = <TPrevious, TNewOne, TData>(
         queryKey: [queryEndpoint],
       })
 
-      const previous: TPrevious | undefined = queryClient.getQueryData([
-        queryEndpoint,
-      ])
+      const queryKeyResult = queryKey ? queryKey : [queryEndpoint]
+
+      const previous: TPrevious | undefined =
+        queryClient.getQueryData(queryKeyResult)
 
       if (previous !== undefined) {
         const newCache = updateCacheForUi(previous, newOne)
-        queryClient.setQueryData([queryEndpoint], newCache)
+        queryClient.setQueryData(queryKeyResult, newCache)
       }
 
       return { previous }
