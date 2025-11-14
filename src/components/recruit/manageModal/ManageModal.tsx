@@ -1,7 +1,7 @@
 import { GridContainer, Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import ApplicantCard from '../applicantCard/ApplicantCard'
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
 import useStudyHubStore from '@/store/store'
 import useApplicantStore from '@/store/recruit/manageModal/applicantStore'
@@ -18,7 +18,6 @@ interface ManageModal {
 }
 
 const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
-  console.log(recruit)
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
     null
   )
@@ -62,7 +61,10 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
           </Vstack>
         </Modal.Header>
 
-        <Modal.Body ref={bodyRef} className="overflow-auto">
+        <Modal.Body
+          ref={bodyRef}
+          className={`min-h-[492px] overflow-auto ${isPending && applicantArray.length === 0 && 'justify-center'} `}
+        >
           {isPending && <ApplicantListSkeleton />}
           {!isPending && applicantArray.length > 0 && (
             <GridContainer gap="lg" className="grid-cols-2">
@@ -76,7 +78,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
             </GridContainer>
           )}
 
-          {!isPending && applicantArray.length === 0 && (
+          {isPending && applicantArray.length === 0 && (
             <Vstack gap="none" className="text-center text-gray-500">
               아직 지원자가 없습니다
             </Vstack>
