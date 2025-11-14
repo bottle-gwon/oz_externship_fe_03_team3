@@ -42,10 +42,10 @@ const TagList = ({ responseData }: TagListInterface) => {
   }
 
   // 검색 결과 없음 새로운 태그 추가
-  if (responseData.total_count === 0) {
+  if (responseData.count === 0) {
     return <TagSearchEmpty />
   }
-
+  console.log(responseData)
   return (
     <Vstack
       gap="xl"
@@ -56,9 +56,9 @@ const TagList = ({ responseData }: TagListInterface) => {
       {!(tagListLoading === 'paginating') && (
         <Vstack gap="sm" className="h-[314px] items-center justify-start">
           <Hstack className="w-full items-start justify-start self-start">
-            <p className="text-sm font-medium">{`사용가능한 태그 (${responseData.total_count}개)`}</p>
+            <p className="text-sm font-medium">{`사용가능한 태그 (${responseData.count}개)`}</p>
           </Hstack>
-          {responseData.tags?.map((el) => (
+          {responseData.results?.map((el) => (
             <TagCard
               key={el.id + el.name}
               name={el.name}
