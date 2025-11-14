@@ -1,23 +1,61 @@
 import type { ReactNode } from 'react'
 import { FlexOneContainer } from '../layout'
+import ErrorDisplayContext from './_ErrorDisplayContext'
+import useErrorDisplayContext from './_useErrorDisplayContext'
+
+type ErrorDisplayColor = 'primary' | 'mono-bright'
+
+const colorToTextColor: Record<ErrorDisplayColor, string> = {
+  primary: 'text-primary-500',
+  'mono-bright': 'text-gray-200',
+}
 
 const ErrorDisplayCode = ({ children }: { children: string }) => {
+  const { color, isSmall } = useErrorDisplayContext()
   return (
-    <h1 className="text-primary-500 text-[96px] leading-none font-bold">
+    <h1
+      className={[
+        colorToTextColor[color],
+        isSmall ? 'text-[48px]' : 'text-[96px]',
+        'leading-none font-bold',
+      ].join(' ')}
+    >
       {children}
     </h1>
   )
 }
 
 const ErrorDisplayTitle = ({ children }: { children: string }) => {
-  return <h2 className="text-[32px] leading-none font-medium">{children}</h2>
+  const { isSmall } = useErrorDisplayContext()
+  return (
+    <h2
+      className={[
+        isSmall ? 'text-lg' : 'text-[32px]',
+        'leading-none font-medium',
+      ].join(' ')}
+    >
+      {children}
+    </h2>
+  )
 }
 
-const ErrorDisplay = ({ children }: { children: ReactNode }) => {
+interface ErrorDisplayProps {
+  color?: ErrorDisplayColor
+  isSmall?: boolean
+  children: ReactNode
+}
+
+const ErrorDisplay = ({
+  color = 'primary',
+  isSmall = false,
+  children,
+}: ErrorDisplayProps) => {
   return (
-    <FlexOneContainer className="gap-oz-xl flex h-full flex-col items-center justify-center">
-      {children}
-    </FlexOneContainer>
+    <ErrorDisplayContext.Provider value={{ color, isSmall }}>
+      <FlexOneContainer className="gap-oz-xl flex h-full flex-col items-center justify-center">
+        {children}
+      </FlexOneContainer>
+    </ErrorDisplayContext.Provider>
   )
 }
 
