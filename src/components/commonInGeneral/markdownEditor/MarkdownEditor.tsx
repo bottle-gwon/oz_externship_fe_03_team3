@@ -15,6 +15,7 @@ interface MarkdownEditorProps {
   insertingTextArray?: string[]
   replacingArray?: Replacing[]
   onFileArrayDrop: (fileArray: File[]) => void
+  isInDanger?: boolean
 }
 
 const MarkdownEditor = memo(
@@ -24,6 +25,7 @@ const MarkdownEditor = memo(
     insertingTextArray,
     replacingArray,
     onFileArrayDrop,
+    isInDanger,
   }: MarkdownEditorProps) => {
     const [text, setText] = useState<string | undefined>(defaultValue)
     const editorRef = useRef<RefMDEditor>(null)
@@ -93,7 +95,7 @@ const MarkdownEditor = memo(
         <RoundBox
           color={'mono-dim'}
           padding="none"
-          className="overflow-hidden"
+          className={`overflow-hidden ${isInDanger ? '!border-danger-100' : ''}`}
           data-color-mode="light"
         >
           <Vstack className="gap-0">

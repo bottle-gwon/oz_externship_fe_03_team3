@@ -66,6 +66,7 @@ const RWMarkdownEditor = ({ errors, control }: RecruitWriteChildrenProps) => {
         render={({ field: { onChange } }) => (
           <div className="relative">
             <MarkdownEditor
+              isInDanger={Boolean(errors?.content)}
               defaultValue={editingRecruit?.content}
               onChange={onChange}
               insertingTextArray={insertingTextArray}

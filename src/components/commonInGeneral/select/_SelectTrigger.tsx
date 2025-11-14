@@ -10,8 +10,13 @@ interface SelectTriggerProps {
 }
 
 const SelectTrigger = ({ icon, children }: SelectTriggerProps) => {
-  const { setIsOpened, selectedChildren, selectedIcon, triggerRef } =
-    useSelectContext()
+  const {
+    setIsOpened,
+    selectedChildren,
+    selectedIcon,
+    triggerRef,
+    isInDanger,
+  } = useSelectContext()
 
   const handleClick = () => {
     setIsOpened((prev) => !prev)
@@ -23,7 +28,10 @@ const SelectTrigger = ({ icon, children }: SelectTriggerProps) => {
     <RoundBox
       ref={triggerRef}
       onClick={handleClick}
-      className="cursor-pointer bg-white px-3 py-2 transition hover:bg-gray-50"
+      className={[
+        isInDanger ? '!border-danger-100' : '',
+        'cursor-pointer bg-white px-3 py-2 transition hover:bg-gray-50',
+      ].join(' ')}
     >
       <Hstack className="items-center">
         <div className="text-gray-400">{selectedIcon ?? icon}</div>

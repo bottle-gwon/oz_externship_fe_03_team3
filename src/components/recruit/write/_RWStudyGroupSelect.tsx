@@ -56,6 +56,7 @@ const RWStudyGroupSelect = ({ errors, control }: RecruitWriteChildrenProps) => {
           name="study_group"
           render={({ field: { onChange } }) => (
             <Select
+              isInDanger={Boolean(errors?.study_group)}
               defaultChildren={editingRecruit?.study_group_name}
               onOptionSelect={(option) => {
                 handleOptionSelect(option)

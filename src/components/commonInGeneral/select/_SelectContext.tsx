@@ -13,6 +13,7 @@ interface SelectContextProps {
   selectedIcon: JSX.Element | null
   setSelectedIcon: React.Dispatch<React.SetStateAction<JSX.Element | null>>
   triggerRef: React.RefObject<HTMLDivElement | null>
+  isInDanger?: boolean
 }
 
 const SelectContext = createContext<SelectContextProps | null>(null)
