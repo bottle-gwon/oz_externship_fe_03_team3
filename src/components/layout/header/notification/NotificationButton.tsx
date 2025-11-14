@@ -8,6 +8,7 @@ import useNotificationStore from '@/store/notification/notificationStore'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 import CountBadge from '@/components/commonInGeneral/countBadge/CountBadge'
+import NotificationErrorContent from './NotificationErrorContent'
 
 const NotificationButton = () => {
   const notificationArray = useNotificationStore(
@@ -45,8 +46,7 @@ const NotificationButton = () => {
         {isShowingSkeleton && (
           <Skeleton heightInPixel={475} widthInPixel={384} />
         )}
-        {/* TODO: 여기 에러 컴포넌트도 작게 만들어야 함 */}
-        {isShowingError && <RoundBox>알 수 없는 에러가 발생했습니다</RoundBox>}
+        {isShowingError && <NotificationErrorContent />}
         <Suspense
           fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
         >
