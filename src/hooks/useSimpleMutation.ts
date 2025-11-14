@@ -66,7 +66,9 @@ export const useSimpleMutation = <TPrevious, TNewOne, TData, TQueryKey>(
       if (!context) {
         return
       }
-      queryClient.setQueryData([queryEndpoint], context.previous)
+
+      const queryKeyResult = queryKey ? queryKey : [queryEndpoint]
+      queryClient.setQueryData(queryKeyResult, context.previous)
       if (handleError) {
         handleError(error)
       }
@@ -75,8 +77,9 @@ export const useSimpleMutation = <TPrevious, TNewOne, TData, TQueryKey>(
     // NOTE: 성공하든 실패하든 응답을 받은 뒤에는 캐시를 무효화해서 GET 요청을 새로 보냅니다
     // NOTE: 이로써 클라이언트가 가지고 있는 자료를 항상 최신 자료로 유지합니다
     onSettled: () => {
+      const queryKeyResult = queryKey ? queryKey : [queryEndpoint]
       queryClient.invalidateQueries({
-        queryKey: [queryEndpoint],
+        queryKey: queryKeyResult,
       })
     },
   })
