@@ -1,11 +1,12 @@
 import api from '@/api/api'
 import useStudyHubStore from '@/store/store'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router'
 
 const useRecruitWriteMutation = () => {
   const setModalKey = useStudyHubStore((state) => state.setModalKey)
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const postRecruitWriteMutation = useMutation({
     mutationFn: (body: FormData) => api.post('/recruitments', body),
@@ -15,7 +16,9 @@ const useRecruitWriteMutation = () => {
     },
     onSuccess: (response: { data: { uuid: string } }) => {
       const id = response.data.uuid
-      navigate(`/recruit/${id}`)
+      navigate(`/recruit/${id}`, { replace: true })
+      queryClient.invalidateQueries({ queryKey: ['/recruitments'] })
+      queryClient.invalidateQueries({ queryKey: ['/recruitments/mine'] })
     },
   })
 
@@ -28,7 +31,10 @@ const useRecruitWriteMutation = () => {
     },
     onSuccess: (response: { data: { uuid: string } }) => {
       const uuid = response.data.uuid
-      navigate(`/recruit/${uuid}`)
+      navigate(`/recruit/${uuid}`, { replace: true })
+      queryClient.invalidateQueries({ queryKey: ['/recruitments'] })
+      queryClient.invalidateQueries({ queryKey: ['/recruitments/mine'] })
+      queryClient.invalidateQueries({ queryKey: [`/recruitments/${uuid}`] })
     },
   })
 
