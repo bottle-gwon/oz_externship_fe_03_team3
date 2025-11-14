@@ -6,6 +6,7 @@ import {
   // type ChatRoomApiResponse,
   // type ChatRoomPageResponse,
   type ChatMessageListRequest,
+  type ChatRoomData,
 } from '@/types/_chat'
 import { CHAT_CONFIG } from '@/utils/constants'
 import { useInfiniteQuery, useQuery } from '@tanstack/react-query'
@@ -15,8 +16,24 @@ const chatQueryEndpoint = '/chat'
 // 채팅방 리스트 가져오기
 const getChatRoomList = async () => {
   // const response = await api.get(`${chatQueryEndpoint}/chatrooms?page=${page}`)
-  const response = await api.get(`${chatQueryEndpoint}/chatrooms`)
+  const response = await api.get<ChatRoomData[]>(
+    `${chatQueryEndpoint}/chatrooms`
+  )
+
   return response.data
+}
+
+const getChatCounter = async () => {
+  const response = await getChatRoomList()
+
+  if (response) {
+    const count = response.reduce((acc: number, cur: ChatRoomData) => {
+      return acc + cur.unread_message_count
+    }, 0)
+    return count
+  } else {
+    return 0
+  }
 }
 
 // 채팅 메시지 리스트 가져오기
@@ -116,5 +133,21 @@ export const useChatRoomMessage = () => {
     },
 
     enabled: get_study_group_id !== '-1',
+  })
+}
+
+export const useUnreadChatCount = () => {
+  const accessToken = useStudyHubStore((state) => state.accessToken)
+
+  return useQuery({
+    queryKey: ['counter'],
+    queryFn: getChatCounter,
+    refetchInterval() {
+      // 로그인 상태가아니면 요청 안보냄
+      if (!accessToken) {
+        return false
+      }
+      return 3000 // 3초마다 요청 보내기
+    },
   })
 }

@@ -36,14 +36,14 @@ const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
     hour12: false,
   })
   // const isOwner = SENDER_NICKNAME === chat?.sender.nickname
-  const isOwner = me?.nickname === chat?.sender.nickname // 실제 api 연결시 사용
+  const isOwner = me?.nickname === chat?.sender?.nickname // 실제 api 연결시 사용
 
   const boxStyle = chatBoxStyle(isOwner)
 
   return (
     <Vstack gap="xs" className={`w-full ${boxStyle.align}`} ref={measure}>
       {!isOwner && (
-        <span className="text-xs text-gray-600">{chat?.sender.nickname}</span>
+        <span className="text-xs text-gray-600">{chat?.sender?.nickname}</span>
       )}
       <RoundBox
         padding="sm"
