@@ -34,7 +34,6 @@ const RecruitManageContent = () => {
   const [deleteSuccessOpen, setDeleteSuccessOpen] = useState(false)
   const [deleteErrorOpen, setDeleteErrorOpen] = useState(false)
 
-  // ★ 추가: ManageModal 관련 상태
   const [manageModalOpen, setManageModalOpen] = useState(false)
   const [selectedRecruit, setSelectedRecruit] = useState<Recruit | null>(null)
 
@@ -53,7 +52,6 @@ const RecruitManageContent = () => {
   const loaderRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(loaderRef, requestNextPage)
 
-  // ★ 추가: 지원내역 클릭 핸들러
   const handleManageClick = (recruit: Recruit) => {
     setSelectedRecruit(recruit)
     setManageModalOpen(true)
@@ -106,7 +104,7 @@ const RecruitManageContent = () => {
                 setDeletedTitle(title)
                 setDeleteSuccessOpen(true)
               }}
-              onManageClick={handleManageClick} // ★ 추가
+              onManageClick={handleManageClick}
               onDeleteError={(title) => {
                 setDeletedTitle(title)
                 setDeleteErrorOpen(true)
@@ -116,7 +114,7 @@ const RecruitManageContent = () => {
 
           <div ref={loaderRef} className="h-0.5 w-full shrink-0"></div>
         </Vstack>
-        {/* ★ 추가: 단일 ManageModal */}
+
         {selectedRecruit && (
           <ManageModal
             isOn={manageModalOpen}
