@@ -106,12 +106,12 @@ const useStudyHubStore = create<StudyHubState>()(
 
         // 초기 연결시 이벤트
         ws.addEventListener('open', () => {
-          console.log('연결 성공')
+          // console.log('연결 성공')
           get().setChatConnected(true)
         })
         // 메시지 수신
         ws.addEventListener('message', (event) => {
-          console.log('메시지 수신:', event.data)
+          // console.log('메시지 수신:', event.data)
           if (event.data !== '채팅 연결완') {
             const response = JSON.parse(event.data)
             if (response?.type === 'chat.message') {
@@ -123,8 +123,8 @@ const useStudyHubStore = create<StudyHubState>()(
         })
 
         // 에러 처리
-        ws.addEventListener('error', (error) => {
-          console.error('채팅 소켓 에러:', error) // 임시 에러
+        ws.addEventListener('error', () => {
+          // console.error('채팅 소켓 에러:', error) // 임시 에러
           const now = new Date()
           const ErrorMessage = <ChatMessage>{
             type: 'chat.message',
@@ -139,7 +139,7 @@ const useStudyHubStore = create<StudyHubState>()(
 
         // 연결 종료
         ws.addEventListener('close', () => {
-          console.log('연결 종료')
+          // console.log('연결 종료')
           get().setChatConnected(false)
           set({ chatSocket: null })
         })
