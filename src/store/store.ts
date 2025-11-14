@@ -1,6 +1,7 @@
 import { create } from 'zustand'
 import type { StudyHubState } from './_storeInterfaces'
 import { createJSONStorage, persist } from 'zustand/middleware'
+import type { ChatMessage } from '@/types/_chat'
 
 // NOTE: 초깃값을 설정합니다
 // NOTE: 여기에 작성되는 변수 순서는 interface의 변수 순서를 따릅니다
@@ -124,6 +125,15 @@ const useStudyHubStore = create<StudyHubState>()(
         // 에러 처리
         ws.addEventListener('error', (error) => {
           console.error('채팅 소켓 에러:', error) // 임시 에러
+          const now = new Date()
+          const ErrorMessage = <ChatMessage>{
+            type: 'chat.message',
+            id: -1,
+            content: `에러 발생 연결 해제 했습니다 추후 다시 시도 해주세요.`,
+            sender: { id: -1, nickname: '시스템' },
+            created_at: now.toISOString(),
+          }
+          get().addChatMessage(ErrorMessage)
           get().setChatConnected(false) // 에러 발생시 연결 해제
         })
 

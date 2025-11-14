@@ -51,11 +51,8 @@ const ChatList = () => {
     }
   }, [data, setChatRoomArray, setUnReadCounter])
 
-  // 임시 에러 처리
-  if (isError) {
-    return <>{error} 임시</>
-  }
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
+
   return (
     <ChattingLayout>
       <ChattingLayout.Header>
@@ -70,6 +67,7 @@ const ChatList = () => {
         {isPending && <ChatListSkeleton />}
         {!isPending &&
           chatRoomArray.map((el) => <ChatListCard key={el.uuid} room={el} />)}
+        {isError && <p>{error.message} 에러 발생</p>}
         {/* {!hasNextPage && <NoMoreChatList />} */}
         {/* 무한 스크롤 훅이 감지하는 위치  */}
         {/* <div ref={LoadingRef} className="h-0.5 w-full shrink-0"></div> */}
