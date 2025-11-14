@@ -20,9 +20,16 @@ const NotificationButton = () => {
 
   const { isPending, error } = useNotificationsQuery()
 
+  // NOTE: 에러 컴포넌트를 확인할 때 아래를 주석 처리 해주세요
   const isShowingSkeleton =
     isPending && notificationArray.length === 0 && selectedTab === 'total'
   const isShowingError = error && notificationArray.length === 0
+  // ---- 여기까지
+
+  // NOTE: 에러 컴포넌틀 확인할 때 아래 주석을 해제해주세요
+  // const isShowingSkeleton = false
+  // const isShowingError = true
+  // ---- 여기까지
 
   const unreadCount = notificationCounts?.unread ?? 0
 
