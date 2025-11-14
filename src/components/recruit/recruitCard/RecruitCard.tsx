@@ -22,7 +22,7 @@ export type RecruitCardProps = {
   isMine?: boolean
   cardClassName?: string
   imageClassName?: string
-  onManageClick?: (recruit: Recruit) => void // ★ 추가
+  onManageClick?: (recruit: Recruit) => void
   onDeleteSuccess?: (title: string) => void
   onDeleteError?: (title: string) => void
 }
@@ -32,7 +32,7 @@ const RecruitCard = ({
   isMine = false,
   cardClassName = 'cursor-pointer hover:bg-gray-50 transition',
   imageClassName = 'h-27 w-35',
-  onManageClick, // ★ 추가
+  onManageClick,
   onDeleteSuccess,
   onDeleteError,
 }: RecruitCardProps) => {
@@ -247,7 +247,7 @@ const RecruitCard = ({
                     className="gap-2 px-6 py-2 text-sm"
                     onClick={(e) => {
                       e.stopPropagation()
-                      onManageClick?.(recruit) // ★ 수정
+                      onManageClick?.(recruit)
                     }}
                   >
                     <FileText className="size-4" />
