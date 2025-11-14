@@ -5,6 +5,8 @@ import type {
 import useSimpleMutation from '../useSimpleMutation'
 import api from '@/api/api'
 import type { InfiniteData } from '@tanstack/react-query'
+import useStudyHubStore from '@/store/store'
+import useNotificationStore from '@/store/notification/notificationStore'
 
 const updateOneNotificationCache = (
   previous: InfiniteData<NotificationsResponseData, unknown>,
@@ -33,11 +35,13 @@ const updateAllNotificationCache = (
 })
 
 const useNotificationMutation = () => {
+  const selectedTab = useNotificationStore((state) => state.selectedTab)
   const queryEndpoint = '/notifications'
-  const patchSingleMutation = useSimpleMutation({
-    queryEndpoint,
+
+  const postSingleMutation = useSimpleMutation({
+    queryKey: [queryEndpoint, selectedTab],
     mutationFnWithData: (data: Notification) =>
-      api.patch(`${queryEndpoint}/${data.id}/read`),
+      api.post(`${queryEndpoint}/${data.id}/read`),
     updateCacheForUi: updateOneNotificationCache,
   })
 
@@ -47,6 +51,6 @@ const useNotificationMutation = () => {
     updateCacheForUi: updateAllNotificationCache,
   })
 
-  return { patchSingleMutation, patchAllMutation }
+  return { patchSingleMutation: postSingleMutation, patchAllMutation }
 }
 export default useNotificationMutation

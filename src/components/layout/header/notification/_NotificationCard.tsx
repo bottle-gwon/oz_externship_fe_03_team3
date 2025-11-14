@@ -69,7 +69,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
     const newOne: Notification = { ...notification, is_read: true }
     patchSingleMutation.mutate({ data: notification, newOne })
 
-    window.location.href = notification.back_url_link
+    // window.location.href = notification.back_url_link
   }
 
   return (
