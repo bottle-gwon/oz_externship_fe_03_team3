@@ -19,11 +19,6 @@ const NotificationBox = () => {
 
   const { hasNextPage, fetchNextPage } = useNotificationsQuery()
   const { patchAllMutation } = useNotificationMutation()
-  useOneWayInfinityScroll(targetRef, fetchNextPage, {
-    threshold: 0,
-    root: rootRef.current,
-    rootMargin: '0px 0px 300px 0px',
-  })
 
   useOneWayInfinityScroll(targetRef, fetchNextPage, {
     threshold: 0,
