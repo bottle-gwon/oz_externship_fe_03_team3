@@ -1,7 +1,8 @@
 import { Hstack } from '@/components/commonInGeneral/layout'
 import type { RecruitsManageResponse } from '@/types'
-
-import { Clock3, FileText, Megaphone } from 'lucide-react'
+import scrollTextBlack from '@/assets/scroll-text-black.svg'
+import megaphoneGreen from '@/assets/megaphone-green.svg'
+import { Clock3 } from 'lucide-react'
 import SummaryCard from './SummaryCard'
 
 type CountSummary = RecruitsManageResponse['count']
@@ -14,13 +15,13 @@ const RecruitSummaryCard = ({ count }: SummaryProps) => {
       <SummaryCard
         value={totalCount}
         label="전체"
-        Icon={FileText}
+        Icon={scrollTextBlack}
         color="mono-dim"
       ></SummaryCard>
       <SummaryCard
         value={openCount}
         label="모집중"
-        Icon={Megaphone}
+        Icon={megaphoneGreen}
         color="success"
       ></SummaryCard>
       <SummaryCard
