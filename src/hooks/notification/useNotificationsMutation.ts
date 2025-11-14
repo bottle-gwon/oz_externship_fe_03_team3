@@ -5,7 +5,6 @@ import type {
 import useSimpleMutation from '../useSimpleMutation'
 import api from '@/api/api'
 import type { InfiniteData } from '@tanstack/react-query'
-import useStudyHubStore from '@/store/store'
 import useNotificationStore from '@/store/notification/notificationStore'
 
 const updateOneNotificationCache = (
