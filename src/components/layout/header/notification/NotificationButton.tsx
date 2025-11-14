@@ -7,7 +7,6 @@ import NotificationBox from './_NotificationBox'
 import useNotificationStore from '@/store/notification/notificationStore'
 import useNotificationsQuery from '@/hooks/notification/useNotificationsQuery'
 import CountBadge from '@/components/commonInGeneral/countBadge/CountBadge'
-import NotificationErrorContent from './NotificationErrorContent'
 
 const NotificationButton = () => {
   const notificationArray = useNotificationStore(
@@ -18,12 +17,11 @@ const NotificationButton = () => {
     (state) => state.notificationCounts
   )
 
-  const { isPending, error } = useNotificationsQuery()
+  const { isPending } = useNotificationsQuery()
 
   // NOTE: 에러 컴포넌트를 확인할 때 아래를 주석 처리 해주세요
   const isShowingSkeleton =
     isPending && notificationArray.length === 0 && selectedTab === 'total'
-  const isShowingError = error && notificationArray.length === 0
   // ---- 여기까지
 
   // NOTE: 에러 컴포넌틀 확인할 때 아래 주석을 해제해주세요
@@ -52,8 +50,7 @@ const NotificationButton = () => {
         {isShowingSkeleton && (
           <Skeleton heightInPixel={475} widthInPixel={384} />
         )}
-        {isShowingError && <NotificationErrorContent />}
-        {!isShowingSkeleton && !isShowingError && (
+        {!isShowingSkeleton && (
           <Suspense
             fallback={<Skeleton heightInPixel={475} widthInPixel={384} />}
           >
