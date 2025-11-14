@@ -5,7 +5,7 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import { useEffect } from 'react'
 
 const useApplicantsQuery = (recruitmentUuid: string, isOn: boolean) => {
-  const applicantsQueryEndpoint = `/recruitments/${recruitmentUuid}/applications`
+  const applicantsQueryEndpoint = `/recruitments/${recruitmentUuid}/applications/list`
 
   const setApplicantArray = useApplicantStore(
     (state) => state.setApplicantArray
@@ -19,7 +19,7 @@ const useApplicantsQuery = (recruitmentUuid: string, isOn: boolean) => {
   }
 
   const { data, isPending, error, fetchNextPage } = useInfiniteQuery({
-    queryKey: [applicantsQueryEndpoint],
+    queryKey: ['applicants', recruitmentUuid],
     queryFn: async ({ pageParam = 1 }) => {
       const response = await api.get(applicantsQueryEndpoint, {
         params: { ...params, page: pageParam },
@@ -29,7 +29,7 @@ const useApplicantsQuery = (recruitmentUuid: string, isOn: boolean) => {
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) =>
       lastPage.next ? lastPageParam + 1 : null,
-    enabled: isOn,
+    enabled: isOn && !!recruitmentUuid,
   })
 
   useEffect(() => {

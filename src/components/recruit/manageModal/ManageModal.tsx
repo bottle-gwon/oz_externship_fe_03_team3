@@ -1,7 +1,7 @@
 import { GridContainer, Vstack } from '@/components/commonInGeneral/layout'
 import Modal from '@/components/commonInGeneral/modal/Modal'
 import ApplicantCard from '../applicantCard/ApplicantCard'
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import ManageDetailModal from '../manageDetailModal/ManageDetailModal'
 import useStudyHubStore from '@/store/store'
 import useApplicantStore from '@/store/recruit/manageModal/applicantStore'
@@ -18,6 +18,7 @@ interface ManageModal {
 }
 
 const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
+  console.log(recruit)
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
     null
   )
@@ -31,7 +32,9 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
 
   const bodyRef = useRef<HTMLDivElement | null>(null)
   const targetRef = useRef<HTMLDivElement | null>(null)
-  useOneWayInfinityScroll(targetRef, requestNextPage, { root: bodyRef.current })
+  useOneWayInfinityScroll(targetRef, requestNextPage, {
+    root: bodyRef.current,
+  })
 
   const handleClose = () => {
     onClose(false)
