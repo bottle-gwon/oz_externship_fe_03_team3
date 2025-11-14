@@ -69,7 +69,9 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
     const newOne: Notification = { ...notification, is_read: true }
     patchSingleMutation.mutate({ data: notification, newOne })
 
-    // window.location.href = notification.back_url_link
+    // NOTE: 여기를 주석처리하면 낙관적 업데이트를 보다 편하게 테스트할 수 있습니다
+    window.location.href = notification.back_url_link
+    // ---- 여기까지
   }
 
   return (
@@ -83,7 +85,7 @@ const NotificationCard = ({ notification }: { notification: Notification }) => {
       onClick={handleClick}
     >
       <NotificationIcon type={notification.type} />
-      <Vstack gap="xs">
+      <Vstack gap="xs" className="grow">
         <p className="grow">{notification.content}</p>
         <p className="text-gray-500">
           {convertToMonthDay(notification.created_at)}
