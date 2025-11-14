@@ -30,14 +30,19 @@ const ChatList = () => {
   // })
 
   useEffect(() => {
-    // if (data?.pages && !isFetchingNextPage) {
-    //   const allMessage =
-    //     data.flatMap((res) => res.data?.messages || []) || []
-    //   setChatRoomArray(allMessage)
+    // 더미 데이터 익스프레스
+    // if (data?.data && Array.isArray(data?.data)) {
+    //   setChatRoomArray(data.data)
+    //   const count = data?.data?.reduce((acc: number, cur: ChatRoomData) => {
+    //     return acc + cur.unread_message_count
+    //   }, 0)
+    //   setUnReadCounter(count)
     // }
-    if (data?.data && Array.isArray(data?.data)) {
-      setChatRoomArray(data.data)
-      const count = data?.data?.reduce((acc: number, cur: ChatRoomData) => {
+
+    //실제 api
+    if (data && Array.isArray(data)) {
+      setChatRoomArray(data)
+      const count = data.reduce((acc: number, cur: ChatRoomData) => {
         return acc + cur.unread_message_count
       }, 0)
       setUnReadCounter(count)
