@@ -166,17 +166,20 @@ const ChattingRoom = () => {
     )
   }
 
+  // 메시지 정렬, 메시지 배열 초기화
   useEffect(() => {
     if (data?.pages && !isFetchingNextPage) {
-      const messages = data?.pages[data.pageParams.length - 1]?.data?.messages
+      const messageArray =
+        data?.pages[data.pageParams.length - 1]?.data?.messages
+      // const messageArray = data?.pages[data.pageParams.length - 1]?.results
 
-      if (!messages) {
+      if (!messageArray) {
         return
       }
-
+      // 초기화
       if (page === 0) {
         if (data.pageParams.length === 0) {
-          const allMessage = [...messages].flatMap((res) => res || []) || []
+          const allMessage = [...messageArray].flatMap((res) => res || []) || []
           const sortMessaged = sortMessage(allMessage)
           setChatMessageArray(sortMessaged)
         } else {
@@ -187,7 +190,8 @@ const ChattingRoom = () => {
         }
       } else {
         const allMessage =
-          [...chatMessageArray, ...messages].flatMap((res) => res || []) || []
+          [...chatMessageArray, ...messageArray].flatMap((res) => res || []) ||
+          []
         const sortMessaged = sortMessage(allMessage)
 
         setChatMessageArray(sortMessaged)
