@@ -134,7 +134,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   useEffect(() => {
     if (responseData) {
-      setTotalPage(Math.ceil(responseData.total_count / 5))
+      setTotalPage(Math.ceil(responseData.count / 5))
     }
   }, [responseData, setTotalPage])
 
