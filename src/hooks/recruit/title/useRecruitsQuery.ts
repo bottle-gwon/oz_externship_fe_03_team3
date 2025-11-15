@@ -24,6 +24,8 @@ const useRecruitsQuery = () => {
   const setRequestNextPage = useRecruitStore(
     (state) => state.setRequestNextPage
   )
+  const setTotalCount = useRecruitStore((state) => state.setTotalCount)
+  const setHasNextPage = useRecruitStore((state) => state.setHasNextPage)
 
   const params = useMemo(
     () => ({
@@ -58,19 +60,12 @@ const useRecruitsQuery = () => {
     }, [])
 
     setRecruitArray(recruitArray)
-  }, [data, setRecruitArray])
-
-  // 추천 공고 업데이트
-  useEffect(() => {
-    if (!data || !isLoggedIn) {
-      setRecommendedRecruitArray([])
-      return
-    }
-
+    setTotalCount(data.pages[0].count.total)
     if (data.pages[0].recommended_recruitments) {
       setRecommendedRecruitArray(data.pages[0].recommended_recruitments)
     }
-  }, [data, isLoggedIn, setRecommendedRecruitArray])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data])
 
   useEffect(() => {
     setRequestNextPage(fetchNextPage)
@@ -78,6 +73,10 @@ const useRecruitsQuery = () => {
 
   // 전체 공고 수
   const totalCount = data?.pages[0].count.total ?? 0
+
+  useEffect(() => {
+    setHasNextPage(hasNextPage)
+  }, [hasNextPage, setHasNextPage])
 
   return {
     isPending,

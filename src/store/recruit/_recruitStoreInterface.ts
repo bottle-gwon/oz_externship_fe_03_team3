@@ -21,4 +21,9 @@ export interface RecruitStoreState {
 
   requestNextPage: () => void
   setRequestNextPage: (requestNextPage: () => void) => void
+
+  hasNextPage: boolean
+  setHasNextPage: (hasNextPage: boolean) => void
+  totalCount: number
+  setTotalCount: (totalCount: number) => void
 }
