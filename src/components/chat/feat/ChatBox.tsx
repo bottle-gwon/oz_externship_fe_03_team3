@@ -5,7 +5,7 @@ import type { ChatMessage } from '@/types/_chat'
 
 interface ChatBoxInterface {
   chat: ChatMessage
-  measure: (node: Element | null | undefined) => void
+  // measure: (node: HTMLDivElement | null | undefined) => void
 }
 const chatBoxStyle = (isOwner: boolean) => {
   if (isOwner) {
@@ -26,7 +26,7 @@ const chatBoxStyle = (isOwner: boolean) => {
 // 사용자 임시 아이디 값
 // const SENDER_NICKNAME = '스터디장_김'
 
-const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
+const ChatBox = ({ chat }: ChatBoxInterface) => {
   const me = useStudyHubStore((state) => state.me) // 닉네임 구분
 
   const date = new Date(chat.created_at)
@@ -41,7 +41,7 @@ const ChatBox = ({ chat, measure }: ChatBoxInterface) => {
   const boxStyle = chatBoxStyle(isOwner)
 
   return (
-    <Vstack gap="xs" className={`w-full ${boxStyle.align}`} ref={measure}>
+    <Vstack gap="xs" padding="none" className={`w-full ${boxStyle.align}`}>
       {!isOwner && (
         <span className="text-xs text-gray-600">{chat?.sender?.nickname}</span>
       )}
