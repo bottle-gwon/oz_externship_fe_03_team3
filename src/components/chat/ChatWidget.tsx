@@ -4,15 +4,14 @@ import ChattingRoom from './ChattingRoom'
 import { useUnreadChatCount } from '@/hooks/chat/useChat'
 import { useEffect } from 'react'
 import { useQueryClient } from '@tanstack/react-query'
+import useChatStore from '@/store/chat/chatStore'
 
 // 레이아웃에서 출력용
 const ChatWidget = () => {
-  const chatState = useStudyHubStore((state) => state.chatState)
+  const chatState = useChatStore((state) => state.chatState)
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const setUnReadCounter = useStudyHubStore((state) => state.setUnReadCounter)
-  const setChatMessageArray = useStudyHubStore(
-    (state) => state.setChatMessageArray
-  )
+  const setUnReadCounter = useChatStore((state) => state.setUnReadCounter)
+  const setChatMessageArray = useChatStore((state) => state.setChatMessageArray)
 
   const queryClient = useQueryClient()
 
@@ -30,10 +29,10 @@ const ChatWidget = () => {
       queryClient.invalidateQueries({
         queryKey: ['/chat'],
       })
-      // queryClient.invalidateQueries({
-      //   queryKey: ['message'],
-      // })
-      // setChatMessageArray([])
+      queryClient.invalidateQueries({
+        queryKey: ['message'],
+      })
+      setChatMessageArray([])
     }
   }, [chatState, queryClient, setChatMessageArray])
 

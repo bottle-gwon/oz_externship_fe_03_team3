@@ -1,8 +1,3 @@
-type ChatUIState =
-  | { status: 'off' } //채팅창 닫기
-  | { status: 'chatList' } //채팅방 목록 조회
-  | { status: 'chatRoom'; id: string; title: string } //채팅방 접속
-
 // NOTE: 사용 전 아래를 읽어주세요.
 // NOTE: 1. 스토어의 타입은 store.ts 외의 파일에선 임포트 될 일이 없으므로 store.ts와 같은 폴더에 둡니다.
 // NOTE: 2. 스토어에 저장되는 모든 변수는 camelCase를 따라야 합니다.
@@ -14,7 +9,6 @@ type ChatUIState =
 // NOTE:     - 한 번만 내려줘서 해결되면 전역 상태로 등록하지 않습니다.
 
 import type { Me, StudyGroup, Recruit, RecruitDetail } from '@/types'
-import type { ChatMessage, ChatRoomData, ChatRoomOnline } from '@/types/_chat'
 
 export interface StudyHubState {
   fruitArray: string[] // 타입 정의 예시 1
@@ -56,41 +50,6 @@ export interface StudyHubState {
   setEditingRecruit: (editingRecruit: RecruitDetail | null) => void
 
   // lecture
-
-  // chat
-  chatState: ChatUIState
-  openChatList: () => void //채팅 목록 열기 (채팅 아이콘 클릭 했을때)
-  openChatRoom: (id: string, title: string) => void
-  closeChatUI: () => void //채팅방 닫기
-
-  chatRoomArray: ChatRoomData[]
-  setChatRoomArray: (chatRoomArray: ChatRoomData[]) => void
-
-  chatMessageArray: ChatMessage[]
-  setChatMessageArray: (chatMessageArray: ChatMessage[]) => void
-  addChatMessage: (message: ChatMessage) => void
-  addChatMessageArray: (message: ChatMessage[]) => void
-  page: number
-  setPage: (page: number) => void
-  chatInit: boolean
-  setChatInit: (chatInit: boolean) => void
-
-  unReadCounter: number //안읽은 메시지 카운터
-  setUnReadCounter: (newCount: number) => void
-
-  // chat socket
-  chatConnected: boolean //연결상태
-  setChatConnected: (chatConnected: boolean) => void
-
-  chatOnline: ChatRoomOnline | null //온라인 유저
-  setChatOnline: (chatOnline: ChatRoomOnline) => void
-
-  chatSocket: WebSocket | null
-  chatConnect: (url: string) => void
-  chatDisConnect: () => void
-  sendMessage: (message: string) => void
-  chatScrollBottom: boolean // 채팅 스크롤이 제일 아래 있는지 확인
-  setChatScrollBottom: (chatScrollBottom: boolean) => void
 
   // notification
 }
