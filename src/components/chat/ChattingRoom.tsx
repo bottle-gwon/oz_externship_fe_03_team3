@@ -9,7 +9,6 @@ import Skeleton from '../commonInGeneral/skeleton/Skeleton'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useChatRoomMessage } from '@/hooks/chat/useChat'
 import { useEffect, useRef } from 'react'
-import type { ChatMessage } from '@/types/_chat'
 import useChatStore from '@/store/chat/chatStore'
 
 // 현재 온라인 유저 명수 표기

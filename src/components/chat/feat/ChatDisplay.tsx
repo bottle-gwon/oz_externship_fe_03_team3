@@ -177,18 +177,20 @@ const ChatDisplay = ({
         contain: 'strict',
       }}
     >
+      {/* 무한 스크롤 */}
       <div ref={LoadingRef} className="m-0 h-0 p-0"></div>
       {isPending && <ChattingRoomSkeleton />}
       {isFetchingNextPage && (
         <Skeleton widthInPixel={270} heightInPixel={100} className="shrink-0" />
       )}
+
+      {/* 가상화 리스트 적용 */}
       <div
         className={`relative w-full`}
         style={{
           height: rowVirtualizer.getTotalSize(),
         }}
       >
-        {/* 가상화 리스트 적용 */}
         <Vstack
           gap="none"
           padding="none"
