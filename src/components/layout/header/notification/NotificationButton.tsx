@@ -34,12 +34,12 @@ const NotificationButton = () => {
       <Dropdown.Trigger>
         <div className="relative">
           <Button variant="ghost">
-            <Bell />
+            <Bell size={16} />
           </Button>
           <CountBadge
             isVisible={Boolean(unreadCount)}
             count={unreadCount}
-            topRightClassName="top-[-6px] right-0"
+            topRightClassName="top-[-8px] right-[-8px]"
           />
         </div>
       </Dropdown.Trigger>

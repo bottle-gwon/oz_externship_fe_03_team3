@@ -6,6 +6,8 @@ import ProfileImage from '@/components/commonInProject/ProfileImage/ProfileImage
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
 import { subApi } from '@/api/api'
 import NotificationButton from './notification/NotificationButton'
+import { User } from 'lucide-react'
+import LogoutIcon from '@/assets/logout.svg'
 
 const logout = async () => {
   const state = useStudyHubStore.getState()
@@ -36,8 +38,8 @@ const ProfileButton = ({ me }: { me: Me }) => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <Button color="primary" variant="ghost" className="py-oz-sm p-0">
-          <Hstack className="items-center">
+        <Button variant="ghost">
+          <Hstack className="h-[20px] items-center">
             <ProfileImage url={me.profile_img_url} />
             <p className="shrink-0 text-gray-700">{me.name}</p>
           </Hstack>
@@ -45,8 +47,14 @@ const ProfileButton = ({ me }: { me: Me }) => {
       </Dropdown.Trigger>
 
       <Dropdown.Menu onChange={handleChange}>
-        <Dropdown.MenuItem value="mypage">마이페이지</Dropdown.MenuItem>
-        <Dropdown.MenuItem value="logout">로그아웃</Dropdown.MenuItem>
+        <Dropdown.MenuItem value="mypage">
+          <User size={14} />
+          마이페이지
+        </Dropdown.MenuItem>
+        <Dropdown.MenuItem value="logout">
+          <img src={LogoutIcon} />
+          <p className="text-danger-600">로그아웃</p>
+        </Dropdown.MenuItem>
       </Dropdown.Menu>
     </Dropdown>
   )

@@ -22,8 +22,8 @@ const Header = () => {
 
   return (
     <div className="border-b border-b-gray-200 bg-white">
-      <Container width="lg" className="px-oz-xxl py-oz-sm">
-        <Hstack className="items-center gap-0">
+      <Container width="lg" className="px-oz-xxl py-oz-md">
+        <Hstack className="h-[40px] items-center gap-0">
           <div className="grow">
             <img
               src={Logo}

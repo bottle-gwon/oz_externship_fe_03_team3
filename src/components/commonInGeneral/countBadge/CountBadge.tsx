@@ -20,7 +20,7 @@ const CountBadge = ({
     <div
       className={[
         topRightClassName ? topRightClassName : 'top-[-8px] right-[-8px]',
-        'bg-danger-500 absolute flex h-6 min-w-6 items-center justify-center rounded-full p-2 text-xs font-semibold text-white',
+        'bg-danger-500 absolute z-2 flex h-6 min-w-6 items-center justify-center rounded-full p-2 text-xs font-semibold text-white',
       ].join(' ')}
     >
       {count}
