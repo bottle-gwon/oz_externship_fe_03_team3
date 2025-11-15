@@ -15,7 +15,6 @@ import type { ChatMessage } from '@/types/_chat'
 // 현재 온라인 유저 명수 표기
 const OnlineUser = ({ isPending }: { isPending: boolean }) => {
   const chatOnline = useStudyHubStore((state) => state.chatOnline)
-
   if (isPending && chatOnline !== null) {
     return <Skeleton widthInPixel={162} heightInPixel={14} />
   }
@@ -51,7 +50,7 @@ const ChattingRoom = () => {
   const LoadingRef = useRef<HTMLDivElement | null>(null)
   useOneWayInfinityScroll(LoadingRef, () => {
     // 스크롤이 타겟에 들어왔을때 (훅에서는 100% 보일때로 설정해둠)
-
+    console.log('무한 스크롤')
     // 로딩중일때, 다음 페이지가 없으면 는 무한 스크롤 시작 안함
     if (hasNextPage && !isFetchingNextPage! && !chatInit) {
       fetchNextPage()
