@@ -4,7 +4,11 @@ import ManageDetailModal from '@/components/recruit/manageDetailModal/ManageDeta
 import useStudyHubStore from '@/store/store'
 import type { Applicant } from '@/types'
 
-const HyejeongManageModal = (applicant: Applicant) => {
+interface HyejeongManageModalProps {
+  applicant: Applicant
+}
+
+const HyejeongManageModal = ({ applicant }: HyejeongManageModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
 

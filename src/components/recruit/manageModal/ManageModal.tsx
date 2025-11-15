@@ -8,8 +8,8 @@ import useApplicantStore from '@/store/recruit/manageModal/applicantStore'
 import useApplicantsQuery from '@/hooks/manageModal/useApplicantsQuery'
 import type { Applicant, Recruit } from '@/types'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
-import ApplicantListSkeleton from './skeleton/ApplicantListSkeleton'
-import ApplicantTitleSkeleton from './skeleton/ApplicantTitleSkeleton'
+import ManageModalSkeleton from './ManageModalSkeleton'
+import ManageModalError from './ManageModalError'
 
 interface ManageModal {
   isOn: boolean
@@ -21,7 +21,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   const [selectedApplicant, setSelectedApplicant] = useState<Applicant | null>(
     null
   )
-  const { isPending, count } = useApplicantsQuery(recruit.uuid, isOn)
+  const { isPending, error, count } = useApplicantsQuery(recruit.uuid, isOn)
 
   const applicantArray = useApplicantStore((state) => state.applicantArray)
   const requestNextPage = useApplicantStore((state) => state.requestNextPage)
@@ -34,6 +34,14 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
   useOneWayInfinityScroll(targetRef, requestNextPage, {
     root: bodyRef.current,
   })
+
+  if (isPending) {
+    return <ManageModalSkeleton isOn={isOn} onClose={onClose} />
+  }
+
+  if (error) {
+    return <ManageModalError isOn={isOn} onClose={onClose} />
+  }
 
   const handleClose = () => {
     onClose(false)
@@ -54,10 +62,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
         <Modal.Header>
           <Vstack gap="xs">
             <h2 className="text-lg font-semibold">지원현황관리</h2>
-            {isPending && <ApplicantTitleSkeleton />}
-            {!isPending && (
-              <p className="text-sm">{`${recruit.title} - 총 ${count}명이 지원했습니다`}</p>
-            )}
+            <p className="text-sm">{`${recruit.title} - 총 ${count}명이 지원했습니다`}</p>
           </Vstack>
         </Modal.Header>
 
@@ -65,8 +70,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
           ref={bodyRef}
           className={`min-h-[492px] overflow-auto ${!isPending && applicantArray.length === 0 && 'justify-center'} `}
         >
-          {isPending && <ApplicantListSkeleton />}
-          {!isPending && applicantArray.length > 0 && (
+          {applicantArray.length > 0 && (
             <GridContainer gap="lg" className="grid-cols-2">
               {applicantArray.map((applicant) => (
                 <ApplicantCard
@@ -78,7 +82,7 @@ const ManageModal = ({ isOn, onClose, recruit }: ManageModal) => {
             </GridContainer>
           )}
 
-          {!isPending && applicantArray.length === 0 && (
+          {applicantArray.length === 0 && (
             <Vstack gap="none" className="text-center text-gray-500">
               아직 지원자가 없습니다
             </Vstack>
