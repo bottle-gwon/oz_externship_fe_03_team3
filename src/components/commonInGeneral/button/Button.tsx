@@ -2,9 +2,15 @@ import type { ButtonProps, ButtonVariant, Color, SmToLg } from '@/types'
 import { Hstack } from '../layout'
 import Spinner from '../spinner/Spinner'
 
-type ButtonShape = 'rectangle' | 'square' | 'circle' | 'slim' | 'spread'
+type ButtonShape =
+  | 'rectangle'
+  | 'square'
+  | 'circle'
+  | 'slim'
+  | 'spread'
+  | 'wideRectangle'
 
-interface WithButtonProps {
+export interface WithButtonProps {
   color?: Color
   variant?: ButtonVariant
   status?: 'enabled' | 'pending' | 'disabled'
@@ -89,6 +95,8 @@ const makeShapeResult = (shape: ButtonShape, size: SmToLg): string => {
   switch (shape) {
     case 'rectangle':
       return [makePaddigResult(size), 'rounded-lg h-fit w-fit'].join(' ')
+    case 'wideRectangle':
+      return [makePaddigResult(size), 'rounded-lg '].join(' ')
     case 'square':
       return [
         sizeMap[size],
@@ -128,7 +136,7 @@ const Button = ({
       disabled={status !== 'enabled'}
       className={`${className} ${result} cursor-pointer transition disabled:opacity-50`}
     >
-      <Hstack gap="xs" className="items-center">
+      <Hstack gap="xs" className="items-center justify-center">
         {status === 'pending' && (
           <Spinner variant={variant} size={size} color={color} />
         )}
