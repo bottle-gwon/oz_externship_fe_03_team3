@@ -10,7 +10,11 @@ import {
   useState,
 } from 'react'
 import useStudyHubStore from '@/store/store'
-import { useVirtualizer } from '@tanstack/react-virtual'
+import {
+  elementScroll,
+  useVirtualizer,
+  type VirtualizerOptions,
+} from '@tanstack/react-virtual'
 import useDebounce from '@/hooks/useDebounce'
 
 interface ChatArray {
@@ -39,6 +43,34 @@ const ChatDisplay = ({
   const [debounceValue] = useDebounce(bottom, 50)
 
   const previndex = useRef(0)
+  const scrollingRef = useRef<number>(0)
+
+  const easeInOutQuint = (t: number) => {
+    return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t
+  }
+  const scrollToFn: VirtualizerOptions<HTMLDivElement, Element>['scrollToFn'] =
+    useCallback((offset, canSmooth, instance) => {
+      const duration = 1000
+      const start = containerRef.current?.scrollTop || 0
+      const startTime = (scrollingRef.current = Date.now())
+
+      const run = () => {
+        if (scrollingRef.current !== startTime) return
+        const now = Date.now()
+        const elapsed = now - startTime
+        const progress = easeInOutQuint(Math.min(elapsed / duration, 1))
+        const interpolated = start + (offset - start) * progress
+
+        if (elapsed < duration) {
+          elementScroll(interpolated, canSmooth, instance)
+          requestAnimationFrame(run)
+        } else {
+          elementScroll(interpolated, canSmooth, instance)
+        }
+      }
+
+      requestAnimationFrame(run)
+    }, [])
 
   // 윈도잉(가상화 리스트)
   const rowVirtualizer = useVirtualizer({
@@ -46,6 +78,8 @@ const ChatDisplay = ({
     getScrollElement: () => containerRef.current, //스크롤 요소
     estimateSize: (_) => 120, // 각 메시지 예상 높이
     overscan: 10, // 화면 바깥에 미리 렌더링 할 메시지 수
+    scrollToFn,
+    initialOffset: Number.POSITIVE_INFINITY,
   })
 
   const handleScroll = () => {
@@ -80,9 +114,12 @@ const ChatDisplay = ({
     if (chatMessageArray.length === 0) {
       return
     }
+    // debugger
+    console.log(chatMessageArray.length, '길이')
     if (containerRef.current && chatInit && !isPending) {
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
+        behavior: 'auto',
       })
       setChatInit(false)
       previndex.current = 0
