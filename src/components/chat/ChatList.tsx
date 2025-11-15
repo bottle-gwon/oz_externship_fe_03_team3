@@ -1,22 +1,22 @@
 import ChattingLayout from '@/components/layout/chattingRoom/ChattingLayout'
 import ChatListCard from './feat/ChatListCard'
-import useStudyHubStore from '@/store/store'
 import { useEffect } from 'react'
 import ChatListSkeleton from './skeleton/ChatListSkeleton'
 // import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 // import ChatListSkeletonCard from './skeleton/ChatListSkeletonCard'
 import { useChatRoomList } from '@/hooks/chat/useChat'
 import type { ChatRoomData } from '@/types/_chat'
+import useChatStore from '@/store/chat/chatStore'
 // import NoMoreChatList from './feat/NoMoreChatList'
 
 // 채팅 목록
 const ChatList = () => {
   // const responseData = DUMMY_CHATLIST
 
-  const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
-  const chatRoomArray = useStudyHubStore((state) => state.chatRoomArray)
-  const setChatRoomArray = useStudyHubStore((state) => state.setChatRoomArray)
-  const setUnReadCounter = useStudyHubStore((state) => state.setUnReadCounter)
+  const unreadCounter = useChatStore((state) => state.unReadCounter) //안읽은 메시지
+  const chatRoomArray = useChatStore((state) => state.chatRoomArray)
+  const setChatRoomArray = useChatStore((state) => state.setChatRoomArray)
+  const setUnReadCounter = useChatStore((state) => state.setUnReadCounter)
 
   const { data, isPending, isError, error } = useChatRoomList()
 

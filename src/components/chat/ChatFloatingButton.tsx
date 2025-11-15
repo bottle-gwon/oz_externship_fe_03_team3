@@ -1,6 +1,7 @@
 import useStudyHubStore from '@/store/store'
 import FloatingButton from '../layout/floatingButton/FloatingButton'
 import { MessageCircle, X } from 'lucide-react'
+import useChatStore from '@/store/chat/chatStore'
 
 const ChatIcon = (isOff: boolean) => {
   if (isOff) {
@@ -11,11 +12,11 @@ const ChatIcon = (isOff: boolean) => {
 }
 
 const ChatFloatingButton = () => {
-  const chatState = useStudyHubStore((state) => state.chatState)
-  const openChatList = useStudyHubStore((state) => state.openChatList)
-  const closeChatUI = useStudyHubStore((state) => state.closeChatUI)
+  const chatState = useChatStore((state) => state.chatState)
+  const openChatList = useChatStore((state) => state.openChatList)
+  const closeChatUI = useChatStore((state) => state.closeChatUI)
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const unreadCounter = useStudyHubStore((state) => state.unReadCounter) //안읽은 메시지
+  const unreadCounter = useChatStore((state) => state.unReadCounter) //안읽은 메시지
   // const setUnreadCounter = useStudyHubStore((state) => state.setUnReadCounter) //안읽은 메시지 카운터
 
   const isOff = chatState.status === 'off'

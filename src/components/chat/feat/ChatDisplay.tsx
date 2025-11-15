@@ -3,13 +3,13 @@ import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
-import useStudyHubStore from '@/store/store'
 import {
   elementScroll,
   useVirtualizer,
   type VirtualizerOptions,
 } from '@tanstack/react-virtual'
 import useDebounce from '@/hooks/useDebounce'
+import useChatStore from '@/store/chat/chatStore'
 
 interface ChatArray {
   isPending: boolean
@@ -25,13 +25,11 @@ const ChatDisplay = ({
   // const [scrollHeight, setScrollHeight] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null)
   const overflow = isPending ? 'overflow-hidden' : 'overflow-y-scroll'
-  const chatMessageArray = useStudyHubStore((state) => state.chatMessageArray)
-  const chatScrollBottom = useStudyHubStore((state) => state.chatScrollBottom)
-  const setChatScrollBottom = useStudyHubStore(
-    (state) => state.setChatScrollBottom
-  )
-  const chatInit = useStudyHubStore((state) => state.chatInit) // 초기 스크롤 세팅할 플래그
-  const setChatInit = useStudyHubStore((state) => state.setChatInit)
+  const chatMessageArray = useChatStore((state) => state.chatMessageArray)
+  const chatScrollBottom = useChatStore((state) => state.chatScrollBottom)
+  const setChatScrollBottom = useChatStore((state) => state.setChatScrollBottom)
+  const chatInit = useChatStore((state) => state.chatInit) // 초기 스크롤 세팅할 플래그
+  const setChatInit = useChatStore((state) => state.setChatInit)
 
   const [debounceValue] = useDebounce(true, 500)
 
