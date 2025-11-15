@@ -1,6 +1,8 @@
 import type { ReactNode } from 'react'
 import Modal from '../Modal'
-import { Hstack, Vstack } from '../../layout'
+import { Vstack } from '../../layout'
+import type { ButtonProps } from '@/types'
+import Button, { type WithButtonProps } from '../../button/Button'
 
 const ConfirmationModalTitle = ({ children }: { children: ReactNode }) => {
   return <div className="text-center text-lg font-semibold">{children}</div>
@@ -9,12 +11,25 @@ const ConfirmationModalContent = ({ children }: { children: ReactNode }) => {
   return <div className="mt-oz-lg inline-block w-fit text-left">{children}</div>
 }
 
+const ConfirmationModalButton = (props: ButtonProps & WithButtonProps) => {
+  const { children, shape: _shape, ...rest } = props
+  return (
+    <Button {...rest} shape="wideRectangle">
+      {children}
+    </Button>
+  )
+}
+
 const ConfirmationModalButtonSection = ({
   children,
 }: {
   children: ReactNode
 }) => {
-  return <Hstack className="mt-oz-xxl w-full justify-end">{children}</Hstack>
+  return (
+    <div className="mt-oz-xxl gap-oz-xs grid w-full auto-cols-fr grid-flow-col">
+      {children}
+    </div>
+  )
 }
 
 interface ConfirmationModalProps {
@@ -42,5 +57,6 @@ const ConfirmationModal = ({
 ConfirmationModal.Title = ConfirmationModalTitle
 ConfirmationModal.Content = ConfirmationModalContent
 ConfirmationModal.ButtonSection = ConfirmationModalButtonSection
+ConfirmationModal.Button = ConfirmationModalButton
 
 export default ConfirmationModal

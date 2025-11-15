@@ -30,7 +30,9 @@ const ThePottModalPage = () => {
           으하하항 으하하하 으하하하 으하하항 으하 으하하하 으 하하
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => setIsOn1(false)}>확인</Button>
+          <Button shape="wideRectangle" onClick={() => setIsOn1(false)}>
+            확인
+          </Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
 
@@ -40,8 +42,15 @@ const ThePottModalPage = () => {
           으하하하 으하하항 으하하하
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => setIsOn2(false)}>확인</Button>
-          <Button onClick={() => setIsOn2(false)} color="danger">
+          <ConfirmationModal.Button>asdfasdf</ConfirmationModal.Button>
+          <Button shape="wideRectangle" onClick={() => setIsOn2(false)}>
+            확인
+          </Button>
+          <Button
+            shape="wideRectangle"
+            onClick={() => setIsOn2(false)}
+            color="danger"
+          >
             삭제
           </Button>
         </ConfirmationModal.ButtonSection>
