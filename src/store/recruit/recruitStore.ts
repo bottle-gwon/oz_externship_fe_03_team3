@@ -21,6 +21,11 @@ const useRecruitStore = create<RecruitStoreState>()((set) => ({
 
   requestNextPage: () => {},
   setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
+
+  hasNextPage: false,
+  setHasNextPage: (hasNextPage) => set({ hasNextPage }),
+  totalCount: 0,
+  setTotalCount: (totalCount) => set({ totalCount }),
 }))
 
 export default useRecruitStore

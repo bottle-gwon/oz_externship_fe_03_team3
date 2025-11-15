@@ -2,18 +2,28 @@ import RecruitManageContent from '@/components/recruit/manage/RecruitManageConte
 import useStudyHubStore from '@/store/store'
 import useRecruitManage from '@/hooks/recruit/useRecruitsManageQuery'
 import ManageSkeleton from '@/components/recruit/manage/ManageSkeleton'
-import RecruitContent from '@/components/recruit/title/RecruitContent'
 import UnknwonErrorContent from '@/components/commonInGeneral/error/UnknownErrorContent'
+import useRecruitManageStore from '@/store/recruit/manage/recruitManageStore'
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router'
 
 const RecruitManagePage = () => {
   const userId = useStudyHubStore((state) => state.me?.id ?? 0)
   const { isPending, error } = useRecruitManage()
+  const recuitManageArray = useRecruitManageStore(
+    (state) => state.recruitManageArray
+  )
+  const navigate = useNavigate()
 
-  if (!userId) {
-    return <RecruitContent />
-  }
+  useEffect(() => {
+    if (userId) {
+      return
+    }
+    navigate('/recruit')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [userId])
 
-  if (isPending) {
+  if (isPending && recuitManageArray.length === 0) {
     return <ManageSkeleton />
   }
   if (error) {
