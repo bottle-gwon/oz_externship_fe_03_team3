@@ -76,10 +76,11 @@ const ChatDisplay = ({
   const rowVirtualizer = useVirtualizer({
     count: chatMessageArray.length, // 렌더링할 아이템 개수
     getScrollElement: () => containerRef.current, //스크롤 요소
-    estimateSize: (_) => 120, // 각 메시지 예상 높이
+    estimateSize: (_) => 85, // 각 메시지 예상 높이
     overscan: 10, // 화면 바깥에 미리 렌더링 할 메시지 수
     enabled: !isPending,
     scrollToFn,
+    // scrollPaddingEnd: 100,
   })
 
   const handleScroll = () => {
@@ -117,6 +118,7 @@ const ChatDisplay = ({
     // debugger
     if (containerRef.current && chatInit && !isPending) {
       console.log(chatMessageArray.length)
+      console.log('초기')
 
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
@@ -141,6 +143,8 @@ const ChatDisplay = ({
     ) {
       // 무한 스크롤 할때
       if (previndex.current !== chatMessageArray.length) {
+        console.log('무한')
+
         rowVirtualizer.scrollToIndex(
           chatMessageArray.length - previndex.current - 1,
           {
@@ -165,9 +169,14 @@ const ChatDisplay = ({
     if (!chatInit && chatMessageArray.length > previndex.current) {
       // 바닥에 있을때 === 채팅 할때
       if (chatScrollBottom) {
+        console.log(
+          '채팅',
+          chatMessageArray.length,
+          previndex.current,
+          chatMessageArray
+        )
         rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
-          align: 'end',
-          behavior: 'auto',
+          align: 'center',
         })
         // previndex.current = chatMessageArray.length
       }
@@ -181,7 +190,7 @@ const ChatDisplay = ({
     <Vstack
       padding="md"
       gap="none"
-      className={`mx-[-24px] h-full ${overflow}`}
+      className={`mx-[-24px] h-full ${overflow} !my-0 !py-0`}
       ref={containerRef}
       onScroll={handleScroll}
       style={{
@@ -201,6 +210,8 @@ const ChatDisplay = ({
       >
         {/* 가상화 리스트 적용 */}
         <Vstack
+          gap="none"
+          padding="none"
           className="absolute top-0 left-0 w-full"
           style={{
             transform: `translateY(${rowVirtualizer.getVirtualItems()[0]?.start ?? 0}px)`,
