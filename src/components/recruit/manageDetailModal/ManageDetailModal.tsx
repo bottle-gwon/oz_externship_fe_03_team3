@@ -10,6 +10,8 @@ import ManageDetailConfirmationModal from './_ManageDetailConfirmationModal'
 import useStudyHubStore from '@/store/store'
 import useApplicantDetailQuery from '@/hooks/manageDetailModal/useApplicantDetailQuery'
 import ManageDetailSkeleton from './ManageDetailSkeleton'
+import ManageDetailError from './ManageDetailError'
+import ManageDetailFallback from './ManageDetailFallback'
 
 interface ManageDetailModalProps {
   isOn: boolean
@@ -26,16 +28,22 @@ const ManageDetailModal = ({
 }: ManageDetailModalProps) => {
   const modalKeyArray = useStudyHubStore((state) => state.modalKeyArray)
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
-  const { data: applicantDetail, isPending } = useApplicantDetailQuery(
-    applicant.uuid
-  )
+  const {
+    data: applicantDetail,
+    isPending,
+    error,
+  } = useApplicantDetailQuery(applicant.uuid)
 
   if (isPending) {
     return <ManageDetailSkeleton isOn={isOn} onClose={onClose} />
   }
 
+  if (error) {
+    return <ManageDetailError isOn={isOn} onClose={onClose} />
+  }
+
   if (!applicantDetail) {
-    return <p>데이터를 찾을 수 없습니다.</p>
+    return <ManageDetailFallback isOn={isOn} onClose={onClose} />
   }
 
   const statusStyle = statusStyles[applicantDetail.status]
