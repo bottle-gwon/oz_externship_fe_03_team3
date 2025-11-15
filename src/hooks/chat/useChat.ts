@@ -154,7 +154,7 @@ export const useUnreadChatCount = (): number => {
       if (!accessToken) {
         return false
       }
-      return 50000 // 3초마다 요청 보내기
+      return 3000 // 3초마다 요청 보내기
     },
   })
 
