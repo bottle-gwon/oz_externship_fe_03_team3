@@ -7,7 +7,7 @@ import NotificationTabRow from './_NotificationTabRow'
 import useNotificationMutation from '@/hooks/notification/useNotificationsMutation'
 import useNotificationStore from '@/store/notification/notificationStore'
 import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import ErrorDisplay from '@/components/commonInGeneral/error/ErrorDisplay'
 import UnknwonErrorContent from '@/components/commonInGeneral/error/UnknownErrorContent'
 
@@ -20,6 +20,9 @@ const NotificationBox = () => {
   const error = useNotificationStore((state) => state.error)
   const hasNextPage = useNotificationStore((state) => state.hasNextPage)
   const requestNextPage = useNotificationStore((state) => state.requestNextPage)
+  const setHasBeenOpened = useNotificationStore(
+    (state) => state.setHasBeenOpened
+  )
 
   const { patchAllMutation } = useNotificationMutation()
 
@@ -28,6 +31,11 @@ const NotificationBox = () => {
     root: rootRef.current,
     rootMargin: '0px 0px 300px 0px',
   })
+
+  useEffect(() => {
+    setHasBeenOpened(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <RoundBox padding="none" className="shadow-oz-lg overflow-hidden">
@@ -54,7 +62,7 @@ const NotificationBox = () => {
           ref={rootRef}
         >
           {error && <UnknwonErrorContent isSmall />}
-          {notificationArray.length === 0 && (
+          {!error && notificationArray.length === 0 && (
             <ErrorDisplay isSmall color="mono-bright">
               <ErrorDisplay.Code>Empty</ErrorDisplay.Code>
             </ErrorDisplay>

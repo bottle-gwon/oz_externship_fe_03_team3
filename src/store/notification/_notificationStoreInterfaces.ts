@@ -19,4 +19,7 @@ export interface NotificationStoreState {
   setHasNextPage: (hasNextPage: boolean) => void
   requestNextPage: () => void
   setRequestNextPage: (requestNextPage: () => void) => void
+
+  hasBeenOpened: boolean
+  setHasBeenOpened: (hasBeenOpened: boolean) => void
 }
