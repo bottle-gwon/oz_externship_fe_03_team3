@@ -16,6 +16,12 @@ const LectureCategorySelect = () => {
     queryFn: async () => (await api.get(endpoint)).data as LectureCategory[],
   })
 
+  const filteredData = data
+    ? data.filter((lectureCategory) => {
+        return /^[a-zA-Z가-힣ㄱ-ㅎㅏ-ㅣ\s]+$/.test(lectureCategory.name)
+      })
+    : []
+
   const handleOptionSelect = (option: string | number) => {
     if (typeof option !== 'string') {
       throw new Error('---- 카테고리는 스트링이어야 합니다!')
@@ -28,10 +34,9 @@ const LectureCategorySelect = () => {
       <Select.Trigger icon={<Folder size={16} />}>전체 카테고리</Select.Trigger>
       <Select.Content>
         <Select.Option>전체 카테고리</Select.Option>
-        {data &&
-          data.map((category) => (
-            <Select.Option key={category.id}>{category.name}</Select.Option>
-          ))}
+        {filteredData.slice(0, 15).map((category) => (
+          <Select.Option key={category.id}>{category.name}</Select.Option>
+        ))}
       </Select.Content>
     </Select>
   )
