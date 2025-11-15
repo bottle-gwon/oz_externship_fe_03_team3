@@ -28,11 +28,11 @@ const ChattingRoom = () => {
   const chatState = useChatStore((state) => state.chatState)
   const openChatList = useChatStore((state) => state.openChatList)
   const setChatMessageArray = useChatStore((state) => state.setChatMessageArray)
-  const chatMessageArray = useChatStore((state) => state.chatMessageArray)
+  // const chatMessageArray = useChatStore((state) => state.chatMessageArray)
   const chatInit = useChatStore((state) => state.chatInit)
 
-  const page = useChatStore((state) => state.page)
-  const setPage = useChatStore((state) => state.setPage)
+  // const page = useChatStore((state) => state.page)
+  // const setPage = useChatStore((state) => state.setPage)
   const chatOnline = useChatStore((state) => state.chatOnline)
 
   const {
@@ -56,11 +56,11 @@ const ChattingRoom = () => {
   })
 
   // 데이터 저장, 정렬
-  const sortMessage = (message: ChatMessage[]) => {
-    return message.sort(
-      (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
-    )
-  }
+  // const sortMessage = (message: ChatMessage[]) => {
+  //   return message.sort(
+  //     (a, b) => Date.parse(a.created_at) - Date.parse(b.created_at)
+  //   )
+  // }
 
   // 메시지 정렬, 메시지 배열 초기화
   useEffect(() => {
@@ -72,31 +72,32 @@ const ChattingRoom = () => {
       if (!messageArray) {
         return
       }
+      const allMessage = [...messageArray].flatMap((res) => res || []) || []
+      setChatMessageArray(allMessage)
+
       // 초기화
-      if (page === 0) {
-        if (data.pageParams.length === 0) {
-          const allMessage = [...messageArray].flatMap((res) => res || []) || []
-          const sortMessaged = sortMessage(allMessage)
-          setChatMessageArray(sortMessaged)
-        } else {
-          const allMessage =
-            data?.pages.flatMap((res) => res.results || []) || []
-          const sortMessaged = sortMessage(allMessage)
-          setChatMessageArray(sortMessaged)
-        }
-      } else {
-        const allMessage =
-          [...chatMessageArray, ...messageArray].flatMap((res) => res || []) ||
-          []
-        const sortMessaged = sortMessage(allMessage)
+      // if (page === 0) {
+      //   if (data.pageParams.length === 0) {
+      //     const allMessage = [...messageArray].flatMap((res) => res || []) || []
+      //     const sortMessaged = sortMessage(allMessage)
+      //     setChatMessageArray(sortMessaged)
+      //   } else {
+      //     const allMessage =
+      //       data?.pages.flatMap((res) => res.results || []) || []
+      //     const sortMessaged = sortMessage(allMessage)
+      //     setChatMessageArray(sortMessaged)
+      //   }
+      // } else {
+      //   const allMessage =
+      //     [...chatMessageArray, ...messageArray].flatMap((res) => res || []) ||
+      //     []
+      //   const sortMessaged = sortMessage(allMessage)
 
-        setChatMessageArray(sortMessaged)
-      }
+      //   setChatMessageArray(sortMessaged)
+      // }
 
-      setPage(data.pageParams.length)
+      // setPage(data.pageParams.length)
     }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data, isFetchingNextPage, setChatMessageArray])
 
   if (chatState.status !== 'chatRoom') {
