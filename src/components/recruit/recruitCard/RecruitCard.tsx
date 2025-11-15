@@ -263,8 +263,10 @@ const RecruitCard = ({
           </p>
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={cancelDelete}>취소</Button>
-          <Button onClick={confirmDelete} color="danger">
+          <Button shape="wideRectangle" onClick={cancelDelete}>
+            취소
+          </Button>
+          <Button shape="wideRectangle" onClick={confirmDelete} color="danger">
             삭제
           </Button>
         </ConfirmationModal.ButtonSection>

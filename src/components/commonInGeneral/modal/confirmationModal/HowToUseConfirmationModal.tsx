@@ -16,8 +16,14 @@ const HowToUseConfirmationModal = () => {
           사용하고 싶을 땐 버튼 섹션에 버튼을 여럿 넣으면 됩니다
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => setIsOn(false)}>확인</Button>
-          <Button onClick={() => setIsOn(false)} color="danger">
+          <Button shape="wideRectangle" onClick={() => setIsOn(false)}>
+            확인
+          </Button>
+          <Button
+            shape="wideRectangle"
+            onClick={() => setIsOn(false)}
+            color="danger"
+          >
             삭제
           </Button>
         </ConfirmationModal.ButtonSection>

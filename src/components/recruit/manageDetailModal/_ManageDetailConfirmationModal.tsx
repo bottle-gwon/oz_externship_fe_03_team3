@@ -28,6 +28,7 @@ const ManageDetailConfirmationModal = ({
       <ConfirmationModal.ButtonSection>
         {currentConfig.buttons.map((button, index) => (
           <Button
+            shape="wideRectangle"
             key={index}
             variant="contained"
             color={button.color}

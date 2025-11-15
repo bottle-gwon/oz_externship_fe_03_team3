@@ -224,7 +224,9 @@ const ApplicationModalPage = ({
           {`지원한 리스트는 '마이페이지>지원내역'에서 확인할 수 있습니다.`}
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={closeAllAndReset}>확인</Button>
+          <Button shape="wideRectangle" onClick={closeAllAndReset}>
+            확인
+          </Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
 
@@ -241,7 +243,10 @@ const ApplicationModalPage = ({
           {`문제가 지속되면 관리자에게 문의하세요.`}
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => removeModalKeyFromArray('applyError')}>
+          <Button
+            shape="wideRectangle"
+            onClick={() => removeModalKeyFromArray('applyError')}
+          >
             확인
           </Button>
         </ConfirmationModal.ButtonSection>

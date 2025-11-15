@@ -33,7 +33,9 @@ const ErrorModal = ({ isOn, setIsOn, title, detail }: ErrorModalInterface) => {
       </ConfirmationModal.Content>
 
       <ConfirmationModal.ButtonSection>
-        <Button onClick={() => setIsOn(false)}>확인</Button>
+        <Button shape="wideRectangle" onClick={() => setIsOn(false)}>
+          확인
+        </Button>
       </ConfirmationModal.ButtonSection>
     </ConfirmationModal>
   )
