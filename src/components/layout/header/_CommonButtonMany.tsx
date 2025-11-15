@@ -12,13 +12,13 @@ const CommonButtonMany = () => {
 
   return (
     <>
-      <Button variant="ghost" size="lg" onClick={navigateToLecture}>
+      <Button variant="ghost" onClick={navigateToLecture}>
         강의 목록
       </Button>
-      <Button variant="ghost" size="lg" onClick={redirectToStudy}>
+      <Button variant="ghost" onClick={redirectToStudy}>
         스터디 그룹
       </Button>
-      <Button variant="ghost" size="lg" onClick={navigateToRecruit}>
+      <Button variant="ghost" onClick={navigateToRecruit}>
         구인 공고
       </Button>
     </>

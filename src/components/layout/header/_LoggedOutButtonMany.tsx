@@ -9,10 +9,10 @@ const LoggedOutButtonMany = () => {
     (window.location.href = import.meta.env.VITE_SIGNUP_PAGE_URL)
   return (
     <>
-      <Button variant="ghost" size="lg" onClick={redirectToLogin}>
+      <Button variant="ghost" onClick={redirectToLogin}>
         로그인
       </Button>
-      <Button color="primary" size="lg" onClick={redirectToSignup}>
+      <Button color="primary" onClick={redirectToSignup}>
         회원가입
       </Button>
     </>

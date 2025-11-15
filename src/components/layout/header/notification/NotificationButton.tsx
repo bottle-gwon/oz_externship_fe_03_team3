@@ -37,7 +37,7 @@ const NotificationButton = () => {
     <Dropdown>
       <Dropdown.Trigger>
         <div className="relative">
-          <Button variant="ghost" size="lg">
+          <Button variant="ghost">
             <Bell />
           </Button>
           <CountBadge
