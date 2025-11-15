@@ -1,12 +1,12 @@
 // import ChatList from '@/components/chat/ChatList'
 import ChattingRoom from '@/components/chat/ChattingRoom'
 import Button from '@/components/commonInGeneral/button/Button'
-import useStudyHubStore from '@/store/store'
+import useChatStore from '@/store/chat/chatStore'
 // import ChattingLayout from '@/components/layout/chattingRoom/chattingLayout'
 
 const GwonChatTest = () => {
-  const openChatRoom = useStudyHubStore((state) => state.openChatRoom)
-  const chatState = useStudyHubStore((state) => state.chatState)
+  const openChatRoom = useChatStore((state) => state.openChatRoom)
+  const chatState = useChatStore((state) => state.chatState)
 
   const testOpenChatRoom = () => {
     openChatRoom('123', '리눅스 공부')
