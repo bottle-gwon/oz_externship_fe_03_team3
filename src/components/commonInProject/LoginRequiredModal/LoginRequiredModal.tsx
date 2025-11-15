@@ -21,7 +21,7 @@ const LoginRequiredModal = () => {
         로그인 페이지로 이동할까요?
       </ConfirmationModal.Content>
       <ConfirmationModal.ButtonSection>
-        <Button onClick={handleClick}>
+        <Button shape="wideRectangle" onClick={handleClick}>
           <LogIn size={16} />
           로그인하기
         </Button>

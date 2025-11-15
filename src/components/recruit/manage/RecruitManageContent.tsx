@@ -131,7 +131,12 @@ const RecruitManageContent = () => {
             {`'${deletedTitle}'의 삭제가 완료되었습니다.`}
           </ConfirmationModal.Title>
           <ConfirmationModal.ButtonSection>
-            <Button onClick={() => setDeleteSuccessOpen(false)}>확인</Button>
+            <Button
+              shape="wideRectangle"
+              onClick={() => setDeleteSuccessOpen(false)}
+            >
+              확인
+            </Button>
           </ConfirmationModal.ButtonSection>
         </ConfirmationModal>
 
@@ -149,7 +154,12 @@ const RecruitManageContent = () => {
             </p>
           </ConfirmationModal.Content>
           <ConfirmationModal.ButtonSection>
-            <Button onClick={() => setDeleteErrorOpen(false)}>확인</Button>
+            <Button
+              shape="wideRectangle"
+              onClick={() => setDeleteErrorOpen(false)}
+            >
+              확인
+            </Button>
           </ConfirmationModal.ButtonSection>
         </ConfirmationModal>
       </Vstack>

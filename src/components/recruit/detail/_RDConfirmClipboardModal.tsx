@@ -16,7 +16,9 @@ const RDConfirmClipboardModalMany = () => {
           클립보드에 URL이 복사되었습니다
         </ConfirmationModal.Title>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => setModalKey(null)}>확인</Button>
+          <Button shape="wideRectangle" onClick={() => setModalKey(null)}>
+            확인
+          </Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
 
@@ -31,7 +33,9 @@ const RDConfirmClipboardModalMany = () => {
           잠시 후 다시 시도해주세요
         </ConfirmationModal.Content>
         <ConfirmationModal.ButtonSection>
-          <Button onClick={() => setModalKey(null)}>확인</Button>
+          <Button shape="wideRectangle" onClick={() => setModalKey(null)}>
+            확인
+          </Button>
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
     </>
