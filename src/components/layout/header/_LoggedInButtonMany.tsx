@@ -36,12 +36,7 @@ const ProfileButton = ({ me }: { me: Me }) => {
   return (
     <Dropdown>
       <Dropdown.Trigger>
-        <Button
-          color="primary"
-          variant="ghost"
-          size="lg"
-          className="py-oz-sm p-0"
-        >
+        <Button color="primary" variant="ghost" className="py-oz-sm p-0">
           <Hstack className="items-center">
             <ProfileImage url={me.profile_img_url} />
             <p className="shrink-0 text-gray-700">{me.name}</p>
