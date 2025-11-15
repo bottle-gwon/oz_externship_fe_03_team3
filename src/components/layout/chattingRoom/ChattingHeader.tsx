@@ -1,5 +1,5 @@
 import { Hstack, Vstack } from '@/components/commonInGeneral/layout'
-import useStudyHubStore from '@/store/store'
+import useChatStore from '@/store/chat/chatStore'
 import { X } from 'lucide-react'
 import type { ReactNode } from 'react'
 
@@ -8,7 +8,7 @@ interface ChattingHeader {
 }
 
 const ChattingHeader = ({ children }: ChattingHeader) => {
-  const closeChatUI = useStudyHubStore((state) => state.closeChatUI)
+  const closeChatUI = useChatStore((state) => state.closeChatUI)
 
   return (
     <Hstack

@@ -1,4 +1,5 @@
 import api from '@/api/api'
+import useChatStore from '@/store/chat/chatStore'
 import useStudyHubStore from '@/store/store'
 import {
   type ChatMessageApiResponse,
@@ -98,7 +99,7 @@ export const useChatRoomList = () => {
 
 // 채팅 메시지 리스트 가져오기
 export const useChatRoomMessage = () => {
-  const chatState = useStudyHubStore((state) => state.chatState)
+  const chatState = useChatStore((state) => state.chatState)
 
   // 만약 채팅방이 열리지 않은 상태면 -1을 넣어서 훅이 작동 하지 않도록 한다.(쿼리의 enabled 참고)
   const get_study_group_id =
@@ -142,7 +143,7 @@ export const useChatRoomMessage = () => {
 
 export const useUnreadChatCount = (): number => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const unReadCounter = useStudyHubStore((state) => state.unReadCounter)
+  const unReadCounter = useChatStore((state) => state.unReadCounter)
   const queryClient = useQueryClient()
 
   const { data } = useQuery({

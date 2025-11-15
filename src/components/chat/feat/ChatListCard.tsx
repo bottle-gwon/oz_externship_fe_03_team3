@@ -1,6 +1,6 @@
-import useStudyHubStore from '@/store/store'
 import { Hstack, Vstack } from '../../commonInGeneral/layout'
 import type { ChatRoomData } from '@/types/_chat'
+import useChatStore from '@/store/chat/chatStore'
 
 interface ChatListCardInterface {
   room: ChatRoomData
@@ -17,7 +17,7 @@ const ChatListCard = ({ room }: ChatListCardInterface) => {
     ? chatData
     : '시작일이 없습니다'
 
-  const openChatList = useStudyHubStore((state) => state.openChatRoom)
+  const openChatList = useChatStore((state) => state.openChatRoom)
 
   const onClickChatRoom = () => {
     openChatList(room.uuid, room.name)

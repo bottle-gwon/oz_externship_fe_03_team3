@@ -2,6 +2,7 @@ import { Hstack } from '@/components/commonInGeneral/layout'
 import SendIcon from '@/assets/send.svg'
 import useStudyHubStore from '@/store/store'
 import { useEffect, useState } from 'react'
+import useChatStore from '@/store/chat/chatStore'
 
 interface ChatInput {
   isPending: boolean
@@ -30,10 +31,10 @@ const URL = import.meta.env.VITE_SOCEKT_BASE_URL
 const ChatInput = ({ isPending }: ChatInput) => {
   const LoadingStatus = chatInputStatus(isPending)
 
-  const chatState = useStudyHubStore((state) => state.chatState)
-  const chatConnect = useStudyHubStore((state) => state.chatConnect)
-  const chatDisConnect = useStudyHubStore((state) => state.chatDisConnect)
-  const sendMessage = useStudyHubStore((state) => state.sendMessage)
+  const chatState = useChatStore((state) => state.chatState)
+  const chatConnect = useChatStore((state) => state.chatConnect)
+  const chatDisConnect = useChatStore((state) => state.chatDisConnect)
+  const sendMessage = useChatStore((state) => state.sendMessage)
   const accessToken = useStudyHubStore((state) => state.accessToken)
 
   const [inputValue, setInputValue] = useState<string>('')
