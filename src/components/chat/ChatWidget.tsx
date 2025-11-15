@@ -32,7 +32,6 @@ const ChatWidget = () => {
       queryClient.invalidateQueries({
         queryKey: ['message'],
       })
-      setChatMessageArray([])
     }
   }, [chatState, queryClient, setChatMessageArray])
 
