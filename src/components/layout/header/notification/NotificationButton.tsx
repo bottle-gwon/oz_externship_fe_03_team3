@@ -1,6 +1,5 @@
 import Button from '@/components/commonInGeneral/button/Button'
 import Dropdown from '@/components/commonInGeneral/dropdown/Dropdown'
-import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { Bell } from 'lucide-react'
 import { Suspense } from 'react'
 import NotificationBox from './_NotificationBox'
@@ -10,9 +9,6 @@ import CountBadge from '@/components/commonInGeneral/countBadge/CountBadge'
 import NotificationSkeleton from './_NotificationSkeleton'
 
 const NotificationButton = () => {
-  const allNotificationArray = useNotificationStore(
-    (state) => state.allNotificationArray
-  )
   const selectedTab = useNotificationStore((state) => state.selectedTab)
   const notificationCounts = useNotificationStore(
     (state) => state.notificationCounts
