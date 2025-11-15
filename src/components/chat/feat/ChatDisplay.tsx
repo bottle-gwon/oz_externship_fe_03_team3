@@ -116,9 +116,10 @@ const ChatDisplay = ({
     }
     // debugger
     if (containerRef.current && chatInit && !isPending) {
+      console.log(chatMessageArray.length)
+
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
-        behavior: 'auto',
       })
       setChatInit(false)
       previndex.current = 0
@@ -179,6 +180,7 @@ const ChatDisplay = ({
   return (
     <Vstack
       padding="md"
+      gap="none"
       className={`mx-[-24px] h-full ${overflow}`}
       ref={containerRef}
       onScroll={handleScroll}
@@ -186,6 +188,11 @@ const ChatDisplay = ({
         contain: 'strict',
       }}
     >
+      <div ref={LoadingRef} className="m-0 h-0 p-0"></div>
+      {isPending && <ChattingRoomSkeleton />}
+      {isFetchingNextPage && (
+        <Skeleton widthInPixel={270} heightInPixel={100} className="shrink-0" />
+      )}
       <div
         className={`relative w-full`}
         style={{
@@ -199,33 +206,19 @@ const ChatDisplay = ({
             transform: `translateY(${rowVirtualizer.getVirtualItems()[0]?.start ?? 0}px)`,
           }}
         >
-          {isPending && <ChattingRoomSkeleton />}
-          {isFetchingNextPage && (
-            <Skeleton
-              widthInPixel={270}
-              heightInPixel={100}
-              className="shrink-0"
-            />
-          )}
-
-          {rowVirtualizer.getVirtualItems().map((virtualRow) => {
-            const message = chatMessageArray[virtualRow.index]
-            return (
-              <div
-                key={virtualRow.key}
-                data-index={virtualRow.index}
-                ref={rowVirtualizer.measureElement}
-              >
-                {virtualRow.index === 0 && (
-                  <div ref={LoadingRef} className="m-0 h-0 p-0"></div>
-                )}
-                <ChatBox
-                  chat={message}
-                  // measure={rowVirtualizer.measureElement}
-                />
-              </div>
-            )
-          })}
+          {!isPending &&
+            rowVirtualizer.getVirtualItems().map((virtualRow) => {
+              const message = chatMessageArray[virtualRow.index]
+              return (
+                <div
+                  key={virtualRow.key}
+                  data-index={virtualRow.index}
+                  ref={rowVirtualizer.measureElement}
+                >
+                  <ChatBox chat={message} />
+                </div>
+              )
+            })}
         </Vstack>
       </div>
       {/* {chatMessageArray.map((el) => (
