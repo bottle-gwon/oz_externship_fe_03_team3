@@ -21,6 +21,9 @@ const useNotificationStore = create<NotificationStoreState>()((set, _get) => ({
   setHasNextPage: (hasNextPage) => set({ hasNextPage }),
   requestNextPage: () => {},
   setRequestNextPage: (requestNextPage) => set({ requestNextPage }),
+
+  hasBeenOpened: false,
+  setHasBeenOpened: (hasBeenOpened) => set({ hasBeenOpened }),
 }))
 
 export default useNotificationStore
