@@ -41,7 +41,7 @@ const ChatBox = ({ chat }: ChatBoxInterface) => {
   const boxStyle = chatBoxStyle(isOwner)
 
   return (
-    <Vstack gap="xs" padding="none" className={`w-full ${boxStyle.align}`}>
+    <Vstack gap="xs" padding="none" className={`w-full ${boxStyle.align} my-3`}>
       {!isOwner && (
         <span className="text-xs text-gray-600">{chat?.sender?.nickname}</span>
       )}
