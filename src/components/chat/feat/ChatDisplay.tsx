@@ -71,15 +71,15 @@ const ChatDisplay = ({
 
       requestAnimationFrame(run)
     }, [])
-
+  // console.log(chatMessageArray)
   // 윈도잉(가상화 리스트)
   const rowVirtualizer = useVirtualizer({
     count: chatMessageArray.length, // 렌더링할 아이템 개수
     getScrollElement: () => containerRef.current, //스크롤 요소
     estimateSize: (_) => 120, // 각 메시지 예상 높이
     overscan: 10, // 화면 바깥에 미리 렌더링 할 메시지 수
+    enabled: !isPending,
     scrollToFn,
-    initialOffset: Number.POSITIVE_INFINITY,
   })
 
   const handleScroll = () => {
@@ -115,7 +115,6 @@ const ChatDisplay = ({
       return
     }
     // debugger
-    console.log(chatMessageArray.length, '길이')
     if (containerRef.current && chatInit && !isPending) {
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
@@ -167,14 +166,13 @@ const ChatDisplay = ({
       if (chatScrollBottom) {
         rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
           align: 'end',
-          behavior: 'smooth',
+          behavior: 'auto',
         })
         // previndex.current = chatMessageArray.length
       }
 
-      // previndex.current = chatMessageArray.length
+      previndex.current = chatMessageArray.length
     }
-
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chatScrollBottom, chatMessageArray])
 
@@ -184,11 +182,14 @@ const ChatDisplay = ({
       className={`mx-[-24px] h-full ${overflow}`}
       ref={containerRef}
       onScroll={handleScroll}
+      style={{
+        contain: 'strict',
+      }}
     >
       <div
-        className={`w-full] relative`}
+        className={`relative w-full`}
         style={{
-          height: `${rowVirtualizer.getTotalSize()}px`,
+          height: rowVirtualizer.getTotalSize(),
         }}
       >
         {/* 가상화 리스트 적용 */}
@@ -207,15 +208,22 @@ const ChatDisplay = ({
             />
           )}
 
-          <div ref={LoadingRef}></div>
           {rowVirtualizer.getVirtualItems().map((virtualRow) => {
             const message = chatMessageArray[virtualRow.index]
             return (
-              <ChatBox
+              <div
                 key={virtualRow.key}
-                chat={message}
-                measure={rowVirtualizer.measureElement}
-              />
+                data-index={virtualRow.index}
+                ref={rowVirtualizer.measureElement}
+              >
+                {virtualRow.index === 0 && (
+                  <div ref={LoadingRef} className="m-0 h-0 p-0"></div>
+                )}
+                <ChatBox
+                  chat={message}
+                  // measure={rowVirtualizer.measureElement}
+                />
+              </div>
             )
           })}
         </Vstack>

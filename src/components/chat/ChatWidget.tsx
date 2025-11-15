@@ -10,6 +10,10 @@ const ChatWidget = () => {
   const chatState = useStudyHubStore((state) => state.chatState)
   const accessToken = useStudyHubStore((state) => state.accessToken)
   const setUnReadCounter = useStudyHubStore((state) => state.setUnReadCounter)
+  const setChatMessageArray = useStudyHubStore(
+    (state) => state.setChatMessageArray
+  )
+
   const queryClient = useQueryClient()
 
   const data = useUnreadChatCount()
@@ -26,8 +30,12 @@ const ChatWidget = () => {
       queryClient.invalidateQueries({
         queryKey: ['/chat'],
       })
+      // queryClient.invalidateQueries({
+      //   queryKey: ['message'],
+      // })
+      // setChatMessageArray([])
     }
-  }, [chatState, queryClient])
+  }, [chatState, queryClient, setChatMessageArray])
 
   if (chatState.status === 'off') {
     return
