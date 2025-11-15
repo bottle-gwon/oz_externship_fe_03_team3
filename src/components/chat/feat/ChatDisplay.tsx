@@ -2,13 +2,7 @@ import { Vstack } from '@/components/commonInGeneral/layout'
 import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react'
+import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import useStudyHubStore from '@/store/store'
 import {
   elementScroll,
@@ -39,12 +33,12 @@ const ChatDisplay = ({
   const chatInit = useStudyHubStore((state) => state.chatInit) // 초기 스크롤 세팅할 플래그
   const setChatInit = useStudyHubStore((state) => state.setChatInit)
 
-  const [bottom, setBottom] = useState(0)
-  const [debounceValue] = useDebounce(bottom, 50)
+  const [debounceValue] = useDebounce(true, 500)
 
   const previndex = useRef(0)
   const scrollingRef = useRef<number>(0)
 
+  // 스크롤 애니메이션 함수
   const easeInOutQuint = (t: number) => {
     return t < 0.5 ? 16 * t * t * t * t * t : 1 + 16 * --t * t * t * t * t
   }
@@ -76,35 +70,33 @@ const ChatDisplay = ({
   const rowVirtualizer = useVirtualizer({
     count: chatMessageArray.length, // 렌더링할 아이템 개수
     getScrollElement: () => containerRef.current, //스크롤 요소
-    estimateSize: (_) => 85, // 각 메시지 예상 높이
-    overscan: 10, // 화면 바깥에 미리 렌더링 할 메시지 수
+    estimateSize: (_) => 120, // 각 메시지 예상 높이
+    overscan: 30, // 화면 바깥에 미리 렌더링 할 메시지 수
     enabled: !isPending,
     scrollToFn,
     // scrollPaddingEnd: 100,
   })
 
+  // 스크롤이 하단에 있는지 판단( 하단 === 채팅중)
   const handleScroll = () => {
     const el = rowVirtualizer.scrollElement
     if (!el || isFetchingNextPage || isPending) {
       return
     }
     // const scrollBottom = rowVirtualizer.getTotalSize() - ((rowVirtualizer.scrollOffset|| 0)+ (rowVirtualizer.scrollElement?.clientHeight ||0))
-    setBottom(el.scrollHeight - (el.scrollTop + el.clientHeight))
+    // setBottom(el.scrollHeight - (el.scrollTop + el.clientHeight))
+    const height = el.scrollHeight - (el.scrollTop + el.clientHeight)
+
+    if (height > 50) {
+      setChatScrollBottom(false)
+    } else {
+      setChatScrollBottom(true)
+    }
   }
-  const onDebounce = useCallback(
-    (result: number) => {
-      if (result > 50) {
-        setChatScrollBottom(false)
-      } else {
-        setChatScrollBottom(true)
-      }
-    },
-    [setChatScrollBottom]
-  )
 
   useEffect(() => {
-    onDebounce(debounceValue)
-  }, [debounceValue, onDebounce])
+    setChatInit(debounceValue)
+  }, [debounceValue, setChatInit])
 
   // 처음 들어오면 아래로 이동하는 useEffect
   // Todo 추후에 안읽은 메시지로 이동 하도록 변경
@@ -117,9 +109,6 @@ const ChatDisplay = ({
     }
     // debugger
     if (containerRef.current && chatInit && !isPending) {
-      console.log(chatMessageArray.length)
-      console.log('초기')
-
       rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
         align: 'end',
       })
@@ -143,8 +132,6 @@ const ChatDisplay = ({
     ) {
       // 무한 스크롤 할때
       if (previndex.current !== chatMessageArray.length) {
-        console.log('무한')
-
         rowVirtualizer.scrollToIndex(
           chatMessageArray.length - previndex.current - 1,
           {
@@ -169,14 +156,9 @@ const ChatDisplay = ({
     if (!chatInit && chatMessageArray.length > previndex.current) {
       // 바닥에 있을때 === 채팅 할때
       if (chatScrollBottom) {
-        console.log(
-          '채팅',
-          chatMessageArray.length,
-          previndex.current,
-          chatMessageArray
-        )
         rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
           align: 'center',
+          behavior: 'smooth',
         })
         // previndex.current = chatMessageArray.length
       }
