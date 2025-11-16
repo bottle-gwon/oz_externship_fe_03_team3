@@ -1,8 +1,6 @@
 import useStudyHubStore from '@/store/store'
 import type { Applicant, Color } from '@/types'
 import useApplicantConfirmMutation from './useApplicantConfirmMutation'
-import { isAxiosError } from 'axios'
-import { useEffect } from 'react'
 
 interface ButtonConfig {
   text: string
@@ -30,44 +28,6 @@ const useManageDetailConfirmation = ({
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
   const { approveApplicantMutation, rejectApplicantMutation } =
     useApplicantConfirmMutation(recruitmentId)
-
-  // mutation 상태 변화 감지 - 성공
-  useEffect(() => {
-    if (approveApplicantMutation.isSuccess) {
-      console.log('승인 성공')
-      setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
-    }
-  }, [approveApplicantMutation.isSuccess, setModalKeyArray])
-
-  useEffect(() => {
-    if (rejectApplicantMutation.isSuccess) {
-      console.log('거절 성공')
-      setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
-    }
-  }, [rejectApplicantMutation.isSuccess, setModalKeyArray])
-
-  // mutation 상태 변화 감지 - 에러
-  useEffect(() => {
-    if (approveApplicantMutation.isError) {
-      console.log('승인 에러:', approveApplicantMutation.error)
-      setModalKeyArray(['manage', 'manageDetail', 'errorMessage'])
-    }
-  }, [
-    approveApplicantMutation.isError,
-    approveApplicantMutation.error,
-    setModalKeyArray,
-  ])
-
-  useEffect(() => {
-    if (rejectApplicantMutation.isError) {
-      console.log('거절 에러:', rejectApplicantMutation.error)
-      setModalKeyArray(['manage', 'manageDetail', 'errorMessage'])
-    }
-  }, [
-    rejectApplicantMutation.isError,
-    rejectApplicantMutation.error,
-    setModalKeyArray,
-  ])
 
   // 승인 버튼 클릭
   const handleApproveClick = () => {

@@ -12,7 +12,6 @@ import useApplicantDetailQuery from '@/hooks/manageDetailModal/useApplicantDetai
 import ManageDetailSkeleton from './ManageDetailSkeleton'
 import ManageDetailError from './ManageDetailError'
 import ManageDetailFallback from './ManageDetailFallback'
-import { dummyApplicantDetail } from '@/testRoutes/testPages/hyejeong/dummy/dummyApplicantDetail'
 
 interface ManageDetailModalProps {
   isOn: boolean
