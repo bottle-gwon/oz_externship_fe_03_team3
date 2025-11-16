@@ -34,12 +34,16 @@ const updateApplicationCache = (
 
 const useApplicantConfirmMutation = (recruitmentId: string) => {
   const setModalKeyArray = useStudyHubStore((state) => state.setModalKeyArray)
+
   const approveApplicantMutation = useSimpleMutation({
     queryEndpoint: `/recruitments/${recruitmentId}/applications/list`,
     mutationFnWithData: approveApplicant,
     updateCacheForUi: updateApplicationCache,
     handleSuccess: () => {
       setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
+    },
+    handleError: () => {
+      setModalKeyArray(['manage', 'manageDetail', 'errorMessage'])
     },
   })
 
@@ -49,6 +53,9 @@ const useApplicantConfirmMutation = (recruitmentId: string) => {
     updateCacheForUi: updateApplicationCache,
     handleSuccess: () => {
       setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
+    },
+    handleError: () => {
+      setModalKeyArray(['manage', 'manageDetail', 'errorMessage'])
     },
   })
 
