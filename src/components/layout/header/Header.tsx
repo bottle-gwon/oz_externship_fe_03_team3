@@ -9,14 +9,8 @@ import { useNavigate } from 'react-router'
 
 const Header = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
-  const navigate = useNavigate()
 
   const handleLogoClick = () => {
-    if (accessToken) {
-      navigate('/lecture')
-      return
-    }
-
     window.location.href = import.meta.env.VITE_LANDING_PAGE_URL
   }
 
