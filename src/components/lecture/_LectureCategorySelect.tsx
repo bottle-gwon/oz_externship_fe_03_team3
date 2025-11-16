@@ -26,6 +26,12 @@ const LectureCategorySelect = () => {
     if (typeof option !== 'string') {
       throw new Error('---- 카테고리는 스트링이어야 합니다!')
     }
+
+    if (option === '전체 카테고리') {
+      setSelectedCategory('')
+      return
+    }
+
     setSelectedCategory(option)
   }
 
