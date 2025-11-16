@@ -1,6 +1,8 @@
 import useStudyHubStore from '@/store/store'
 import type { Applicant, Color } from '@/types'
 import useApplicantConfirmMutation from './useApplicantConfirmMutation'
+import { isAxiosError } from 'axios'
+import { useEffect } from 'react'
 
 interface ButtonConfig {
   text: string
@@ -29,8 +31,47 @@ const useManageDetailConfirmation = ({
   const { approveApplicantMutation, rejectApplicantMutation } =
     useApplicantConfirmMutation(recruitmentId)
 
+  // mutation 상태 변화 감지 - 성공
+  useEffect(() => {
+    if (approveApplicantMutation.isSuccess) {
+      console.log('승인 성공')
+      setModalKeyArray(['manage', 'manageDetail', 'resultApprove'])
+    }
+  }, [approveApplicantMutation.isSuccess, setModalKeyArray])
+
+  useEffect(() => {
+    if (rejectApplicantMutation.isSuccess) {
+      console.log('거절 성공')
+      setModalKeyArray(['manage', 'manageDetail', 'resultReject'])
+    }
+  }, [rejectApplicantMutation.isSuccess, setModalKeyArray])
+
+  // mutation 상태 변화 감지 - 에러
+  useEffect(() => {
+    if (approveApplicantMutation.isError) {
+      console.log('승인 에러:', approveApplicantMutation.error)
+      setModalKeyArray(['manage', 'manageDetail', 'errorMessage'])
+    }
+  }, [
+    approveApplicantMutation.isError,
+    approveApplicantMutation.error,
+    setModalKeyArray,
+  ])
+
+  useEffect(() => {
+    if (rejectApplicantMutation.isError) {
+      console.log('거절 에러:', rejectApplicantMutation.error)
+      setModalKeyArray(['manage', 'manageDetail', 'errorMessage'])
+    }
+  }, [
+    rejectApplicantMutation.isError,
+    rejectApplicantMutation.error,
+    setModalKeyArray,
+  ])
+
   // 승인 버튼 클릭
   const handleApproveClick = () => {
+    console.log('승인 버튼 클릭')
     approveApplicantMutation.mutate({
       data: applicant,
       newOne: {
@@ -42,6 +83,7 @@ const useManageDetailConfirmation = ({
 
   // 거절 버튼 클릭
   const handleRejectClick = () => {
+    console.log('거절 버튼 클릭')
     rejectApplicantMutation.mutate({
       data: applicant,
       newOne: {
@@ -51,13 +93,8 @@ const useManageDetailConfirmation = ({
     })
   }
 
-  // 승인 확정
-  const handleConfirmApprove = async () => {
-    setModalKeyArray(['manage'])
-  }
-
-  // 거절 확정
-  const handleConfirmReject = async () => {
+  // 확인 버튼 클릭
+  const handleConfirm = async () => {
     setModalKeyArray(['manage'])
   }
 
@@ -105,7 +142,7 @@ const useManageDetailConfirmation = ({
         {
           text: '확인',
           color: 'mono',
-          onClick: handleConfirmApprove,
+          onClick: handleConfirm,
         },
       ],
     },
@@ -115,14 +152,23 @@ const useManageDetailConfirmation = ({
         {
           text: '확인',
           color: 'mono',
-          onClick: handleConfirmReject,
+          onClick: handleConfirm,
+        },
+      ],
+    },
+    errorMessage: {
+      title: '요청 처리 중 오류가 발생했습니다.',
+      buttons: [
+        {
+          text: '확인',
+          color: 'mono',
+          onClick: handleConfirm,
         },
       ],
     },
   }
 
   const currentModalKey = modalKeyArray[modalKeyArray.length - 1]
-
   const currentConfig = confirmationConfig[currentModalKey]
 
   return { isPending, currentConfig, handleClose }
