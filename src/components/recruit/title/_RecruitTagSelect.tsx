@@ -18,6 +18,10 @@ const RecruitTagSelect = () => {
     if (typeof option !== 'string') {
       throw new Error('---- 태그는 스트링이어야 합니다!')
     }
+    if (option === '전체 태그') {
+      setSelectedTag('')
+      return
+    }
     setSelectedTag(option)
   }
 
