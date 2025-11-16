@@ -21,6 +21,7 @@ jobs:
           VITE_MYPAGE_PAGE_URL: ${{ secrets.VITE_MYPAGE_PAGE_URL }}
           VITE_STUDY_PAGE_URL: ${{ secrets.VITE_MYPAGE_PAGE_URL }}
           VITE_OUR_DOMAIN: ${{ secrets.VITE_STUDY_PAGE_URL }}
+          VITE_SOCEKT_BASE_URL: ${{secrets.VITE_SOCEKT_BASE_URL}}
         run: |
           npm install
           npm run build
