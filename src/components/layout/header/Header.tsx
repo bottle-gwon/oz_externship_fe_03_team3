@@ -5,7 +5,6 @@ import useStudyHubStore from '@/store/store'
 import CommonButtonMany from './_CommonButtonMany'
 import LoggedInButtonMany from './_LoggedInButtonMany'
 import LoggedOutButtonMany from './_LoggedOutButtonMany'
-import { useNavigate } from 'react-router'
 
 const Header = () => {
   const accessToken = useStudyHubStore((state) => state.accessToken)
