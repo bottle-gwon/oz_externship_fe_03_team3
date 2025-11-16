@@ -20,7 +20,7 @@ const Img = ({
     }
 
     const img = event.currentTarget
-    if (img.naturalWidth === 0 || img.naturalHeight === 0) {
+    if (img.naturalWidth < 50 || img.naturalHeight < 50) {
       img.src = fallbackImageUrl
     }
   }
