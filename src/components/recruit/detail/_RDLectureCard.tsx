@@ -9,6 +9,8 @@ const RWLectureCard = ({ lecture }: { lecture: RecruitDetailLecture }) => {
   const handleRedirect = () => {
     window.location.href = lecture.link
   }
+  const price =
+    lecture.discounted_price ?? lecture.original_price ?? lecture.price ?? 11000
   return (
     <RoundBox padding="none" className="overflow-hidden">
       <Img
@@ -22,7 +24,7 @@ const RWLectureCard = ({ lecture }: { lecture: RecruitDetailLecture }) => {
         <p className="text-color-gray pb-3 text-sm">강사{lecture.instructor}</p>
         <Hstack className="items-center justify-between">
           <p className="text-primary-600 text-xl font-bold">
-            {lecture.price.toLocaleString()}원
+            {price.toLocaleString()}원
           </p>
 
           <Button

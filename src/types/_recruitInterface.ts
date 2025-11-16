@@ -125,6 +125,8 @@ export interface RecruitDetailLecture {
   instructor: string
   link: string
   price: number
+  discounted_price: number
+  original_price: number
 }
 
 export interface RecruitDetail {
