@@ -47,7 +47,7 @@ const useNotificationMutation = () => {
 
   const patchAllMutation = useSimpleMutation({
     queryKey,
-    mutationFnWithData: () => api.patch(`${queryEndpoint}/read-all`),
+    mutationFnWithData: () => api.post(`${queryEndpoint}/read-all`),
     updateCacheForUi: updateAllNotificationCache,
   })
 
