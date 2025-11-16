@@ -1,8 +1,9 @@
 export interface LectureInStudyGroup {
-  id: number
+  uuid: string
   title: string
   instructor: string
-  price: number
+  discounted_price: number
+  original_price: number
 }
 
 export interface StudyGroup {
