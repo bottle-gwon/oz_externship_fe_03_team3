@@ -143,13 +143,17 @@ const RecruitDetailContent = ({
         </Vstack>
       </Container>
 
-      <ApplicationModalPage recruitDetail={recruitDetail} />
+      <ApplicationModalPage
+        recruitDetail={recruitDetail}
+        title={recruitDetail.title}
+      />
 
       <ManageModal
         isOn={modalKey === 'manage'}
         onClose={() => setModalKey(null)}
         recruit={simplifiedRecruit}
       />
+
       <RDConfirmClipboardModalMany />
 
       <LoginRequiredModal />
