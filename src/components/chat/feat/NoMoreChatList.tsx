@@ -1,10 +1,10 @@
-import { Hstack } from '@/components/commonInGeneral/layout'
+import ErrorDisplay from '@/components/commonInGeneral/error/ErrorDisplay'
 
 const NoMoreChatList = () => {
   return (
-    <Hstack className="items-center justify-center">
-      <p>불러올 채팅방이 없습니다.</p>
-    </Hstack>
+    <ErrorDisplay>
+      <ErrorDisplay.Title>Empty</ErrorDisplay.Title>
+    </ErrorDisplay>
   )
 }
 
