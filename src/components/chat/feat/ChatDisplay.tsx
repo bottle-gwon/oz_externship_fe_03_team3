@@ -1,7 +1,6 @@
 import { Vstack } from '@/components/commonInGeneral/layout'
 import ChatBox from './ChatBox'
 import ChattingRoomSkeleton from '../skeleton/ChattingRoomSkeleton'
-import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
 import { useCallback, useEffect, useLayoutEffect, useRef } from 'react'
 import {
   elementScroll,
@@ -42,6 +41,14 @@ const ChatDisplay = ({
   }
   const scrollToFn: VirtualizerOptions<HTMLDivElement, Element>['scrollToFn'] =
     useCallback((offset, canSmooth, instance) => {
+      if (canSmooth.behavior === 'auto') {
+        instance.scrollElement?.scrollTo({
+          top: offset,
+          behavior: 'auto',
+        })
+        return
+      }
+
       const duration = 1000
       const start = containerRef.current?.scrollTop || 0
       const startTime = (scrollingRef.current = Date.now())
@@ -70,7 +77,7 @@ const ChatDisplay = ({
     getScrollElement: () => containerRef.current, //스크롤 요소
     estimateSize: (_) => 120, // 각 메시지 예상 높이
     overscan: 30, // 화면 바깥에 미리 렌더링 할 메시지 수
-    enabled: !isPending,
+    enabled: !isPending && chatMessageArray.length !== 0,
     scrollToFn,
     // scrollPaddingEnd: 100,
   })
@@ -156,7 +163,7 @@ const ChatDisplay = ({
       if (chatScrollBottom) {
         rowVirtualizer.scrollToIndex(chatMessageArray.length - 1, {
           align: 'center',
-          behavior: 'smooth',
+          behavior: 'auto',
         })
         // previndex.current = chatMessageArray.length
       }
@@ -180,9 +187,9 @@ const ChatDisplay = ({
       {/* 무한 스크롤 */}
       <div ref={LoadingRef} className="m-0 h-0 p-0"></div>
       {isPending && <ChattingRoomSkeleton />}
-      {isFetchingNextPage && (
+      {/* {isFetchingNextPage && (
         <Skeleton widthInPixel={270} heightInPixel={100} className="shrink-0" />
-      )}
+      )} */}
 
       {/* 가상화 리스트 적용 */}
       <div
