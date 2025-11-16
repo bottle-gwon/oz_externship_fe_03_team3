@@ -7,13 +7,11 @@ const useNoSearchResult = (
   resetSelect: () => void,
   cancelDebounce?: () => void
 ) => {
-  // NOTE: 필터 초기화
-  const isClearingSearch = useStudyHubStore((state) => state.isClearingSearch)
+  const isResettingFilter = useStudyHubStore((state) => state.isResettingFilter)
   const setIsClearingSearch = useStudyHubStore(
     (state) => state.setIsClearingSearch
   )
-  // NOTE: 검색만 초기화
-  const isFocusingSearch = useStudyHubStore((state) => state.isFocusingSearch)
+  const isResettingInput = useStudyHubStore((state) => state.isResettingInput)
   const setIsFocusingSearch = useStudyHubStore(
     (state) => state.setIsFocusingSearch
   )
@@ -34,7 +32,7 @@ const useNoSearchResult = (
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isClearingSearch])
+  }, [isResettingFilter])
 
   useEffect(() => {
     if (!inputRef.current) {
@@ -50,7 +48,7 @@ const useNoSearchResult = (
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isFocusingSearch])
+  }, [isResettingInput])
 }
 
 export default useNoSearchResult

@@ -23,9 +23,9 @@ export interface StudyHubState {
   me: Me | null
   setMe: (me: Me | null) => void
 
-  isClearingSearch: boolean // true 가 감지되면 인풋 필드를 비워주세요
+  isResettingFilter: boolean // true 가 감지되면 인풋 필드를 비워주세요
   setIsClearingSearch: (isClearingSearch: boolean) => void
-  isFocusingSearch: boolean // true 가 감지되면 인풋 필드에 포커스해주세요
+  isResettingInput: boolean // true 가 감지되면 인풋 필드에 포커스해주세요
   setIsFocusingSearch: (isFocusingSearch: boolean) => void
 
   modalKey: string | null // 모달을 하나만 띄울 때 사용해주세요. modalKey가 원하는 값과 일치하면 isOn이 되게 하면 됩니다
