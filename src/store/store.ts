@@ -62,6 +62,9 @@ const useStudyHubStore = create<StudyHubState>()(
       editingRecruit: null,
       setEditingRecruit: (editingRecruit) => set({ editingRecruit }),
 
+      error: null,
+      setError: (error) => set({ error }),
+
       // lecture
 
       // notification

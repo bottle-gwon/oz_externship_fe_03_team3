@@ -4,12 +4,19 @@ import checkHavingKorean from '@/utils/koreanCheck'
 
 interface ErrorModalInterface {
   isOn: boolean
-  setIsOn: React.Dispatch<React.SetStateAction<boolean>>
+  setIsOn?: React.Dispatch<React.SetStateAction<boolean>>
+  onClose?: () => void
   title: string
   detail: string
 }
 
-const ErrorModal = ({ isOn, setIsOn, title, detail }: ErrorModalInterface) => {
+const ErrorModal = ({
+  isOn,
+  setIsOn,
+  onClose,
+  title,
+  detail,
+}: ErrorModalInterface) => {
   const errorTitle = checkHavingKorean(title)
     ? title
     : `정의 되지 않은 에러 / ${title}`
@@ -17,13 +24,19 @@ const ErrorModal = ({ isOn, setIsOn, title, detail }: ErrorModalInterface) => {
     ? detail
     : `정의 되지 않은 에러 / ${detail}`
 
+  const handleClose = () => {
+    if (setIsOn) {
+      setIsOn(false)
+      return
+    }
+    if (onClose) {
+      onClose()
+      return
+    }
+  }
+
   return (
-    <ConfirmationModal
-      isOn={isOn}
-      onClose={() => {
-        setIsOn(false)
-      }}
-    >
+    <ConfirmationModal isOn={isOn} onClose={handleClose}>
       <ConfirmationModal.Title>
         <h4>{errorTitle}</h4>
       </ConfirmationModal.Title>
@@ -33,7 +46,7 @@ const ErrorModal = ({ isOn, setIsOn, title, detail }: ErrorModalInterface) => {
       </ConfirmationModal.Content>
 
       <ConfirmationModal.ButtonSection>
-        <Button shape="wideRectangle" onClick={() => setIsOn(false)}>
+        <Button shape="wideRectangle" onClick={handleClose}>
           확인
         </Button>
       </ConfirmationModal.ButtonSection>
