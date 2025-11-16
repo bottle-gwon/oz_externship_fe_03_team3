@@ -15,7 +15,7 @@ const useRecruitsQuery = () => {
   const debounceValue = useRecruitStore((state) => state.debounceValue)
   const selectedTag = useRecruitStore((state) => state.selectedTag)
   const selectedArrangementInText = useRecruitStore(
-    (state) => state.selectedArrangementInText
+    (state) => state.selectedOrderingInText
   )
   const setRecruitArray = useRecruitStore((state) => state.setRecruitArray)
   const setRecommendedRecruitArray = useRecruitStore(

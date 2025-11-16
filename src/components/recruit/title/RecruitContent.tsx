@@ -19,7 +19,6 @@ const RecruitContent = () => {
   const recommendedRecruitArray = useRecruitStore(
     (state) => state.recommendedRecruitArray
   )
-  const isSearching = useRecruitStore((state) => state.isSearching)
   const hasNextPage = useRecruitStore((state) => state.hasNextPage)
   const totalCount = useRecruitStore((state) => state.totalCount)
   const requestNextPage = useRecruitStore((state) => state.requestNextPage)
@@ -54,7 +53,7 @@ const RecruitContent = () => {
           <Vstack gap="none" className="mb-oz-xl text-lg font-semibold">
             전체 공고({totalCount})
           </Vstack>
-          {isSearching && recruitArray.length === 0 && <NoSearchResult />}
+          {recruitArray.length === 0 && <NoSearchResult />}
           {recruitArray.length > 0 && (
             <Vstack gap="none" className="items-center gap-12">
               <Vstack gap="none" className="w-full">

@@ -7,6 +7,9 @@ import {
 } from '@/types'
 
 const RecruitOrderingSelect = () => {
+  const selectedOrderingInText = useRecruitStore(
+    (state) => state.selectedOrderingInText
+  )
   const setSelectedOrderingInText = useRecruitStore(
     (state) => state.setSelectedOrdingInText
   )
@@ -17,6 +20,8 @@ const RecruitOrderingSelect = () => {
         onOptionSelect={(option) =>
           setSelectedOrderingInText(option as RecruitArrangementInText)
         }
+        value={selectedOrderingInText}
+        label={selectedOrderingInText}
       >
         <Select.Trigger>최신순</Select.Trigger>
         <Select.Content>

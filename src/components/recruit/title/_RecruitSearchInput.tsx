@@ -1,5 +1,6 @@
 import Input from '@/components/commonInGeneral/inputFamily/input/Input'
 import useDebounce from '@/hooks/useDebounce'
+import useNoSearchResult from '@/hooks/useNoSearchResult'
 // import useNoSearchResult from '@/hooks/useNoSearchResult'
 import useRecruitStore from '@/store/recruit/recruitStore'
 import { Search } from 'lucide-react'
@@ -9,21 +10,27 @@ const RecruitSearchInput = () => {
   const searchText = useRecruitStore((state) => state.searchText)
   const setSearchText = useRecruitStore((state) => state.setSearchText)
   const setDebounceValue = useRecruitStore((state) => state.setDebounceValue)
-  const setIsSearching = useRecruitStore((state) => state.setIsSearching)
 
+  const setSelectedTag = useRecruitStore((state) => state.setSelectedTag)
+  const setSelectedOrderingInText = useRecruitStore(
+    (state) => state.setSelectedOrdingInText
+  )
   const [debounceValue, cancelDebounce] = useDebounce(searchText, 500)
   const inputRef = useRef<HTMLInputElement>(null)
-  // useNoSearchResult(inputRef, setSearchText, cancelDebounce)
+
+  const resetSelect = () => {
+    setSelectedTag('')
+    setSelectedOrderingInText('최신순')
+  }
+  const resetInput = () => {
+    setSearchText('')
+  }
+  useNoSearchResult(inputRef, resetInput, resetSelect, cancelDebounce)
 
   useEffect(() => {
     setDebounceValue(debounceValue)
-
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-  }, [debounceValue, setDebounceValue, setIsSearching])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounceValue])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {
