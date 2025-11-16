@@ -4,9 +4,6 @@ import ReviewCard from './_ReviewCard'
 import { useQuery } from '@tanstack/react-query'
 import api from '@/api/api'
 import Skeleton from '@/components/commonInGeneral/skeleton/Skeleton'
-import Divider from '@/components/commonInGeneral/divider/Divider'
-import ErrorDisplay from '@/components/commonInGeneral/error/ErrorDisplay'
-import UnknwonErrorContent from '@/components/commonInGeneral/error/UnknownErrorContent'
 import RoundBox from '@/components/commonInGeneral/roundBox/RoundBox'
 
 const ReviewEdgeCaseBox = ({ children }: { children: string }) => {
