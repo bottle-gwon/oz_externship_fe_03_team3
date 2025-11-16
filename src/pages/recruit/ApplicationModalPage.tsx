@@ -32,7 +32,7 @@ const ApplicationModalPage = ({
     (state) => state.removeModalKeyFromArray
   )
   const error = useStudyHubStore((state) => state.error) as {
-    response: { data: { error: string } }
+    response: { data: { error: string; detail: string } }
   } | null
 
   const { applyMutation } = useApplyMutation()
@@ -66,7 +66,7 @@ const ApplicationModalPage = ({
   }
 
   const errorTitle = error
-    ? error.response.data.error
+    ? error.response.data.error || error.response.data.detail
     : '알 수 없는 에러가 발생했습니다'
 
   return (
