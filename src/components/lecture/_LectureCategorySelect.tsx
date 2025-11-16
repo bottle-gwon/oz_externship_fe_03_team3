@@ -6,6 +6,7 @@ import api from '@/api/api'
 import type { LectureCategory } from '@/types'
 
 const LectureCategorySelect = () => {
+  const selectedCategory = useLectureStore((state) => state.selectedCategory)
   const setSelectedCategory = useLectureStore(
     (state) => state.setSelectedCategory
   )
@@ -27,19 +28,18 @@ const LectureCategorySelect = () => {
       throw new Error('---- 카테고리는 스트링이어야 합니다!')
     }
 
-    if (option === '전체 카테고리') {
-      setSelectedCategory('')
-      return
-    }
-
     setSelectedCategory(option)
   }
 
   return (
-    <Select onOptionSelect={handleOptionSelect}>
+    <Select
+      onOptionSelect={handleOptionSelect}
+      value={selectedCategory ?? ''}
+      label={selectedCategory === '' ? '전체 카테고리' : undefined}
+    >
       <Select.Trigger icon={<Folder size={16} />}>전체 카테고리</Select.Trigger>
       <Select.Content>
-        <Select.Option>전체 카테고리</Select.Option>
+        <Select.Option value="">전체 카테고리</Select.Option>
         {filteredData.slice(0, 15).map((category) => (
           <Select.Option key={category.id}>{category.name}</Select.Option>
         ))}

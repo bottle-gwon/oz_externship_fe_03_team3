@@ -3,12 +3,22 @@ import LectureContent from '@/components/lecture/LectureContent'
 import LectureSkeleton from '@/components/lecture/LectureSkeleton'
 import useLecturesQuery from '@/hooks/lecture/useLecturesQuery'
 import useLectureStore from '@/store/lecture/lectureStore'
+import { useEffect } from 'react'
 
 const LecturePage = () => {
-  const lectureArray = useLectureStore((state) => state.lectureArray)
+  const hasBeenOpened = useLectureStore((state) => state.hasBeenOpened)
+  const setHasBeenOpened = useLectureStore((state) => state.setHasBeenOpened)
   const { isPending, error } = useLecturesQuery()
 
-  if (isPending && lectureArray.length === 0) {
+  useEffect(() => {
+    if (isPending || error) {
+      return
+    }
+    setHasBeenOpened(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isPending, error])
+
+  if (isPending && !hasBeenOpened) {
     return <LectureSkeleton />
   }
 

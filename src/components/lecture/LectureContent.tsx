@@ -20,7 +20,6 @@ const LectureContent = () => {
   const recommendedLectureArray = useLectureStore(
     (state) => state.recommendedLectureArray
   )
-  const isSearching = useLectureStore((state) => state.isSearching)
   const requestNextPage = useLectureStore((state) => state.requestNextPage)
 
   const targetRef = useRef<HTMLDivElement | null>(null)
@@ -55,7 +54,8 @@ const LectureContent = () => {
             </GridContainer>
           </RoundBox>
 
-          {isSearching && lectureArray.length === 0 && <NoSearchResult />}
+          {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
+          {lectureArray.length === 0 && <NoSearchResult />}
           {lectureArray.length > 0 && (
             <GridContainer className="gap-oz-xl">
               {lectureArray.map((lecture) => (
@@ -65,7 +65,6 @@ const LectureContent = () => {
           )}
 
           <div ref={targetRef} />
-          {/* 필터 없이 불러온 강의가 없을 때는 피그마에서 다루지 않아 고려하지 않았습니다 */}
         </Vstack>
       </Vstack>
     </Container>

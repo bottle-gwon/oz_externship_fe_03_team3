@@ -7,10 +7,12 @@ const useNoSearchResult = (
   resetSelect: () => void,
   cancelDebounce?: () => void
 ) => {
+  // NOTE: 필터 초기화
   const isClearingSearch = useStudyHubStore((state) => state.isClearingSearch)
   const setIsClearingSearch = useStudyHubStore(
     (state) => state.setIsClearingSearch
   )
+  // NOTE: 검색만 초기화
   const isFocusingSearch = useStudyHubStore((state) => state.isFocusingSearch)
   const setIsFocusingSearch = useStudyHubStore(
     (state) => state.setIsFocusingSearch
