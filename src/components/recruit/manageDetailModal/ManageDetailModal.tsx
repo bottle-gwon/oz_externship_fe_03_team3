@@ -34,6 +34,8 @@ const ManageDetailModal = ({
     error,
   } = useApplicantDetailQuery(applicant.uuid)
 
+  // const applicantDetail2 = dummyApplicantDetail
+
   if (isPending) {
     return <ManageDetailSkeleton isOn={isOn} onClose={onClose} />
   }
