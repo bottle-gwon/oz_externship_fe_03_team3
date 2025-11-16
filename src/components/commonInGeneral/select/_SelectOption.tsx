@@ -1,4 +1,4 @@
-import { useEffect, type JSX } from 'react'
+import type { JSX } from 'react'
 import { Hstack } from '../layout'
 import RoundBox from '../roundBox/RoundBox'
 import useSelectContext from './_useSelectContext'
