@@ -7,15 +7,15 @@ const useRecruitStore = create<RecruitStoreState>()((set) => ({
   recommendedRecruitArray: [],
   setRecommendedRecruitArray: (recommendedRecruitArray) =>
     set({ recommendedRecruitArray }),
-  isSearching: false,
-  setIsSearching: (isSearching) => set({ isSearching }),
+  hasBeenOpened: false,
+  setHasBeenOpened: (hasBeenOpened) => set({ hasBeenOpened }),
   searchText: '',
   setSearchText: (searchText) => set({ searchText }),
   selectedTag: null,
   setSelectedTag: (selectedTag) => set({ selectedTag }),
-  selectedArrangementInText: '최신순',
+  selectedOrderingInText: '최신순',
   setSelectedOrdingInText: (selectedArrangementInText) =>
-    set({ selectedArrangementInText }),
+    set({ selectedOrderingInText: selectedArrangementInText }),
   debounceValue: '',
   setDebounceValue: (debounceValue) => set({ debounceValue }),
 

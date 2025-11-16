@@ -6,13 +6,13 @@ export interface RecruitStoreState {
   recommendedRecruitArray: Recruit[]
   setRecommendedRecruitArray: (recommendedRecruitArray: Recruit[]) => void
 
-  isSearching: boolean
-  setIsSearching: (isSearching: boolean) => void
+  hasBeenOpened: boolean
+  setHasBeenOpened: (hasBeenOpened: boolean) => void
   searchText: string
   setSearchText: (searchText: string) => void
   selectedTag: string | null
   setSelectedTag: (selectedTag: string | null) => void
-  selectedArrangementInText: RecruitArrangementInText
+  selectedOrderingInText: RecruitArrangementInText
   setSelectedOrdingInText: (
     selectedArrangementInText: RecruitArrangementInText
   ) => void

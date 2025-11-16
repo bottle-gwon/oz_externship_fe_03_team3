@@ -2,7 +2,6 @@ import Select from '../commonInGeneral/select/Select'
 import { lectureOrderingInTextArray, type LectureOrderingInText } from '@/types'
 import SortIcon from '@/assets/sort.svg'
 import useLectureStore from '@/store/lecture/lectureStore'
-import { textToLectureOrdering } from '@/utils/simpleMaps'
 
 const LectureOrderingSelect = () => {
   const selectedOrderingInText = useLectureStore(
@@ -17,7 +16,7 @@ const LectureOrderingSelect = () => {
       onOptionSelect={(option) =>
         setSelectedOrderingInText(option as LectureOrderingInText)
       }
-      value={textToLectureOrdering[selectedOrderingInText]}
+      value={selectedOrderingInText}
       label={selectedOrderingInText}
     >
       <Select.Trigger icon={<img src={SortIcon} />}>최신순</Select.Trigger>

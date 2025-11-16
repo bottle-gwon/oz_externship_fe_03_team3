@@ -7,6 +7,7 @@ import { useQuery } from '@tanstack/react-query'
 
 const RecruitTagSelect = () => {
   const setSelectedTag = useRecruitStore((state) => state.setSelectedTag)
+  const selectedTag = useRecruitStore((state) => state.selectedTag)
 
   const endpoint = '/recruitments/tags'
   const { data } = useQuery({
@@ -29,10 +30,14 @@ const RecruitTagSelect = () => {
     <Vstack gap="none" className="w-full">
       <p className="mb-oz-sm">태그</p>
 
-      <Select onOptionSelect={handleOptionSelect}>
+      <Select
+        onOptionSelect={handleOptionSelect}
+        value={selectedTag ?? ''}
+        label={selectedTag === '' ? '전체 태그' : undefined}
+      >
         <Select.Trigger>전체 태그</Select.Trigger>
         <Select.Content>
-          <Select.Option>전체 태그</Select.Option>
+          <Select.Option value="">전체 태그</Select.Option>
           {data &&
             data.map((tag) => (
               <Select.Option key={tag.id}>{tag.name}</Select.Option>
