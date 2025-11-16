@@ -28,10 +28,12 @@ const useStudyHubStore = create<StudyHubState>()(
       me: null,
       setMe: (me) => set({ me }),
 
-      isClearingSearch: false,
-      setIsClearingSearch: (isClearingSearch) => set({ isClearingSearch }),
-      isFocusingSearch: false,
-      setIsFocusingSearch: (isFocusingSearch) => set({ isFocusingSearch }),
+      isResettingFilter: false,
+      setIsClearingSearch: (isClearingSearch) =>
+        set({ isResettingFilter: isClearingSearch }),
+      isResettingInput: false,
+      setIsFocusingSearch: (isFocusingSearch) =>
+        set({ isResettingInput: isFocusingSearch }),
 
       modalKey: null,
       setModalKey: (modalKey) => set({ modalKey }),
