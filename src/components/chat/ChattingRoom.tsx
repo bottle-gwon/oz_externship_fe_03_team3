@@ -10,6 +10,7 @@ import useOneWayInfinityScroll from '@/hooks/useOneWayInfinityScroll'
 import { useChatRoomMessage } from '@/hooks/chat/useChat'
 import { useEffect, useRef } from 'react'
 import useChatStore from '@/store/chat/chatStore'
+import ChatError from './feat/ChatError'
 
 // 현재 온라인 유저 명수 표기
 const OnlineUser = ({ isPending }: { isPending: boolean }) => {
@@ -103,10 +104,6 @@ const ChattingRoom = () => {
     return
   }
 
-  if (isError) {
-    return <>{error} 임시</>
-  }
-
   return (
     <ChattingLayout>
       {/* 헤더 */}
@@ -136,12 +133,18 @@ const ChattingRoom = () => {
 
       {/* 채팅창 */}
       <ChattingLayout.Body className="h-[280px] grow justify-between border-transparent !py-0">
-        <ChatDisplay
-          isPending={isPending}
-          isFetchingNextPage={isFetchingNextPage}
-          LoadingRef={LoadingRef}
-        />
-        <ChatInput isPending={isPending} />
+        {isError && <ChatError message={error?.message} />}
+
+        {!isError && (
+          <>
+            <ChatDisplay
+              isPending={isPending}
+              isFetchingNextPage={isFetchingNextPage}
+              LoadingRef={LoadingRef}
+            />
+            <ChatInput isPending={isPending} />
+          </>
+        )}
       </ChattingLayout.Body>
     </ChattingLayout>
   )

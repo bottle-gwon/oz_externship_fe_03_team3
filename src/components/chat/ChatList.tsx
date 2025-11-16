@@ -7,7 +7,8 @@ import ChatListSkeleton from './skeleton/ChatListSkeleton'
 import { useChatRoomList } from '@/hooks/chat/useChat'
 import type { ChatRoomData } from '@/types/_chat'
 import useChatStore from '@/store/chat/chatStore'
-// import NoMoreChatList from './feat/NoMoreChatList'
+import NoMoreChatList from './feat/NoMoreChatList'
+import ChatError from './feat/ChatError'
 
 // 채팅 목록
 const ChatList = () => {
@@ -66,8 +67,11 @@ const ChatList = () => {
         {/* 테스트를 위해 스켈레톤을 카드보다 위로 올려 놨습니다. */}
         {isPending && <ChatListSkeleton />}
         {!isPending &&
+          !isError &&
           chatRoomArray.map((el) => <ChatListCard key={el.uuid} room={el} />)}
-        {isError && <p>{error.message} 에러 발생</p>}
+        {isError && <ChatError message={error?.message} />}
+
+        {chatRoomArray.length === 0 && <NoMoreChatList />}
         {/* {!hasNextPage && <NoMoreChatList />} */}
         {/* 무한 스크롤 훅이 감지하는 위치  */}
         {/* <div ref={LoadingRef} className="h-0.5 w-full shrink-0"></div> */}
