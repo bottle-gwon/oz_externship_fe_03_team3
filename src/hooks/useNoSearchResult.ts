@@ -3,9 +3,8 @@ import { useEffect } from 'react'
 
 const useNoSearchResult = (
   inputRef: React.RefObject<HTMLInputElement | null>,
-  setSearchText:
-    | React.Dispatch<React.SetStateAction<string>>
-    | ((searchText: string) => void),
+  resetInput: () => void,
+  resetSelect: () => void,
   cancelDebounce?: () => void
 ) => {
   const isClearingSearch = useStudyHubStore((state) => state.isClearingSearch)
@@ -18,7 +17,8 @@ const useNoSearchResult = (
   )
 
   useEffect(() => {
-    setSearchText('')
+    resetInput()
+    resetSelect()
     setIsClearingSearch(false)
 
     if (!inputRef.current) {
@@ -39,8 +39,13 @@ const useNoSearchResult = (
       return
     }
 
+    resetInput()
     inputRef.current.focus()
     setIsFocusingSearch(false)
+
+    if (cancelDebounce) {
+      cancelDebounce()
+    }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isFocusingSearch])

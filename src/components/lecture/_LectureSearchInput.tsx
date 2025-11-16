@@ -10,10 +10,24 @@ const LectureSearchInput = () => {
   const setSearchText = useLectureStore((state) => state.setSearchText)
   const setDebounceValue = useLectureStore((state) => state.setDebounceValue)
   const setIsSearching = useLectureStore((state) => state.setIsSearching)
+  const setSelectedCategory = useLectureStore(
+    (state) => state.setSelectedCategory
+  )
+  const setSelectedOrderingInText = useLectureStore(
+    (state) => state.setSelectedOrdingInText
+  )
 
   const [debounceValue, cancelDebounce] = useDebounce(searchText, 500)
   const inputRef = useRef<HTMLInputElement>(null)
-  useNoSearchResult(inputRef, setSearchText, cancelDebounce)
+
+  const resetInput = () => {
+    setSearchText('')
+  }
+  const resetSelect = () => {
+    setSelectedCategory('')
+    setSelectedOrderingInText('최신순')
+  }
+  useNoSearchResult(inputRef, resetInput, resetSelect, cancelDebounce)
 
   useEffect(() => {
     setDebounceValue(debounceValue)
