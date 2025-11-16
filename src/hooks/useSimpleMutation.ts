@@ -51,7 +51,6 @@ export const useSimpleMutation = <TPrevious, TNewOne, TData, TQueryKey>(
         const newCache = updateCacheForUi(previous, newOne)
         queryClient.setQueryData(queryKeyResult, newCache)
       }
-
       return { previous }
     },
 
