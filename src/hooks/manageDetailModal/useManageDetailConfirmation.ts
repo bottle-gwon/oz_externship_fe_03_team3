@@ -31,7 +31,6 @@ const useManageDetailConfirmation = ({
 
   // 승인 버튼 클릭
   const handleApproveClick = () => {
-    console.log('승인 버튼 클릭')
     approveApplicantMutation.mutate({
       data: applicant,
       newOne: {
@@ -43,7 +42,6 @@ const useManageDetailConfirmation = ({
 
   // 거절 버튼 클릭
   const handleRejectClick = () => {
-    console.log('거절 버튼 클릭')
     rejectApplicantMutation.mutate({
       data: applicant,
       newOne: {
