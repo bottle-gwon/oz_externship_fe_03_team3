@@ -10,12 +10,16 @@ interface WithSelectProps {
   onOptionSelect: (option: string | number) => void
   defaultChildren?: string
   isInDanger?: boolean
+  value?: string | number
+  label?: string
 }
 
 const Select = ({
   onOptionSelect,
   defaultChildren,
   isInDanger,
+  value,
+  label,
   ...props
 }: DivProps & WithSelectProps) => {
   const { className, children, ...rest } = props
@@ -34,6 +38,15 @@ const Select = ({
     }
     setSelectedChildren(defaultChildren)
   }, [defaultChildren])
+
+  useEffect(() => {
+    if (value === undefined || value === selectedValue || label === undefined) {
+      return
+    }
+    setSelectedValue(value)
+    setSelectedChildren(label)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [value, label])
 
   return (
     <SelectContext

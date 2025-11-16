@@ -9,7 +9,6 @@ const LectureSearchInput = () => {
   const searchText = useLectureStore((state) => state.searchText)
   const setSearchText = useLectureStore((state) => state.setSearchText)
   const setDebounceValue = useLectureStore((state) => state.setDebounceValue)
-  const setIsSearching = useLectureStore((state) => state.setIsSearching)
   const setSelectedCategory = useLectureStore(
     (state) => state.setSelectedCategory
   )
@@ -31,14 +30,8 @@ const LectureSearchInput = () => {
 
   useEffect(() => {
     setDebounceValue(debounceValue)
-
-    // 검색 관련된 로직은 최대한 각 검색란 컴포넌트에서 작성했습니다
-    if (debounceValue === '') {
-      setIsSearching(false)
-    } else {
-      setIsSearching(true)
-    }
-  }, [debounceValue, setDebounceValue, setIsSearching])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debounceValue])
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key !== 'Enter') {

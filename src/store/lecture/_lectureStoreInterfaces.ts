@@ -7,8 +7,8 @@ export interface LectureStoreState {
   recommendedLectureArray: Lecture[]
   setRecommendedLectureArray: (recommendedLectureArray: Lecture[]) => void
 
-  isSearching: boolean
-  setIsSearching: (isSearching: boolean) => void
+  hasBeenOpened: boolean
+  setHasBeenOpened: (hasBeenOpened: boolean) => void
   searchText: string
   setSearchText: (searchText: string) => void
   selectedCategory: string | null

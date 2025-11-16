@@ -14,8 +14,8 @@ const useLectureStore = create<LectureStoreState>()((set, get) => ({
   setRecommendedLectureArray: (recommendedLectureArray) =>
     set({ recommendedLectureArray }),
 
-  isSearching: false,
-  setIsSearching: (isSearching) => set({ isSearching }),
+  hasBeenOpened: false,
+  setHasBeenOpened: (hasBeenOpened) => set({ hasBeenOpened }),
   searchText: '',
   setSearchText: (searchText) => set({ searchText }),
   selectedCategory: null,
