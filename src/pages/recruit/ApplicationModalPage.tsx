@@ -18,8 +18,10 @@ import useApplyMutation from '@/hooks/apply/useApplyMutation'
 import type { RecruitDetail } from '@/types'
 
 const ApplicationModalPage = ({
+  title,
   recruitDetail,
 }: {
+  title: string
   recruitDetail: RecruitDetail
 }) => {
   // NOTE: 외부에서 이 모달을 띄우기 위해 전역 모달 상태를 사용했습니다
@@ -68,10 +70,7 @@ const ApplicationModalPage = ({
           <Modal.Header>
             <div className="space-y-1">
               <div className="text-lg font-semibold">스터디 지원서 작성</div>
-              <div className="text-sm text-gray-500">
-                나중에 상세페이지에서 타이틀 값받아와야해요!
-                {/* 추후 상세페이지 제작 되면 재진행 */}
-              </div>
+              <div className="text-sm text-gray-500">{title}</div>
             </div>
           </Modal.Header>
           <Modal.Body className="overflow-x-hidden overflow-y-scroll">
