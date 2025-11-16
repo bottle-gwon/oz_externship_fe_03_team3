@@ -226,7 +226,7 @@ const ApplicationModalPage = ({
         onClose={closeAllAndReset}
       >
         <ConfirmationModal.Title>
-          {`'스터디 제목' 의 제출이 완료되었습니다.`}
+          {`${title}의 제출이 완료되었습니다.`}
         </ConfirmationModal.Title>
         <ConfirmationModal.Content>
           {`지원한 리스트는 '마이페이지>지원내역'에서 확인할 수 있습니다.`}
