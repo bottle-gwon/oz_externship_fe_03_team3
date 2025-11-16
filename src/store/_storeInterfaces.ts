@@ -49,6 +49,8 @@ export interface StudyHubState {
   editingRecruit: RecruitDetail | null
   setEditingRecruit: (editingRecruit: RecruitDetail | null) => void
 
+  error: Error | null
+  setError: (error: Error | null) => void
   // lecture
 
   // notification

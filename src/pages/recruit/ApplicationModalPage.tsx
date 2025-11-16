@@ -16,6 +16,7 @@ import ConfirmationModal from '@/components/commonInGeneral/modal/confirmationMo
 import useStudyHubStore from '@/store/store'
 import useApplyMutation from '@/hooks/apply/useApplyMutation'
 import type { RecruitDetail } from '@/types'
+import ErrorModal from '@/components/commonInGeneral/modal/errorModal/ErrorModal'
 
 const ApplicationModalPage = ({
   title,
@@ -30,6 +31,10 @@ const ApplicationModalPage = ({
   const removeModalKeyFromArray = useStudyHubStore(
     (state) => state.removeModalKeyFromArray
   )
+  const error = useStudyHubStore((state) => state.error) as {
+    response: { data: { error: string } }
+  } | null
+
   const { applyMutation } = useApplyMutation()
 
   const {
@@ -59,6 +64,10 @@ const ApplicationModalPage = ({
     reset(defaultApplicationValues)
     setModalKeyArray([])
   }
+
+  const errorTitle = error
+    ? error.response.data.error
+    : '알 수 없는 에러가 발생했습니다'
 
   return (
     <>
@@ -229,27 +238,12 @@ const ApplicationModalPage = ({
         </ConfirmationModal.ButtonSection>
       </ConfirmationModal>
 
-      <ConfirmationModal
+      <ErrorModal
+        title={errorTitle}
+        detail={''}
         isOn={modalKeyArray.includes('applyError')}
         onClose={() => removeModalKeyFromArray('applyError')}
-      >
-        <ConfirmationModal.Title>
-          {`'스터디 제목' 의 제출에 실패하였습니다.`}
-        </ConfirmationModal.Title>
-        <ConfirmationModal.Content>
-          {`잠시 후 다시 시도해주세요.`}
-          <br />
-          {`문제가 지속되면 관리자에게 문의하세요.`}
-        </ConfirmationModal.Content>
-        <ConfirmationModal.ButtonSection>
-          <Button
-            shape="wideRectangle"
-            onClick={() => removeModalKeyFromArray('applyError')}
-          >
-            확인
-          </Button>
-        </ConfirmationModal.ButtonSection>
-      </ConfirmationModal>
+      />
     </>
   )
 }
