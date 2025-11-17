@@ -25,6 +25,7 @@ import RWSubHeader from './_RWSubHeader'
 import RWMarkdownEditor from './_RWMarkdownEditor'
 import useRecruitWriteMutation from '@/hooks/recruitWrite/useRecruitWriteMutation'
 import { trimObject } from '@/utils/trim'
+import postFileForPresignedUrl from './_postFileForPresignedUrl'
 
 interface RecruitWriteContetProps {
   isEditing?: boolean
@@ -49,14 +50,19 @@ const RecruitWriteContent = ({
   const { handleSubmit, register, setValue, control, errors } =
     useRecruitWrite(isEditing)
 
-  const onSubmit = (data: FieldValues) => {
+  const onSubmit = async (data: FieldValues) => {
     const { attachments, ...rest } = data
     const trimmedRest = trimObject(rest)
+
+    const promiseArray = attachments.map((file: File) =>
+      postFileForPresignedUrl(file)
+    )
+    const urlArray = await Promise.all(promiseArray)
 
     const formData = new FormData()
     const restEntryArray = Object.entries(trimmedRest)
     restEntryArray.forEach((entry) => formData.append(...entry))
-    attachments.forEach((file: File) => formData.append('attachments', file))
+    attachments.append('attachments', urlArray)
 
     if (isEditing) {
       if (!editingRecruit) {

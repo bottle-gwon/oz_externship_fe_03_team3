@@ -6,35 +6,11 @@ import type { RecruitWriteChildrenProps, Replacing } from '@/types'
 import { RECRUIT_WRITE_CONFIG } from '@/utils/constants'
 import { Controller } from 'react-hook-form'
 import useRecruitWriteStore from '@/store/recruitWrite/recruitWriteStore'
-import api from '@/api/api'
+import postFileForPresignedUrl from './_postFileForPresignedUrl'
 
 // NOTE: 명세서 상으론 복수의 이미지를 업로드할 수 있는데 실제론 맨 앞 것만 됩니다
 // NOTE: 이 때문에 개별적으로 요청을 보냅니다
 // NOTE: 이 부분은 https로만 테스트가 가능하기 때문에 배포를 하고 테스트해야 합니다
-const postSingleImage = async (file: File) => {
-  const metaData = {
-    file_name: file.name,
-    content_type: file.type,
-    file_size: file.size,
-  }
-
-  // TODO: 조교님께서 고쳐주신 다음 recruitment로 되돌려야 합니다
-  const responseUrl = await api.post('/studies/groups/presigned-url', {
-    // const response = await api.post('/recruitments/presigned_url', {
-    files: [metaData],
-  })
-
-  const { file_url, url, fields } = responseUrl.data.data
-  const fieldsEntryArray = Object.entries(fields) as [string, string][]
-
-  const formData = new FormData()
-  fieldsEntryArray.forEach((entry) => formData.append(...entry))
-  formData.append('file', file)
-
-  await api.post(url, formData)
-
-  return file_url
-}
 
 const postImages = async (fileArray: File[]) => {
   const state = useRecruitWriteStore.getState()
@@ -47,7 +23,7 @@ const postImages = async (fileArray: File[]) => {
   setInsertingTextArray(insertingPlaceholderArray)
 
   try {
-    const promiseArray = fileArray.map((file) => postSingleImage(file))
+    const promiseArray = fileArray.map((file) => postFileForPresignedUrl(file))
     const urlArray = await Promise.all(promiseArray)
 
     const replacingArray: Replacing[] = urlArray.map((url, index) => ({
