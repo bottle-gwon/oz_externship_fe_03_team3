@@ -10,8 +10,7 @@ const postFileForPresignedUrl = async (file: File) => {
 
   // TODO: 조교님께서 고쳐주신 다음 recruitment로 되돌려야 합니다
   const responseUrl = await api.post(PRESINGED_ENDPOINT, [metaData])
-
-  const { file_url, url, fields } = responseUrl.data.data
+  const { file_url, url, fields } = responseUrl.data.data[0]
   const fieldsEntryArray = Object.entries(fields) as [string, string][]
 
   const formData = new FormData()
