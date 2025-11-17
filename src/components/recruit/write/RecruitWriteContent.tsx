@@ -24,7 +24,6 @@ import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
 import RWMarkdownEditor from './_RWMarkdownEditor'
 import useRecruitWriteMutation from '@/hooks/recruitWrite/useRecruitWriteMutation'
-import { trimObject } from '@/utils/trim'
 import postFileForPresignedUrl from './_postFileForPresignedUrl'
 
 interface RecruitWriteContetProps {

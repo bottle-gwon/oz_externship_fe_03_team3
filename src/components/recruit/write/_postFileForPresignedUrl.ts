@@ -18,8 +18,10 @@ const postFileForPresignedUrl = async (file: File) => {
   formData.append('file', file)
   try {
     await subApi.post(url, formData)
-  } catch {}
-  debugger
+  } catch {
+    const empty = () => {}
+    empty()
+  }
   return file_url
 }
 

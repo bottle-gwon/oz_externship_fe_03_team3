@@ -142,7 +142,7 @@ export const useChatRoomMessage = () => {
 }
 
 export const useUnreadChatCount = (): number => {
-  const accessToken = useStudyHubStore((state) => state.accessToken)
+  // const accessToken = useStudyHubStore((state) => state.accessToken)
   const unReadCounter = useChatStore((state) => state.unReadCounter)
   const queryClient = useQueryClient()
 
