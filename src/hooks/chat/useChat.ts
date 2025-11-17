@@ -149,13 +149,6 @@ export const useUnreadChatCount = (): number => {
   const { data } = useQuery({
     queryKey: ['counter'],
     queryFn: getChatCounter,
-    refetchInterval() {
-      // 로그인 상태가아니면 요청 안보냄
-      if (!accessToken) {
-        return false
-      }
-      return 3000 // 3초마다 요청 보내기
-    },
   })
 
   // 새로운 메시지 도착 하면 채팅 방 다시 가져오기

@@ -1,4 +1,4 @@
-import api from '@/api/api'
+import api, { subApi } from '@/api/api'
 import { PRESINGED_ENDPOINT } from '@/utils/constants'
 
 const postFileForPresignedUrl = async (file: File) => {
@@ -16,9 +16,10 @@ const postFileForPresignedUrl = async (file: File) => {
   const formData = new FormData()
   fieldsEntryArray.forEach((entry) => formData.append(...entry))
   formData.append('file', file)
-
-  await api.post(url, formData)
-
+  try {
+    await subApi.post(url, formData)
+  } catch {}
+  debugger
   return file_url
 }
 
