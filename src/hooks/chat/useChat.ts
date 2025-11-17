@@ -1,6 +1,5 @@
 import api from '@/api/api'
 import useChatStore from '@/store/chat/chatStore'
-import useStudyHubStore from '@/store/store'
 import {
   type ChatMessageApiResponse,
   type ChatMessagePageResponse,
