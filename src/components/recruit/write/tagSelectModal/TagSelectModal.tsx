@@ -132,7 +132,7 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [responseData, page])
+  }, [responseData])
 
   useEffect(() => {
     if (responseData) {
