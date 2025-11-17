@@ -10,3 +10,6 @@ export const RECRUIT_WRITE_CONFIG = {
 export const CHAT_CONFIG = {
   MAX_CHAT_MESSAGE: 300,
 } as const
+
+export const PRESINGED_ENDPOINT = '/studies/groups/presigned-url'
+// export const PRESINGED_ENDPOINT = '/recruitments/presigned_url'
