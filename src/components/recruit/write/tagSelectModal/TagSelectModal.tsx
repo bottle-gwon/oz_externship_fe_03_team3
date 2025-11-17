@@ -130,7 +130,9 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
         page: page,
       }
     }
-  }, [responseData, tagSearchKeyword, page])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [responseData, page])
 
   useEffect(() => {
     if (responseData) {
@@ -194,7 +196,9 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
 
   // 검색 로딩
   const isSearchLoading =
-    isFetching && tagSearchKeyword !== lastFetchParams.current.keyword
+    isFetching &&
+    tagSearchKeyword !== lastFetchParams.current.keyword &&
+    page === 1
 
   // 페이지 네이팅 로딩
   const isPaginatingLoading =
@@ -212,6 +216,8 @@ const TagSelectModal = ({ isOn, onClose }: TagSelectModal) => {
     } else {
       setTagListLoading('false')
     }
+
+    return () => setTagListLoading('false')
   }, [isPending, setTagListLoading, isSearchLoading, isPaginatingLoading])
 
   return (
