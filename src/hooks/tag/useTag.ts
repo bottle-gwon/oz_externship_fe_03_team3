@@ -15,11 +15,11 @@ const queryEndpoint = '/recruitments/tags'
 const getSearchTag = async (params: TagApiSearchParam) => {
   const { keyword = '', page = 1, page_size = 5 } = params
   const newParam = new URLSearchParams()
-  const encodedKeyowrd = encodeURIComponent(keyword)
+  // const encodedKeyowrd = encodeURIComponent(keyword)
 
   newParam.append('page', String(page))
   newParam.append('page_size', String(page_size))
-  newParam.append('search', encodedKeyowrd) //키워드 필수로 변경됨
+  newParam.append('search', keyword) //키워드 필수로 변경됨
 
   const response = await api.get(`${queryEndpoint}?${newParam}`)
 
