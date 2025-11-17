@@ -9,7 +9,7 @@ const useRecruitWriteMutation = () => {
   const queryClient = useQueryClient()
 
   const postRecruitWriteMutation = useMutation({
-    mutationFn: (body: FormData) => api.post('/recruitments', body),
+    mutationFn: (body: object) => api.post('/recruitments', body),
     onError: () => {
       // TODO: 아직 해당 모달 추가 못 함
       setModalKey('recruitWriteError')
@@ -23,7 +23,7 @@ const useRecruitWriteMutation = () => {
   })
 
   const patchRecruitWriteMutation = useMutation({
-    mutationFn: ({ body, uuid }: { body: FormData; uuid: string }) =>
+    mutationFn: ({ body, uuid }: { body: object; uuid: string }) =>
       api.patch(`/recruitments/${uuid}`, body),
     onError: () => {
       // TODO: 아직 해당 모달 추가 못 함

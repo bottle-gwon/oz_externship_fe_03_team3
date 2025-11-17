@@ -24,7 +24,6 @@ import useRecruitWrite from './_useRecruitWrite'
 import RWSubHeader from './_RWSubHeader'
 import RWMarkdownEditor from './_RWMarkdownEditor'
 import useRecruitWriteMutation from '@/hooks/recruitWrite/useRecruitWriteMutation'
-import { trimObject } from '@/utils/trim'
 import postFileForPresignedUrl from './_postFileForPresignedUrl'
 
 interface RecruitWriteContetProps {
@@ -52,28 +51,24 @@ const RecruitWriteContent = ({
 
   const onSubmit = async (data: FieldValues) => {
     const { attachments, ...rest } = data
-    const trimmedRest = trimObject(rest)
 
     const promiseArray = attachments.map((file: File) =>
       postFileForPresignedUrl(file)
     )
     const urlArray = await Promise.all(promiseArray)
 
-    const formData = new FormData()
-    const restEntryArray = Object.entries(trimmedRest)
-    restEntryArray.forEach((entry) => formData.append(...entry))
-    attachments.append('attachments', urlArray)
+    const body = { ...rest, attachments: urlArray }
 
     if (isEditing) {
       if (!editingRecruit) {
         throw new Error('---- 수정 중인 공고를 못 찾았어요')
       }
       patchRecruitWriteMutation.mutate({
-        body: formData,
+        body,
         uuid: editingRecruit.uuid,
       })
     } else {
-      postRecruitWriteMutation.mutate(formData)
+      postRecruitWriteMutation.mutate(body)
     }
   }
 

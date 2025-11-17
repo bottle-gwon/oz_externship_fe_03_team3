@@ -1,6 +1,5 @@
 import api from '@/api/api'
 import useChatStore from '@/store/chat/chatStore'
-import useStudyHubStore from '@/store/store'
 import {
   type ChatMessageApiResponse,
   type ChatMessagePageResponse,
@@ -142,20 +141,13 @@ export const useChatRoomMessage = () => {
 }
 
 export const useUnreadChatCount = (): number => {
-  const accessToken = useStudyHubStore((state) => state.accessToken)
+  // const accessToken = useStudyHubStore((state) => state.accessToken)
   const unReadCounter = useChatStore((state) => state.unReadCounter)
   const queryClient = useQueryClient()
 
   const { data } = useQuery({
     queryKey: ['counter'],
     queryFn: getChatCounter,
-    refetchInterval() {
-      // 로그인 상태가아니면 요청 안보냄
-      if (!accessToken) {
-        return false
-      }
-      return 3000 // 3초마다 요청 보내기
-    },
   })
 
   // 새로운 메시지 도착 하면 채팅 방 다시 가져오기
